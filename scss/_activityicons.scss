@@ -1,0 +1,66 @@
+// Activity icons.
+//
+// Keep the SVG files monochrome. The visual identity is applied entirely by SCSS:
+// each module gets its own background colour while the existing icon is rendered white.
+
+$learnlingo-activity-colors: (
+    assign: #F05A5A,
+    bigbluebuttonbn: #4F7DF3,
+    book: #F29F3D,
+    choice: #8B63D9,
+    data: #1EA896,
+    feedback: #E85D9E,
+    folder: #E8A52B,
+    forum: #4C82E8,
+    glossary: #32A86D,
+    h5pactivity: #7656D6,
+    imscp: #6574CF,
+    label: #7B8794,
+    lesson: #EB7A3B,
+    lti: #3B9FCB,
+    page: #43A86B,
+    qbank: #A05ACB,
+    quiz: #E25858,
+    resource: #3A96D8,
+    scorm: #D88733,
+    subsection: #73808C,
+    url: #3978D4,
+    wiki: #2D9E96,
+    workshop: #8D62C9
+);
+
+.activity-item .activityiconcontainer {
+    width: 46px;
+    height: 46px;
+    min-width: 46px;
+    padding: 10px !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 0 !important;
+    border-radius: 14px !important;
+    overflow: hidden;
+    transition: transform .16s ease, box-shadow .16s ease;
+
+    .activityicon {
+        width: 26px;
+        height: 26px;
+        margin: 0 !important;
+        object-fit: contain;
+        opacity: 1;
+        filter: brightness(0) invert(1);
+    }
+}
+
+@each $module, $color in $learnlingo-activity-colors {
+    .modtype_#{$module} .activityiconcontainer {
+        background: $color !important;
+        box-shadow:
+            0 3px 0 mix(#000, $color, 18%),
+            0 6px 12px rgba($color, .18);
+    }
+}
+
+.activity-item:hover .activityiconcontainer {
+    transform: translateY(-1px);
+}
