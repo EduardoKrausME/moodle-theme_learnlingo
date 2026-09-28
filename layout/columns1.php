@@ -38,4 +38,3 @@ if (empty($PAGE->layout_options['noactivityheader'])) {
 }
 
 echo $OUTPUT->render_from_template('theme_learnlingo/columns1', $templatecontext);
-
