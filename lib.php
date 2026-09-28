@@ -66,4 +66,3 @@ function theme_learnlingo_get_extra_scss(theme_config $theme): string {
 
     return $scss;
 }
-
