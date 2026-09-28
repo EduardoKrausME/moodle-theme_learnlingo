@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:cc="http://creativecommons.org/ns#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:svg="http://www.w3.org/2000/svg"
+    viewBox="-0.66 -0.66 13.536 13.944"
+    preserveAspectRatio="xMidYMid meet"
+    role="img">
+  <!-- Playful Moodle icon conversion. Original geometry and embedded notices are preserved below. -->
+  <defs>
+    <metadata
+     id="metadata10">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+    <clipPath id="duo-highlight-clip-8b6c5e2c58" clipPathUnits="userSpaceOnUse">
+      <rect x="-0.66" y="-0.66"
+            width="13.536" height="5.7"/>
+    </clipPath>
+    <style>
+      .duo-shadow path:not([data-duo-fill="none"]){fill:#46A302!important}
+      .duo-shadow rect:not([data-duo-fill="none"]){fill:#46A302!important}
+      .duo-shadow circle:not([data-duo-fill="none"]){fill:#46A302!important}
+      .duo-shadow ellipse:not([data-duo-fill="none"]){fill:#46A302!important}
+      .duo-shadow polygon:not([data-duo-fill="none"]){fill:#46A302!important}
+      .duo-shadow path[stroke]:not([data-duo-stroke="none"]){stroke:#46A302!important}
+      .duo-shadow rect[stroke]:not([data-duo-stroke="none"]){stroke:#46A302!important}
+      .duo-shadow circle[stroke]:not([data-duo-stroke="none"]){stroke:#46A302!important}
+      .duo-shadow ellipse[stroke]:not([data-duo-stroke="none"]){stroke:#46A302!important}
+      .duo-shadow polygon[stroke]:not([data-duo-stroke="none"]){stroke:#46A302!important}
+      .duo-shadow line:not([data-duo-stroke="none"]),.duo-shadow polyline:not([data-duo-stroke="none"]){fill:none!important;stroke:#46A302!important}
+      .duo-main path:not([data-duo-fill="none"]){fill:#58CC02!important}
+      .duo-main rect:not([data-duo-fill="none"]){fill:#58CC02!important}
+      .duo-main circle:not([data-duo-fill="none"]){fill:#58CC02!important}
+      .duo-main ellipse:not([data-duo-fill="none"]){fill:#58CC02!important}
+      .duo-main polygon:not([data-duo-fill="none"]){fill:#58CC02!important}
+      .duo-main path[stroke]:not([data-duo-stroke="none"]){stroke:#58CC02!important}
+      .duo-main rect[stroke]:not([data-duo-stroke="none"]){stroke:#58CC02!important}
+      .duo-main circle[stroke]:not([data-duo-stroke="none"]){stroke:#58CC02!important}
+      .duo-main ellipse[stroke]:not([data-duo-stroke="none"]){stroke:#58CC02!important}
+      .duo-main polygon[stroke]:not([data-duo-stroke="none"]){stroke:#58CC02!important}
+      .duo-main line:not([data-duo-stroke="none"]),.duo-main polyline:not([data-duo-stroke="none"]){fill:none!important;stroke:#58CC02!important}
+      .duo-main path[data-duo-fill="white"],.duo-main rect[data-duo-fill="white"],.duo-main circle[data-duo-fill="white"],.duo-main ellipse[data-duo-fill="white"],.duo-main polygon[data-duo-fill="white"]{fill:#fff!important}
+      .duo-main path[data-duo-stroke="white"],.duo-main rect[data-duo-stroke="white"],.duo-main circle[data-duo-stroke="white"],.duo-main ellipse[data-duo-stroke="white"],.duo-main polygon[data-duo-stroke="white"],.duo-main line[data-duo-stroke="white"],.duo-main polyline[data-duo-stroke="white"]{stroke:#fff!important}
+      .duo-highlight path:not([data-duo-fill="none"]){fill:#89E219!important}
+      .duo-highlight rect:not([data-duo-fill="none"]){fill:#89E219!important}
+      .duo-highlight circle:not([data-duo-fill="none"]){fill:#89E219!important}
+      .duo-highlight ellipse:not([data-duo-fill="none"]){fill:#89E219!important}
+      .duo-highlight polygon:not([data-duo-fill="none"]){fill:#89E219!important}
+      .duo-highlight path[stroke]:not([data-duo-stroke="none"]){stroke:#89E219!important}
+      .duo-highlight rect[stroke]:not([data-duo-stroke="none"]){stroke:#89E219!important}
+      .duo-highlight circle[stroke]:not([data-duo-stroke="none"]){stroke:#89E219!important}
+      .duo-highlight ellipse[stroke]:not([data-duo-stroke="none"]){stroke:#89E219!important}
+      .duo-highlight polygon[stroke]:not([data-duo-stroke="none"]){stroke:#89E219!important}
+      .duo-highlight line:not([data-duo-stroke="none"]),.duo-highlight polyline:not([data-duo-stroke="none"]){fill:none!important;stroke:#89E219!important}
+      .duo-highlight path[data-duo-fill="white"],.duo-highlight rect[data-duo-fill="white"],.duo-highlight circle[data-duo-fill="white"],.duo-highlight ellipse[data-duo-fill="white"],.duo-highlight polygon[data-duo-fill="white"]{fill:#fff!important}
+      .duo-highlight path[data-duo-stroke="white"],.duo-highlight rect[data-duo-stroke="white"],.duo-highlight circle[data-duo-stroke="white"],.duo-highlight ellipse[data-duo-stroke="white"],.duo-highlight polygon[data-duo-stroke="white"],.duo-highlight line[data-duo-stroke="white"],.duo-highlight polyline[data-duo-stroke="white"]{stroke:#fff!important}
+    </style>
+  </defs>
+  <g class="duo-shadow" transform="translate(0.216 0.624)">
+    <g>
+      <defs
+     />
+  <path
+    
+     d="M 6.0000002,2.4999999 C 4.0728255,2.4999999 2.5,4.0728255 2.5,6.0000001 c 0,1.9271748 1.5728255,3.5 3.5000002,3.5 C 7.927175,9.5000001 9.5,7.9271749 9.5,6.0000001 9.5,4.0728255 7.927175,2.4999999 6.0000002,2.4999999 Z"
+     style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#387936;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.80178976;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" data-duo-stroke="none" />
+    </g>
+  </g>
+  <g class="duo-main">
+    <g>
+      <defs
+     />
+  <path
+    
+     d="M 6.0000002,2.4999999 C 4.0728255,2.4999999 2.5,4.0728255 2.5,6.0000001 c 0,1.9271748 1.5728255,3.5 3.5000002,3.5 C 7.927175,9.5000001 9.5,7.9271749 9.5,6.0000001 9.5,4.0728255 7.927175,2.4999999 6.0000002,2.4999999 Z"
+     style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#387936;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.80178976;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" data-duo-stroke="none" />
+    </g>
+  </g>
+  <g class="duo-highlight" clip-path="url(#duo-highlight-clip-8b6c5e2c58)" opacity="0.72"
+     transform="translate(0 -0.096)">
+    <g>
+      <defs
+     />
+  <path
+    
+     d="M 6.0000002,2.4999999 C 4.0728255,2.4999999 2.5,4.0728255 2.5,6.0000001 c 0,1.9271748 1.5728255,3.5 3.5000002,3.5 C 7.927175,9.5000001 9.5,7.9271749 9.5,6.0000001 9.5,4.0728255 7.927175,2.4999999 6.0000002,2.4999999 Z"
+     style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#387936;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.80178976;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" data-duo-stroke="none" />
+    </g>
+  </g>
+</svg>

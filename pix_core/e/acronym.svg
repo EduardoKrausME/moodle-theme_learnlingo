@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    viewBox="-28.16 -28.16 577.536 594.944"
+    preserveAspectRatio="xMidYMid meet"
+    role="img">
+  <!-- Playful Moodle icon conversion. Original geometry and embedded notices are preserved below. -->
+  <defs>
+    <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+    <clipPath id="duo-highlight-clip-363aa81da7" clipPathUnits="userSpaceOnUse">
+      <rect x="-28.16" y="-28.16"
+            width="577.536" height="243.2"/>
+    </clipPath>
+    <style>
+      .duo-shadow path:not([data-duo-fill="none"]){fill:#D97F00!important}
+      .duo-shadow rect:not([data-duo-fill="none"]){fill:#D97F00!important}
+      .duo-shadow circle:not([data-duo-fill="none"]){fill:#D97F00!important}
+      .duo-shadow ellipse:not([data-duo-fill="none"]){fill:#D97F00!important}
+      .duo-shadow polygon:not([data-duo-fill="none"]){fill:#D97F00!important}
+      .duo-shadow path[stroke]:not([data-duo-stroke="none"]){stroke:#D97F00!important}
+      .duo-shadow rect[stroke]:not([data-duo-stroke="none"]){stroke:#D97F00!important}
+      .duo-shadow circle[stroke]:not([data-duo-stroke="none"]){stroke:#D97F00!important}
+      .duo-shadow ellipse[stroke]:not([data-duo-stroke="none"]){stroke:#D97F00!important}
+      .duo-shadow polygon[stroke]:not([data-duo-stroke="none"]){stroke:#D97F00!important}
+      .duo-shadow line:not([data-duo-stroke="none"]),.duo-shadow polyline:not([data-duo-stroke="none"]){fill:none!important;stroke:#D97F00!important}
+      .duo-main path:not([data-duo-fill="none"]){fill:#FF9600!important}
+      .duo-main rect:not([data-duo-fill="none"]){fill:#FF9600!important}
+      .duo-main circle:not([data-duo-fill="none"]){fill:#FF9600!important}
+      .duo-main ellipse:not([data-duo-fill="none"]){fill:#FF9600!important}
+      .duo-main polygon:not([data-duo-fill="none"]){fill:#FF9600!important}
+      .duo-main path[stroke]:not([data-duo-stroke="none"]){stroke:#FF9600!important}
+      .duo-main rect[stroke]:not([data-duo-stroke="none"]){stroke:#FF9600!important}
+      .duo-main circle[stroke]:not([data-duo-stroke="none"]){stroke:#FF9600!important}
+      .duo-main ellipse[stroke]:not([data-duo-stroke="none"]){stroke:#FF9600!important}
+      .duo-main polygon[stroke]:not([data-duo-stroke="none"]){stroke:#FF9600!important}
+      .duo-main line:not([data-duo-stroke="none"]),.duo-main polyline:not([data-duo-stroke="none"]){fill:none!important;stroke:#FF9600!important}
+      .duo-main path[data-duo-fill="white"],.duo-main rect[data-duo-fill="white"],.duo-main circle[data-duo-fill="white"],.duo-main ellipse[data-duo-fill="white"],.duo-main polygon[data-duo-fill="white"]{fill:#fff!important}
+      .duo-main path[data-duo-stroke="white"],.duo-main rect[data-duo-stroke="white"],.duo-main circle[data-duo-stroke="white"],.duo-main ellipse[data-duo-stroke="white"],.duo-main polygon[data-duo-stroke="white"],.duo-main line[data-duo-stroke="white"],.duo-main polyline[data-duo-stroke="white"]{stroke:#fff!important}
+      .duo-highlight path:not([data-duo-fill="none"]){fill:#FFBE4D!important}
+      .duo-highlight rect:not([data-duo-fill="none"]){fill:#FFBE4D!important}
+      .duo-highlight circle:not([data-duo-fill="none"]){fill:#FFBE4D!important}
+      .duo-highlight ellipse:not([data-duo-fill="none"]){fill:#FFBE4D!important}
+      .duo-highlight polygon:not([data-duo-fill="none"]){fill:#FFBE4D!important}
+      .duo-highlight path[stroke]:not([data-duo-stroke="none"]){stroke:#FFBE4D!important}
+      .duo-highlight rect[stroke]:not([data-duo-stroke="none"]){stroke:#FFBE4D!important}
+      .duo-highlight circle[stroke]:not([data-duo-stroke="none"]){stroke:#FFBE4D!important}
+      .duo-highlight ellipse[stroke]:not([data-duo-stroke="none"]){stroke:#FFBE4D!important}
+      .duo-highlight polygon[stroke]:not([data-duo-stroke="none"]){stroke:#FFBE4D!important}
+      .duo-highlight line:not([data-duo-stroke="none"]),.duo-highlight polyline:not([data-duo-stroke="none"]){fill:none!important;stroke:#FFBE4D!important}
+      .duo-highlight path[data-duo-fill="white"],.duo-highlight rect[data-duo-fill="white"],.duo-highlight circle[data-duo-fill="white"],.duo-highlight ellipse[data-duo-fill="white"],.duo-highlight polygon[data-duo-fill="white"]{fill:#fff!important}
+      .duo-highlight path[data-duo-stroke="white"],.duo-highlight rect[data-duo-stroke="white"],.duo-highlight circle[data-duo-stroke="white"],.duo-highlight ellipse[data-duo-stroke="white"],.duo-highlight polygon[data-duo-stroke="white"],.duo-highlight line[data-duo-stroke="white"],.duo-highlight polyline[data-duo-stroke="white"]{stroke:#fff!important}
+    </style>
+  </defs>
+  <g class="duo-shadow" transform="translate(9.216 26.624)">
+    <g>
+      <path d="M123.6 391.3c12.9-9.4 29.6-11.8 44.6-6.4c26.5 9.6 56.2 15.1 87.8 15.1c124.7 0 208-80.5 208-160s-83.3-160-208-160S48 160.5 48 240c0 32 12.4 62.8 35.7 89.2c8.6 9.7 12.8 22.5 11.8 35.5c-1.4 18.1-5.7 34.7-11.3 49.4c17-7.9 31.1-16.7 39.4-22.7zM21.2 431.9c1.8-2.7 3.5-5.4 5.1-8.1c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208s-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6c-15.1 6.6-32.3 12.6-50.1 16.1c-.8 .2-1.6 .3-2.4 .5c-4.4 .8-8.7 1.5-13.2 1.9c-.2 0-.5 .1-.7 .1c-5.1 .5-10.2 .8-15.3 .8c-6.5 0-12.3-3.9-14.8-9.9c-2.5-6-1.1-12.8 3.4-17.4c4.1-4.2 7.8-8.7 11.3-13.5c1.7-2.3 3.3-4.6 4.8-6.9c.1-.2 .2-.3 .3-.5z" />
+    </g>
+  </g>
+  <g class="duo-main">
+    <g>
+      <path d="M123.6 391.3c12.9-9.4 29.6-11.8 44.6-6.4c26.5 9.6 56.2 15.1 87.8 15.1c124.7 0 208-80.5 208-160s-83.3-160-208-160S48 160.5 48 240c0 32 12.4 62.8 35.7 89.2c8.6 9.7 12.8 22.5 11.8 35.5c-1.4 18.1-5.7 34.7-11.3 49.4c17-7.9 31.1-16.7 39.4-22.7zM21.2 431.9c1.8-2.7 3.5-5.4 5.1-8.1c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208s-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6c-15.1 6.6-32.3 12.6-50.1 16.1c-.8 .2-1.6 .3-2.4 .5c-4.4 .8-8.7 1.5-13.2 1.9c-.2 0-.5 .1-.7 .1c-5.1 .5-10.2 .8-15.3 .8c-6.5 0-12.3-3.9-14.8-9.9c-2.5-6-1.1-12.8 3.4-17.4c4.1-4.2 7.8-8.7 11.3-13.5c1.7-2.3 3.3-4.6 4.8-6.9c.1-.2 .2-.3 .3-.5z" />
+    </g>
+  </g>
+  <g class="duo-highlight" clip-path="url(#duo-highlight-clip-363aa81da7)" opacity="0.72"
+     transform="translate(0 -4.096)">
+    <g>
+      <path d="M123.6 391.3c12.9-9.4 29.6-11.8 44.6-6.4c26.5 9.6 56.2 15.1 87.8 15.1c124.7 0 208-80.5 208-160s-83.3-160-208-160S48 160.5 48 240c0 32 12.4 62.8 35.7 89.2c8.6 9.7 12.8 22.5 11.8 35.5c-1.4 18.1-5.7 34.7-11.3 49.4c17-7.9 31.1-16.7 39.4-22.7zM21.2 431.9c1.8-2.7 3.5-5.4 5.1-8.1c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208s-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6c-15.1 6.6-32.3 12.6-50.1 16.1c-.8 .2-1.6 .3-2.4 .5c-4.4 .8-8.7 1.5-13.2 1.9c-.2 0-.5 .1-.7 .1c-5.1 .5-10.2 .8-15.3 .8c-6.5 0-12.3-3.9-14.8-9.9c-2.5-6-1.1-12.8 3.4-17.4c4.1-4.2 7.8-8.7 11.3-13.5c1.7-2.3 3.3-4.6 4.8-6.9c.1-.2 .2-.3 .3-.5z" />
+    </g>
+  </g>
+</svg>

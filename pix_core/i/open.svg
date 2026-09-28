@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    viewBox="-28.16 -28.16 641.536 594.944"
+    preserveAspectRatio="xMidYMid meet"
+    role="img">
+  <!-- Playful Moodle icon conversion. Original geometry and embedded notices are preserved below. -->
+  <defs>
+    <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+    <clipPath id="duo-highlight-clip-5b54e43828" clipPathUnits="userSpaceOnUse">
+      <rect x="-28.16" y="-28.16"
+            width="641.536" height="243.2"/>
+    </clipPath>
+    <style>
+      .duo-shadow path:not([data-duo-fill="none"]){fill:#168EC4!important}
+      .duo-shadow rect:not([data-duo-fill="none"]){fill:#168EC4!important}
+      .duo-shadow circle:not([data-duo-fill="none"]){fill:#168EC4!important}
+      .duo-shadow ellipse:not([data-duo-fill="none"]){fill:#168EC4!important}
+      .duo-shadow polygon:not([data-duo-fill="none"]){fill:#168EC4!important}
+      .duo-shadow path[stroke]:not([data-duo-stroke="none"]){stroke:#168EC4!important}
+      .duo-shadow rect[stroke]:not([data-duo-stroke="none"]){stroke:#168EC4!important}
+      .duo-shadow circle[stroke]:not([data-duo-stroke="none"]){stroke:#168EC4!important}
+      .duo-shadow ellipse[stroke]:not([data-duo-stroke="none"]){stroke:#168EC4!important}
+      .duo-shadow polygon[stroke]:not([data-duo-stroke="none"]){stroke:#168EC4!important}
+      .duo-shadow line:not([data-duo-stroke="none"]),.duo-shadow polyline:not([data-duo-stroke="none"]){fill:none!important;stroke:#168EC4!important}
+      .duo-main path:not([data-duo-fill="none"]){fill:#1CB0F6!important}
+      .duo-main rect:not([data-duo-fill="none"]){fill:#1CB0F6!important}
+      .duo-main circle:not([data-duo-fill="none"]){fill:#1CB0F6!important}
+      .duo-main ellipse:not([data-duo-fill="none"]){fill:#1CB0F6!important}
+      .duo-main polygon:not([data-duo-fill="none"]){fill:#1CB0F6!important}
+      .duo-main path[stroke]:not([data-duo-stroke="none"]){stroke:#1CB0F6!important}
+      .duo-main rect[stroke]:not([data-duo-stroke="none"]){stroke:#1CB0F6!important}
+      .duo-main circle[stroke]:not([data-duo-stroke="none"]){stroke:#1CB0F6!important}
+      .duo-main ellipse[stroke]:not([data-duo-stroke="none"]){stroke:#1CB0F6!important}
+      .duo-main polygon[stroke]:not([data-duo-stroke="none"]){stroke:#1CB0F6!important}
+      .duo-main line:not([data-duo-stroke="none"]),.duo-main polyline:not([data-duo-stroke="none"]){fill:none!important;stroke:#1CB0F6!important}
+      .duo-main path[data-duo-fill="white"],.duo-main rect[data-duo-fill="white"],.duo-main circle[data-duo-fill="white"],.duo-main ellipse[data-duo-fill="white"],.duo-main polygon[data-duo-fill="white"]{fill:#fff!important}
+      .duo-main path[data-duo-stroke="white"],.duo-main rect[data-duo-stroke="white"],.duo-main circle[data-duo-stroke="white"],.duo-main ellipse[data-duo-stroke="white"],.duo-main polygon[data-duo-stroke="white"],.duo-main line[data-duo-stroke="white"],.duo-main polyline[data-duo-stroke="white"]{stroke:#fff!important}
+      .duo-highlight path:not([data-duo-fill="none"]){fill:#6DD6FF!important}
+      .duo-highlight rect:not([data-duo-fill="none"]){fill:#6DD6FF!important}
+      .duo-highlight circle:not([data-duo-fill="none"]){fill:#6DD6FF!important}
+      .duo-highlight ellipse:not([data-duo-fill="none"]){fill:#6DD6FF!important}
+      .duo-highlight polygon:not([data-duo-fill="none"]){fill:#6DD6FF!important}
+      .duo-highlight path[stroke]:not([data-duo-stroke="none"]){stroke:#6DD6FF!important}
+      .duo-highlight rect[stroke]:not([data-duo-stroke="none"]){stroke:#6DD6FF!important}
+      .duo-highlight circle[stroke]:not([data-duo-stroke="none"]){stroke:#6DD6FF!important}
+      .duo-highlight ellipse[stroke]:not([data-duo-stroke="none"]){stroke:#6DD6FF!important}
+      .duo-highlight polygon[stroke]:not([data-duo-stroke="none"]){stroke:#6DD6FF!important}
+      .duo-highlight line:not([data-duo-stroke="none"]),.duo-highlight polyline:not([data-duo-stroke="none"]){fill:none!important;stroke:#6DD6FF!important}
+      .duo-highlight path[data-duo-fill="white"],.duo-highlight rect[data-duo-fill="white"],.duo-highlight circle[data-duo-fill="white"],.duo-highlight ellipse[data-duo-fill="white"],.duo-highlight polygon[data-duo-fill="white"]{fill:#fff!important}
+      .duo-highlight path[data-duo-stroke="white"],.duo-highlight rect[data-duo-stroke="white"],.duo-highlight circle[data-duo-stroke="white"],.duo-highlight ellipse[data-duo-stroke="white"],.duo-highlight polygon[data-duo-stroke="white"],.duo-highlight line[data-duo-stroke="white"],.duo-highlight polyline[data-duo-stroke="white"]{stroke:#fff!important}
+    </style>
+  </defs>
+  <g class="duo-shadow" transform="translate(9.216 26.624)">
+    <g>
+      <path d="M88.7 223.8L0 375.8V96C0 60.7 28.7 32 64 32H181.5c17 0 33.3 6.7 45.3 18.7l26.5 26.5c12 12 28.3 18.7 45.3 18.7H416c35.3 0 64 28.7 64 64v32H144c-22.8 0-43.8 12.1-55.3 31.8zm27.6 16.1C122.1 230 132.6 224 144 224H544c11.5 0 22 6.1 27.7 16.1s5.7 22.2-.1 32.1l-112 192C453.9 474 443.4 480 432 480H32c-11.5 0-22-6.1-27.7-16.1s-5.7-22.2 .1-32.1l112-192z" />
+    </g>
+  </g>
+  <g class="duo-main">
+    <g>
+      <path d="M88.7 223.8L0 375.8V96C0 60.7 28.7 32 64 32H181.5c17 0 33.3 6.7 45.3 18.7l26.5 26.5c12 12 28.3 18.7 45.3 18.7H416c35.3 0 64 28.7 64 64v32H144c-22.8 0-43.8 12.1-55.3 31.8zm27.6 16.1C122.1 230 132.6 224 144 224H544c11.5 0 22 6.1 27.7 16.1s5.7 22.2-.1 32.1l-112 192C453.9 474 443.4 480 432 480H32c-11.5 0-22-6.1-27.7-16.1s-5.7-22.2 .1-32.1l112-192z" />
+    </g>
+  </g>
+  <g class="duo-highlight" clip-path="url(#duo-highlight-clip-5b54e43828)" opacity="0.72"
+     transform="translate(0 -4.096)">
+    <g>
+      <path d="M88.7 223.8L0 375.8V96C0 60.7 28.7 32 64 32H181.5c17 0 33.3 6.7 45.3 18.7l26.5 26.5c12 12 28.3 18.7 45.3 18.7H416c35.3 0 64 28.7 64 64v32H144c-22.8 0-43.8 12.1-55.3 31.8zm27.6 16.1C122.1 230 132.6 224 144 224H544c11.5 0 22 6.1 27.7 16.1s5.7 22.2-.1 32.1l-112 192C453.9 474 443.4 480 432 480H32c-11.5 0-22-6.1-27.7-16.1s-5.7-22.2 .1-32.1l112-192z" />
+    </g>
+  </g>
+</svg>

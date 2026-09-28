@@ -1,0 +1,148 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    @template theme_learnlingo/frontpage
+
+    PulsoMed front page rendered by theme_learnlingo\output\core\course_renderer.
+
+    Example context (json):
+    {
+        "dashboardeyebrow": "Learn at your pace",
+        "dashboardtitle": "Hello, Marina! Ready for another step?",
+        "dashboarddescription": "Continue your education.",
+        "dashboardcta": "Keep learning",
+        "mycoursesurl": "#",
+        "hasfeaturedcourse": true,
+        "featuredcourse": {
+            "fullname": "Emergency care",
+            "url": "#",
+            "progress": 38,
+            "hasprogress": true,
+            "progresslabel": "38% complete"
+        },
+        "hascourses": true,
+        "courses": []
+    }
+}}
+<div class="pulsomed-home">
+    {{#showwelcome}}
+        <section class="pulsomed-dashboard-grid" aria-label="{{dashboardeyebrow}}">
+            <div class="pulsomed-dashboard-hero">
+                <div class="pulsomed-dashboard-copy">
+                    <span class="pulsomed-eyebrow">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        {{dashboardeyebrow}}
+                    </span>
+                    <h1 class="pulsomed-dashboard-title">{{dashboardtitle}}</h1>
+                    <p class="pulsomed-dashboard-description">{{dashboarddescription}}</p>
+                    <a class="pulsomed-dashboard-cta" href="{{mycoursesurl}}">
+                        {{dashboardcta}}
+                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="pulsomed-mascot" aria-hidden="true">
+                    <i class="fa fa-stethoscope"></i>
+                </div>
+            </div>
+            <aside class="pulsomed-goal-card">
+                <div class="pulsomed-goal-heading">
+                    <span class="pulsomed-goal-icon" aria-hidden="true">
+                        <i class="fa fa-clock-o"></i>
+                    </span>
+                    <span>
+                        <span class="pulsomed-goal-kicker">{{dashboardeyebrow}}</span>
+                        <strong class="pulsomed-goal-title">{{goaltitle}}</strong>
+                    </span>
+                </div>
+                <div class="pulsomed-goal-ring" aria-hidden="true">
+                    <div class="pulsomed-goal-ring-inner">
+                        <strong>{{goaltime}}</strong>
+                        <small>{{goaltitle}}</small>
+                    </div>
+                </div>
+                <p class="pulsomed-goal-copy">{{goalsubtitle}}</p>
+                <a class="btn btn-primary" href="{{mycoursesurl}}">{{goalcta}}</a>
+            </aside>
+        </section>
+    {{/showwelcome}}
+
+    {{#hasfeaturedcourse}}
+        <section class="pulsomed-resume-card" aria-label="{{featuredlabel}}">
+            <div class="pulsomed-resume-icon" aria-hidden="true">
+                <i class="fa fa-heartbeat"></i>
+            </div>
+            <div class="pulsomed-resume-main">
+                <span class="pulsomed-resume-label">{{featuredlabel}}</span>
+                <a class="pulsomed-resume-title" href="{{featuredcourse.url}}">{{featuredcourse.fullname}}</a>
+                <span class="pulsomed-resume-category">{{featuredcourse.categoryname}}</span>
+                {{#featuredcourse.hasprogress}}
+                    <div class="pulsomed-resume-progress">
+                        <div class="progress" role="progressbar" aria-label="{{featuredcourse.progresslabel}}"
+                                aria-valuenow="{{featuredcourse.progress}}" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar" style="width: {{featuredcourse.progress}}%"></div>
+                        </div>
+                        <strong>{{featuredcourse.progresslabel}}</strong>
+                    </div>
+                {{/featuredcourse.hasprogress}}
+            </div>
+            <a class="pulsomed-resume-action" href="{{featuredcourse.url}}" aria-label="{{featuredaction}}: {{featuredcourse.fullname}}">
+                <i class="fa fa-play" aria-hidden="true"></i>
+            </a>
+        </section>
+    {{/hasfeaturedcourse}}
+
+    <section class="pulsomed-home-courses">
+        <div class="pulsomed-home-section-heading">
+            <div>
+                <span>{{courseseyebrow}}</span>
+                <h2>{{coursestitle}}</h2>
+            </div>
+            <a href="{{allcoursesurl}}">{{allcoursestext}} <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+        </div>
+
+        {{#hascourses}}
+            <div class="pulsomed-home-course-grid">
+                {{#courses}}
+                    <article class="pulsomed-course-card">
+                        <a class="pulsomed-course-card-media {{toneclass}}" href="{{url}}" tabindex="-1" aria-hidden="true">
+                            {{#hasimage}}
+                                <img src="{{{imageurl}}}" alt="" loading="lazy">
+                            {{/hasimage}}
+                            {{^hasimage}}
+                                <i class="fa fa-book" aria-hidden="true"></i>
+                            {{/hasimage}}
+                            <span>{{categoryname}}</span>
+                        </a>
+                        <div class="pulsomed-course-card-body">
+                            <span class="pulsomed-course-card-kicker">{{shortname}}</span>
+                            <h3><a href="{{url}}">{{fullname}}</a></h3>
+                            {{#hasprogress}}
+                                <div class="pulsomed-course-card-progress">
+                                    <div class="progress" role="progressbar" aria-label="{{progresslabel}}"
+                                            aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-bar" style="width: {{progress}}%"></div>
+                                    </div>
+                                    <span>{{progresslabel}}</span>
+                                </div>
+                            {{/hasprogress}}
+                            <a class="pulsomed-course-card-action" href="{{url}}">
+                                {{courseaction}} <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </article>
+                {{/courses}}
+            </div>
+        {{/hascourses}}
+
+        {{#showempty}}
+            <div class="pulsomed-home-empty">
+                <i class="fa fa-book" aria-hidden="true"></i>
+                <div>
+                    <h3>{{emptytitle}}</h3>
+                    <p>{{emptydescription}}</p>
+                </div>
+                <a class="btn btn-primary" href="{{allcoursesurl}}">{{allcoursestext}}</a>
+            </div>
+        {{/showempty}}
+    </section>
+</div>

@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    viewBox="-24.64 -24.64 505.344 584.576"
+    preserveAspectRatio="xMidYMid meet"
+    role="img">
+  <!-- Playful Moodle icon conversion. Original geometry and embedded notices are preserved below. -->
+  <defs>
+    <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+    <clipPath id="duo-highlight-clip-6a71a49845" clipPathUnits="userSpaceOnUse">
+      <rect x="-24.64" y="-24.64"
+            width="505.344" height="239.68"/>
+    </clipPath>
+    <style>
+      .duo-shadow path:not([data-duo-fill="none"]){fill:#168EC4!important}
+      .duo-shadow rect:not([data-duo-fill="none"]){fill:#168EC4!important}
+      .duo-shadow circle:not([data-duo-fill="none"]){fill:#168EC4!important}
+      .duo-shadow ellipse:not([data-duo-fill="none"]){fill:#168EC4!important}
+      .duo-shadow polygon:not([data-duo-fill="none"]){fill:#168EC4!important}
+      .duo-shadow path[stroke]:not([data-duo-stroke="none"]){stroke:#168EC4!important}
+      .duo-shadow rect[stroke]:not([data-duo-stroke="none"]){stroke:#168EC4!important}
+      .duo-shadow circle[stroke]:not([data-duo-stroke="none"]){stroke:#168EC4!important}
+      .duo-shadow ellipse[stroke]:not([data-duo-stroke="none"]){stroke:#168EC4!important}
+      .duo-shadow polygon[stroke]:not([data-duo-stroke="none"]){stroke:#168EC4!important}
+      .duo-shadow line:not([data-duo-stroke="none"]),.duo-shadow polyline:not([data-duo-stroke="none"]){fill:none!important;stroke:#168EC4!important}
+      .duo-main path:not([data-duo-fill="none"]){fill:#1CB0F6!important}
+      .duo-main rect:not([data-duo-fill="none"]){fill:#1CB0F6!important}
+      .duo-main circle:not([data-duo-fill="none"]){fill:#1CB0F6!important}
+      .duo-main ellipse:not([data-duo-fill="none"]){fill:#1CB0F6!important}
+      .duo-main polygon:not([data-duo-fill="none"]){fill:#1CB0F6!important}
+      .duo-main path[stroke]:not([data-duo-stroke="none"]){stroke:#1CB0F6!important}
+      .duo-main rect[stroke]:not([data-duo-stroke="none"]){stroke:#1CB0F6!important}
+      .duo-main circle[stroke]:not([data-duo-stroke="none"]){stroke:#1CB0F6!important}
+      .duo-main ellipse[stroke]:not([data-duo-stroke="none"]){stroke:#1CB0F6!important}
+      .duo-main polygon[stroke]:not([data-duo-stroke="none"]){stroke:#1CB0F6!important}
+      .duo-main line:not([data-duo-stroke="none"]),.duo-main polyline:not([data-duo-stroke="none"]){fill:none!important;stroke:#1CB0F6!important}
+      .duo-main path[data-duo-fill="white"],.duo-main rect[data-duo-fill="white"],.duo-main circle[data-duo-fill="white"],.duo-main ellipse[data-duo-fill="white"],.duo-main polygon[data-duo-fill="white"]{fill:#fff!important}
+      .duo-main path[data-duo-stroke="white"],.duo-main rect[data-duo-stroke="white"],.duo-main circle[data-duo-stroke="white"],.duo-main ellipse[data-duo-stroke="white"],.duo-main polygon[data-duo-stroke="white"],.duo-main line[data-duo-stroke="white"],.duo-main polyline[data-duo-stroke="white"]{stroke:#fff!important}
+      .duo-highlight path:not([data-duo-fill="none"]){fill:#6DD6FF!important}
+      .duo-highlight rect:not([data-duo-fill="none"]){fill:#6DD6FF!important}
+      .duo-highlight circle:not([data-duo-fill="none"]){fill:#6DD6FF!important}
+      .duo-highlight ellipse:not([data-duo-fill="none"]){fill:#6DD6FF!important}
+      .duo-highlight polygon:not([data-duo-fill="none"]){fill:#6DD6FF!important}
+      .duo-highlight path[stroke]:not([data-duo-stroke="none"]){stroke:#6DD6FF!important}
+      .duo-highlight rect[stroke]:not([data-duo-stroke="none"]){stroke:#6DD6FF!important}
+      .duo-highlight circle[stroke]:not([data-duo-stroke="none"]){stroke:#6DD6FF!important}
+      .duo-highlight ellipse[stroke]:not([data-duo-stroke="none"]){stroke:#6DD6FF!important}
+      .duo-highlight polygon[stroke]:not([data-duo-stroke="none"]){stroke:#6DD6FF!important}
+      .duo-highlight line:not([data-duo-stroke="none"]),.duo-highlight polyline:not([data-duo-stroke="none"]){fill:none!important;stroke:#6DD6FF!important}
+      .duo-highlight path[data-duo-fill="white"],.duo-highlight rect[data-duo-fill="white"],.duo-highlight circle[data-duo-fill="white"],.duo-highlight ellipse[data-duo-fill="white"],.duo-highlight polygon[data-duo-fill="white"]{fill:#fff!important}
+      .duo-highlight path[data-duo-stroke="white"],.duo-highlight rect[data-duo-stroke="white"],.duo-highlight circle[data-duo-stroke="white"],.duo-highlight ellipse[data-duo-stroke="white"],.duo-highlight polygon[data-duo-stroke="white"],.duo-highlight line[data-duo-stroke="white"],.duo-highlight polyline[data-duo-stroke="white"]{stroke:#fff!important}
+    </style>
+  </defs>
+  <g class="duo-shadow" transform="translate(8.064 23.296)">
+    <g>
+      <path d="M384 80c8.8 0 16 7.2 16 16V416c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V96c0-8.8 7.2-16 16-16H384zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64z" />
+    </g>
+  </g>
+  <g class="duo-main">
+    <g>
+      <path d="M384 80c8.8 0 16 7.2 16 16V416c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V96c0-8.8 7.2-16 16-16H384zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64z" />
+    </g>
+  </g>
+  <g class="duo-highlight" clip-path="url(#duo-highlight-clip-6a71a49845)" opacity="0.72"
+     transform="translate(0 -3.584)">
+    <g>
+      <path d="M384 80c8.8 0 16 7.2 16 16V416c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V96c0-8.8 7.2-16 16-16H384zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64z" />
+    </g>
+  </g>
+</svg>

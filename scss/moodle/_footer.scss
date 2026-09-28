@@ -1,0 +1,25 @@
+// Footer.
+#page-footer {
+    margin-top: 2rem;
+    background: transparent !important;
+}
+
+.btn-footer-popover,
+.btn-footer-communication {
+    width: 48px !important;
+    height: 48px !important;
+    color: #fff !important;
+    background: $primary !important;
+    border: 0 !important;
+    box-shadow: 0 5px 0 darken($primary, 11%) !important;
+}
+
+[data-region="footer-container-popover"]{
+    display:none;
+}
+
+.footer-content-popover {
+    border: 1px solid var(--pulsomed-border);
+    border-radius: 17px;
+    box-shadow: 0 15px 40px rgba(37, 42, 55, .14);
+}

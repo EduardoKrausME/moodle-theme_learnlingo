@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    viewBox="-77.44 -77.44 2100.224 1636.096"
+    preserveAspectRatio="xMidYMid meet"
+    role="img">
+  <!-- Playful Moodle icon conversion. Original geometry and embedded notices are preserved below. -->
+  <defs>
+    
+    <clipPath id="duo-highlight-clip-7cffe40f06" clipPathUnits="userSpaceOnUse">
+      <rect x="-77.44" y="-77.44"
+            width="2100.224" height="668.8"/>
+    </clipPath>
+    <style>
+      .duo-shadow path:not([data-duo-fill="none"]){fill:#D97F00!important}
+      .duo-shadow rect:not([data-duo-fill="none"]){fill:#D97F00!important}
+      .duo-shadow circle:not([data-duo-fill="none"]){fill:#D97F00!important}
+      .duo-shadow ellipse:not([data-duo-fill="none"]){fill:#D97F00!important}
+      .duo-shadow polygon:not([data-duo-fill="none"]){fill:#D97F00!important}
+      .duo-shadow path[stroke]:not([data-duo-stroke="none"]){stroke:#D97F00!important}
+      .duo-shadow rect[stroke]:not([data-duo-stroke="none"]){stroke:#D97F00!important}
+      .duo-shadow circle[stroke]:not([data-duo-stroke="none"]){stroke:#D97F00!important}
+      .duo-shadow ellipse[stroke]:not([data-duo-stroke="none"]){stroke:#D97F00!important}
+      .duo-shadow polygon[stroke]:not([data-duo-stroke="none"]){stroke:#D97F00!important}
+      .duo-shadow line:not([data-duo-stroke="none"]),.duo-shadow polyline:not([data-duo-stroke="none"]){fill:none!important;stroke:#D97F00!important}
+      .duo-main path:not([data-duo-fill="none"]){fill:#FF9600!important}
+      .duo-main rect:not([data-duo-fill="none"]){fill:#FF9600!important}
+      .duo-main circle:not([data-duo-fill="none"]){fill:#FF9600!important}
+      .duo-main ellipse:not([data-duo-fill="none"]){fill:#FF9600!important}
+      .duo-main polygon:not([data-duo-fill="none"]){fill:#FF9600!important}
+      .duo-main path[stroke]:not([data-duo-stroke="none"]){stroke:#FF9600!important}
+      .duo-main rect[stroke]:not([data-duo-stroke="none"]){stroke:#FF9600!important}
+      .duo-main circle[stroke]:not([data-duo-stroke="none"]){stroke:#FF9600!important}
+      .duo-main ellipse[stroke]:not([data-duo-stroke="none"]){stroke:#FF9600!important}
+      .duo-main polygon[stroke]:not([data-duo-stroke="none"]){stroke:#FF9600!important}
+      .duo-main line:not([data-duo-stroke="none"]),.duo-main polyline:not([data-duo-stroke="none"]){fill:none!important;stroke:#FF9600!important}
+      .duo-main path[data-duo-fill="white"],.duo-main rect[data-duo-fill="white"],.duo-main circle[data-duo-fill="white"],.duo-main ellipse[data-duo-fill="white"],.duo-main polygon[data-duo-fill="white"]{fill:#fff!important}
+      .duo-main path[data-duo-stroke="white"],.duo-main rect[data-duo-stroke="white"],.duo-main circle[data-duo-stroke="white"],.duo-main ellipse[data-duo-stroke="white"],.duo-main polygon[data-duo-stroke="white"],.duo-main line[data-duo-stroke="white"],.duo-main polyline[data-duo-stroke="white"]{stroke:#fff!important}
+      .duo-highlight path:not([data-duo-fill="none"]){fill:#FFBE4D!important}
+      .duo-highlight rect:not([data-duo-fill="none"]){fill:#FFBE4D!important}
+      .duo-highlight circle:not([data-duo-fill="none"]){fill:#FFBE4D!important}
+      .duo-highlight ellipse:not([data-duo-fill="none"]){fill:#FFBE4D!important}
+      .duo-highlight polygon:not([data-duo-fill="none"]){fill:#FFBE4D!important}
+      .duo-highlight path[stroke]:not([data-duo-stroke="none"]){stroke:#FFBE4D!important}
+      .duo-highlight rect[stroke]:not([data-duo-stroke="none"]){stroke:#FFBE4D!important}
+      .duo-highlight circle[stroke]:not([data-duo-stroke="none"]){stroke:#FFBE4D!important}
+      .duo-highlight ellipse[stroke]:not([data-duo-stroke="none"]){stroke:#FFBE4D!important}
+      .duo-highlight polygon[stroke]:not([data-duo-stroke="none"]){stroke:#FFBE4D!important}
+      .duo-highlight line:not([data-duo-stroke="none"]),.duo-highlight polyline:not([data-duo-stroke="none"]){fill:none!important;stroke:#FFBE4D!important}
+      .duo-highlight path[data-duo-fill="white"],.duo-highlight rect[data-duo-fill="white"],.duo-highlight circle[data-duo-fill="white"],.duo-highlight ellipse[data-duo-fill="white"],.duo-highlight polygon[data-duo-fill="white"]{fill:#fff!important}
+      .duo-highlight path[data-duo-stroke="white"],.duo-highlight rect[data-duo-stroke="white"],.duo-highlight circle[data-duo-stroke="white"],.duo-highlight ellipse[data-duo-stroke="white"],.duo-highlight polygon[data-duo-stroke="white"],.duo-highlight line[data-duo-stroke="white"],.duo-highlight polyline[data-duo-stroke="white"]{stroke:#fff!important}
+    </style>
+  </defs>
+  <g class="duo-shadow" transform="translate(25.344 73.216)">
+    <g>
+      <path fill="currentColor" d="M1280 736q0-14-9-23L919 361q-9-9-23-9t-23 9L522 712q-10 12-10 24q0 14 9 23t23 9h224v352q0 13 9.5 22.5t22.5 9.5h192q13 0 22.5-9.5t9.5-22.5V768h224q13 0 22.5-9.5t9.5-22.5m640 288q0 159-112.5 271.5T1536 1408H448q-185 0-316.5-131.5T0 960q0-130 70-240t188-165q-2-30-2-43q0-212 150-362T768 0q156 0 285.5 87T1242 318q71-62 166-62q106 0 181 75t75 181q0 76-41 138q130 31 213.5 135.5T1920 1024" />
+    </g>
+  </g>
+  <g class="duo-main">
+    <g>
+      <path fill="currentColor" d="M1280 736q0-14-9-23L919 361q-9-9-23-9t-23 9L522 712q-10 12-10 24q0 14 9 23t23 9h224v352q0 13 9.5 22.5t22.5 9.5h192q13 0 22.5-9.5t9.5-22.5V768h224q13 0 22.5-9.5t9.5-22.5m640 288q0 159-112.5 271.5T1536 1408H448q-185 0-316.5-131.5T0 960q0-130 70-240t188-165q-2-30-2-43q0-212 150-362T768 0q156 0 285.5 87T1242 318q71-62 166-62q106 0 181 75t75 181q0 76-41 138q130 31 213.5 135.5T1920 1024" />
+    </g>
+  </g>
+  <g class="duo-highlight" clip-path="url(#duo-highlight-clip-7cffe40f06)" opacity="0.72"
+     transform="translate(0 -11.264)">
+    <g>
+      <path fill="currentColor" d="M1280 736q0-14-9-23L919 361q-9-9-23-9t-23 9L522 712q-10 12-10 24q0 14 9 23t23 9h224v352q0 13 9.5 22.5t22.5 9.5h192q13 0 22.5-9.5t9.5-22.5V768h224q13 0 22.5-9.5t9.5-22.5m640 288q0 159-112.5 271.5T1536 1408H448q-185 0-316.5-131.5T0 960q0-130 70-240t188-165q-2-30-2-43q0-212 150-362T768 0q156 0 285.5 87T1242 318q71-62 166-62q106 0 181 75t75 181q0 76-41 138q130 31 213.5 135.5T1920 1024" />
+    </g>
+  </g>
+</svg>

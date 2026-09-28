@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    viewBox="-28.16 -28.16 705.536 594.944"
+    preserveAspectRatio="xMidYMid meet"
+    role="img">
+  <!-- Playful Moodle icon conversion. Original geometry and embedded notices are preserved below. -->
+  <defs>
+    <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+    <clipPath id="duo-highlight-clip-760ab57ba1" clipPathUnits="userSpaceOnUse">
+      <rect x="-28.16" y="-28.16"
+            width="705.536" height="243.2"/>
+    </clipPath>
+    <style>
+      .duo-shadow path:not([data-duo-fill="none"]){fill:#1FAF9F!important}
+      .duo-shadow rect:not([data-duo-fill="none"]){fill:#1FAF9F!important}
+      .duo-shadow circle:not([data-duo-fill="none"]){fill:#1FAF9F!important}
+      .duo-shadow ellipse:not([data-duo-fill="none"]){fill:#1FAF9F!important}
+      .duo-shadow polygon:not([data-duo-fill="none"]){fill:#1FAF9F!important}
+      .duo-shadow path[stroke]:not([data-duo-stroke="none"]){stroke:#1FAF9F!important}
+      .duo-shadow rect[stroke]:not([data-duo-stroke="none"]){stroke:#1FAF9F!important}
+      .duo-shadow circle[stroke]:not([data-duo-stroke="none"]){stroke:#1FAF9F!important}
+      .duo-shadow ellipse[stroke]:not([data-duo-stroke="none"]){stroke:#1FAF9F!important}
+      .duo-shadow polygon[stroke]:not([data-duo-stroke="none"]){stroke:#1FAF9F!important}
+      .duo-shadow line:not([data-duo-stroke="none"]),.duo-shadow polyline:not([data-duo-stroke="none"]){fill:none!important;stroke:#1FAF9F!important}
+      .duo-main path:not([data-duo-fill="none"]){fill:#2BD9C5!important}
+      .duo-main rect:not([data-duo-fill="none"]){fill:#2BD9C5!important}
+      .duo-main circle:not([data-duo-fill="none"]){fill:#2BD9C5!important}
+      .duo-main ellipse:not([data-duo-fill="none"]){fill:#2BD9C5!important}
+      .duo-main polygon:not([data-duo-fill="none"]){fill:#2BD9C5!important}
+      .duo-main path[stroke]:not([data-duo-stroke="none"]){stroke:#2BD9C5!important}
+      .duo-main rect[stroke]:not([data-duo-stroke="none"]){stroke:#2BD9C5!important}
+      .duo-main circle[stroke]:not([data-duo-stroke="none"]){stroke:#2BD9C5!important}
+      .duo-main ellipse[stroke]:not([data-duo-stroke="none"]){stroke:#2BD9C5!important}
+      .duo-main polygon[stroke]:not([data-duo-stroke="none"]){stroke:#2BD9C5!important}
+      .duo-main line:not([data-duo-stroke="none"]),.duo-main polyline:not([data-duo-stroke="none"]){fill:none!important;stroke:#2BD9C5!important}
+      .duo-main path[data-duo-fill="white"],.duo-main rect[data-duo-fill="white"],.duo-main circle[data-duo-fill="white"],.duo-main ellipse[data-duo-fill="white"],.duo-main polygon[data-duo-fill="white"]{fill:#fff!important}
+      .duo-main path[data-duo-stroke="white"],.duo-main rect[data-duo-stroke="white"],.duo-main circle[data-duo-stroke="white"],.duo-main ellipse[data-duo-stroke="white"],.duo-main polygon[data-duo-stroke="white"],.duo-main line[data-duo-stroke="white"],.duo-main polyline[data-duo-stroke="white"]{stroke:#fff!important}
+      .duo-highlight path:not([data-duo-fill="none"]){fill:#75EADB!important}
+      .duo-highlight rect:not([data-duo-fill="none"]){fill:#75EADB!important}
+      .duo-highlight circle:not([data-duo-fill="none"]){fill:#75EADB!important}
+      .duo-highlight ellipse:not([data-duo-fill="none"]){fill:#75EADB!important}
+      .duo-highlight polygon:not([data-duo-fill="none"]){fill:#75EADB!important}
+      .duo-highlight path[stroke]:not([data-duo-stroke="none"]){stroke:#75EADB!important}
+      .duo-highlight rect[stroke]:not([data-duo-stroke="none"]){stroke:#75EADB!important}
+      .duo-highlight circle[stroke]:not([data-duo-stroke="none"]){stroke:#75EADB!important}
+      .duo-highlight ellipse[stroke]:not([data-duo-stroke="none"]){stroke:#75EADB!important}
+      .duo-highlight polygon[stroke]:not([data-duo-stroke="none"]){stroke:#75EADB!important}
+      .duo-highlight line:not([data-duo-stroke="none"]),.duo-highlight polyline:not([data-duo-stroke="none"]){fill:none!important;stroke:#75EADB!important}
+      .duo-highlight path[data-duo-fill="white"],.duo-highlight rect[data-duo-fill="white"],.duo-highlight circle[data-duo-fill="white"],.duo-highlight ellipse[data-duo-fill="white"],.duo-highlight polygon[data-duo-fill="white"]{fill:#fff!important}
+      .duo-highlight path[data-duo-stroke="white"],.duo-highlight rect[data-duo-stroke="white"],.duo-highlight circle[data-duo-stroke="white"],.duo-highlight ellipse[data-duo-stroke="white"],.duo-highlight polygon[data-duo-stroke="white"],.duo-highlight line[data-duo-stroke="white"],.duo-highlight polyline[data-duo-stroke="white"]{stroke:#fff!important}
+    </style>
+  </defs>
+  <g class="duo-shadow" transform="translate(9.216 26.624)">
+    <g>
+      <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H392.6c-5.4-9.4-8.6-20.3-8.6-32V352c0-2.1 .1-4.2 .3-6.3c-31-26-71-41.7-114.6-41.7H178.3zM528 240c17.7 0 32 14.3 32 32v48H496V272c0-17.7 14.3-32 32-32zm-80 32v48c-17.7 0-32 14.3-32 32V480c0 17.7 14.3 32 32 32H608c17.7 0 32-14.3 32-32V352c0-17.7-14.3-32-32-32V272c0-44.2-35.8-80-80-80s-80 35.8-80 80z" />
+    </g>
+  </g>
+  <g class="duo-main">
+    <g>
+      <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H392.6c-5.4-9.4-8.6-20.3-8.6-32V352c0-2.1 .1-4.2 .3-6.3c-31-26-71-41.7-114.6-41.7H178.3zM528 240c17.7 0 32 14.3 32 32v48H496V272c0-17.7 14.3-32 32-32zm-80 32v48c-17.7 0-32 14.3-32 32V480c0 17.7 14.3 32 32 32H608c17.7 0 32-14.3 32-32V352c0-17.7-14.3-32-32-32V272c0-44.2-35.8-80-80-80s-80 35.8-80 80z" />
+    </g>
+  </g>
+  <g class="duo-highlight" clip-path="url(#duo-highlight-clip-760ab57ba1)" opacity="0.72"
+     transform="translate(0 -4.096)">
+    <g>
+      <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H392.6c-5.4-9.4-8.6-20.3-8.6-32V352c0-2.1 .1-4.2 .3-6.3c-31-26-71-41.7-114.6-41.7H178.3zM528 240c17.7 0 32 14.3 32 32v48H496V272c0-17.7 14.3-32 32-32zm-80 32v48c-17.7 0-32 14.3-32 32V480c0 17.7 14.3 32 32 32H608c17.7 0 32-14.3 32-32V352c0-17.7-14.3-32-32-32V272c0-44.2-35.8-80-80-80s-80 35.8-80 80z" />
+    </g>
+  </g>
+</svg>

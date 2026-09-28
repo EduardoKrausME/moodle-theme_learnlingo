@@ -1,0 +1,54 @@
+.drawer-primary .drawerheader {
+    .drawerheading {
+        min-width: 0;
+    }
+
+    [data-region="site-home-link"] {
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    .logo {
+        max-width: 100%;
+        max-height: $navbar-height;
+        width: auto;
+        height: $navbar-height;
+        object-fit: contain;
+    }
+}
+
+.primary-navigation .navigation {
+    gap: .35rem;
+}
+
+.primary-navigation .nav-link,
+.navbar .moremenu .nav-link {
+    min-height: 43px;
+    padding: .7rem 1rem;
+    color: #666a74;
+    font-weight: 650;
+    border: 0 !important;
+    border-radius: 13px;
+}
+
+.primary-navigation .nav-link:hover,
+.navbar .moremenu .nav-link:hover {
+    color: $primary;
+    background: rgba($primary, .07);
+}
+
+.primary-navigation .nav-link.active,
+.navbar .moremenu .nav-link.active {
+    color: $primary;
+    background: rgba($primary, .09);
+    box-shadow: inset 0 0 0 1px rgba($primary, .03);
+}
+
+.primary-navigation .nav-link::before,
+.navbar .moremenu .nav-link::before {
+    display: none !important;
+}
+
+.moremenu {
+    opacity: 1 !important;
+}

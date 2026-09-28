@@ -1,0 +1,1366 @@
+// PulsoMed visual identity.
+:root {
+    --pulsomed-primary: #{$primary};
+    --pulsomed-accent: #{$pulsomed-accent};
+    --pulsomed-ink: #252A37;
+    --pulsomed-muted: #727681;
+    --pulsomed-surface: #FFF;
+    --pulsomed-canvas: #F5F6F8;
+    --pulsomed-border: #E4E6EB;
+    --pulsomed-shadow: 0 4px 0 rgba(37, 42, 55, .07);
+    --pulsomed-shadow-hover: 0 8px 18px rgba(37, 42, 55, .11);
+}
+html {
+    scroll-behavior: smooth;
+}
+body {
+    color: var(--pulsomed-ink);
+    background: var(--pulsomed-canvas);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+a {
+    font-weight: 600;
+    text-underline-offset: .18em;
+}
+a:focus-visible,
+button:focus-visible,
+.btn:focus-visible,
+.form-control:focus-visible,
+.custom-select:focus-visible,
+.form-select:focus-visible {
+    outline: 3px solid rgba($primary, .25);
+    outline-offset: 2px;
+    box-shadow: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+    letter-spacing: -.025em;
+    font-weight: 750;
+}
+.text-muted,
+.dimmed,
+.dimmed_text,
+.course-description-item,
+.small-info {
+    color: var(--pulsomed-muted) !important;
+}
+// Header and brand.
+.navbar.fixed-top {
+    min-height: 74px;
+    padding: .65rem 1.25rem;
+    background: rgba(255, 255, 255, .97) !important;
+    border-bottom: 1px solid var(--pulsomed-border);
+    box-shadow: none;
+    backdrop-filter: blur(12px);
+}
+.navbar .container-fluid {
+    max-width: 1500px;
+    margin: 0 auto;
+}
+.navbar-brand.pulsomed-navbar-brand {
+    gap: .7rem;
+    min-width: 190px;
+    color: var(--pulsomed-ink);
+    text-decoration: none;
+}
+.navbar-brand .logo {
+    width: auto;
+    max-width: 190px;
+    height: 44px;
+    object-fit: contain;
+}
+.pulsomed-brandmark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 42px;
+    width: 42px;
+    height: 42px;
+    color: #FFF;
+    background: linear-gradient(145deg, $pulsomed-accent, $primary 70%);
+    border-radius: 13px;
+    box-shadow: 0 4px 0 darken($primary, 10%);
+}
+.pulsomed-brandmark .fa {
+    margin: 0;
+    font-size: 1.15rem;
+}
+.pulsomed-wordmark {
+    color: var(--pulsomed-ink);
+    font-size: 1.18rem;
+    font-weight: 850;
+    letter-spacing: -.06em;
+    line-height: 1;
+}
+.pulsomed-wordmark-accent {
+    color: $primary;
+}
+// Page frame.
+#page-wrapper,
+#page.drawers {
+    background: var(--pulsomed-canvas);
+}
+#page.drawers {
+    padding-left: 0;
+    padding-right: 0;
+}
+#page.drawers .main-inner {
+    width: calc(100% - 2rem);
+    max-width: 1460px;
+    margin: 1.7rem auto 0;
+    padding: 0 0 2rem;
+    background: transparent;
+}
+#page.drawers.show-drawer-left .main-inner,
+#page.drawers.show-drawer-right .main-inner {
+    max-width: 1180px;
+}
+#topofscroll > .page-header-headings,
+#page-header {
+    margin-bottom: 1.25rem;
+}
+.page-header-headings h1 {
+    color: var(--pulsomed-ink);
+    font-size: clamp(1.8rem, 3vw, 2.45rem);
+    font-weight: 800;
+}
+.breadcrumb {
+    gap: .15rem;
+    padding: .65rem .85rem;
+    background: #FFF;
+    border: 1px solid var(--pulsomed-border);
+    border-radius: 12px;
+}
+.breadcrumb-item a {
+    color: var(--pulsomed-muted);
+}
+#region-main {
+    background: transparent;
+}
+// Dashboard welcome area based on the PulsoMed interface.
+.pulsomed-dashboard-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 2.55fr) minmax(255px, .9fr);
+    gap: 1.4rem;
+    margin-bottom: 1.7rem;
+}
+.pulsomed-dashboard-hero {
+    position: relative;
+    min-height: 350px;
+    padding: clamp(2rem, 5vw, 3.2rem);
+    overflow: hidden;
+    color: #FFF;
+    background: linear-gradient(125deg, $pulsomed-accent 0%, $primary 55%, darken($primary, 7%) 100%);
+    border-radius: 29px;
+    box-shadow: 0 9px 0 rgba($primary, .14);
+}
+.pulsomed-dashboard-hero::before,
+.pulsomed-dashboard-hero::after {
+    position: absolute;
+    content: "";
+    border: 1px solid rgba(255, 255, 255, .2);
+    border-radius: 50%;
+}
+.pulsomed-dashboard-hero::before {
+    top: -120px;
+    right: -20px;
+    width: 430px;
+    height: 430px;
+}
+.pulsomed-dashboard-hero::after {
+    top: 20px;
+    right: 75px;
+    width: 285px;
+    height: 285px;
+}
+.pulsomed-dashboard-copy {
+    position: relative;
+    z-index: 2;
+    max-width: 60%;
+}
+.pulsomed-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    margin-bottom: 1rem;
+    padding: .5rem .8rem;
+    color: #FFF;
+    font-size: .9rem;
+    font-weight: 700;
+    background: rgba(255, 255, 255, .12);
+    border: 1px solid rgba(255, 255, 255, .28);
+    border-radius: 999px;
+}
+.pulsomed-dashboard-title {
+    max-width: 610px;
+    margin-bottom: .9rem;
+    color: #FFF;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 850;
+    letter-spacing: -.055em;
+    line-height: .98;
+}
+.pulsomed-dashboard-description {
+    max-width: 590px;
+    margin-bottom: 1.45rem;
+    color: rgba(255, 255, 255, .92);
+    font-size: 1.05rem;
+    font-weight: 560;
+    line-height: 1.65;
+}
+.pulsomed-dashboard-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    min-height: 50px;
+    padding: .8rem 1.2rem;
+    color: darken($primary, 8%);
+    background: #FFF;
+    border: 0;
+    border-radius: 13px;
+    box-shadow: 0 5px 0 rgba(87, 14, 23, .2);
+    font-weight: 800;
+    text-decoration: none;
+    transition: transform .18s ease, box-shadow .18s ease;
+}
+.pulsomed-dashboard-cta:hover {
+    color: darken($primary, 13%);
+    transform: translateY(-2px);
+    box-shadow: 0 7px 0 rgba(87, 14, 23, .2);
+}
+.pulsomed-mascot {
+    position: absolute;
+    right: 8%;
+    bottom: 2.2rem;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 155px;
+    height: 180px;
+    color: #4E5565;
+    background: #FFF;
+    border-radius: 50% 50% 44% 44% / 56% 56% 42% 42%;
+    box-shadow: 0 8px 0 rgba(112, 20, 31, .18);
+    transform: rotate(-3deg);
+}
+.pulsomed-mascot .fa {
+    margin: 0;
+    font-size: 4.2rem;
+}
+.pulsomed-mascot::before {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    width: 52px;
+    height: 18px;
+    content: "+";
+    color: $primary;
+    font-size: 3rem;
+    font-weight: 900;
+    line-height: .25;
+    text-align: center;
+    transform: translateX(-50%);
+}
+.pulsomed-goal-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 350px;
+    padding: 1.5rem;
+    background: #FFF;
+    border: 1px solid var(--pulsomed-border);
+    border-radius: 25px;
+    box-shadow: var(--pulsomed-shadow);
+}
+.pulsomed-goal-heading {
+    display: flex;
+    align-items: center;
+    align-self: stretch;
+    gap: .75rem;
+    margin-bottom: 1.25rem;
+}
+.pulsomed-goal-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 43px;
+    width: 43px;
+    height: 43px;
+    color: $primary;
+    background: rgba($primary, .08);
+    border-radius: 13px;
+}
+.pulsomed-goal-kicker {
+    display: block;
+    color: #9699A1;
+    font-size: .7rem;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+.pulsomed-goal-title {
+    display: block;
+    margin-top: .1rem;
+    color: var(--pulsomed-ink);
+    font-size: 1rem;
+    font-weight: 800;
+}
+.pulsomed-goal-ring {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 132px;
+    height: 132px;
+    margin: .2rem 0 1.1rem;
+    background: conic-gradient($primary 0 82%, #ECEEF2 82% 100%);
+    border-radius: 50%;
+}
+.pulsomed-goal-ring-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    color: var(--pulsomed-ink);
+    background: #FFF;
+    border-radius: 50%;
+}
+.pulsomed-goal-ring-inner strong {
+    font-size: 1.45rem;
+    letter-spacing: -.04em;
+}
+.pulsomed-goal-ring-inner small {
+    color: var(--pulsomed-muted);
+}
+.pulsomed-goal-copy {
+    margin: 0 0 1.1rem;
+    color: var(--pulsomed-muted);
+    font-size: .86rem;
+    line-height: 1.5;
+    text-align: center;
+}
+.pulsomed-goal-card .btn {
+    width: 100%;
+    margin-top: auto;
+}
+// Course renderer front page.
+.pulsomed-home {
+    width: 100%;
+}
+.pulsomed-resume-card {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1.15rem;
+    margin-bottom: 2.25rem;
+    padding: 1.2rem 1.35rem;
+    background: #FFF;
+    border: 1px solid var(--pulsomed-border);
+    border-radius: 20px;
+    box-shadow: var(--pulsomed-shadow);
+}
+.pulsomed-resume-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    color: $primary;
+    background: rgba($primary, .08);
+    border-radius: 16px;
+}
+.pulsomed-resume-icon .fa {
+    margin: 0;
+    font-size: 1.45rem;
+}
+.pulsomed-resume-main {
+    display: grid;
+    min-width: 0;
+}
+.pulsomed-resume-label,
+.pulsomed-course-card-kicker {
+    color: #91959F;
+    font-size: .68rem;
+    font-weight: 850;
+    letter-spacing: .075em;
+    text-transform: uppercase;
+}
+.pulsomed-resume-title {
+    width: fit-content;
+    margin: .12rem 0;
+    overflow: hidden;
+    color: var(--pulsomed-ink);
+    font-size: 1.08rem;
+    font-weight: 820;
+    line-height: 1.35;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.pulsomed-resume-title:hover {
+    color: $primary;
+}
+.pulsomed-resume-category {
+    color: var(--pulsomed-muted);
+    font-size: .78rem;
+}
+.pulsomed-resume-progress {
+    display: grid;
+    grid-template-columns: minmax(120px, 1fr) auto;
+    align-items: center;
+    gap: .85rem;
+    max-width: 720px;
+    margin-top: .7rem;
+}
+.pulsomed-resume-progress strong {
+    color: $primary;
+    font-size: .78rem;
+    white-space: nowrap;
+}
+.pulsomed-resume-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    color: #FFF;
+    background: $primary;
+    border-radius: 14px;
+    box-shadow: 0 4px 0 darken($primary, 11%);
+    text-decoration: none;
+    transition: transform .16s ease, box-shadow .16s ease;
+}
+.pulsomed-resume-action:hover {
+    color: #FFF;
+    box-shadow: 0 6px 0 darken($primary, 11%);
+    transform: translateY(-2px);
+}
+.pulsomed-resume-action .fa {
+    margin: 0 0 0 .15rem;
+}
+.pulsomed-home-courses {
+    margin-bottom: 2.5rem;
+}
+.pulsomed-home-section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.15rem;
+}
+.pulsomed-home-section-heading > div > span {
+    color: $primary;
+    font-size: .72rem;
+    font-weight: 850;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+.pulsomed-home-section-heading h2 {
+    margin: .22rem 0 0;
+    color: var(--pulsomed-ink);
+    font-size: clamp(1.5rem, 3vw, 2.15rem);
+    font-weight: 850;
+}
+.pulsomed-home-section-heading > a {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    padding: .5rem 0;
+    color: $primary;
+    font-size: .86rem;
+    font-weight: 800;
+    text-decoration: none;
+}
+.pulsomed-home-section-heading > a:hover .fa {
+    transform: translateX(3px);
+}
+.pulsomed-home-section-heading .fa {
+    margin: 0;
+    transition: transform .16s ease;
+}
+.pulsomed-home-course-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.2rem;
+}
+.pulsomed-course-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+    background: #FFF;
+    border: 1px solid var(--pulsomed-border);
+    border-radius: 20px;
+    box-shadow: var(--pulsomed-shadow);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.pulsomed-course-card:hover {
+    border-color: rgba($primary, .22);
+    box-shadow: var(--pulsomed-shadow-hover);
+    transform: translateY(-4px);
+}
+.pulsomed-course-card-media {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 155px;
+    overflow: hidden;
+    color: rgba(255, 255, 255, .88);
+    text-decoration: none;
+}
+.pulsomed-course-tone-1 {
+    background: linear-gradient(135deg, $pulsomed-accent, $primary);
+}
+.pulsomed-course-tone-2 {
+    background: linear-gradient(135deg, #F5A23B, #F36A3F);
+}
+.pulsomed-course-tone-3 {
+    background: linear-gradient(135deg, #6D7DE8, #9D65D7);
+}
+.pulsomed-course-card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .3s ease;
+}
+.pulsomed-course-card:hover .pulsomed-course-card-media img {
+    transform: scale(1.04);
+}
+.pulsomed-course-card-media > .fa {
+    margin: 0;
+    font-size: 3.2rem;
+    opacity: .72;
+}
+.pulsomed-course-card-media > span {
+    position: absolute;
+    top: .8rem;
+    left: .8rem;
+    max-width: calc(100% - 1.6rem);
+    padding: .38rem .62rem;
+    overflow: hidden;
+    color: var(--pulsomed-ink);
+    background: rgba(255, 255, 255, .93);
+    border-radius: 999px;
+    box-shadow: 0 2px 0 rgba(37, 42, 55, .08);
+    font-size: .66rem;
+    font-weight: 820;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.pulsomed-course-card-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 1.05rem 1.1rem 1.15rem;
+}
+.pulsomed-course-card-body h3 {
+    margin: .25rem 0 .9rem;
+    font-size: 1.08rem;
+    line-height: 1.35;
+}
+.pulsomed-course-card-body h3 a {
+    color: var(--pulsomed-ink);
+    font-weight: 820;
+    text-decoration: none;
+}
+.pulsomed-course-card-body h3 a:hover {
+    color: $primary;
+}
+.pulsomed-course-card-progress {
+    display: grid;
+    gap: .42rem;
+    margin-top: auto;
+}
+.pulsomed-course-card-progress span {
+    color: var(--pulsomed-muted);
+    font-size: .72rem;
+    font-weight: 700;
+}
+.pulsomed-course-card-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .6rem;
+    margin-top: 1rem;
+    padding-top: .85rem;
+    color: $primary;
+    font-size: .8rem;
+    font-weight: 820;
+    border-top: 1px solid #ECEEF2;
+    text-decoration: none;
+}
+.pulsomed-course-card-action .fa {
+    margin: 0;
+}
+.pulsomed-home-empty {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.4rem;
+    background: #FFF;
+    border: 1px solid var(--pulsomed-border);
+    border-radius: 20px;
+    box-shadow: var(--pulsomed-shadow);
+}
+.pulsomed-home-empty > .fa {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin: 0;
+    color: $primary;
+    background: rgba($primary, .08);
+    border-radius: 14px;
+}
+.pulsomed-home-empty h3,
+.pulsomed-home-empty p {
+    margin: 0;
+}
+.pulsomed-home-empty p {
+    margin-top: .25rem;
+    color: var(--pulsomed-muted);
+}
+// Buttons, inputs and feedback.
+.btn {
+    //min-height: 42px;
+    padding: .62rem 1rem;
+    font-weight: 750;
+    border-width: 1px;
+    transition: transform .16s ease, box-shadow .16s ease, background-color .16s ease;
+}
+.btn:hover {
+    transform: translateY(-1px);
+}
+.btn-primary {
+    color: #FFF;
+    background: $primary;
+    border-color: $primary;
+    box-shadow: 0 4px 0 darken($primary, 11%);
+    &:hover,
+    &:focus,
+    &:active {
+        color: #FFF;
+        background: darken($primary, 5%);
+        border-color: darken($primary, 5%);
+        box-shadow: 0 4px 0 darken($primary, 14%);
+    }
+}
+.btn-group > .btn-primary {
+    box-shadow: none;
+}
+.btn-secondary,
+.btn-outline-secondary {
+    color: var(--pulsomed-ink);
+    background: #FFF;
+    border-color: #D9DCE3;
+    box-shadow: 0 3px 0 rgba(37, 42, 55, .08);
+}
+.btn-secondary:hover,
+.btn-outline-secondary:hover {
+    color: $primary;
+    background: rgba($primary, .04);
+    border-color: rgba($primary, .35);
+}
+.btn-link {
+    color: $primary;
+    box-shadow: none;
+}
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn .icon,
+.btn .fa {
+    margin-right: .35rem;
+}
+.form-control,
+.custom-select,
+.form-select,
+.form-file-input,
+.form-control-static {
+    min-height: 46px;
+    color: var(--pulsomed-ink);
+    background-color: #FFF;
+    border-color: #DFE1E7;
+    box-shadow: inset 0 1px 0 rgba(37, 42, 55, .02);
+}
+.form-control:focus,
+.custom-select:focus,
+.form-select:focus {
+    border-color: rgba($primary, .65);
+    box-shadow: 0 0 0 4px rgba($primary, .09);
+}
+.form-label,
+.col-form-label {
+    color: #4E5360;
+    font-size: .86rem;
+    font-weight: 750;
+}
+.input-group-text {
+    color: var(--pulsomed-muted);
+    background: #F8F8FA;
+    border-color: #DFE1E7;
+}
+.alert {
+    border: 0;
+    border-left: 4px solid currentColor;
+    border-radius: 14px;
+}
+.badge {
+    padding: .42rem .65rem;
+    font-weight: 750;
+    border-radius: 999px;
+}
+.progress {
+    height: 9px;
+    overflow: hidden;
+    background: #ECEEF2;
+    border-radius: 999px;
+}
+.progress-bar {
+    background: linear-gradient(90deg, $pulsomed-accent, $primary);
+    border-radius: inherit;
+}
+// Cards, dashboard blocks and course grids.
+.card,
+.block,
+.coursebox,
+.dashboard-card,
+.course-info-container,
+    //.generalbox,
+.boxaligncenter {
+    border: 1px solid var(--pulsomed-border);
+    border-radius: 20px;
+    box-shadow: var(--pulsomed-shadow);
+}
+.card,
+.block,
+.coursebox,
+.dashboard-card,
+.course-info-container {
+    background: var(--pulsomed-surface);
+}
+.card-header,
+.block .card-title {
+    background: transparent;
+    border-bottom-color: #ECEEF2;
+}
+.block .card-title {
+    color: var(--pulsomed-ink);
+    font-size: 1.05rem;
+    font-weight: 800;
+}
+.block .card-body {
+    padding: 1.35rem;
+}
+.dashboard-card,
+.coursebox,
+.course-summaryitem {
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.dashboard-card:hover,
+.coursebox:hover,
+.course-summaryitem:hover {
+    border-color: rgba($primary, .22);
+    box-shadow: var(--pulsomed-shadow-hover);
+    transform: translateY(-3px);
+}
+.dashboard-card .dashboard-card-img,
+.coursebox .courseimage img,
+.course-summaryitem .course-image {
+    border-radius: 18px 18px 0 0;
+}
+.dashboard-card-deck .dashboard-card {
+    overflow: hidden;
+}
+.dashboard-card .course-info-container {
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+.dashboard-card .coursename,
+.coursebox .coursename,
+.course-summaryitem .coursename {
+    color: var(--pulsomed-ink);
+    font-weight: 800;
+}
+.block_myoverview .nav-tabs,
+.block_myoverview .nav-pills {
+    gap: .35rem;
+    padding: .35rem;
+    background: #F1F2F5;
+    border: 0;
+    border-radius: 14px;
+}
+.block_myoverview .nav-link {
+    color: var(--pulsomed-muted);
+    border: 0;
+    border-radius: 10px;
+}
+.block_myoverview .nav-link.active {
+    color: $primary;
+    background: #FFF;
+    box-shadow: 0 2px 0 rgba(37, 42, 55, .07);
+}
+.block_timeline .list-group-item,
+.block_recentlyaccesseditems .list-group-item {
+    margin-bottom: .55rem;
+    background: #FAFAFB;
+    border: 1px solid #ECEEF2 !important;
+    border-radius: 12px !important;
+}
+// Native Moodle front page transformed into the PulsoMed course showcase.
+#page-site-index #site-news-forum,
+#page-site-index #frontpage-available-course-list,
+#page-site-index #frontpage-course-list,
+#page-site-index #frontpage-category-names,
+#page-site-index #frontpage-category-combo {
+    margin-bottom: 2.2rem;
+}
+#page-site-index #site-news-forum {
+    padding: 1.35rem;
+    background: #FFF;
+    border: 1px solid var(--pulsomed-border);
+    border-radius: 20px;
+    box-shadow: var(--pulsomed-shadow);
+}
+#page-site-index #site-news-forum h2,
+#page-site-index #frontpage-available-course-list > h2,
+#page-site-index #frontpage-course-list > h2,
+#page-site-index #frontpage-category-names > h2,
+#page-site-index #frontpage-category-combo > h2 {
+    position: relative;
+    margin-bottom: 1.2rem;
+    padding-top: 1.15rem;
+    color: var(--pulsomed-ink);
+    font-size: clamp(1.45rem, 3vw, 2rem);
+    font-weight: 850;
+}
+#page-site-index #site-news-forum h2::before,
+#page-site-index #frontpage-available-course-list > h2::before,
+#page-site-index #frontpage-course-list > h2::before,
+#page-site-index #frontpage-category-names > h2::before,
+#page-site-index #frontpage-category-combo > h2::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: $primary;
+    content: "PULSOMED";
+    font-size: .68rem;
+    font-weight: 850;
+    letter-spacing: .09em;
+}
+#page-site-index .frontpage-course-list-all,
+#page-site-index .frontpage-course-list-enrolled {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.2rem;
+}
+#page-site-index .frontpage-course-list-all .coursebox,
+#page-site-index .frontpage-course-list-enrolled .coursebox {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 275px;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+#page-site-index .frontpage-course-list-all .coursebox > .content,
+#page-site-index .frontpage-course-list-enrolled .coursebox > .content,
+#page-site-index .frontpage-course-list-all .coursebox > .content > .d-flex,
+#page-site-index .frontpage-course-list-enrolled .coursebox > .content > .d-flex {
+    display: contents !important;
+}
+#page-site-index .frontpage-course-list-all .coursebox .courseimage,
+#page-site-index .frontpage-course-list-enrolled .coursebox .courseimage {
+    order: 0;
+    width: 100%;
+    height: 155px;
+    margin: 0;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba($primary, .11), rgba($pulsomed-accent, .2));
+}
+#page-site-index .frontpage-course-list-all .coursebox .courseimage img,
+#page-site-index .frontpage-course-list-enrolled .coursebox .courseimage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+    transition: transform .3s ease;
+}
+#page-site-index .frontpage-course-list-all .coursebox:hover .courseimage img,
+#page-site-index .frontpage-course-list-enrolled .coursebox:hover .courseimage img {
+    transform: scale(1.035);
+}
+#page-site-index .frontpage-course-list-all .coursebox > .info,
+#page-site-index .frontpage-course-list-enrolled .coursebox > .info {
+    order: 1;
+    padding: 1.05rem 1.1rem .45rem;
+}
+#page-site-index .frontpage-course-list-all .coursebox .coursename,
+#page-site-index .frontpage-course-list-enrolled .coursebox .coursename {
+    margin: 0;
+    font-size: 1.06rem;
+    line-height: 1.35;
+}
+#page-site-index .frontpage-course-list-all .coursebox .coursename a,
+#page-site-index .frontpage-course-list-enrolled .coursebox .coursename a {
+    color: var(--pulsomed-ink);
+    font-weight: 820;
+    text-decoration: none;
+}
+#page-site-index .frontpage-course-list-all .coursebox .coursename a:hover,
+#page-site-index .frontpage-course-list-enrolled .coursebox .coursename a:hover {
+    color: $primary;
+}
+#page-site-index .frontpage-course-list-all .coursebox .flex-grow-1,
+#page-site-index .frontpage-course-list-enrolled .coursebox .flex-grow-1 {
+    order: 2;
+    padding: 0 1.1rem 1rem;
+}
+#page-site-index .frontpage-course-list-all .coursebox .teachers,
+#page-site-index .frontpage-course-list-enrolled .coursebox .teachers {
+    margin: 0;
+    padding: 0;
+    color: var(--pulsomed-muted);
+    font-size: .78rem;
+    list-style: none;
+}
+#page-site-index .frontpage-course-list-all .coursebox .teachers .font-weight-bold,
+#page-site-index .frontpage-course-list-enrolled .coursebox .teachers .font-weight-bold {
+    color: #8B8F99;
+    font-size: .68rem;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+#page-site-index .frontpage-course-list-all .coursebox .moreinfo,
+#page-site-index .frontpage-course-list-enrolled .coursebox .moreinfo,
+#page-site-index .frontpage-course-list-all .coursebox .enrolmenticons,
+#page-site-index .frontpage-course-list-enrolled .coursebox .enrolmenticons {
+    color: $primary;
+}
+#page-site-index #frontpage-category-names .course_category_tree,
+#page-site-index #frontpage-category-combo .course_category_tree {
+    padding: 1.25rem;
+    background: #FFF;
+    border: 1px solid var(--pulsomed-border);
+    border-radius: 20px;
+    box-shadow: var(--pulsomed-shadow);
+}
+#page-site-index .course_category_tree .category > .info {
+    margin-bottom: .55rem;
+    padding: .85rem 1rem;
+    background: #FAFAFB;
+    border: 1px solid #ECEEF2;
+    border-radius: 13px;
+}
+#page-site-index .course_category_tree .categoryname {
+    margin: 0;
+}
+#page-site-index .course_category_tree .categoryname a {
+    color: var(--pulsomed-ink);
+    font-weight: 800;
+    text-decoration: none;
+}
+#page-site-index .course_category_tree .categoryname a:hover {
+    color: $primary;
+}
+#page-site-index .paging-morelink {
+    grid-column: 1 / -1;
+    margin-top: .5rem;
+    text-align: right;
+}
+// Course pages and activities.
+.secondary-navigation {
+    margin-bottom: 1.25rem;
+    padding: 0;
+    background: #FFF;
+    border: 1px solid var(--pulsomed-border);
+    border-radius: 15px;
+    box-shadow: var(--pulsomed-shadow);
+    .navigation {
+        border: 0;
+        background-color: transparent;
+        margin-bottom: -4px;
+        .nav-tabs {
+            background-color: transparent;
+        }
+    }
+    .nav-link {
+        padding: .7rem .95rem;
+        color: var(--pulsomed-muted);
+        border: 0 !important;
+        border-radius: 11px;
+    }
+    .nav-link.active {
+        color: $primary;
+        background: rgba($primary, .08);
+    }
+    .nav-link::before {
+        display: none !important;
+    }
+}
+.course-section {
+    margin-bottom: 1rem;
+    padding: 1.15rem;
+    background: #FFF;
+    border: 1px solid var(--pulsomed-border);
+    border-radius: 20px;
+    box-shadow: var(--pulsomed-shadow);
+}
+.course-section .sectionname,
+.course-section .section-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+}
+.course-section .section-item {
+    border: 0;
+}
+.course-content ul.topics li.section,
+.course-content ul.weeks li.section {
+    border-bottom: 0;
+}
+.activity-item {
+    margin-bottom: .65rem;
+    padding: .85rem !important;
+    background: #FAFAFB;
+    border: 1px solid #ECEEF2 !important;
+    border-radius: 14px !important;
+    transition: background-color .16s ease, border-color .16s ease, transform .16s ease;
+}
+.activity-item:hover {
+    background: rgba($primary, .025);
+    border-color: rgba($primary, .22) !important;
+    transform: translateX(2px);
+}
+.activityiconcontainer {
+    border-radius: 12px !important;
+}
+.activityname a,
+.instancename {
+    color: var(--pulsomed-ink);
+    font-weight: 750;
+}
+.activity-navigation {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: #FFF;
+    border: 1px solid var(--pulsomed-border);
+    border-radius: 17px;
+    box-shadow: var(--pulsomed-shadow);
+}
+.completion-info,
+.automatic-completion-conditions .badge {
+    border-radius: 999px;
+}
+// Tables, tabs, dropdowns and dialogs.
+.table {
+    overflow: hidden;
+    background: #FFF;
+    border-radius: 14px;
+}
+.table thead th {
+    padding-top: .85rem;
+    padding-bottom: .85rem;
+    color: #626672;
+    font-size: .76rem;
+    font-weight: 800;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    background: #F5F6F8;
+    border-bottom-width: 1px;
+}
+.table td,
+.table th {
+    vertical-align: middle;
+    border-color: #ECEEF2;
+}
+.nav-tabs {
+    gap: .25rem;
+    border-bottom-color: #E6E8ED;
+}
+.nav-tabs .nav-link {
+    color: var(--pulsomed-muted);
+    border: 0;
+    border-radius: 10px 10px 0 0;
+}
+.nav-tabs .nav-link.active {
+    color: $primary;
+    background: rgba($primary, .06);
+    box-shadow: inset 0 -3px 0 $primary;
+}
+.dropdown-menu {
+    padding: .5rem;
+    border: 1px solid var(--pulsomed-border);
+    border-radius: 14px;
+    box-shadow: 0 12px 30px rgba(37, 42, 55, .13);
+}
+.dropdown-item {
+    padding: .65rem .75rem;
+    border-radius: 9px;
+}
+.dropdown-item:hover,
+.dropdown-item:focus {
+    color: $primary;
+    background: rgba($primary, .07);
+}
+.modal-content {
+    overflow: hidden;
+    border: 1px solid var(--pulsomed-border);
+    border-radius: 20px;
+    box-shadow: 0 20px 55px rgba(37, 42, 55, .18);
+}
+.modal-header,
+.modal-footer {
+    border-color: #ECEEF2;
+}
+.popover,
+.tooltip-inner {
+    border-radius: 10px;
+}
+.pagination {
+    gap: .3rem;
+}
+.page-link {
+    min-width: 39px;
+    color: var(--pulsomed-muted);
+    text-align: center;
+    border-color: #E2E4E9;
+    border-radius: 10px !important;
+}
+.page-item.active .page-link {
+    background: $primary;
+    border-color: $primary;
+}
+// Drawers.
+.drawer {
+    background: #FFF;
+    border-color: var(--pulsomed-border);
+    box-shadow: 8px 0 25px rgba(37, 42, 55, .08);
+}
+.drawer-right {
+    box-shadow: -8px 0 25px rgba(37, 42, 55, .08);
+}
+.drawerheader {
+    padding: .9rem;
+    border-bottom: 1px solid #ECEEF2;
+}
+.drawercontent {
+    padding: .75rem;
+}
+.drawer-toggles .drawer-toggler .btn {
+    color: $primary;
+    background: #FFF;
+    border: 1px solid var(--pulsomed-border);
+    box-shadow: var(--pulsomed-shadow);
+}
+.courseindex .courseindex-item {
+    margin-bottom: .2rem;
+    border-radius: 10px;
+}
+.courseindex .courseindex-item.pageitem {
+    &, a {
+        color: $primary;
+    }
+    background: rgba($primary, .08);
+}
+// Responsive adjustments.
+@media (max-width: 1199.98px) {
+    .pulsomed-home-course-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .pulsomed-dashboard-copy {
+        max-width: 68%;
+    }
+    .pulsomed-mascot {
+        right: 5%;
+        width: 125px;
+        height: 150px;
+    }
+}
+@media (max-width: 991.98px) {
+    .navbar.fixed-top {
+        min-height: 64px;
+        padding: .45rem .75rem;
+    }
+    .navbar-brand.pulsomed-navbar-brand {
+        min-width: auto;
+        margin-right: .5rem !important;
+    }
+    .pulsomed-brandmark {
+        flex-basis: 38px;
+        width: 38px;
+        height: 38px;
+    }
+    .pulsomed-dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+    .pulsomed-goal-card {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 1rem;
+        min-height: 0;
+        align-items: center;
+    }
+    .pulsomed-goal-heading {
+        margin: 0;
+    }
+    .pulsomed-goal-ring {
+        width: 92px;
+        height: 92px;
+        margin: 0;
+    }
+    .pulsomed-goal-ring-inner {
+        width: 68px;
+        height: 68px;
+    }
+    .pulsomed-goal-copy {
+        margin: 0;
+        text-align: left;
+    }
+    .pulsomed-goal-card .btn {
+        width: auto;
+        margin: 0;
+    }
+}
+@media (max-width: 767.98px) {
+    #page.drawers .main-inner {
+        width: calc(100% - 1rem);
+        margin-top: 1rem;
+    }
+    .navbar-brand .pulsomed-wordmark {
+        display: none;
+    }
+    .pulsomed-dashboard-hero {
+        min-height: 410px;
+        padding: 1.6rem;
+        border-radius: 23px;
+    }
+    .pulsomed-dashboard-copy {
+        max-width: 100%;
+    }
+    .pulsomed-dashboard-title {
+        max-width: 100%;
+        font-size: 2.15rem;
+    }
+    .pulsomed-dashboard-description {
+        max-width: 100%;
+        font-size: .98rem;
+    }
+    .pulsomed-mascot {
+        right: 1.5rem;
+        bottom: 1.3rem;
+        width: 92px;
+        height: 108px;
+    }
+    .pulsomed-mascot .fa {
+        font-size: 2.6rem;
+    }
+    .pulsomed-mascot::before {
+        top: 14px;
+        font-size: 2.1rem;
+    }
+    .pulsomed-dashboard-cta {
+        max-width: calc(100% - 110px);
+        font-size: .88rem;
+    }
+    .pulsomed-goal-card {
+        display: flex;
+        align-items: stretch;
+    }
+    .pulsomed-goal-heading {
+        align-self: stretch;
+    }
+    .pulsomed-goal-ring {
+        align-self: center;
+    }
+    .pulsomed-goal-copy {
+        text-align: center;
+    }
+    .pulsomed-goal-card .btn {
+        width: 100%;
+    }
+    .pulsomed-home-resume-card {
+        grid-template-columns: auto minmax(0, 1fr);
+    }
+    .pulsomed-home-resume-action {
+        grid-column: 1 / -1;
+        width: 100%;
+    }
+    .pulsomed-home-section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+    .pulsomed-home-course-grid {
+        grid-template-columns: 1fr;
+    }
+    .pulsomed-home-empty {
+        padding: 2rem 1.25rem;
+    }
+    .course-section,
+    .block .card-body {
+        padding: 1rem;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}
+@media print {
+    body,
+    #page-wrapper,
+    #page.drawers {
+        background: #FFF !important;
+    }
+    .pulsomed-dashboard-grid,
+    .drawer-toggles,
+    .navbar.fixed-top,
+    #page-footer {
+        display: none !important;
+    }
+    .card,
+    .block,
+    .course-section,
+    .activity-navigation {
+        box-shadow: none !important;
+    }
+}
+@import "bootstrap/utilities/stretched-link";
+@import "moodle/courseindex";
+@import "moodle/coursemanagement";
+@import "moodle/footer";
+@import "moodle/icon";
+@import "moodle/layout";
+@import "moodle/login";
+@import "moodle/primarynavigation";
+@import "moodle/navbar";
+@import "moodle/tables";
+@import "moodle/visually-hidden";
+@import "moodle/search";

@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    viewBox="-28.16 -28.16 577.536 594.944"
+    preserveAspectRatio="xMidYMid meet"
+    role="img">
+  <!-- Playful Moodle icon conversion. Original geometry and embedded notices are preserved below. -->
+  <defs>
+    <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+    <clipPath id="duo-highlight-clip-89c275bd07" clipPathUnits="userSpaceOnUse">
+      <rect x="-28.16" y="-28.16"
+            width="577.536" height="243.2"/>
+    </clipPath>
+    <style>
+      .duo-shadow path:not([data-duo-fill="none"]){fill:#A560E8!important}
+      .duo-shadow rect:not([data-duo-fill="none"]){fill:#A560E8!important}
+      .duo-shadow circle:not([data-duo-fill="none"]){fill:#A560E8!important}
+      .duo-shadow ellipse:not([data-duo-fill="none"]){fill:#A560E8!important}
+      .duo-shadow polygon:not([data-duo-fill="none"]){fill:#A560E8!important}
+      .duo-shadow path[stroke]:not([data-duo-stroke="none"]){stroke:#A560E8!important}
+      .duo-shadow rect[stroke]:not([data-duo-stroke="none"]){stroke:#A560E8!important}
+      .duo-shadow circle[stroke]:not([data-duo-stroke="none"]){stroke:#A560E8!important}
+      .duo-shadow ellipse[stroke]:not([data-duo-stroke="none"]){stroke:#A560E8!important}
+      .duo-shadow polygon[stroke]:not([data-duo-stroke="none"]){stroke:#A560E8!important}
+      .duo-shadow line:not([data-duo-stroke="none"]),.duo-shadow polyline:not([data-duo-stroke="none"]){fill:none!important;stroke:#A560E8!important}
+      .duo-main path:not([data-duo-fill="none"]){fill:#CE82FF!important}
+      .duo-main rect:not([data-duo-fill="none"]){fill:#CE82FF!important}
+      .duo-main circle:not([data-duo-fill="none"]){fill:#CE82FF!important}
+      .duo-main ellipse:not([data-duo-fill="none"]){fill:#CE82FF!important}
+      .duo-main polygon:not([data-duo-fill="none"]){fill:#CE82FF!important}
+      .duo-main path[stroke]:not([data-duo-stroke="none"]){stroke:#CE82FF!important}
+      .duo-main rect[stroke]:not([data-duo-stroke="none"]){stroke:#CE82FF!important}
+      .duo-main circle[stroke]:not([data-duo-stroke="none"]){stroke:#CE82FF!important}
+      .duo-main ellipse[stroke]:not([data-duo-stroke="none"]){stroke:#CE82FF!important}
+      .duo-main polygon[stroke]:not([data-duo-stroke="none"]){stroke:#CE82FF!important}
+      .duo-main line:not([data-duo-stroke="none"]),.duo-main polyline:not([data-duo-stroke="none"]){fill:none!important;stroke:#CE82FF!important}
+      .duo-main path[data-duo-fill="white"],.duo-main rect[data-duo-fill="white"],.duo-main circle[data-duo-fill="white"],.duo-main ellipse[data-duo-fill="white"],.duo-main polygon[data-duo-fill="white"]{fill:#fff!important}
+      .duo-main path[data-duo-stroke="white"],.duo-main rect[data-duo-stroke="white"],.duo-main circle[data-duo-stroke="white"],.duo-main ellipse[data-duo-stroke="white"],.duo-main polygon[data-duo-stroke="white"],.duo-main line[data-duo-stroke="white"],.duo-main polyline[data-duo-stroke="white"]{stroke:#fff!important}
+      .duo-highlight path:not([data-duo-fill="none"]){fill:#E6B7FF!important}
+      .duo-highlight rect:not([data-duo-fill="none"]){fill:#E6B7FF!important}
+      .duo-highlight circle:not([data-duo-fill="none"]){fill:#E6B7FF!important}
+      .duo-highlight ellipse:not([data-duo-fill="none"]){fill:#E6B7FF!important}
+      .duo-highlight polygon:not([data-duo-fill="none"]){fill:#E6B7FF!important}
+      .duo-highlight path[stroke]:not([data-duo-stroke="none"]){stroke:#E6B7FF!important}
+      .duo-highlight rect[stroke]:not([data-duo-stroke="none"]){stroke:#E6B7FF!important}
+      .duo-highlight circle[stroke]:not([data-duo-stroke="none"]){stroke:#E6B7FF!important}
+      .duo-highlight ellipse[stroke]:not([data-duo-stroke="none"]){stroke:#E6B7FF!important}
+      .duo-highlight polygon[stroke]:not([data-duo-stroke="none"]){stroke:#E6B7FF!important}
+      .duo-highlight line:not([data-duo-stroke="none"]),.duo-highlight polyline:not([data-duo-stroke="none"]){fill:none!important;stroke:#E6B7FF!important}
+      .duo-highlight path[data-duo-fill="white"],.duo-highlight rect[data-duo-fill="white"],.duo-highlight circle[data-duo-fill="white"],.duo-highlight ellipse[data-duo-fill="white"],.duo-highlight polygon[data-duo-fill="white"]{fill:#fff!important}
+      .duo-highlight path[data-duo-stroke="white"],.duo-highlight rect[data-duo-stroke="white"],.duo-highlight circle[data-duo-stroke="white"],.duo-highlight ellipse[data-duo-stroke="white"],.duo-highlight polygon[data-duo-stroke="white"],.duo-highlight line[data-duo-stroke="white"],.duo-highlight polyline[data-duo-stroke="white"]{stroke:#fff!important}
+    </style>
+  </defs>
+  <g class="duo-shadow" transform="translate(9.216 26.624)">
+    <g>
+      <path d="M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm161.5-86.1c-12.2-5.2-26.3 .4-31.5 12.6s.4 26.3 12.6 31.5l11.9 5.1c17.3 7.4 35.2 12.9 53.6 16.3v50.1c0 4.3-.7 8.6-2.1 12.6l-28.7 86.1c-4.2 12.6 2.6 26.2 15.2 30.4s26.2-2.6 30.4-15.2l24.4-73.2c1.3-3.8 4.8-6.4 8.8-6.4s7.6 2.6 8.8 6.4l24.4 73.2c4.2 12.6 17.8 19.4 30.4 15.2s19.4-17.8 15.2-30.4l-28.7-86.1c-1.4-4.1-2.1-8.3-2.1-12.6V235.5c18.4-3.5 36.3-8.9 53.6-16.3l11.9-5.1c12.2-5.2 17.8-19.3 12.6-31.5s-19.3-17.8-31.5-12.6L338.7 175c-26.1 11.2-54.2 17-82.7 17s-56.5-5.8-82.7-17l-11.9-5.1zM256 160a40 40 0 1 0 0-80 40 40 0 1 0 0 80z" />
+    </g>
+  </g>
+  <g class="duo-main">
+    <g>
+      <path d="M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm161.5-86.1c-12.2-5.2-26.3 .4-31.5 12.6s.4 26.3 12.6 31.5l11.9 5.1c17.3 7.4 35.2 12.9 53.6 16.3v50.1c0 4.3-.7 8.6-2.1 12.6l-28.7 86.1c-4.2 12.6 2.6 26.2 15.2 30.4s26.2-2.6 30.4-15.2l24.4-73.2c1.3-3.8 4.8-6.4 8.8-6.4s7.6 2.6 8.8 6.4l24.4 73.2c4.2 12.6 17.8 19.4 30.4 15.2s19.4-17.8 15.2-30.4l-28.7-86.1c-1.4-4.1-2.1-8.3-2.1-12.6V235.5c18.4-3.5 36.3-8.9 53.6-16.3l11.9-5.1c12.2-5.2 17.8-19.3 12.6-31.5s-19.3-17.8-31.5-12.6L338.7 175c-26.1 11.2-54.2 17-82.7 17s-56.5-5.8-82.7-17l-11.9-5.1zM256 160a40 40 0 1 0 0-80 40 40 0 1 0 0 80z" />
+    </g>
+  </g>
+  <g class="duo-highlight" clip-path="url(#duo-highlight-clip-89c275bd07)" opacity="0.72"
+     transform="translate(0 -4.096)">
+    <g>
+      <path d="M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm161.5-86.1c-12.2-5.2-26.3 .4-31.5 12.6s.4 26.3 12.6 31.5l11.9 5.1c17.3 7.4 35.2 12.9 53.6 16.3v50.1c0 4.3-.7 8.6-2.1 12.6l-28.7 86.1c-4.2 12.6 2.6 26.2 15.2 30.4s26.2-2.6 30.4-15.2l24.4-73.2c1.3-3.8 4.8-6.4 8.8-6.4s7.6 2.6 8.8 6.4l24.4 73.2c4.2 12.6 17.8 19.4 30.4 15.2s19.4-17.8 15.2-30.4l-28.7-86.1c-1.4-4.1-2.1-8.3-2.1-12.6V235.5c18.4-3.5 36.3-8.9 53.6-16.3l11.9-5.1c12.2-5.2 17.8-19.3 12.6-31.5s-19.3-17.8-31.5-12.6L338.7 175c-26.1 11.2-54.2 17-82.7 17s-56.5-5.8-82.7-17l-11.9-5.1zM256 160a40 40 0 1 0 0-80 40 40 0 1 0 0 80z" />
+    </g>
+  </g>
+</svg>

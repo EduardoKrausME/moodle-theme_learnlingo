@@ -1,0 +1,10 @@
+//
+// Stretched link
+//
+
+.stretched-link {
+    &::after {
+        position: initial;
+        content: none;
+    }
+}

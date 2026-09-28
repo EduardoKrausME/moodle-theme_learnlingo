@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    viewBox="-6.3189 -6.3189 129.5948 133.501"
+    preserveAspectRatio="xMidYMid meet"
+    role="img">
+  <!-- Playful Moodle icon conversion. Original geometry and embedded notices are preserved below. -->
+  <defs>
+    <defs><linearGradient id="b"><stop offset="0" stop-opacity="0"/><stop offset="1" stop-color="#ff8000"/></linearGradient><linearGradient id="a"><stop offset="0" stop-color="#ffab00"/><stop offset="1" stop-color="#ff8000"/></linearGradient><radialGradient xlink:href="#a" id="c" cx="360.682" cy="435.112" fx="360.682" fy="435.112" r="45.406" gradientTransform="matrix(1 0 0 .9811 0 8.223)" gradientUnits="userSpaceOnUse" spreadMethod="pad"/><linearGradient xlink:href="#b" id="d" x1="323.186" y1="445.295" x2="375.842" y2="514.342" gradientUnits="userSpaceOnUse"/><filter id="e" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="2.12"/></filter></defs>
+    <clipPath id="duo-highlight-clip-d1cfcc7da4" clipPathUnits="userSpaceOnUse">
+      <rect x="-6.3189" y="-6.3189"
+            width="129.5948" height="54.5723"/>
+    </clipPath>
+    <style>
+      .duo-shadow path:not([data-duo-fill="none"]){fill:#D97F00!important}
+      .duo-shadow rect:not([data-duo-fill="none"]){fill:#D97F00!important}
+      .duo-shadow circle:not([data-duo-fill="none"]){fill:#D97F00!important}
+      .duo-shadow ellipse:not([data-duo-fill="none"]){fill:#D97F00!important}
+      .duo-shadow polygon:not([data-duo-fill="none"]){fill:#D97F00!important}
+      .duo-shadow path[stroke]:not([data-duo-stroke="none"]){stroke:#D97F00!important}
+      .duo-shadow rect[stroke]:not([data-duo-stroke="none"]){stroke:#D97F00!important}
+      .duo-shadow circle[stroke]:not([data-duo-stroke="none"]){stroke:#D97F00!important}
+      .duo-shadow ellipse[stroke]:not([data-duo-stroke="none"]){stroke:#D97F00!important}
+      .duo-shadow polygon[stroke]:not([data-duo-stroke="none"]){stroke:#D97F00!important}
+      .duo-shadow line:not([data-duo-stroke="none"]),.duo-shadow polyline:not([data-duo-stroke="none"]){fill:none!important;stroke:#D97F00!important}
+      .duo-main path:not([data-duo-fill="none"]){fill:#FF9600!important}
+      .duo-main rect:not([data-duo-fill="none"]){fill:#FF9600!important}
+      .duo-main circle:not([data-duo-fill="none"]){fill:#FF9600!important}
+      .duo-main ellipse:not([data-duo-fill="none"]){fill:#FF9600!important}
+      .duo-main polygon:not([data-duo-fill="none"]){fill:#FF9600!important}
+      .duo-main path[stroke]:not([data-duo-stroke="none"]){stroke:#FF9600!important}
+      .duo-main rect[stroke]:not([data-duo-stroke="none"]){stroke:#FF9600!important}
+      .duo-main circle[stroke]:not([data-duo-stroke="none"]){stroke:#FF9600!important}
+      .duo-main ellipse[stroke]:not([data-duo-stroke="none"]){stroke:#FF9600!important}
+      .duo-main polygon[stroke]:not([data-duo-stroke="none"]){stroke:#FF9600!important}
+      .duo-main line:not([data-duo-stroke="none"]),.duo-main polyline:not([data-duo-stroke="none"]){fill:none!important;stroke:#FF9600!important}
+      .duo-main path[data-duo-fill="white"],.duo-main rect[data-duo-fill="white"],.duo-main circle[data-duo-fill="white"],.duo-main ellipse[data-duo-fill="white"],.duo-main polygon[data-duo-fill="white"]{fill:#fff!important}
+      .duo-main path[data-duo-stroke="white"],.duo-main rect[data-duo-stroke="white"],.duo-main circle[data-duo-stroke="white"],.duo-main ellipse[data-duo-stroke="white"],.duo-main polygon[data-duo-stroke="white"],.duo-main line[data-duo-stroke="white"],.duo-main polyline[data-duo-stroke="white"]{stroke:#fff!important}
+      .duo-highlight path:not([data-duo-fill="none"]){fill:#FFBE4D!important}
+      .duo-highlight rect:not([data-duo-fill="none"]){fill:#FFBE4D!important}
+      .duo-highlight circle:not([data-duo-fill="none"]){fill:#FFBE4D!important}
+      .duo-highlight ellipse:not([data-duo-fill="none"]){fill:#FFBE4D!important}
+      .duo-highlight polygon:not([data-duo-fill="none"]){fill:#FFBE4D!important}
+      .duo-highlight path[stroke]:not([data-duo-stroke="none"]){stroke:#FFBE4D!important}
+      .duo-highlight rect[stroke]:not([data-duo-stroke="none"]){stroke:#FFBE4D!important}
+      .duo-highlight circle[stroke]:not([data-duo-stroke="none"]){stroke:#FFBE4D!important}
+      .duo-highlight ellipse[stroke]:not([data-duo-stroke="none"]){stroke:#FFBE4D!important}
+      .duo-highlight polygon[stroke]:not([data-duo-stroke="none"]){stroke:#FFBE4D!important}
+      .duo-highlight line:not([data-duo-stroke="none"]),.duo-highlight polyline:not([data-duo-stroke="none"]){fill:none!important;stroke:#FFBE4D!important}
+      .duo-highlight path[data-duo-fill="white"],.duo-highlight rect[data-duo-fill="white"],.duo-highlight circle[data-duo-fill="white"],.duo-highlight ellipse[data-duo-fill="white"],.duo-highlight polygon[data-duo-fill="white"]{fill:#fff!important}
+      .duo-highlight path[data-duo-stroke="white"],.duo-highlight rect[data-duo-stroke="white"],.duo-highlight circle[data-duo-stroke="white"],.duo-highlight ellipse[data-duo-stroke="white"],.duo-highlight polygon[data-duo-stroke="white"],.duo-highlight line[data-duo-stroke="white"],.duo-highlight polyline[data-duo-stroke="white"]{stroke:#fff!important}
+    </style>
+  </defs>
+  <g class="duo-shadow" transform="translate(2.068 5.9742)">
+    <g>
+      <path d="M405.59 435.112c0 24.328-20.107 44.05-44.908 44.05-24.8 0-44.906-19.722-44.906-44.05 0-24.327 20.105-44.048 44.906-44.048 24.8 0 44.907 19.72 44.907 44.048z" fill="url(#c)" fill-rule="evenodd" stroke="#000" transform="translate(-304.954 -378.526)" /><path d="M427.327 445.123c0 28.91-23.435 52.344-52.344 52.344-28.908 0-52.343-23.435-52.343-52.344 0-28.908 23.435-52.343 52.343-52.343 28.91 0 52.344 23.435 52.344 52.343z" transform="rotate(-17.435 -1047.974 1286.75)" opacity=".477" fill="url(#d)" />
+    </g>
+  </g>
+  <g class="duo-main">
+    <g>
+      <path d="M405.59 435.112c0 24.328-20.107 44.05-44.908 44.05-24.8 0-44.906-19.722-44.906-44.05 0-24.327 20.105-44.048 44.906-44.048 24.8 0 44.907 19.72 44.907 44.048z" fill="url(#c)" fill-rule="evenodd" stroke="#000" transform="translate(-304.954 -378.526)" /><path d="M427.327 445.123c0 28.91-23.435 52.344-52.344 52.344-28.908 0-52.343-23.435-52.343-52.344 0-28.908 23.435-52.343 52.343-52.343 28.91 0 52.344 23.435 52.344 52.343z" transform="rotate(-17.435 -1047.974 1286.75)" opacity=".477" fill="url(#d)" />
+    </g>
+  </g>
+  <g class="duo-highlight" clip-path="url(#duo-highlight-clip-d1cfcc7da4)" opacity="0.72"
+     transform="translate(0 -0.9191)">
+    <g>
+      <path d="M405.59 435.112c0 24.328-20.107 44.05-44.908 44.05-24.8 0-44.906-19.722-44.906-44.05 0-24.327 20.105-44.048 44.906-44.048 24.8 0 44.907 19.72 44.907 44.048z" fill="url(#c)" fill-rule="evenodd" stroke="#000" transform="translate(-304.954 -378.526)" /><path d="M427.327 445.123c0 28.91-23.435 52.344-52.344 52.344-28.908 0-52.343-23.435-52.343-52.344 0-28.908 23.435-52.343 52.343-52.343 28.91 0 52.344 23.435 52.344 52.343z" transform="rotate(-17.435 -1047.974 1286.75)" opacity=".477" fill="url(#d)" />
+    </g>
+  </g>
+</svg>

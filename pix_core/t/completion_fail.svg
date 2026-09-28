@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:cc="http://creativecommons.org/ns#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:svg="http://www.w3.org/2000/svg"
+    viewBox="-0.66 -0.66 13.536 13.944"
+    preserveAspectRatio="xMidYMid meet"
+    role="img">
+  <!-- Playful Moodle icon conversion. Original geometry and embedded notices are preserved below. -->
+  <defs>
+    <metadata
+     id="metadata10">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+    <clipPath id="duo-highlight-clip-118da3665e" clipPathUnits="userSpaceOnUse">
+      <rect x="-0.66" y="-0.66"
+            width="13.536" height="5.7"/>
+    </clipPath>
+    <style>
+      .duo-shadow path:not([data-duo-fill="none"]){fill:#D83B3B!important}
+      .duo-shadow rect:not([data-duo-fill="none"]){fill:#D83B3B!important}
+      .duo-shadow circle:not([data-duo-fill="none"]){fill:#D83B3B!important}
+      .duo-shadow ellipse:not([data-duo-fill="none"]){fill:#D83B3B!important}
+      .duo-shadow polygon:not([data-duo-fill="none"]){fill:#D83B3B!important}
+      .duo-shadow path[stroke]:not([data-duo-stroke="none"]){stroke:#D83B3B!important}
+      .duo-shadow rect[stroke]:not([data-duo-stroke="none"]){stroke:#D83B3B!important}
+      .duo-shadow circle[stroke]:not([data-duo-stroke="none"]){stroke:#D83B3B!important}
+      .duo-shadow ellipse[stroke]:not([data-duo-stroke="none"]){stroke:#D83B3B!important}
+      .duo-shadow polygon[stroke]:not([data-duo-stroke="none"]){stroke:#D83B3B!important}
+      .duo-shadow line:not([data-duo-stroke="none"]),.duo-shadow polyline:not([data-duo-stroke="none"]){fill:none!important;stroke:#D83B3B!important}
+      .duo-main path:not([data-duo-fill="none"]){fill:#FF4B4B!important}
+      .duo-main rect:not([data-duo-fill="none"]){fill:#FF4B4B!important}
+      .duo-main circle:not([data-duo-fill="none"]){fill:#FF4B4B!important}
+      .duo-main ellipse:not([data-duo-fill="none"]){fill:#FF4B4B!important}
+      .duo-main polygon:not([data-duo-fill="none"]){fill:#FF4B4B!important}
+      .duo-main path[stroke]:not([data-duo-stroke="none"]){stroke:#FF4B4B!important}
+      .duo-main rect[stroke]:not([data-duo-stroke="none"]){stroke:#FF4B4B!important}
+      .duo-main circle[stroke]:not([data-duo-stroke="none"]){stroke:#FF4B4B!important}
+      .duo-main ellipse[stroke]:not([data-duo-stroke="none"]){stroke:#FF4B4B!important}
+      .duo-main polygon[stroke]:not([data-duo-stroke="none"]){stroke:#FF4B4B!important}
+      .duo-main line:not([data-duo-stroke="none"]),.duo-main polyline:not([data-duo-stroke="none"]){fill:none!important;stroke:#FF4B4B!important}
+      .duo-main path[data-duo-fill="white"],.duo-main rect[data-duo-fill="white"],.duo-main circle[data-duo-fill="white"],.duo-main ellipse[data-duo-fill="white"],.duo-main polygon[data-duo-fill="white"]{fill:#fff!important}
+      .duo-main path[data-duo-stroke="white"],.duo-main rect[data-duo-stroke="white"],.duo-main circle[data-duo-stroke="white"],.duo-main ellipse[data-duo-stroke="white"],.duo-main polygon[data-duo-stroke="white"],.duo-main line[data-duo-stroke="white"],.duo-main polyline[data-duo-stroke="white"]{stroke:#fff!important}
+      .duo-highlight path:not([data-duo-fill="none"]){fill:#FF8585!important}
+      .duo-highlight rect:not([data-duo-fill="none"]){fill:#FF8585!important}
+      .duo-highlight circle:not([data-duo-fill="none"]){fill:#FF8585!important}
+      .duo-highlight ellipse:not([data-duo-fill="none"]){fill:#FF8585!important}
+      .duo-highlight polygon:not([data-duo-fill="none"]){fill:#FF8585!important}
+      .duo-highlight path[stroke]:not([data-duo-stroke="none"]){stroke:#FF8585!important}
+      .duo-highlight rect[stroke]:not([data-duo-stroke="none"]){stroke:#FF8585!important}
+      .duo-highlight circle[stroke]:not([data-duo-stroke="none"]){stroke:#FF8585!important}
+      .duo-highlight ellipse[stroke]:not([data-duo-stroke="none"]){stroke:#FF8585!important}
+      .duo-highlight polygon[stroke]:not([data-duo-stroke="none"]){stroke:#FF8585!important}
+      .duo-highlight line:not([data-duo-stroke="none"]),.duo-highlight polyline:not([data-duo-stroke="none"]){fill:none!important;stroke:#FF8585!important}
+      .duo-highlight path[data-duo-fill="white"],.duo-highlight rect[data-duo-fill="white"],.duo-highlight circle[data-duo-fill="white"],.duo-highlight ellipse[data-duo-fill="white"],.duo-highlight polygon[data-duo-fill="white"]{fill:#fff!important}
+      .duo-highlight path[data-duo-stroke="white"],.duo-highlight rect[data-duo-stroke="white"],.duo-highlight circle[data-duo-stroke="white"],.duo-highlight ellipse[data-duo-stroke="white"],.duo-highlight polygon[data-duo-stroke="white"],.duo-highlight line[data-duo-stroke="white"],.duo-highlight polyline[data-duo-stroke="white"]{stroke:#fff!important}
+    </style>
+  </defs>
+  <g class="duo-shadow" transform="translate(0.216 0.624)">
+    <g>
+      <defs
+     />
+  <g
+     style="overflow:visible"
+    
+     transform="matrix(1.1075441,0,0,1.1075441,-0.6452645,-1.4759224)">
+    <path
+      
+       d="m 8.9412074,8.2774034 c 0.2106763,0.2106763 0.2106763,0.5266909 0,0.7373672 L 8.2038402,9.7521378 c -0.2106764,0.2106761 -0.5266909,0.2106761 -0.7373672,0 L 5.9917385,8.2774034 4.5170041,9.7521378 c -0.2106763,0.2106761 -0.5266908,0.2106761 -0.7373672,0 L 3.0422697,9.0147706 c -0.2106763,-0.2106763 -0.2106763,-0.5266909 0,-0.7373672 L 4.5170041,6.802669 3.0422697,5.2225964 c -0.2106763,-0.2106763 -0.2106763,-0.5266909 0,-0.7373672 L 3.7796369,3.747862 c 0.2106764,-0.2106764 0.5266909,-0.2106764 0.7373672,0 L 5.9917385,5.3279346 7.466473,3.8532002 C 7.6771493,3.6425238 8.098502,3.6425238 8.2038402,3.747862 l 0.7373672,0.7373672 c 0.2106763,0.2106763 0.2106763,0.632029 0.1053381,0.8427054 L 7.466473,6.802669 Z"
+       style="fill:#c83328;fill-opacity:1;stroke-width:1.05338168" />
+  </g>
+    </g>
+  </g>
+  <g class="duo-main">
+    <g>
+      <defs
+     />
+  <g
+     style="overflow:visible"
+    
+     transform="matrix(1.1075441,0,0,1.1075441,-0.6452645,-1.4759224)">
+    <path
+      
+       d="m 8.9412074,8.2774034 c 0.2106763,0.2106763 0.2106763,0.5266909 0,0.7373672 L 8.2038402,9.7521378 c -0.2106764,0.2106761 -0.5266909,0.2106761 -0.7373672,0 L 5.9917385,8.2774034 4.5170041,9.7521378 c -0.2106763,0.2106761 -0.5266908,0.2106761 -0.7373672,0 L 3.0422697,9.0147706 c -0.2106763,-0.2106763 -0.2106763,-0.5266909 0,-0.7373672 L 4.5170041,6.802669 3.0422697,5.2225964 c -0.2106763,-0.2106763 -0.2106763,-0.5266909 0,-0.7373672 L 3.7796369,3.747862 c 0.2106764,-0.2106764 0.5266909,-0.2106764 0.7373672,0 L 5.9917385,5.3279346 7.466473,3.8532002 C 7.6771493,3.6425238 8.098502,3.6425238 8.2038402,3.747862 l 0.7373672,0.7373672 c 0.2106763,0.2106763 0.2106763,0.632029 0.1053381,0.8427054 L 7.466473,6.802669 Z"
+       style="fill:#c83328;fill-opacity:1;stroke-width:1.05338168" />
+  </g>
+    </g>
+  </g>
+  <g class="duo-highlight" clip-path="url(#duo-highlight-clip-118da3665e)" opacity="0.72"
+     transform="translate(0 -0.096)">
+    <g>
+      <defs
+     />
+  <g
+     style="overflow:visible"
+    
+     transform="matrix(1.1075441,0,0,1.1075441,-0.6452645,-1.4759224)">
+    <path
+      
+       d="m 8.9412074,8.2774034 c 0.2106763,0.2106763 0.2106763,0.5266909 0,0.7373672 L 8.2038402,9.7521378 c -0.2106764,0.2106761 -0.5266909,0.2106761 -0.7373672,0 L 5.9917385,8.2774034 4.5170041,9.7521378 c -0.2106763,0.2106761 -0.5266908,0.2106761 -0.7373672,0 L 3.0422697,9.0147706 c -0.2106763,-0.2106763 -0.2106763,-0.5266909 0,-0.7373672 L 4.5170041,6.802669 3.0422697,5.2225964 c -0.2106763,-0.2106763 -0.2106763,-0.5266909 0,-0.7373672 L 3.7796369,3.747862 c 0.2106764,-0.2106764 0.5266909,-0.2106764 0.7373672,0 L 5.9917385,5.3279346 7.466473,3.8532002 C 7.6771493,3.6425238 8.098502,3.6425238 8.2038402,3.747862 l 0.7373672,0.7373672 c 0.2106763,0.2106763 0.2106763,0.632029 0.1053381,0.8427054 L 7.466473,6.802669 Z"
+       style="fill:#c83328;fill-opacity:1;stroke-width:1.05338168" />
+  </g>
+    </g>
+  </g>
+</svg>
