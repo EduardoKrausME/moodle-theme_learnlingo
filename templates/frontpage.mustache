@@ -35,7 +35,7 @@
                     </span>
                     <h1 class="pulsomed-dashboard-title">{{dashboardtitle}}</h1>
                     <p class="pulsomed-dashboard-description">{{dashboarddescription}}</p>
-                    <a class="pulsomed-dashboard-cta" href="{{mycoursesurl}}">
+                    <a class="pulsomed-dashboard-cta" href="{{{mycoursesurl}}}">
                         {{dashboardcta}}
                         <i class="fa fa-arrow-right" aria-hidden="true"></i>
                     </a>
@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 <p class="pulsomed-goal-copy">{{goalsubtitle}}</p>
-                <a class="btn btn-primary" href="{{mycoursesurl}}">{{goalcta}}</a>
+                <a class="btn btn-primary" href="{{{mycoursesurl}}}">{{goalcta}}</a>
             </aside>
         </section>
     {{/showwelcome}}
@@ -73,7 +73,7 @@
             </div>
             <div class="pulsomed-resume-main">
                 <span class="pulsomed-resume-label">{{featuredlabel}}</span>
-                <a class="pulsomed-resume-title" href="{{featuredcourse.url}}">{{featuredcourse.fullname}}</a>
+                <a class="pulsomed-resume-title" href="{{{featuredcourse.url}}}">{{featuredcourse.fullname}}</a>
                 <span class="pulsomed-resume-category">{{featuredcourse.categoryname}}</span>
                 {{#featuredcourse.hasprogress}}
                     <div class="pulsomed-resume-progress">
@@ -85,7 +85,7 @@
                     </div>
                 {{/featuredcourse.hasprogress}}
             </div>
-            <a class="pulsomed-resume-action" href="{{featuredcourse.url}}" aria-label="{{featuredaction}}: {{featuredcourse.fullname}}">
+            <a class="pulsomed-resume-action" href="{{{featuredcourse.url}}}" aria-label="{{featuredaction}}: {{featuredcourse.fullname}}">
                 <i class="fa fa-play" aria-hidden="true"></i>
             </a>
         </section>
@@ -97,14 +97,14 @@
                 <span>{{courseseyebrow}}</span>
                 <h2>{{coursestitle}}</h2>
             </div>
-            <a href="{{allcoursesurl}}">{{allcoursestext}} <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+            <a href="{{{allcoursesurl}}}">{{allcoursestext}} <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
         </div>
 
         {{#hascourses}}
             <div class="pulsomed-home-course-grid">
                 {{#courses}}
                     <article class="pulsomed-course-card">
-                        <a class="pulsomed-course-card-media {{toneclass}}" href="{{url}}" tabindex="-1" aria-hidden="true">
+                        <a class="pulsomed-course-card-media {{toneclass}}" href="{{{url}}}" tabindex="-1" aria-hidden="true">
                             {{#hasimage}}
                                 <img src="{{{imageurl}}}" alt="" loading="lazy">
                             {{/hasimage}}
@@ -115,7 +115,7 @@
                         </a>
                         <div class="pulsomed-course-card-body">
                             <span class="pulsomed-course-card-kicker">{{shortname}}</span>
-                            <h3><a href="{{url}}">{{fullname}}</a></h3>
+                            <h3><a href="{{{url}}}">{{fullname}}</a></h3>
                             {{#hasprogress}}
                                 <div class="pulsomed-course-card-progress">
                                     <div class="progress" role="progressbar" aria-label="{{progresslabel}}"
@@ -125,7 +125,7 @@
                                     <span>{{progresslabel}}</span>
                                 </div>
                             {{/hasprogress}}
-                            <a class="pulsomed-course-card-action" href="{{url}}">
+                            <a class="pulsomed-course-card-action" href="{{{url}}}">
                                 {{courseaction}} <i class="fa fa-arrow-right" aria-hidden="true"></i>
                             </a>
                         </div>
@@ -141,7 +141,7 @@
                     <h3>{{emptytitle}}</h3>
                     <p>{{emptydescription}}</p>
                 </div>
-                <a class="btn btn-primary" href="{{allcoursesurl}}">{{allcoursestext}}</a>
+                <a class="btn btn-primary" href="{{{allcoursesurl}}}">{{allcoursestext}}</a>
             </div>
         {{/showempty}}
     </section>
