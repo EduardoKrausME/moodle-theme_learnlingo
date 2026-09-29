@@ -17,7 +17,7 @@ body#page-login-index {
     align-items: stretch;
     overflow: hidden;
     color: #fff;
-    background: linear-gradient(145deg, $pulsomed-accent 0%, $primary 58%, darken($primary, 8%) 100%);
+    background: linear-gradient(145deg, $learnlingo-accent 0%, $primary 58%, darken($primary, 8%) 100%);
 }
 
 .login-layout-left::before,
@@ -162,7 +162,7 @@ body#page-login-index {
 }
 
 .loginform h1 {
-    color: var(--pulsomed-ink);
+    color: var(--learnlingo-ink);
     font-size: 2rem;
     font-weight: 850;
 }
@@ -197,5 +197,5 @@ body#page-login-index {
 }
 
 .login-cookiesnotice {
-    color: var(--pulsomed-muted);
+    color: var(--learnlingo-muted);
 }
