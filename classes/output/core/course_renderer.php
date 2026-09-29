@@ -31,8 +31,6 @@ use core_course_renderer;
 use moodle_url;
 use stdClass;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Replaces the standard Moodle front page with the PulsoMed experience.
  */
