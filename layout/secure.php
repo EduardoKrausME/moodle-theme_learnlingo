@@ -33,7 +33,7 @@ $templatecontext = [
     'output' => $OUTPUT,
     'bodyattributes' => $bodyattributes,
     'sidepreblocks' => $blockshtml,
-    'hasblocks' => $hasblocks
+    'hasblocks' => $hasblocks,
 ];
 
 if (empty($PAGE->layout_options['noactivityheader'])) {
