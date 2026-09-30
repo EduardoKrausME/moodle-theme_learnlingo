@@ -128,6 +128,8 @@ $courseprogressavailable = false;
 $courseprogress = 0;
 $courseprogresslabel = '';
 $courseheroeyebrow = get_string('courseheroeyebrowdefault', 'theme_learnlingo');
+$personalxp = false;
+$personalxpactivityreward = 0;
 
 if ($coursehero) {
     $coursecontext = context_course::instance($PAGE->course->id);
@@ -176,6 +178,35 @@ if ($coursehero) {
             $courseprogresslabel = get_string('courseheroprogressvalue', 'theme_learnlingo', $courseprogress);
         }
     }
+
+    $showpersonalxp = !isset($PAGE->theme->settings->showpersonalxp)
+        || !empty($PAGE->theme->settings->showpersonalxp);
+    if (
+        $showpersonalxp
+        && isloggedin()
+        && !isguestuser()
+        && has_capability('local/personalxp:view', $coursecontext)
+    ) {
+        $xpstate = \local_personalxp\service\xp_manager::get_course_display_state(
+            (int) $USER->id,
+            (int) $PAGE->course->id
+        );
+
+        if ($xpstate['enabled']) {
+            $personalxpactivityreward = (int) $xpstate['activitycompletionxp'];
+            $personalxp = [
+                'totalxp' => (int) $xpstate['totalxp'],
+                'currentlevel' => (string) $xpstate['currentlevel'],
+                'nextlevel' => $xpstate['nextlevel'],
+                'hasnextlevel' => $xpstate['nextlevel'] !== null,
+                'levelprogress' => (int) $xpstate['levelprogress'],
+                'xptonext' => (int) $xpstate['xptonext'],
+                'url' => (new moodle_url('/local/personalxp/index.php', [
+                    'courseid' => $PAGE->course->id,
+                ]))->out(false),
+            ];
+        }
+    }
 }
 
 $templatecontext = [
@@ -209,6 +240,13 @@ $templatecontext = [
     'courseprogress' => $courseprogress,
     'courseprogresslabel' => $courseprogresslabel,
     'courseprogressheading' => get_string('courseheroprogress', 'theme_learnlingo'),
+    'personalxp' => $personalxp,
+    'personalxpactivityreward' => $personalxpactivityreward,
+    'personalxpactivityrewardlabel' => $personalxpactivityreward > 0
+        ? get_string('coursexpreward', 'theme_learnlingo', $personalxpactivityreward)
+        : '',
+    'personalxpincourselabel' => get_string('coursexpincourse', 'theme_learnlingo'),
+    'personalxplevellabel' => get_string('coursexplevel', 'theme_learnlingo'),
     'showfullheader' => !$dashboardhero && !$customfrontpage,
     'dashboardeyebrow' => get_string('dashboardeyebrow', 'theme_learnlingo'),
     'dashboardtitle' => $dashboardtitle,
