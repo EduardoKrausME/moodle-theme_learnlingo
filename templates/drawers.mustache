@@ -177,6 +177,38 @@
                     </aside>
                 </section>
             {{/dashboardhero}}
+            {{#coursehero}}
+                <section class="learnlingo-course-hero {{#courseheroimage}}has-image{{/courseheroimage}}">
+                    <div class="learnlingo-course-hero-copy">
+                        <span class="learnlingo-course-eyebrow">
+                            <i class="fa fa-bolt" aria-hidden="true"></i>
+                            {{courseheroeyebrow}}
+                        </span>
+                        <h1 class="learnlingo-course-title">{{coursefullname}}</h1>
+                        {{#courseherosummary}}
+                            <p class="learnlingo-course-summary">{{courseherosummary}}</p>
+                        {{/courseherosummary}}
+                        {{#courseprogressavailable}}
+                            <div class="learnlingo-course-progress" aria-label="{{courseprogresslabel}}">
+                                <div class="learnlingo-course-progress-heading">
+                                    <span>{{courseprogressheading}}</span>
+                                    <strong>{{courseprogress}}%</strong>
+                                </div>
+                                <div class="learnlingo-course-progress-track" aria-hidden="true">
+                                    <span style="width: {{courseprogress}}%;"></span>
+                                </div>
+                            </div>
+                        {{/courseprogressavailable}}
+                    </div>
+                    {{#courseheroimage}}
+                        <div class="learnlingo-course-hero-media" aria-hidden="true">
+                            <img src="{{courseheroimage}}" alt="">
+                        </div>
+                    {{/courseheroimage}}
+                    <span class="learnlingo-course-decoration decoration-one" aria-hidden="true"></span>
+                    <span class="learnlingo-course-decoration decoration-two" aria-hidden="true"></span>
+                </section>
+            {{/coursehero}}
             {{#showfullheader}}
                 {{{ output.full_header }}}
             {{/showfullheader}}
