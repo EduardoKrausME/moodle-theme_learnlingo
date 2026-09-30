@@ -1,35 +1,53 @@
 // Activity icons.
 //
-// Keep the SVG files monochrome. The visual identity is applied entirely by SCSS:
-// each module gets its own background colour while the existing icon is rendered white.
+// SVG files remain monochrome. Colour, depth and module identity live in SCSS.
 
-$learnlingo-activity-colors: (
-    assign: #F05A5A,
-    bigbluebuttonbn: #4F7DF3,
-    book: #F29F3D,
-    choice: #8B63D9,
-    data: #1EA896,
-    feedback: #E85D9E,
-    folder: #E8A52B,
-    forum: #4C82E8,
-    glossary: #32A86D,
-    h5pactivity: #7656D6,
-    imscp: #6574CF,
-    label: #7B8794,
-    lesson: #EB7A3B,
-    lti: #3B9FCB,
-    page: #43A86B,
-    qbank: #A05ACB,
-    quiz: #E25858,
-    resource: #3A96D8,
-    scorm: #D88733,
-    subsection: #73808C,
-    url: #3978D4,
-    wiki: #2D9E96,
-    workshop: #8D62C9
+$learnlingo-purpose-colors: (
+    administration: #7B8794,
+    assessment: #FF5D65,
+    collaboration: #1CB0F6,
+    communication: #CE82FF,
+    content: #58CC02,
+    interactivecontent: #FFC800
 );
 
-.activity-item .activityiconcontainer {
+$learnlingo-activity-colors: (
+    assign: #FF5D65,
+    bigbluebuttonbn: #1CB0F6,
+    book: #FF9600,
+    choice: #CE82FF,
+    data: #00B8A9,
+    feedback: #FF86B7,
+    feedbackwall: #A560E8,
+    folder: #FFC800,
+    forum: #1CB0F6,
+    glossary: #58CC02,
+    h5pactivity: #9069CD,
+    imscp: #6C7CE0,
+    label: #7B8794,
+    lesson: #FF9600,
+    lti: #2FB4D7,
+    page: #58CC02,
+    qbank: #A560E8,
+    quiz: #FF5D65,
+    resource: #1CB0F6,
+    scorm: #FF9600,
+    subsection: #7B8794,
+    url: #1CB0F6,
+    wiki: #00B8A9,
+    workshop: #A560E8
+);
+
+@mixin learnlingo-activity-icon($color) {
+    background: $color !important;
+    border-color: transparent !important;
+    box-shadow:
+        0 3px 0 mix(#000, $color, 18%),
+        0 7px 14px rgba($color, .18);
+}
+
+.path-course-view .activityiconcontainer.courseicon,
+.activity-item .activityiconcontainer.courseicon {
     width: 46px;
     height: 46px;
     min-width: 46px;
@@ -50,17 +68,33 @@ $learnlingo-activity-colors: (
         opacity: 1;
         filter: brightness(0) invert(1);
     }
-}
 
-@each $module, $color in $learnlingo-activity-colors {
-    .modtype_#{$module} .activityiconcontainer {
-        background: $color !important;
-        box-shadow:
-            0 3px 0 mix(#000, $color, 18%),
-            0 6px 12px rgba($color, .18);
+    &.smaller {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        padding: 8px !important;
+        border-radius: 12px !important;
+
+        .activityicon {
+            width: 23px;
+            height: 23px;
+        }
     }
 }
 
-.activity-item:hover .activityiconcontainer {
+@each $purpose, $color in $learnlingo-purpose-colors {
+    .activityiconcontainer.courseicon.#{$purpose} {
+        @include learnlingo-activity-icon($color);
+    }
+}
+
+@each $module, $color in $learnlingo-activity-colors {
+    .modtype_#{$module} .activityiconcontainer.courseicon {
+        @include learnlingo-activity-icon($color);
+    }
+}
+
+.activity-item:hover .activityiconcontainer.courseicon {
     transform: translateY(-1px);
 }
