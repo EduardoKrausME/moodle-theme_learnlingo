@@ -201,6 +201,12 @@ if ($coursehero) {
                 'hasnextlevel' => $xpstate['nextlevel'] !== null,
                 'levelprogress' => (int) $xpstate['levelprogress'],
                 'xptonext' => (int) $xpstate['xptonext'],
+                'nextlabel' => $xpstate['nextlevel'] === null
+                    ? get_string('highestlevel', 'local_personalxp')
+                    : get_string('nextlevel', 'local_personalxp', (object) [
+                        'xp' => (int) $xpstate['xptonext'],
+                        'level' => (string) $xpstate['nextlevel'],
+                    ]),
                 'url' => (new moodle_url('/local/personalxp/index.php', [
                     'courseid' => $PAGE->course->id,
                 ]))->out(false),
@@ -240,6 +246,7 @@ $templatecontext = [
     'courseprogress' => $courseprogress,
     'courseprogresslabel' => $courseprogresslabel,
     'courseprogressheading' => get_string('courseheroprogress', 'theme_learnlingo'),
+    'coursestats' => $courseprogressavailable || !empty($personalxp),
     'personalxp' => $personalxp,
     'personalxpactivityreward' => $personalxpactivityreward,
     'personalxpactivityrewardlabel' => $personalxpactivityreward > 0
