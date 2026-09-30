@@ -188,17 +188,6 @@
                         {{#courseherosummary}}
                             <p class="learnlingo-course-summary">{{courseherosummary}}</p>
                         {{/courseherosummary}}
-                        {{#courseprogressavailable}}
-                            <div class="learnlingo-course-progress" aria-label="{{courseprogresslabel}}">
-                                <div class="learnlingo-course-progress-heading">
-                                    <span>{{courseprogressheading}}</span>
-                                    <strong>{{courseprogress}}%</strong>
-                                </div>
-                                <div class="learnlingo-course-progress-track" aria-hidden="true">
-                                    <span style="width: {{courseprogress}}%;"></span>
-                                </div>
-                            </div>
-                        {{/courseprogressavailable}}
                     </div>
                     {{#courseheroimage}}
                         <div class="learnlingo-course-hero-media" aria-hidden="true">
@@ -208,6 +197,60 @@
                     <span class="learnlingo-course-decoration decoration-one" aria-hidden="true"></span>
                     <span class="learnlingo-course-decoration decoration-two" aria-hidden="true"></span>
                 </section>
+                {{#coursestats}}
+                    <section class="learnlingo-course-stats" aria-label="{{courseprogressheading}}">
+                        {{#courseprogressavailable}}
+                            <div class="learnlingo-course-progress-summary">
+                                <div
+                                    class="learnlingo-course-progress-ring"
+                                    style="--learnlingo-course-progress: {{courseprogress}}%;"
+                                    role="img"
+                                    aria-label="{{courseprogresslabel}}">
+                                    <span>{{courseprogress}}%</span>
+                                </div>
+                                <div class="learnlingo-course-progress-copy">
+                                    <div class="learnlingo-course-progress-heading">
+                                        <strong>{{courseprogressheading}}</strong>
+                                        <span>{{courseprogresslabel}}</span>
+                                    </div>
+                                    <div class="learnlingo-course-progress-track" aria-hidden="true">
+                                        <span style="width: {{courseprogress}}%;"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        {{/courseprogressavailable}}
+                        {{#personalxp}}
+                            <a class="learnlingo-course-stat learnlingo-course-stat-xp" href="{{{url}}}">
+                                <span class="learnlingo-course-stat-icon" aria-hidden="true">
+                                    <i class="fa fa-star"></i>
+                                </span>
+                                <span class="learnlingo-course-stat-copy">
+                                    <strong>{{totalxp}}</strong>
+                                    <small>{{personalxpincourselabel}}</small>
+                                </span>
+                            </a>
+                            <a class="learnlingo-course-stat learnlingo-course-stat-level" href="{{{url}}}">
+                                <span class="learnlingo-course-stat-icon" aria-hidden="true">
+                                    <i class="fa fa-trophy"></i>
+                                </span>
+                                <span class="learnlingo-course-stat-copy">
+                                    <strong>{{currentlevel}}</strong>
+                                    <small>{{personalxplevellabel}}</small>
+                                    <span class="learnlingo-level-progress" aria-hidden="true">
+                                        <span style="width: {{levelprogress}}%;"></span>
+                                    </span>
+                                    <span class="learnlingo-level-next">{{nextlabel}}</span>
+                                </span>
+                            </a>
+                            {{#personalxpactivityreward}}
+                                <span
+                                    class="d-none"
+                                    data-learnlingo-xp-reward="{{personalxpactivityrewardlabel}}">
+                                </span>
+                            {{/personalxpactivityreward}}
+                        {{/personalxp}}
+                    </section>
+                {{/coursestats}}
             {{/coursehero}}
             {{#showfullheader}}
                 {{{ output.full_header }}}
@@ -261,4 +304,43 @@ require(['theme_boost/loader', 'theme_boost/drawer'], function(Loader, Drawer) {
     Drawer.init();
     M.util.js_complete('theme_boost/loader');
 });
+
+(function() {
+    const decoratePersonalXpRewards = function() {
+        const config = document.querySelector('[data-learnlingo-xp-reward]');
+        if (!config) {
+            return;
+        }
+
+        const reward = config.getAttribute('data-learnlingo-xp-reward');
+        if (!reward) {
+            return;
+        }
+
+        document.querySelectorAll('.course-content .activity-item').forEach(function(item) {
+            if (!item.querySelector('.activity-completion')) {
+                return;
+            }
+
+            const title = item.querySelector('.activitytitle');
+            if (!title || title.querySelector('.learnlingo-xp-reward')) {
+                return;
+            }
+
+            title.classList.add('learnlingo-activity-title-with-xp');
+            const chip = document.createElement('span');
+            chip.className = 'learnlingo-xp-reward';
+            chip.textContent = reward;
+            title.appendChild(chip);
+        });
+    };
+
+    decoratePersonalXpRewards();
+
+    const courseContent = document.querySelector('.course-content');
+    if (courseContent && window.MutationObserver) {
+        const observer = new MutationObserver(decoratePersonalXpRewards);
+        observer.observe(courseContent, {childList: true, subtree: true});
+    }
+})();
 {{/js}}
