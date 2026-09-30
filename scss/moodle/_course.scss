@@ -153,6 +153,191 @@
     background: rgba(28, 176, 246, .08);
 }
 
+.learnlingo-course-stats {
+    display: grid;
+    grid-template-columns: minmax(300px, 1.7fr) repeat(2, minmax(165px, .65fr));
+    gap: 0;
+    margin: 0 0 1.25rem;
+    padding: 1rem 1.15rem;
+    overflow: hidden;
+    background: #FFF;
+    border: 2px solid var(--learnlingo-border);
+    border-radius: 22px;
+    box-shadow: 0 4px 0 var(--learnlingo-border);
+}
+
+.learnlingo-course-progress-summary {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-width: 0;
+    padding-right: 1.3rem;
+}
+
+.learnlingo-course-progress-ring {
+    --learnlingo-course-progress: 0%;
+    position: relative;
+    display: grid;
+    place-items: center;
+    flex: 0 0 70px;
+    width: 70px;
+    height: 70px;
+    background: conic-gradient(
+        var(--learnlingo-green) var(--learnlingo-course-progress),
+        #E8E8E8 0
+    );
+    border-radius: 50%;
+}
+
+.learnlingo-course-progress-ring::before {
+    position: absolute;
+    width: 52px;
+    height: 52px;
+    background: #FFF;
+    border-radius: 50%;
+    content: "";
+}
+
+.learnlingo-course-progress-ring span {
+    position: relative;
+    z-index: 1;
+    color: var(--learnlingo-ink);
+    font-size: .95rem;
+    font-weight: 900;
+}
+
+.learnlingo-course-progress-copy {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.learnlingo-course-progress-summary .learnlingo-course-progress-heading {
+    margin-bottom: .55rem;
+}
+
+.learnlingo-course-progress-summary .learnlingo-course-progress-heading strong {
+    color: var(--learnlingo-ink);
+    font-size: .88rem;
+}
+
+.learnlingo-course-progress-summary .learnlingo-course-progress-heading span {
+    color: var(--learnlingo-muted);
+    font-size: .78rem;
+}
+
+.learnlingo-course-stat {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    min-width: 0;
+    padding: .45rem 1.15rem;
+    color: var(--learnlingo-ink);
+    text-decoration: none;
+    border-left: 1px solid #ECECEC;
+}
+
+.learnlingo-course-stat:hover,
+.learnlingo-course-stat:focus {
+    color: var(--learnlingo-ink);
+    text-decoration: none;
+    background: #FAFAFA;
+}
+
+.learnlingo-course-stat-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 46px;
+    width: 46px;
+    height: 46px;
+    font-size: 1.2rem;
+    border-radius: 14px;
+}
+
+.learnlingo-course-stat-xp .learnlingo-course-stat-icon {
+    color: #A66B00;
+    background: #FFF3B8;
+    box-shadow: 0 3px 0 #F0D568;
+}
+
+.learnlingo-course-stat-level .learnlingo-course-stat-icon {
+    color: #7042A0;
+    background: #F0E2FF;
+    box-shadow: 0 3px 0 #D6B8F3;
+}
+
+.learnlingo-course-stat-copy {
+    display: flex;
+    flex: 1 1 auto;
+    min-width: 0;
+    flex-direction: column;
+}
+
+.learnlingo-course-stat-copy strong {
+    overflow: hidden;
+    color: var(--learnlingo-ink);
+    font-size: 1.05rem;
+    font-weight: 900;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.learnlingo-course-stat-copy small {
+    margin-top: .12rem;
+    color: var(--learnlingo-muted);
+    font-size: .72rem;
+    font-weight: 700;
+}
+
+.learnlingo-level-progress {
+    height: 6px;
+    margin-top: .4rem;
+    overflow: hidden;
+    background: #ECECEC;
+    border-radius: 999px;
+}
+
+.learnlingo-level-progress > span {
+    display: block;
+    height: 100%;
+    background: #A560E8;
+    border-radius: inherit;
+}
+
+.learnlingo-level-next {
+    margin-top: .28rem;
+    overflow: hidden;
+    color: #909090;
+    font-size: .65rem;
+    line-height: 1.25;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+body.path-course-view .activitytitle.learnlingo-activity-title-with-xp {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .45rem;
+}
+
+body.path-course-view .learnlingo-xp-reward {
+    display: inline-flex;
+    align-items: center;
+    min-height: 26px;
+    padding: .2rem .58rem;
+    color: #A66300;
+    font-size: .72rem;
+    font-weight: 900;
+    line-height: 1;
+    background: #FFF2B2;
+    border: 1px solid #F2DC72;
+    border-radius: 999px;
+    box-shadow: 0 2px 0 #E6CF61;
+    white-space: nowrap;
+}
+
 body.learnlingo-has-course-hero #page-header {
     min-height: 0;
     margin: .65rem 0 .85rem;
@@ -312,6 +497,20 @@ body.path-course-view .courseindex .courseindex-item.pageitem a {
 }
 
 @media (max-width: 991.98px) {
+    .learnlingo-course-stats {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    .learnlingo-course-progress-summary {
+        grid-column: 1 / -1;
+        padding: 0 0 1rem;
+        border-bottom: 1px solid #ECECEC;
+    }
+
+    .learnlingo-course-stat:first-of-type {
+        border-left: 0;
+    }
+
     .learnlingo-course-hero {
         grid-template-columns: 1fr;
         padding: 1.6rem;
@@ -325,6 +524,23 @@ body.path-course-view .courseindex .courseindex-item.pageitem a {
 }
 
 @media (max-width: 575.98px) {
+    .learnlingo-course-stats {
+        grid-template-columns: 1fr;
+        padding: .85rem;
+        border-radius: 18px;
+    }
+
+    .learnlingo-course-progress-summary {
+        grid-column: auto;
+        padding: 0 0 .85rem;
+    }
+
+    .learnlingo-course-stat {
+        padding: .8rem .2rem;
+        border-top: 1px solid #ECECEC;
+        border-left: 0;
+    }
+
     .learnlingo-course-hero {
         padding: 1.25rem;
         border-radius: 22px;
