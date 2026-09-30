@@ -95,6 +95,15 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $settings->add($setting);
 
+    $setting = new admin_setting_configcheckbox(
+        'theme_learnlingo/showpersonalxp',
+        get_string('showpersonalxp', 'theme_learnlingo'),
+        get_string('showpersonalxp_desc', 'theme_learnlingo'),
+        1
+    );
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $settings->add($setting);
+
     $setting = new admin_setting_configtextarea(
         'theme_learnlingo/scsspre',
         get_string('scsspre', 'theme_learnlingo'),
