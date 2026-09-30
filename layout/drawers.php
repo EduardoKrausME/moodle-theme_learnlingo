@@ -169,7 +169,7 @@ if ($coursehero) {
     $showcourseheroprogress = !isset($PAGE->theme->settings->showcourseheroprogress)
         || !empty($PAGE->theme->settings->showcourseheroprogress);
     if ($showcourseheroprogress && isloggedin() && !isguestuser()) {
-        $progress = \\core_completion\\progress::get_course_progress_percentage($PAGE->course, $USER->id);
+        $progress = \core_completion\progress::get_course_progress_percentage($PAGE->course, $USER->id);
         if ($progress !== null) {
             $courseprogress = max(0, min(100, (int)round($progress)));
             $courseprogressavailable = true;
