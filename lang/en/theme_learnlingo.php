@@ -22,6 +22,8 @@
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+defined('MOODLE_INTERNAL') || die;
+
 $string['accentcolor'] = 'Accent colour';
 $string['accentcolor_desc'] = 'Secondary colour used in gradients and decorative elements.';
 $string['brandcolor'] = 'Primary colour';
