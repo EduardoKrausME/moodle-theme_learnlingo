@@ -25,6 +25,15 @@
 defined('MOODLE_INTERNAL') || die;
 
 if ($ADMIN->fulltree) {
+    $settings->add(new admin_setting_heading(
+        'theme_learnlingo/aibrandingheading',
+        get_string('aibranding', 'theme_learnlingo'),
+        html_writer::link(
+            new moodle_url('/theme/learnlingo/admin/branding_ai.php'),
+            get_string('aibrandingopen', 'theme_learnlingo')
+        )
+    ));
+
     $setting = new admin_setting_configcolourpicker(
         'theme_learnlingo/brandcolor',
         get_string('brandcolor', 'theme_learnlingo'),
