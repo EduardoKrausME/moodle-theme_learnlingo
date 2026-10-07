@@ -216,6 +216,8 @@ if ($coursehero) {
 }
 
 $templatecontext = [
+    'brandlogo' => theme_learnlingo_logo_url($PAGE->theme, 'logo'),
+    'hasbrandlogo' => (bool) theme_learnlingo_logo_url($PAGE->theme, 'logo'),
     'sitename' => format_string($SITE->shortname, true, ['context' => context_course::instance(SITEID), "escape" => false]),
     'coursefullname' => $coursefullname,
     'courseurl' => $courseurl ? $courseurl->out(false) : null,
