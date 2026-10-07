@@ -26,6 +26,15 @@ defined('MOODLE_INTERNAL') || die;
 
 if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_heading(
+        'theme_learnlingo/jsonbrandingheading',
+        get_string('jsonpagetitle', 'theme_learnlingo'),
+        html_writer::link(
+            new moodle_url('/theme/learnlingo/admin/branding_json.php'),
+            get_string('jsonopen', 'theme_learnlingo')
+        )
+    ));
+
+    $settings->add(new admin_setting_heading(
         'theme_learnlingo/aibrandingheading',
         get_string('aibranding', 'theme_learnlingo'),
         html_writer::link(
@@ -60,6 +69,18 @@ if ($ADMIN->fulltree) {
             $area,
             0,
             ['maxfiles' => 1, 'accepted_types' => ['.png', '.jpg', '.jpeg', '.webp']]
+        );
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $settings->add($setting);
+    }
+
+    foreach (['logosvg', 'loginlogosvg'] as $name) {
+        $setting = new admin_setting_configtextarea(
+            'theme_learnlingo/' . $name,
+            get_string($name, 'theme_learnlingo'),
+            get_string($name . '_desc', 'theme_learnlingo'),
+            '',
+            PARAM_RAW
         );
         $setting->set_updatedcallback('theme_reset_all_caches');
         $settings->add($setting);
