@@ -43,6 +43,30 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $settings->add($setting);
 
+    foreach (['logo', 'loginlogo'] as $area) {
+        $setting = new admin_setting_configstoredfile(
+            'theme_learnlingo/' . $area,
+            get_string($area, 'theme_learnlingo'),
+            get_string($area . '_desc', 'theme_learnlingo'),
+            $area,
+            0,
+            ['maxfiles' => 1, 'accepted_types' => ['.png', '.jpg', '.jpeg', '.webp']]
+        );
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $settings->add($setting);
+    }
+
+    foreach (['canvascolor' => '#f5f6f8', 'textcolor' => '#252a37'] as $name => $default) {
+        $setting = new admin_setting_configcolourpicker(
+            'theme_learnlingo/' . $name,
+            get_string($name, 'theme_learnlingo'),
+            get_string($name . '_desc', 'theme_learnlingo'),
+            $default
+        );
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $settings->add($setting);
+    }
+
     $setting = new admin_setting_configcheckbox(
         'theme_learnlingo/showdashboardhero',
         get_string('showdashboardhero', 'theme_learnlingo'),
