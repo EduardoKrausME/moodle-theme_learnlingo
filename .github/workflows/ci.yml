@@ -67,9 +67,11 @@ jobs:
         echo "NVM_DIR=$HOME/.nvm" >> $GITHUB_ENV
 
     - name: Check out Personal XP dependency
-      run: |
-        mkdir -p ./extra-plugins
-        git clone --depth 1 --branch main https://github.com/EduardoKrausME/moodle-local_personalxp.git ./extra-plugins/local_personalxp
+      uses: actions/checkout@v4
+      with:
+        repository: EduardoKrausME/moodle-local_personalxp
+        ref: master
+        path: extra-plugins/local_personalxp
 
     - name: Install moodle-plugin-ci
       run: moodle-plugin-ci install --plugin ./plugin --db-host=127.0.0.1 --extra-plugins ./extra-plugins
