@@ -2,10 +2,10 @@
 :root {
     --pulsomed-primary: #{$primary};
     --pulsomed-accent: #{$pulsomed-accent};
-    --pulsomed-ink: #252A37;
+    --pulsomed-ink: #{$body-color};
     --pulsomed-muted: #727681;
     --pulsomed-surface: #FFF;
-    --pulsomed-canvas: #F5F6F8;
+    --pulsomed-canvas: #{$body-bg};
     --pulsomed-border: #E4E6EB;
     --pulsomed-shadow: 0 4px 0 rgba(37, 42, 55, .07);
     --pulsomed-shadow-hover: 0 8px 18px rgba(37, 42, 55, .11);
@@ -1367,3 +1367,5 @@ h6,
 @import "moodle/activityicons";
 @import "moodle/course";
 @import "moodle/debug";
+
+.pulsomed-login-logo { display: block; max-width: min(100%, 280px); max-height: 100px; width: auto; height: auto; object-fit: contain; }
