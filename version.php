@@ -32,5 +32,6 @@ $plugin->maturity = MATURITY_STABLE;
 
 $plugin->dependencies = [
     'theme_boost' => 2024100700,
+    'local_ai_bridge' => 2026093001,
     'local_personalxp' => 2026093001,
 ];
