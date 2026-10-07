@@ -36,9 +36,15 @@ function theme_learnlingo_get_pre_scss(theme_config $theme): string {
     $brandcolor = !empty($theme->settings->brandcolor) ? $theme->settings->brandcolor : "#ef3340";
     $accentcolor = !empty($theme->settings->accentcolor) ? $theme->settings->accentcolor : "#ff6670";
 
-    $scss = file_get_contents("{$CFG->dirroot}/theme/learnlingo/scss/_pre.scss");
-    $scss .= "\$primary: {$brandcolor};\n";
+    $canvascolor = !empty($theme->settings->canvascolor) ? $theme->settings->canvascolor : '#f5f6f8';
+    $textcolor = !empty($theme->settings->textcolor) ? $theme->settings->textcolor : '#252a37';
+
+    $scss = "\$primary: {$brandcolor};\n";
     $scss .= "\$pulsomed-accent: {$accentcolor};\n";
+    $scss .= "\$body-bg: {$canvascolor};\n";
+    $scss .= "\$body-color: {$textcolor};\n";
+    $scss .= "\$headings-color: {$textcolor};\n";
+    $scss .= file_get_contents("{$CFG->dirroot}/theme/learnlingo/scss/_pre.scss");
 
     if (!empty($theme->settings->scsspre)) {
         $scss .= PHP_EOL . $theme->settings->scsspre;
@@ -65,4 +71,32 @@ function theme_learnlingo_get_extra_scss(theme_config $theme): string {
     }
 
     return $scss;
+}
+
+/**
+ * URL for an uploaded theme logo.
+ *
+ * @param theme_config $theme Theme settings.
+ * @param string $area File area.
+ * @return string|null
+ */
+function theme_learnlingo_logo_url(theme_config $theme, string $area): ?string {
+    $url = $theme->setting_file_url($area, $area);
+    return $url ? (string) $url : null;
+}
+
+/**
+ * Serves logos uploaded through the theme configuration.
+ */
+function theme_learnlingo_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = []): void {
+    if ($context->contextlevel !== CONTEXT_SYSTEM || !in_array($filearea, ['logo', 'loginlogo'], true)) {
+        send_file_not_found();
+    }
+    $filename = array_pop($args);
+    $filepath = $args ? '/' . implode('/', $args) . '/' : '/';
+    $file = get_file_storage()->get_file($context->id, 'theme_learnlingo', $filearea, 0, $filepath, $filename);
+    if (!$file || $file->is_directory()) {
+        send_file_not_found();
+    }
+    send_stored_file($file, 86400, 0, false, $options);
 }
