@@ -107,3 +107,16 @@ $string['loginpaneldescriptiontext'] = 'Descrição do login';
 $string['loginpaneldescriptiontext_desc'] = 'Descrição institucional na tela de login.';
 $string['loginpaneltaglinetext'] = 'Frase do login';
 $string['loginpaneltaglinetext_desc'] = 'Frase curta no rodapé do painel de login.';
+
+$string['aibranding'] = 'Personalização com IA';
+$string['aibrandingopen'] = 'Abrir assistente de identidade visual com IA';
+$string['aibrandingdesc'] = 'Descreva a instituição e gere uma proposta para revisão. Exige o local_ai_bridge configurado, com a finalidade theme-branding e rota para o administrador atual. Nada é salvo sem confirmação.';
+$string['aibridgemissing'] = 'O plugin AI Bridge não está instalado ou disponível.';
+$string['aidescriptionrequired'] = 'Descreva a instituição antes de gerar.';
+$string['aidescription'] = 'Instituição, público e identidade visual desejada';
+$string['aigenerationfailed'] = 'Não foi possível gerar uma proposta válida';
+$string['ainoproposal'] = 'Gere uma proposta antes de aplicar.';
+$string['aiapplied'] = 'Configurações de identidade visual salvas.';
+$string['aigenerate'] = 'Gerar sugestão';
+$string['aipreview'] = 'Revisar valores sugeridos';
+$string['aiapply'] = 'Aplicar estas configurações';
