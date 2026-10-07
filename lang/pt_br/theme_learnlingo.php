@@ -120,3 +120,15 @@ $string['aiapplied'] = 'Configurações de identidade visual salvas.';
 $string['aigenerate'] = 'Gerar sugestão';
 $string['aipreview'] = 'Revisar valores sugeridos';
 $string['aiapply'] = 'Aplicar estas configurações';
+
+$string['homepageheading'] = 'Página inicial do site';
+$string['homepageheading_desc'] = 'Escolha como a página inicial do site será exibida. O Painel do aluno e as páginas dos cursos continuam independentes.';
+$string['homepagemode'] = 'Modelo da página inicial';
+$string['homepagemode_desc'] = 'LearnLingo mantém a home visual atual; Moodle exibe as listas nativas de cursos e atividades; HTML apresenta o conteúdo do editor. Se o HTML estiver vazio, a página nativa do Moodle é utilizada.';
+$string['homepagemodelearnlingo'] = 'Home LearnLingo (visual atual)';
+$string['homepagemodemoodle'] = 'Home padrão do Moodle';
+$string['homepagemodehtml'] = 'Home em HTML personalizado';
+$string['homepagehtml'] = 'HTML da página inicial';
+$string['homepagehtml_desc'] = 'Exibido apenas no modo HTML personalizado. Use o editor visual ou a edição do código HTML para compor banners, seções e mídias. Scripts não permitidos são removidos; adicione estilos próprios no campo SCSS adicional. É possível usar URLs de imagens já hospedadas.';
+$string['homepagefullwidth'] = 'Home HTML em largura total';
+$string['homepagefullwidth_desc'] = 'Remove a limitação de largura do conteúdo do LearnLingo somente na página inicial em HTML.';
