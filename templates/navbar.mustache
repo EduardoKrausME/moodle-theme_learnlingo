@@ -64,6 +64,10 @@
 
         <a href="{{{ config.homeurl }}}" class="navbar-brand pulsomed-navbar-brand d-flex align-items-center m-0 me-4 p-0 aabtn" aria-label="{{sitename}}">
 
+            {{#hasbrandlogo}}
+                <img src="{{{brandlogo}}}" class="logo me-1" alt="{{sitename}}">
+            {{/hasbrandlogo}}
+            {{^hasbrandlogo}}
             {{# output.should_display_navbar_logo }}
                 <img src="{{{output.get_compact_logo_url}}}" class="logo me-1" alt="{{sitename}}">
             {{/ output.should_display_navbar_logo }}
@@ -73,6 +77,7 @@
                 </span>
                 <span class="pulsomed-wordmark">PULSO<span class="pulsomed-wordmark-accent">MED</span></span>
             {{/ output.should_display_navbar_logo }}
+            {{/hasbrandlogo}}
         </a>
         {{#primarymoremenu}}
             <div class="primary-navigation">
