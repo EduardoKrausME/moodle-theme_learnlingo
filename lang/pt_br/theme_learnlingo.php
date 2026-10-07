@@ -96,3 +96,14 @@ $string['canvascolor'] = 'Cor de fundo';
 $string['canvascolor_desc'] = 'Cor principal do fundo das páginas.';
 $string['textcolor'] = 'Cor do texto';
 $string['textcolor_desc'] = 'Cor principal dos textos e títulos.';
+
+$string['dashboardeyebrowtext'] = 'Rótulo de boas-vindas';
+$string['dashboardeyebrowtext_desc'] = 'Substitui o pequeno rótulo de boas-vindas.';
+$string['dashboarddescriptiontext'] = 'Descrição de boas-vindas';
+$string['dashboarddescriptiontext_desc'] = 'Descrição institucional no painel inicial.';
+$string['loginpaneltitletext'] = 'Título do painel de login';
+$string['loginpaneltitletext_desc'] = 'Título principal do painel esquerdo na tela de login.';
+$string['loginpaneldescriptiontext'] = 'Descrição do login';
+$string['loginpaneldescriptiontext_desc'] = 'Descrição institucional na tela de login.';
+$string['loginpaneltaglinetext'] = 'Frase do login';
+$string['loginpaneltaglinetext_desc'] = 'Frase curta no rodapé do painel de login.';
