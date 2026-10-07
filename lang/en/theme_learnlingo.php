@@ -87,3 +87,12 @@ $string['showdashboardhero_desc'] = 'Displays the PulsoMed welcome panel on the 
 $string['showfooter'] = 'Show footer';
 $string['showpersonalxp'] = 'Show Personal XP';
 $string['showpersonalxp_desc'] = 'Displays Personal XP in the LearnLingo course experience when local_personalxp is enabled. The plugin remains installed even when this display is disabled.';
+
+$string['logo'] = 'Header logo';
+$string['logo_desc'] = 'Logo displayed in the navigation bar. When empty, the Moodle site logo or the theme default is used.';
+$string['loginlogo'] = 'Login logo';
+$string['loginlogo_desc'] = 'Logo displayed on the login panel. When empty, the header logo is reused.';
+$string['canvascolor'] = 'Page background colour';
+$string['canvascolor_desc'] = 'Main background colour of the pages.';
+$string['textcolor'] = 'Text colour';
+$string['textcolor_desc'] = 'Main text and heading colour.';
