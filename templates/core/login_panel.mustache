@@ -34,19 +34,19 @@
         {{/loginlogo}}
         {{^loginlogo}}
         <span class="pulsomed-brandmark" aria-hidden="true"><i class="fa fa-heartbeat"></i></span>
-        <span class="pulsomed-wordmark">PULSO<span class="pulsomed-wordmark-accent">MED</span></span>
+        <span class="pulsomed-wordmark">{{sitename}}</span>
         {{/loginlogo}}
     </div>
     {{^leftinstructions}}
-        <span class="pulsomed-login-kicker">{{#str}}dashboardeyebrow, theme_learnlingo{{/str}}</span>
-        <h1>{{#str}}loginpaneltitle, theme_learnlingo{{/str}}</h1>
-        <p class="pulsomed-login-description">{{#str}}loginpaneldescription, theme_learnlingo{{/str}}</p>
+        <span class="pulsomed-login-kicker">{{loginkicker}}</span>
+        <h1>{{logintitle}}</h1>
+        <p class="pulsomed-login-description">{{logindescription}}</p>
         <ul class="pulsomed-login-benefits">
             <li><i class="fa fa-bolt" aria-hidden="true"></i>{{#str}}loginbenefitone, theme_learnlingo{{/str}}</li>
             <li><i class="fa fa-map-signs" aria-hidden="true"></i>{{#str}}loginbenefittwo, theme_learnlingo{{/str}}</li>
             <li><i class="fa fa-line-chart" aria-hidden="true"></i>{{#str}}loginbenefitthree, theme_learnlingo{{/str}}</li>
         </ul>
-        <p class="pulsomed-login-tagline">{{#str}}loginpaneltagline, theme_learnlingo{{/str}}</p>
+        <p class="pulsomed-login-tagline">{{logintagline}}</p>
     {{/leftinstructions}}
     {{#leftinstructions}}
         <div class="mx-auto text-start">
