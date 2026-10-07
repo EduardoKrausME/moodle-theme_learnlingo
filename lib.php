@@ -96,3 +96,16 @@ function theme_learnlingo_pluginfile($course, $cm, $context, $filearea, $args, $
     // and resolves the configured file in the system context.
     theme_config::load('learnlingo')->setting_file_serve($filearea, $args, $forcedownload, $options);
 }
+
+/**
+ * Return configurable institutional text, with translated defaults.
+ *
+ * @param string $key Configuration key.
+ * @param string $fallback Moodle language string identifier.
+ * @return string
+ */
+function theme_learnlingo_brand_text(string $key, string $fallback): string {
+    $configured = get_config('theme_learnlingo', $key);
+    return is_string($configured) && trim($configured) !== ''
+        ? $configured : get_string($fallback, 'theme_learnlingo');
+}
