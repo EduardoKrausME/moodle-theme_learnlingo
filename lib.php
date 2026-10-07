@@ -109,3 +109,25 @@ function theme_learnlingo_brand_text(string $key, string $fallback): string {
     return is_string($configured) && trim($configured) !== ''
         ? $configured : get_string($fallback, 'theme_learnlingo');
 }
+
+
+/**
+ * Resolve the site homepage mode, preserving the pre-existing LearnLingo home.
+ *
+ * @param theme_config $theme Active theme configuration.
+ * @return string 'learnlingo', 'moodle' or 'html'.
+ */
+function theme_learnlingo_homepage_mode(theme_config $theme): string {
+    $mode = (string) ($theme->settings->homepagemode ?? 'learnlingo');
+    return in_array($mode, ['learnlingo', 'moodle', 'html'], true) ? $mode : 'learnlingo';
+}
+
+/**
+ * Get configured home HTML (it is cleaned only when rendered).
+ *
+ * @param theme_config $theme Active theme configuration.
+ * @return string
+ */
+function theme_learnlingo_homepage_html(theme_config $theme): string {
+    return trim((string) ($theme->settings->homepagehtml ?? ''));
+}
