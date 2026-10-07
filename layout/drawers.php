@@ -71,7 +71,7 @@ if (!$courseindex) {
     $courseindexopen = false;
 }
 
-$bodyattributes = $OUTPUT->body_attributes($extraclasses);
+// Body attributes are built after the homepage layout mode is resolved.
 $forceblockdraweropen = $OUTPUT->firstview_fakeblocks();
 
 $secondarynavigation = false;
@@ -116,7 +116,20 @@ $dashboardhero = $PAGE->pagetype === 'my-index'
     && !isguestuser()
     && !$PAGE->user_is_editing()
     && $showdashboardhero;
-$customfrontpage = $PAGE->pagetype === 'site-index' && !$PAGE->user_is_editing() && $showdashboardhero;
+$homepagemode = theme_learnlingo_homepage_mode($PAGE->theme);
+$ishtmlhomepage = $PAGE->pagetype === 'site-index'
+    && !$PAGE->user_is_editing()
+    && $homepagemode === 'html'
+    && theme_learnlingo_homepage_html($PAGE->theme) !== '';
+$customfrontpage = $PAGE->pagetype === 'site-index'
+    && !$PAGE->user_is_editing()
+    && ($ishtmlhomepage || ($homepagemode === 'learnlingo' && $showdashboardhero));
+if ($ishtmlhomepage && (!isset($PAGE->theme->settings->homepagefullwidth)
+        || !empty($PAGE->theme->settings->homepagefullwidth))) {
+    $extraclasses[] = 'learnlingo-html-home-fullwidth';
+}
+
+$bodyattributes = $OUTPUT->body_attributes($extraclasses);
 $coursesurl = new moodle_url('/my/courses.php');
 $dashboardtitle = $dashboardhero
     ? get_string('dashboardtitle', 'theme_learnlingo', $USER->firstname)
