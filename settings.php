@@ -67,6 +67,24 @@ if ($ADMIN->fulltree) {
         $settings->add($setting);
     }
 
+    foreach ([
+        'dashboardeyebrowtext' => '',
+        'dashboarddescriptiontext' => '',
+        'loginpaneltitletext' => '',
+        'loginpaneldescriptiontext' => '',
+        'loginpaneltaglinetext' => '',
+    ] as $name => $default) {
+        $setting = new admin_setting_configtext(
+            'theme_learnlingo/' . $name,
+            get_string($name, 'theme_learnlingo'),
+            get_string($name . '_desc', 'theme_learnlingo'),
+            $default,
+            PARAM_TEXT
+        );
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $settings->add($setting);
+    }
+
     $setting = new admin_setting_configcheckbox(
         'theme_learnlingo/showdashboardhero',
         get_string('showdashboardhero', 'theme_learnlingo'),
