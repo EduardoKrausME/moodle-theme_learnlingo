@@ -1,9 +1,5 @@
 // PulsoMed design tokens loaded before Boost and Bootstrap.
-$primary: #ef3340;
-$pulsomed-accent: #ff6670;
-$body-bg: #f5f6f8;
-$body-color: #252a37;
-$headings-color: #252a37;
+// Colour tokens are configured in lib.php before this file is loaded.
 $link-color: $primary;
 $link-hover-color: darken($primary, 8%);
 $border-color: #e4e6eb;
