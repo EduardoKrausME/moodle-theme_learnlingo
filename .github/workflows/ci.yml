@@ -49,13 +49,6 @@ jobs:
       with:
         path: plugin
 
-    - name: Check out Boost
-      uses: actions/checkout@v4
-      with:
-        repository: EduardoKrausME/moodle-theme_boost
-        ref: master
-        path: extra-plugins/boost
-
     - name: Setup PHP ${{ matrix.config.php }}
       uses: shivammathur/setup-php@v2
       with:
