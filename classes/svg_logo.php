@@ -49,7 +49,7 @@ final class svg_logo {
 
         $previous = libxml_use_internal_errors(true);
         try {
-            $document = new \\DOMDocument();
+            $document = new \DOMDocument();
             if (!$document->loadXML($source, LIBXML_NONET) ||
                     $document->doctype !== null || !$document->documentElement ||
                     $document->documentElement->localName !== 'svg' ||
@@ -72,10 +72,10 @@ final class svg_logo {
     /**
      * Recursively check the SVG element tree.
      *
-     * @param \\DOMNode $node Node.
+     * @param \DOMNode $node Node.
      * @return bool
      */
-    private static function check_node(\\DOMNode $node): bool {
+    private static function check_node(\DOMNode $node): bool {
         $elements = ['svg', 'g', 'path', 'rect', 'circle', 'ellipse', 'line', 'polyline',
             'polygon', 'text', 'tspan', 'title', 'desc'];
         $attributes = ['xmlns', 'viewBox', 'width', 'height', 'x', 'y', 'x1', 'x2',
