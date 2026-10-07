@@ -92,11 +92,7 @@ function theme_learnlingo_pluginfile($course, $cm, $context, $filearea, $args, $
     if ($context->contextlevel !== CONTEXT_SYSTEM || !in_array($filearea, ['logo', 'loginlogo'], true)) {
         send_file_not_found();
     }
-    $filename = array_pop($args);
-    $filepath = $args ? '/' . implode('/', $args) . '/' : '/';
-    $file = get_file_storage()->get_file($context->id, 'theme_learnlingo', $filearea, 0, $filepath, $filename);
-    if (!$file || $file->is_directory()) {
-        send_file_not_found();
-    }
-    send_stored_file($file, 86400, 0, false, $options);
+    // Moodle adds the theme revision to the URL. The core helper removes it
+    // and resolves the configured file in the system context.
+    theme_config::load('learnlingo')->setting_file_serve($filearea, $args, $forcedownload, $options);
 }
