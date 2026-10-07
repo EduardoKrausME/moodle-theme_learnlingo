@@ -87,3 +87,12 @@ $string['showdashboardhero_desc'] = 'Exibe o painel de boas-vindas PulsoMed na p
 $string['showfooter'] = 'Exibir rodapé';
 $string['showpersonalxp'] = 'Exibir XP Pessoal';
 $string['showpersonalxp_desc'] = 'Exibe o XP Pessoal na experiência visual do LearnLingo quando o local_personalxp estiver ativado. O plugin continua instalado mesmo quando esta exibição estiver desativada.';
+
+$string['logo'] = 'Logo do cabeçalho';
+$string['logo_desc'] = 'Logo exibida na navegação. Sem arquivo, utiliza a logo do Moodle ou a marca padrão do tema.';
+$string['loginlogo'] = 'Logo do login';
+$string['loginlogo_desc'] = 'Logo exibida na tela de login. Sem arquivo, utiliza a logo do cabeçalho.';
+$string['canvascolor'] = 'Cor de fundo';
+$string['canvascolor_desc'] = 'Cor principal do fundo das páginas.';
+$string['textcolor'] = 'Cor do texto';
+$string['textcolor_desc'] = 'Cor principal dos textos e títulos.';
