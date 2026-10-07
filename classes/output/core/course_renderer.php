@@ -45,7 +45,31 @@ class course_renderer extends core_course_renderer {
      * @return string
      */
     public function frontpage() {
-        if ($this->page->user_is_editing() || !$this->customfrontpageenabled()) {
+        // Keep Moodle's normal front page while editing so activities and blocks remain manageable.
+        if ($this->page->user_is_editing()) {
+            return parent::frontpage();
+        }
+
+        $mode = theme_learnlingo_homepage_mode($this->page->theme);
+        if ($mode === 'moodle') {
+            return parent::frontpage();
+        }
+        if ($mode === 'html') {
+            $html = theme_learnlingo_homepage_html($this->page->theme);
+            if ($html === '') {
+                // An empty HTML configuration must not result in an empty site homepage.
+                return parent::frontpage();
+            }
+            // Filter and clean editor HTML, without running arbitrary scripts or raw PHP.
+            $content = \format_text($html, FORMAT_HTML, [
+                'context' => \context_system::instance(),
+                'noclean' => false,
+                'filter' => true,
+                'para' => false,
+            ]);
+            return \html_writer::div($content, 'learnlingo-html-home');
+        }
+        if (!$this->customfrontpageenabled()) {
             return parent::frontpage();
         }
 
@@ -106,6 +130,21 @@ class course_renderer extends core_course_renderer {
         ];
 
         return $this->render_from_template('theme_learnlingo/frontpage', $data);
+    }
+
+    /**
+     * Hide Moodle's site section only while showing the configured HTML home.
+     * Editing mode always exposes the original section and its activities.
+     *
+     * @return string
+     */
+    public function frontpage_section1() {
+        if (!$this->page->user_is_editing()
+                && theme_learnlingo_homepage_mode($this->page->theme) === 'html'
+                && theme_learnlingo_homepage_html($this->page->theme) !== '') {
+            return '';
+        }
+        return parent::frontpage_section1();
     }
 
     /**
