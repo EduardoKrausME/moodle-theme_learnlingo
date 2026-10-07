@@ -120,3 +120,15 @@ $string['aiapplied'] = 'Institution branding preferences saved.';
 $string['aigenerate'] = 'Generate suggestion';
 $string['aipreview'] = 'Review the proposed values';
 $string['aiapply'] = 'Apply these settings';
+
+$string['homepageheading'] = 'Site homepage';
+$string['homepageheading_desc'] = 'Choose how the public site homepage is rendered. The dashboard and course pages are independent.';
+$string['homepagemode'] = 'Homepage layout';
+$string['homepagemode_desc'] = 'LearnLingo retains the existing home, Moodle uses the native course and activity lists, and HTML displays the editor content. An empty HTML home automatically falls back to Moodle.';
+$string['homepagemodelearnlingo'] = 'LearnLingo home (current layout)';
+$string['homepagemodemoodle'] = 'Native Moodle home';
+$string['homepagemodehtml'] = 'Custom HTML home';
+$string['homepagehtml'] = 'Custom homepage HTML';
+$string['homepagehtml_desc'] = 'HTML shown only in Custom HTML mode. Use the visual editor or HTML source view to create banners, sections and embedded media. Unsupported scripts are removed for safety; place custom styles in Additional SCSS. Hosted image URLs can be used.';
+$string['homepagefullwidth'] = 'Full-width HTML homepage';
+$string['homepagefullwidth_desc'] = 'Remove the LearnLingo content width restriction on the custom HTML homepage only.';
