@@ -76,11 +76,11 @@ class course_renderer extends core_course_renderer {
 
         $data = [
             'showwelcome' => $showwelcome,
-            'dashboardeyebrow' => get_string('dashboardeyebrow', 'theme_learnlingo'),
+            'dashboardeyebrow' => theme_learnlingo_brand_text('dashboardeyebrowtext', 'dashboardeyebrow'),
             'dashboardtitle' => $showwelcome
                 ? get_string('dashboardtitle', 'theme_learnlingo', $firstname)
                 : '',
-            'dashboarddescription' => get_string('dashboarddescription', 'theme_learnlingo'),
+            'dashboarddescription' => theme_learnlingo_brand_text('dashboarddescriptiontext', 'dashboarddescription'),
             'dashboardcta' => get_string('dashboardcta', 'theme_learnlingo'),
             'goaltitle' => get_string('goaltitle', 'theme_learnlingo'),
             'goaltime' => get_string('goaltime', 'theme_learnlingo'),
