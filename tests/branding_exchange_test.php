@@ -1,0 +1,87 @@
+<?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU GPL for details.
+
+/**
+ * Contract tests for the LearnLingo ChatGPT JSON exchange.
+ *
+ * @package theme_learnlingo
+ * @copyright 2026 Eduardo Kraus
+ * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+namespace theme_learnlingo;
+
+defined('MOODLE_INTERNAL') || die;
+
+/**
+ * Round-trip validation and safe SVG checks.
+ */
+final class branding_exchange_test extends \advanced_testcase {
+    /**
+     * A freshly exported JSON can always be re-imported without schema drift.
+     */
+    public function test_original_json_roundtrip(): void {
+        $this->resetAfterTest();
+        $original = branding_exchange::export();
+        $parsed = branding_exchange::parse(branding_exchange::json($original));
+        $this->assertSame($original, $parsed);
+        $prompt = branding_exchange::prompt($original);
+        $this->assertStringContainsString('https://github.com/EduardoKrausME/moodle-theme_learnlingo', $prompt);
+        $this->assertStringContainsString('schema_version', $prompt);
+    }
+
+    /**
+     * No model-added settings may reach set_config.
+     */
+    public function test_extra_key_is_rejected(): void {
+        $data = branding_exchange::export();
+        $data['settings']['extra_setting'] = 'not allowed';
+        $this->expectException(\invalid_parameter_exception::class);
+        branding_exchange::parse(branding_exchange::json($data));
+    }
+
+    /**
+     * Boolean fields cannot be converted to strings.
+     */
+    public function test_changed_type_is_rejected(): void {
+        $data = branding_exchange::export();
+        $data['settings']['showcoursehero'] = 'true';
+        $this->expectException(\invalid_parameter_exception::class);
+        branding_exchange::parse(branding_exchange::json($data));
+    }
+
+    /**
+     * Reject executable SVG while allowing basic generated vector logos.
+     */
+    public function test_svg_must_be_static(): void {
+        $valid = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50">'
+            . '<rect width="100" height="50" fill="#123456"/></svg>';
+        $this->assertTrue(svg_logo::is_valid($valid));
+        $this->assertStringStartsWith('data:image/svg+xml;base64,', svg_logo::data_url($valid));
+        $this->assertFalse(svg_logo::is_valid('<svg xmlns="http://www.w3.org/2000/svg">'
+            . '<script>alert(1)</script></svg>'));
+        $this->assertFalse(svg_logo::is_valid('<svg xmlns="http://www.w3.org/2000/svg">'
+            . '<image href="https://example.com/image.png"/></svg>'));
+    }
+
+    /**
+     * Home HTML, SCSS and SVG are part of the stable importable contract.
+     */
+    public function test_html_home_and_logo_roundtrip(): void {
+        $data = branding_exchange::export();
+        $data['settings']['homepagemode'] = 'html';
+        $data['settings']['homepagehtml'] = '<section><h1>Universidade Esportiva</h1></section>';
+        $data['settings']['scss'] = '.learnlingo-html-home { padding: 2rem; }';
+        $data['settings']['logosvg'] = '<svg xmlns="http://www.w3.org/2000/svg" '
+            . 'viewBox="0 0 50 50"><circle cx="25" cy="25" r="20" fill="#ef3340"/></svg>';
+        $this->assertSame($data, branding_exchange::parse(branding_exchange::json($data)));
+    }
+}
