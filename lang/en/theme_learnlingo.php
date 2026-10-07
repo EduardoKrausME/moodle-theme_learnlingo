@@ -107,3 +107,16 @@ $string['loginpaneldescriptiontext'] = 'Login panel description';
 $string['loginpaneldescriptiontext_desc'] = 'Description on the left side of the login page.';
 $string['loginpaneltaglinetext'] = 'Login panel tagline';
 $string['loginpaneltaglinetext_desc'] = 'Short tagline at the bottom of the login panel.';
+
+$string['aibranding'] = 'AI-assisted branding';
+$string['aibrandingopen'] = 'Open the AI branding assistant';
+$string['aibrandingdesc'] = 'Describe the institution and generate a reviewable proposal. Requires an enabled local_ai_bridge with the theme-branding purpose and a route for the current administrator. AI never modifies settings without approval.';
+$string['aibridgemissing'] = 'The AI Bridge plugin is not installed or enabled.';
+$string['aidescriptionrequired'] = 'Describe the institution before generating.';
+$string['aidescription'] = 'Institution, audience and desired visual style';
+$string['aigenerationfailed'] = 'Unable to generate a valid suggestion';
+$string['ainoproposal'] = 'Generate a proposal before applying it.';
+$string['aiapplied'] = 'Institution branding preferences saved.';
+$string['aigenerate'] = 'Generate suggestion';
+$string['aipreview'] = 'Review the proposed values';
+$string['aiapply'] = 'Apply these settings';
