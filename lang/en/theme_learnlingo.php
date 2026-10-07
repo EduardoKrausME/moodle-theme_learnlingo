@@ -96,3 +96,14 @@ $string['canvascolor'] = 'Page background colour';
 $string['canvascolor_desc'] = 'Main background colour of the pages.';
 $string['textcolor'] = 'Text colour';
 $string['textcolor_desc'] = 'Main text and heading colour.';
+
+$string['dashboardeyebrowtext'] = 'Welcome panel label';
+$string['dashboardeyebrowtext_desc'] = 'Replaces the small welcome label when filled.';
+$string['dashboarddescriptiontext'] = 'Welcome description';
+$string['dashboarddescriptiontext_desc'] = 'Institution-specific welcome description.';
+$string['loginpaneltitletext'] = 'Login panel heading';
+$string['loginpaneltitletext_desc'] = 'Main heading on the left side of the login page.';
+$string['loginpaneldescriptiontext'] = 'Login panel description';
+$string['loginpaneldescriptiontext_desc'] = 'Description on the left side of the login page.';
+$string['loginpaneltaglinetext'] = 'Login panel tagline';
+$string['loginpaneltaglinetext_desc'] = 'Short tagline at the bottom of the login panel.';
