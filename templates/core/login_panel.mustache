@@ -29,8 +29,13 @@
 }}
 <div class="login-layout-left-content">
     <div class="pulsomed-login-brand">
+        {{#loginlogo}}
+            <img src="{{{loginlogo}}}" class="pulsomed-login-logo" alt="{{sitename}}">
+        {{/loginlogo}}
+        {{^loginlogo}}
         <span class="pulsomed-brandmark" aria-hidden="true"><i class="fa fa-heartbeat"></i></span>
         <span class="pulsomed-wordmark">PULSO<span class="pulsomed-wordmark-accent">MED</span></span>
+        {{/loginlogo}}
     </div>
     {{^leftinstructions}}
         <span class="pulsomed-login-kicker">{{#str}}dashboardeyebrow, theme_learnlingo{{/str}}</span>
