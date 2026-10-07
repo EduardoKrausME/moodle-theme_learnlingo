@@ -55,7 +55,7 @@ if ($action === 'generate') {
                 'The first four keys must contain #RRGGBB hex colours. ' .
                 'All other keys must contain short, natural Brazilian Portuguese copy. ' .
                 'Avoid hardcoded product, provider and client names that are not in the description.';
-            $response = \\local_ai_bridge\\api::generate('theme-branding', $prompt);
+            $response = \local_ai_bridge\api::generate('theme-branding', $prompt);
             $raw = trim((string)$response->text);
             $raw = preg_replace('/^\x60\x60\x60(?:json)?\s*|\s*\x60\x60\x60$/i', '', $raw);
             $data = json_decode($raw, true, 16, JSON_THROW_ON_ERROR);
