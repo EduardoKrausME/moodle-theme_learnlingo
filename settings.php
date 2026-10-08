@@ -24,6 +24,11 @@
 
 defined('MOODLE_INTERNAL') || die;
 
+// Moodle creates theme setting pages hidden by default. The navigation tree can
+// be built with fulltree=false, so unhide the page outside the settings block.
+// Otherwise themesettinglearnlingo is never registered in the administration tree.
+$settings->hidden = false;
+
 if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_heading(
         'theme_learnlingo/jsonbrandingheading',
