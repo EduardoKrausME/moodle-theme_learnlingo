@@ -1,0 +1,42 @@
+name: Moodle ChatGPT finishing validator
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  finish:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout LearnLingo
+        uses: actions/checkout@v4
+        with:
+          path: plugin
+      - name: Checkout canonical Moodle validator
+        uses: actions/checkout@v4
+        with:
+          repository: EduardoKrausME/moodle-plugin-validate
+          ref: master
+          path: validator
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, dom, xml, json
+          coverage: none
+      - name: Execute canonical finishing runner
+        run: python3 validator/.chatgpt/run.py "$GITHUB_WORKSPACE/plugin"
+      - name: Show formatter changes
+        if: always()
+        run: |
+          git -C plugin diff --stat
+          git -C plugin diff --check
+          git -C plugin diff > formatting.patch
+          git -C plugin status --short
+      - name: Upload formatting patch
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: learnlingo-formatting-patch
+          path: formatting.patch
