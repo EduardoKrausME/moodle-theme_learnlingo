@@ -41,3 +41,9 @@ Example payload for `learnlingo_update_homepage`:
 Without `local_mcp`, the theme works normally; these classes are loaded
 only when requested by an installed MCP provider. After updating both
 plugins, refresh the custom MCP connection in ChatGPT to discover the tools.
+
+### Integração MCP — configurações do tema
+
+Com o `local_mcp` instalado, o LearnLingo registra automaticamente quatro ferramentas: `learnlingo_get_homepage` e `learnlingo_update_homepage` para a página inicial, além de `learnlingo_get_settings` e `learnlingo_update_settings` para todas as configurações. A leitura completa inclui cores, textos, opções de cursos e painel, SVGs, `scsspre`, `scss`, HTML da home e metadados das imagens `logo` e `loginlogo`.
+
+A atualização geral recebe somente os campos desejados em `settings` e, opcionalmente, imagens em `images` por Base64 ou URL HTTPS (PNG, JPEG ou WebP, máximo 5 MiB), ou `remove: true`. A leitura oferece `state_hash`, que deve ser enviado como `expected_hash` para evitar sobrescrita concorrente; a gravação exige permissão `moodle/site:config`, escopo MCP de escrita e confirmação explícita. O SCSS e demais campos usam a mesma validação da importação JSON, e as alterações invalidam o cache do tema. Um SVG configurado tem prioridade visual sobre a imagem enviada para a área correspondente.

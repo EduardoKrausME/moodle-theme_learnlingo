@@ -11,7 +11,7 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU GPL for details.
 
 /**
- * Expose LearnLingo home configuration as MCP tools.
+ * Expose LearnLingo configuration as MCP tools.
  *
  * @package theme_learnlingo
  * @copyright 2026 Eduardo Kraus
@@ -31,11 +31,11 @@ use local_mcp\extension\write_provider_interface;
 final class provider implements read_provider_interface, write_provider_interface {
     /** @return \local_mcp\read\tool_interface[] */
     public function get_read_tools(): array {
-        return [new get_homepage()];
+        return [new get_homepage(), new get_settings()];
     }
 
     /** @return \local_mcp\write\tool_interface[] */
     public function get_write_tools(): array {
-        return [new update_homepage()];
+        return [new update_homepage(), new update_settings()];
     }
 }
