@@ -159,3 +159,5 @@ $string['logosvg'] = 'Header SVG logo';
 $string['logosvg_desc'] = 'Self-contained vector SVG source, preferred over the uploaded header logo. Can also be imported from JSON. Unsafe SVG is rejected when rendering.';
 $string['loginlogosvg'] = 'Login SVG logo';
 $string['loginlogosvg_desc'] = 'Separate inline SVG for the login panel. Leave blank to fall back to the uploaded logo or the main brand.';
+
+$string['frontpagexpbadge'] = '{$a->xp} XP · {$a->level}';

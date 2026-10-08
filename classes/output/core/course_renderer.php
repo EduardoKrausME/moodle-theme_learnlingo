@@ -219,6 +219,20 @@ class course_renderer extends core_course_renderer {
 
         $imageurl = $this->getcourseimageurl($element);
 
+        // Read XP through Personal XP's public service, never its internal tables.
+        // Only the enrolled learner's own XP is shown, independently of course completion.
+        $xpstate = null;
+        if (isloggedin() && !isguestuser()
+                && class_exists('\\local_personalxp\\service\\xp_manager')
+                && \local_personalxp\service\xp_manager::is_enabled()) {
+            $context = \context_course::instance((int)$course->id, IGNORE_MISSING);
+            if ($context && is_enrolled($context, $USER->id)
+                    && has_capability('local/personalxp:view', $context, $USER->id)) {
+                $xpstate = \local_personalxp\service\xp_manager::get_course_display_state(
+                    (int)$USER->id, (int)$course->id);
+            }
+        }
+
         return [
             'id' => $course->id,
             'fullname' => $element->get_formatted_name(),
@@ -233,6 +247,13 @@ class course_renderer extends core_course_renderer {
             'progresslabel' => $progress === null
                 ? ''
                 : get_string('frontpageprogress', 'theme_learnlingo', $progress),
+            'hasxp' => $xpstate !== null && $xpstate['enabled'],
+            'xptext' => $xpstate === null ? '' : get_string('frontpagexpbadge',
+                'theme_learnlingo', (object)[
+                    'xp' => $xpstate['totalxp'],
+                    'level' => $xpstate['currentlevel'],
+                ]),
+            'xpurl' => new moodle_url('/local/personalxp/index.php', ['courseid' => $course->id]),
         ];
     }
 

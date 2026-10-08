@@ -73,6 +73,11 @@
                 <span class="pulsomed-resume-label">{{featuredlabel}}</span>
                 <a class="pulsomed-resume-title" href="{{{featuredcourse.url}}}">{{featuredcourse.fullname}}</a>
                 <span class="pulsomed-resume-category">{{featuredcourse.categoryname}}</span>
+                {{#featuredcourse.hasxp}}
+                    <a class="pulsomed-course-xp" href="{{{featuredcourse.xpurl}}}">
+                        <i class="fa fa-star" aria-hidden="true"></i> {{featuredcourse.xptext}}
+                    </a>
+                {{/featuredcourse.hasxp}}
                 {{#featuredcourse.hasprogress}}
                     <div class="pulsomed-resume-progress">
                         <div class="progress" role="progressbar" aria-label="{{featuredcourse.progresslabel}}"
@@ -114,6 +119,11 @@
                         <div class="pulsomed-course-card-body">
                             <span class="pulsomed-course-card-kicker">{{shortname}}</span>
                             <h3><a href="{{{url}}}">{{fullname}}</a></h3>
+                            {{#hasxp}}
+                                <a class="pulsomed-course-xp" href="{{{xpurl}}}">
+                                    <i class="fa fa-star" aria-hidden="true"></i> {{xptext}}
+                                </a>
+                            {{/hasxp}}
                             {{#hasprogress}}
                                 <div class="pulsomed-course-card-progress">
                                     <div class="progress" role="progressbar" aria-label="{{progresslabel}}"

@@ -1387,3 +1387,26 @@ body.learnlingo-html-home-fullwidth #page.drawers #region-main {
 body.learnlingo-html-home-fullwidth .learnlingo-html-home {
     width: 100%;
 }
+
+
+// Personal XP lives alongside (not instead of) Moodle course completion.
+.pulsomed-course-xp {
+    display: inline-flex;
+    gap: .35rem;
+    align-items: center;
+    width: fit-content;
+    max-width: 100%;
+    padding: .35rem .65rem;
+    margin: .45rem 0;
+    border-radius: 999px;
+    color: var(--pulsomed-text, #253347);
+    background: rgba($primary, .08);
+    font-size: .82rem;
+    font-weight: 700;
+    line-height: 1.35;
+}
+.pulsomed-course-xp:hover,
+.pulsomed-course-xp:focus {
+    background: rgba($primary, .14);
+    text-decoration: none;
+}

@@ -159,3 +159,5 @@ $string['logosvg'] = 'Logo SVG do cabeçalho';
 $string['logosvg_desc'] = 'Código SVG vetorial autocontido usado antes da logo em arquivo. Também pode ser importado por JSON. Elementos e atributos perigosos são rejeitados na renderização.';
 $string['loginlogosvg'] = 'Logo SVG do login';
 $string['loginlogosvg_desc'] = 'Código SVG vetorial independente para o login. Vazio utiliza a logo em arquivo ou a logo principal.';
+
+$string['frontpagexpbadge'] = '{$a->xp} XP · nível {$a->level}';
