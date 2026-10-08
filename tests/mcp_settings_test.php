@@ -49,6 +49,8 @@ final class mcp_settings_test extends advanced_testcase {
         $writenames = array_map(static fn($tool): string => $tool->get_name(), $provider->get_write_tools());
         $this->assertContains('learnlingo_get_settings', $readnames);
         $this->assertContains('learnlingo_update_settings', $writenames);
+        $this->assertCount(2, $readnames);
+        $this->assertCount(2, $writenames);
         $schema = (new update_settings())->get_input_schema();
         $this->assertArrayHasKey('scsspre', (array)$schema['properties']['settings']['properties']);
         $this->assertArrayHasKey('scss', (array)$schema['properties']['settings']['properties']);
@@ -61,6 +63,25 @@ final class mcp_settings_test extends advanced_testcase {
         $this->assertSame([], array_values(array_filter($issues, static fn($issue): bool => !$issue['repaired'])));
     }
 
+    /**
+     * One missing class must not break unrelated MCP tools.
+     *
+     * @return void
+     */
+    public function test_provider_skips_unavailable_tool_and_keeps_homepage_tool(): void {
+        $this->require_mcp();
+        $method = new \ReflectionMethod(provider::class, 'available_tools');
+        $tools = $method->invoke(null, [
+            'learnlingo_get_homepage' => \theme_learnlingo\mcp\get_homepage::class,
+            'missing_tool' => 'theme_learnlingo\\mcp\\intentionally_missing',
+        ]);
+        $this->assertCount(1, $tools);
+        $this->assertSame('learnlingo_get_homepage', $tools[0]->get_name());
+    }
+
+    /**
+     * @return void
+     */
     public function test_partial_update_preserves_unrelated_settings_and_accepts_both_scss_fields(): void {
         $this->require_mcp();
         $this->resetAfterTest();
