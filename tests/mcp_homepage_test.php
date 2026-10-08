@@ -49,6 +49,9 @@ final class mcp_homepage_test extends advanced_testcase {
         $this->assertInstanceOf(get_homepage::class, $provider->get_read_tools()[0]);
         $this->assertInstanceOf(update_homepage::class, $provider->get_write_tools()[0]);
         $this->assertSame('learnlingo_get_homepage', $provider->get_read_tools()[0]->get_name());
+        $schema = $provider->get_read_tools()[0]->get_input_schema();
+        $this->assertSame('{"type":"object","properties":{},"additionalProperties":false}',
+            json_encode($schema));
         $this->assertSame('learnlingo_update_homepage', $provider->get_write_tools()[0]->get_name());
         $readproviders = \local_mcp\extension\manager::read_providers();
         $writeproviders = \local_mcp\extension\manager::write_providers();

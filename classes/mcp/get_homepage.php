@@ -46,7 +46,7 @@ final class get_homepage implements tool_interface {
     public function get_input_schema(): array {
         return [
             'type' => 'object',
-            'properties' => [],
+            'properties' => (object)[],
             'additionalProperties' => false,
         ];
     }
