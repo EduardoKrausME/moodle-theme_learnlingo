@@ -24,7 +24,13 @@
 namespace theme_learnlingo;
 
 use advanced_testcase;
+use core_component;
+use invalid_parameter_exception;
+use local_mcp\exception\api_exception;
+use local_mcp\protocol\tool_schema;
 use local_mcp\security\authenticated_identity;
+use ReflectionMethod;
+use theme_learnlingo\mcp\get_homepage;
 use theme_learnlingo\mcp\get_settings;
 use theme_learnlingo\mcp\provider;
 use theme_learnlingo\mcp\update_settings;
@@ -42,7 +48,7 @@ final class mcp_settings_test extends advanced_testcase {
      * @return void
      */
     private function require_mcp(): void {
-        if (!\core_component::get_component_directory('local_mcp')) {
+        if (!core_component::get_component_directory('local_mcp')) {
             $this->markTestSkipped('This integration requires local_mcp.');
         }
     }
@@ -74,7 +80,7 @@ final class mcp_settings_test extends advanced_testcase {
         $this->assertTrue((new update_settings())->requires_confirmation());
         $this->assertTrue((new update_settings())->supports_dry_run());
         $issues = [];
-        \local_mcp\protocol\tool_schema::normalize($schema, $issues);
+        tool_schema::normalize($schema, $issues);
         $this->assertSame([], array_values(array_filter($issues, static fn($issue): bool => !$issue['repaired'])));
     }
 
@@ -85,9 +91,9 @@ final class mcp_settings_test extends advanced_testcase {
      */
     public function test_provider_skips_unavailable_tool_and_keeps_homepage_tool(): void {
         $this->require_mcp();
-        $method = new \ReflectionMethod(provider::class, 'available_tools');
+        $method = new ReflectionMethod(provider::class, 'available_tools');
         $tools = $method->invoke(null, [
-            'learnlingo_get_homepage' => \theme_learnlingo\mcp\get_homepage::class,
+            'learnlingo_get_homepage' => get_homepage::class,
             'missing_tool' => 'theme_learnlingo\\mcp\\intentionally_missing',
         ]);
         $this->assertCount(1, $tools);
@@ -134,7 +140,7 @@ final class mcp_settings_test extends advanced_testcase {
         $this->resetAfterTest();
         $identity = $this->identity();
         $writer = new update_settings();
-        $this->expectException(\local_mcp\exception\api_exception::class);
+        $this->expectException(api_exception::class);
         $writer->preview(['settings' => ['brandcolor' => '#abcdef'],
             'expected_hash' => str_repeat('0', 64)], $identity);
     }
@@ -143,7 +149,7 @@ final class mcp_settings_test extends advanced_testcase {
         $this->require_mcp();
         $this->resetAfterTest();
         $identity = $this->identity();
-        $this->expectException(\invalid_parameter_exception::class);
+        $this->expectException(invalid_parameter_exception::class);
         (new update_settings())->preview(
             ['settings' => ['scss' => '@import url(https://example.com/malicious.css);']],
             $identity
@@ -154,7 +160,7 @@ final class mcp_settings_test extends advanced_testcase {
         $this->require_mcp();
         $this->resetAfterTest();
         $identity = $this->identity();
-        $this->expectException(\local_mcp\exception\api_exception::class);
+        $this->expectException(api_exception::class);
         (new update_settings())->preview(['settings' => ['adminpassword' => 'ignored']], $identity);
     }
 
@@ -190,7 +196,7 @@ final class mcp_settings_test extends advanced_testcase {
         $this->require_mcp();
         $this->resetAfterTest();
         $identity = $this->identity();
-        $this->expectException(\local_mcp\exception\api_exception::class);
+        $this->expectException(api_exception::class);
         (new update_settings())->preview(
             ['images' => ['logo' => ['remove' => true, 'image_url' => 'https://example.com/logo.png']]],
             $identity

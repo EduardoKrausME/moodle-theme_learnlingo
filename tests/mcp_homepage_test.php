@@ -25,6 +25,11 @@
 namespace theme_learnlingo;
 
 use advanced_testcase;
+use core_component;
+use invalid_parameter_exception;
+use local_mcp\exception\api_exception;
+use local_mcp\extension\manager;
+use local_mcp\security\authenticated_identity;
 use theme_learnlingo\mcp\provider;
 use theme_learnlingo\mcp\get_homepage;
 use theme_learnlingo\mcp\update_homepage;
@@ -42,7 +47,7 @@ final class mcp_homepage_test extends advanced_testcase {
      * @return void
      */
     private function require_mcp(): void {
-        if (!\core_component::get_component_directory('local_mcp')) {
+        if (!core_component::get_component_directory('local_mcp')) {
             $this->markTestSkipped('This optional integration requires local_mcp.');
         }
     }
@@ -62,8 +67,8 @@ final class mcp_homepage_test extends advanced_testcase {
         $this->assertSame('{"type":"object","properties":{},"additionalProperties":false}',
             json_encode($schema));
         $this->assertSame('learnlingo_update_homepage', $provider->get_write_tools()[0]->get_name());
-        $readproviders = \local_mcp\extension\manager::read_providers();
-        $writeproviders = \local_mcp\extension\manager::write_providers();
+        $readproviders = manager::read_providers();
+        $writeproviders = manager::write_providers();
         $this->assertNotEmpty(array_filter($readproviders,
             static fn($item): bool => $item instanceof provider));
         $this->assertNotEmpty(array_filter($writeproviders,
@@ -79,7 +84,7 @@ final class mcp_homepage_test extends advanced_testcase {
         $this->require_mcp();
         $this->resetAfterTest();
         $this->setAdminUser();
-        $identity = new \local_mcp\security\authenticated_identity((int)get_admin()->id,
+        $identity = new authenticated_identity((int)get_admin()->id,
             'test', ['mcp:read', 'mcp:write']);
         $reader = new get_homepage();
         $writer = new update_homepage();
@@ -116,10 +121,10 @@ final class mcp_homepage_test extends advanced_testcase {
         $this->require_mcp();
         $this->resetAfterTest();
         $this->setAdminUser();
-        $identity = new \local_mcp\security\authenticated_identity((int)get_admin()->id,
+        $identity = new authenticated_identity((int)get_admin()->id,
             'test', ['mcp:read', 'mcp:write']);
         $writer = new update_homepage();
-        $this->expectException(\local_mcp\exception\api_exception::class);
+        $this->expectException(api_exception::class);
         $writer->preview(['html' => '<p>Safe</p>', 'expected_hash' => str_repeat('0', 64)], $identity);
     }
 
@@ -132,10 +137,10 @@ final class mcp_homepage_test extends advanced_testcase {
         $this->require_mcp();
         $this->resetAfterTest();
         $this->setAdminUser();
-        $identity = new \local_mcp\security\authenticated_identity((int)get_admin()->id,
+        $identity = new authenticated_identity((int)get_admin()->id,
             'test', ['mcp:read', 'mcp:write']);
         $writer = new update_homepage();
-        $this->expectException(\invalid_parameter_exception::class);
+        $this->expectException(invalid_parameter_exception::class);
         $writer->preview(['html' => '<script>alert(1)</script><h1>Home</h1>'], $identity);
     }
 }

@@ -25,12 +25,17 @@
 namespace theme_learnlingo;
 
 
+use advanced_testcase;
+use context_system;
+use function theme_learnlingo_install_default_logos;
+use function xmldb_theme_learnlingo_install;
+
 /**
  * Installation callback should fill missing logos without losing uploads.
  *
  * @coversNothing
  */
-final class default_logo_test extends \advanced_testcase {
+final class default_logo_test extends advanced_testcase {
     /**
      * Reset a logo file area to its empty state.
      *
@@ -38,7 +43,7 @@ final class default_logo_test extends \advanced_testcase {
      * @return void
      */
     private function clear_logo(string $area): void {
-        $context = \context_system::instance();
+        $context = context_system::instance();
         $fs = get_file_storage();
         foreach ($fs->get_area_files($context->id, 'theme_learnlingo', $area, 0, 'id', false) as $file) {
             $file->delete();
@@ -60,10 +65,10 @@ final class default_logo_test extends \advanced_testcase {
             $this->clear_logo($area);
         }
 
-        \xmldb_theme_learnlingo_install();
+        xmldb_theme_learnlingo_install();
 
         $fs = get_file_storage();
-        $context = \context_system::instance();
+        $context = context_system::instance();
         $contenthashes = [];
         foreach (['logo', 'loginlogo'] as $area) {
             $this->assertSame('/default-logo.svg', get_config('theme_learnlingo', $area));
@@ -76,7 +81,7 @@ final class default_logo_test extends \advanced_testcase {
         $this->assertSame($contenthashes[0], $contenthashes[1]);
 
         // Running the helper twice should not create duplicate files.
-        \theme_learnlingo_install_default_logos();
+        theme_learnlingo_install_default_logos();
         foreach (['logo', 'loginlogo'] as $area) {
             $this->assertCount(1, $fs->get_area_files($context->id, 'theme_learnlingo', $area, 0, 'id', false));
         }
@@ -94,7 +99,7 @@ final class default_logo_test extends \advanced_testcase {
 
         $this->clear_logo('logo');
         $this->clear_logo('loginlogo');
-        $context = \context_system::instance();
+        $context = context_system::instance();
         $fs = get_file_storage();
         $file = $fs->create_file_from_string([
             'contextid' => $context->id,
@@ -107,7 +112,7 @@ final class default_logo_test extends \advanced_testcase {
         ], 'institution-logo');
         set_config('logo', '/institution.png', 'theme_learnlingo');
 
-        \theme_learnlingo_install_default_logos();
+        theme_learnlingo_install_default_logos();
 
         $this->assertSame('/institution.png', get_config('theme_learnlingo', 'logo'));
         $this->assertSame('institution-logo', $file->get_content());
@@ -127,10 +132,10 @@ final class default_logo_test extends \advanced_testcase {
         $this->clear_logo('logo');
         set_config('logo', '/missing-old-logo.svg', 'theme_learnlingo');
 
-        \theme_learnlingo_install_default_logos();
+        theme_learnlingo_install_default_logos();
 
         $this->assertSame('/default-logo.svg', get_config('theme_learnlingo', 'logo'));
-        $file = get_file_storage()->get_file(\context_system::instance()->id,
+        $file = get_file_storage()->get_file(context_system::instance()->id,
             'theme_learnlingo', 'logo', 0, '/', 'default-logo.svg');
         $this->assertNotFalse($file);
     }

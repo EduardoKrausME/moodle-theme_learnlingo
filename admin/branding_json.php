@@ -48,7 +48,7 @@ if (optional_param('action', '', PARAM_ALPHA) === 'import') {
         $configuration = branding_exchange::parse($importjson);
         branding_exchange::apply($configuration);
         redirect(new moodle_url($url, ['saved' => 1]));
-    } catch (\Throwable $e) {
+    } catch (Throwable $e) {
         $error = $e->getMessage();
     }
 }

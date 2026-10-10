@@ -22,6 +22,8 @@
  * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use theme_learnlingo\svg_logo;
+
 
 /**
  * Upgrade LearnLingo.
@@ -35,7 +37,7 @@ function xmldb_theme_learnlingo_upgrade(int $oldversion): bool {
         $context = context_system::instance();
         foreach (['logo' => 'logosvg', 'loginlogo' => 'loginlogosvg'] as $area => $legacy) {
             $svg = (string) get_config('theme_learnlingo', $legacy);
-            if ($svg !== '' && \theme_learnlingo\svg_logo::is_valid($svg)) {
+            if ($svg !== '' && svg_logo::is_valid($svg)) {
                 $files = $fs->get_area_files($context->id, 'theme_learnlingo', $area, 0, 'id', false);
                 foreach ($files as $file) {
                     $file->delete();

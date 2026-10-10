@@ -22,6 +22,8 @@
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use local_ai_bridge\api;
+
 require_once(__DIR__ . '/../../../config.php');
 require_once($CFG->dirroot . '/theme/learnlingo/lib.php');
 
@@ -65,7 +67,7 @@ if ($action === 'generate') {
                 'The first four keys must contain #RRGGBB hex colours. ' .
                 'All other keys must contain short, natural Brazilian Portuguese copy. ' .
                 'Avoid hardcoded product, provider and client names that are not in the description.';
-            $response = \local_ai_bridge\api::generate('theme-branding', $prompt);
+            $response = api::generate('theme-branding', $prompt);
             $raw = trim((string)$response->text);
             $raw = preg_replace('/^\x60\x60\x60(?:json)?\s*|\s*\x60\x60\x60$/i', '', $raw);
             $data = json_decode($raw, true, 16, JSON_THROW_ON_ERROR);

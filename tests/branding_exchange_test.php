@@ -24,12 +24,15 @@
 namespace theme_learnlingo;
 
 
+use advanced_testcase;
+use invalid_parameter_exception;
+
 /**
  * Round-trip validation and safe SVG checks.
  *
  * @covers \theme_learnlingo\branding_exchange
  */
-final class branding_exchange_test extends \advanced_testcase {
+final class branding_exchange_test extends advanced_testcase {
     /**
      * A freshly exported JSON can always be re-imported without schema drift.
      */
@@ -49,7 +52,7 @@ final class branding_exchange_test extends \advanced_testcase {
     public function test_extra_key_is_rejected(): void {
         $data = branding_exchange::export();
         $data['settings']['extra_setting'] = 'not allowed';
-        $this->expectException(\invalid_parameter_exception::class);
+        $this->expectException(invalid_parameter_exception::class);
         branding_exchange::parse(branding_exchange::json($data));
     }
 
@@ -59,7 +62,7 @@ final class branding_exchange_test extends \advanced_testcase {
     public function test_changed_type_is_rejected(): void {
         $data = branding_exchange::export();
         $data['settings']['showcoursehero'] = 'true';
-        $this->expectException(\invalid_parameter_exception::class);
+        $this->expectException(invalid_parameter_exception::class);
         branding_exchange::parse(branding_exchange::json($data));
     }
 

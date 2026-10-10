@@ -24,6 +24,8 @@
 
 use core\navigation\output\more_menu;
 use core\output\select_menu;
+use core_completion\progress;
+use local_personalxp\service\xp_manager;
 
 defined('MOODLE_INTERNAL') || die;
 
@@ -184,7 +186,7 @@ if ($coursehero) {
     $showcourseheroprogress = !isset($PAGE->theme->settings->showcourseheroprogress)
         || !empty($PAGE->theme->settings->showcourseheroprogress);
     if ($showcourseheroprogress && isloggedin() && !isguestuser()) {
-        $progress = \core_completion\progress::get_course_progress_percentage($PAGE->course, $USER->id);
+        $progress = progress::get_course_progress_percentage($PAGE->course, $USER->id);
         if ($progress !== null) {
             $courseprogress = max(0, min(100, (int)round($progress)));
             $courseprogressavailable = true;
@@ -201,7 +203,7 @@ if ($coursehero) {
         && !isguestuser()
         && has_capability('local/personalxp:view', $coursecontext)
     ) {
-        $xpstate = \local_personalxp\service\xp_manager::get_course_display_state(
+        $xpstate = xp_manager::get_course_display_state(
             (int) $USER->id,
             (int) $PAGE->course->id
         );

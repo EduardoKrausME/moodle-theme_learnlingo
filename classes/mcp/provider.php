@@ -24,8 +24,11 @@
 
 namespace theme_learnlingo\mcp;
 
+use local_mcp\diagnostics;
 use local_mcp\extension\read_provider_interface;
 use local_mcp\extension\write_provider_interface;
+use local_mcp\write\tool_interface;
+use Throwable;
 
 /**
  * Automatically discovered by local_mcp while the theme is installed and enabled.
@@ -48,7 +51,7 @@ final class provider implements read_provider_interface, write_provider_interfac
     /**
      * Return available write tools.
      *
-     * @return \local_mcp\write\tool_interface[]
+     * @return tool_interface[]
      */
     public function get_write_tools(): array {
         return self::available_tools([
@@ -74,7 +77,7 @@ final class provider implements read_provider_interface, write_provider_interfac
                 }
                 self::log_missing_tool($name, $filename,
                     is_file($filename) ? 'autoload_failed' : 'file_missing');
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 // A broken optional tool must not prevent other registered tools from running.
                 self::log_missing_tool($name, $filename, 'load_error', get_class($e));
             }
@@ -93,7 +96,7 @@ final class provider implements read_provider_interface, write_provider_interfac
      */
     private static function log_missing_tool(string $name, string $filename,
             string $status, string $errorclass = ''): void {
-        \local_mcp\diagnostics::event('provider_tool_unavailable', [
+        diagnostics::event('provider_tool_unavailable', [
             'provider' => self::class,
             'tool' => $name,
             'file' => basename($filename),

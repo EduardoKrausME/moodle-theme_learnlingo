@@ -37,10 +37,10 @@ function theme_learnlingo_install_default_logos(): void {
 
     $source = $CFG->dirroot . '/theme/learnlingo/pix/default-logo.svg';
     if (!is_readable($source)) {
-        throw new \coding_exception('LearnLingo default logo file is missing: ' . $source);
+        throw new coding_exception('LearnLingo default logo file is missing: ' . $source);
     }
 
-    $context = \context_system::instance();
+    $context = context_system::instance();
     $fs = get_file_storage();
 
     foreach (['logo', 'loginlogo'] as $area) {

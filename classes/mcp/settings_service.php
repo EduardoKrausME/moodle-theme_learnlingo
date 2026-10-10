@@ -26,6 +26,8 @@ namespace theme_learnlingo\mcp;
 use context_system;
 use local_mcp\course\image_service;
 use local_mcp\exception\api_exception;
+use stored_file;
+use theme_config;
 use theme_learnlingo\branding_exchange;
 
 /**
@@ -55,7 +57,7 @@ final class settings_service {
                     'mimetype' => $image->get_mimetype(),
                     'filesize' => $image->get_filesize(),
                     'contenthash' => $image->get_contenthash(),
-                    'url' => (string)\theme_config::load('learnlingo')->setting_file_url($area, $area),
+                    'url' => (string)theme_config::load('learnlingo')->setting_file_url($area, $area),
                 ];
                 if ($includeimages && $image->get_filesize() <= image_service::MAX_INLINE_BYTES &&
                         in_array($image->get_mimetype(), ['image/png', 'image/jpeg', 'image/webp'], true)) {
@@ -200,7 +202,7 @@ final class settings_service {
      * List all real files (not the virtual "." directory) in a logo area.
      *
      * @param string $area Moodle filearea.
-     * @return \stored_file[]
+     * @return stored_file[]
      */
     private static function files(string $area): array {
         $context = context_system::instance();

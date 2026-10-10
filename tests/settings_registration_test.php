@@ -25,12 +25,16 @@
 namespace theme_learnlingo;
 
 
+use admin_settingpage;
+use advanced_testcase;
+use function admin_get_root;
+
 /**
  * Ensure Moodle can find the LearnLingo page in either admin tree mode.
  *
  * @coversNothing
  */
-final class settings_registration_test extends \advanced_testcase {
+final class settings_registration_test extends advanced_testcase {
     /**
      * The theme settings page must remain visible in the lightweight tree.
      */
@@ -41,11 +45,11 @@ final class settings_registration_test extends \advanced_testcase {
         require_once($CFG->libdir . '/adminlib.php');
 
         // Moodle builds the lightweight tree for navigation before full settings are needed.
-        $tree = \admin_get_root(true, false);
-        $this->assertInstanceOf(\admin_settingpage::class, $tree->locate('themesettinglearnlingo', true));
+        $tree = admin_get_root(true, false);
+        $this->assertInstanceOf(admin_settingpage::class, $tree->locate('themesettinglearnlingo', true));
 
         // The same section must resolve when admin/settings.php requests the full tree.
-        $tree = \admin_get_root(true, true);
-        $this->assertInstanceOf(\admin_settingpage::class, $tree->locate('themesettinglearnlingo', true));
+        $tree = admin_get_root(true, true);
+        $this->assertInstanceOf(admin_settingpage::class, $tree->locate('themesettinglearnlingo', true));
     }
 }

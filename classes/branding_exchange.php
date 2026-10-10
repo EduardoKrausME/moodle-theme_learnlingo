@@ -24,6 +24,9 @@
 namespace theme_learnlingo;
 
 
+use invalid_parameter_exception;
+use JsonException;
+
 /**
  * Versioned, strictly validated configuration interchange.
  */
@@ -176,25 +179,25 @@ PROMPT;
      */
     public static function parse(string $source): array {
         if (strlen($source) > self::MAX_JSON_LENGTH) {
-            throw new \invalid_parameter_exception(get_string('jsonerrorlarge', 'theme_learnlingo'));
+            throw new invalid_parameter_exception(get_string('jsonerrorlarge', 'theme_learnlingo'));
         }
         try {
             $data = json_decode(trim($source), true, 32, JSON_THROW_ON_ERROR);
-        } catch (\JsonException $e) {
-            throw new \invalid_parameter_exception(get_string('jsonerrorinvalid', 'theme_learnlingo'));
+        } catch (JsonException $e) {
+            throw new invalid_parameter_exception(get_string('jsonerrorinvalid', 'theme_learnlingo'));
         }
         if (!is_array($data) || array_is_list($data) ||
                 !self::same_keys($data, ['schema_version', 'plugin', 'repository', 'settings'])) {
-            throw new \invalid_parameter_exception(get_string('jsonerrorstructure', 'theme_learnlingo'));
+            throw new invalid_parameter_exception(get_string('jsonerrorstructure', 'theme_learnlingo'));
         }
         if ($data['schema_version'] !== 1 || $data['plugin'] !== 'theme_learnlingo' ||
                 $data['repository'] !== 'https://github.com/EduardoKrausME/moodle-theme_learnlingo') {
-            throw new \invalid_parameter_exception(get_string('jsonerroridentity', 'theme_learnlingo'));
+            throw new invalid_parameter_exception(get_string('jsonerroridentity', 'theme_learnlingo'));
         }
         $values = $data['settings'];
         if (!is_array($values) || array_is_list($values) ||
                 !self::same_keys($values, array_keys(self::definitions()))) {
-            throw new \invalid_parameter_exception(get_string('jsonerrorsettings', 'theme_learnlingo'));
+            throw new invalid_parameter_exception(get_string('jsonerrorsettings', 'theme_learnlingo'));
         }
 
         $normalized = [];
@@ -282,6 +285,6 @@ PROMPT;
      * @return never
      */
     private static function invalid_field(string $name): never {
-        throw new \invalid_parameter_exception(get_string('jsonerrorfield', 'theme_learnlingo', $name));
+        throw new invalid_parameter_exception(get_string('jsonerrorfield', 'theme_learnlingo', $name));
     }
 }
