@@ -81,15 +81,6 @@ function theme_learnlingo_get_extra_scss(theme_config $theme): string {
  * @return string|null
  */
 function theme_learnlingo_logo_url(theme_config $theme, string $area): ?string {
-    // Generated SVG has priority over the image uploaded to Moodle.
-    $setting = $area === 'loginlogo' ? 'loginlogosvg' : 'logosvg';
-    $svg = (string) get_config('theme_learnlingo', $setting);
-    if ($svg !== '') {
-        $url = \theme_learnlingo\svg_logo::data_url($svg);
-        if ($url !== null) {
-            return $url;
-        }
-    }
     $url = $theme->setting_file_url($area, $area);
     return $url ? (string) $url : null;
 }
