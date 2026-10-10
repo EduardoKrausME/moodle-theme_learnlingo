@@ -73,23 +73,12 @@ if ($ADMIN->fulltree) {
             get_string($area . '_desc', 'theme_learnlingo'),
             $area,
             0,
-            ['maxfiles' => 1, 'accepted_types' => ['.png', '.jpg', '.jpeg', '.webp']]
+            ['maxfiles' => 1, 'accepted_types' => ['.png', '.jpg', '.jpeg', '.webp', '.svg']]
         );
         $setting->set_updatedcallback('theme_reset_all_caches');
         $settings->add($setting);
     }
 
-    foreach (['logosvg', 'loginlogosvg'] as $name) {
-        $setting = new admin_setting_configtextarea(
-            'theme_learnlingo/' . $name,
-            get_string($name, 'theme_learnlingo'),
-            get_string($name . '_desc', 'theme_learnlingo'),
-            '',
-            PARAM_RAW
-        );
-        $setting->set_updatedcallback('theme_reset_all_caches');
-        $settings->add($setting);
-    }
 
     foreach (['canvascolor' => '#f5f6f8', 'textcolor' => '#252a37'] as $name => $default) {
         $setting = new admin_setting_configcolourpicker(
