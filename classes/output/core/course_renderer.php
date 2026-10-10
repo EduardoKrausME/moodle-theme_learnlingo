@@ -24,12 +24,17 @@
 
 namespace theme_learnlingo\output\core;
 
+use context_course;
+use context_system;
 use core_completion\progress;
 use core_course_category;
 use core_course_list_element;
 use core_course_renderer;
+use html_writer;
+use local_personalxp\service\xp_manager;
 use moodle_url;
 use stdClass;
+use function format_text;
 
 /**
  * Replaces the standard Moodle front page with the learnlingo experience.
@@ -45,6 +50,8 @@ class course_renderer extends core_course_renderer {
      * @return string
      */
     public function frontpage() {
+        global $USER;
+
         // Keep Moodle's normal front page while editing so activities and blocks remain manageable.
         if ($this->page->user_is_editing()) {
             return parent::frontpage();
@@ -61,18 +68,16 @@ class course_renderer extends core_course_renderer {
                 return parent::frontpage();
             }
             // Filter and clean editor HTML, without running arbitrary scripts or raw PHP.
-            $content = \format_text($html, FORMAT_HTML, [
-                'context' => \context_system::instance(),
+            $content = format_text($html, FORMAT_HTML, [
+                'context' => context_system::instance(),
                 'noclean' => false,
                 'filter' => true,
                 'para' => false,
             ]);
-            return \html_writer::div($content, 'learnlingo-html-home');
+            return html_writer::div($content, 'learnlingo-html-home');
         }
 
-        global $USER;
-
-        list($courses, $isenrolledlist) = $this->getfrontpagecourses();
+        [$courses, $isenrolledlist] = $this->getfrontpagecourses();
         $showwelcome = isloggedin() && !isguestuser()
             && (!isset($this->page->theme->settings->showdashboardhero)
                 || !empty($this->page->theme->settings->showdashboardhero));
@@ -230,11 +235,11 @@ class course_renderer extends core_course_renderer {
         $xpstate = null;
         if (isloggedin() && !isguestuser()
                 && class_exists('\\local_personalxp\\service\\xp_manager')
-                && \local_personalxp\service\xp_manager::is_enabled()) {
-            $context = \context_course::instance((int)$course->id, IGNORE_MISSING);
+                && xp_manager::is_enabled()) {
+            $context = context_course::instance((int)$course->id, IGNORE_MISSING);
             if ($context && is_enrolled($context, $USER->id)
                     && has_capability('local/personalxp:view', $context, $USER->id)) {
-                $xpstate = \local_personalxp\service\xp_manager::get_course_display_state(
+                $xpstate = xp_manager::get_course_display_state(
                     (int)$USER->id, (int)$course->id);
             }
         }
