@@ -87,5 +87,12 @@ function xmldb_theme_learnlingo_upgrade(int $oldversion): bool {
         }
         upgrade_plugin_savepoint(true, 2026101002, 'theme', 'learnlingo');
     }
+    if ($oldversion < 2026101003) {
+        // Also seed empty logo areas on sites updating from an older version.
+        require_once(__DIR__ . '/install.php');
+        theme_learnlingo_install_default_logos();
+        upgrade_plugin_savepoint(true, 2026101003, 'theme', 'learnlingo');
+    }
+
     return true;
 }
