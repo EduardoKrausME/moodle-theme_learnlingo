@@ -35,7 +35,7 @@
 function theme_learnlingo_install_default_logos(): void {
     global $CFG;
 
-    $source = $CFG->dirroot . '/theme/learnlingo/pix/default-logo.svg';
+    $source = $CFG->dirroot . '/theme/learnlingo/pix/default-logo.png';
     if (!is_readable($source)) {
         throw new coding_exception('LearnLingo default logo file is missing: ' . $source);
     }
@@ -67,14 +67,44 @@ function theme_learnlingo_install_default_logos(): void {
                 'filearea' => $area,
                 'itemid' => 0,
                 'filepath' => '/',
-                'filename' => 'default-logo.svg',
-                'mimetype' => 'image/svg+xml',
+                'filename' => 'default-logo.png',
+                'mimetype' => 'image/png',
                 'userid' => 0,
             ], $source);
         }
 
         set_config($area, $file->get_filepath() . $file->get_filename(), 'theme_learnlingo');
     }
+}
+
+/**
+ * Replace the exact former bundled SVG with the original PNG.
+ *
+ * The SVG used to be only a base64 wrapper around the PNG. Compare the
+ * stored file's content hash to avoid replacing institution-supplied logos.
+ *
+ * @return void
+ */
+function theme_learnlingo_migrate_default_logos(): void {
+    $context = context_system::instance();
+    $fs = get_file_storage();
+
+    foreach (['logo', 'loginlogo'] as $area) {
+        $configured = trim((string)get_config('theme_learnlingo', $area));
+        if ($configured !== '' && $configured !== '/default-logo.svg') {
+            continue;
+        }
+
+        $legacy = $fs->get_file($context->id, 'theme_learnlingo', $area, 0, '/', 'default-logo.svg');
+        if (!$legacy || $legacy->get_contenthash() !== '6b06dbaeede483bb666eb489b136dea5d3cedcd8') {
+            continue;
+        }
+
+        $legacy->delete();
+        set_config($area, '', 'theme_learnlingo');
+    }
+
+    theme_learnlingo_install_default_logos();
 }
 
 /**
