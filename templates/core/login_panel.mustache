@@ -28,25 +28,25 @@
     }
 }}
 <div class="login-layout-left-content">
-    <div class="pulsomed-login-brand">
+    <div class="learnlingo-login-brand">
         {{#loginlogo}}
-            <img src="{{{loginlogo}}}" class="pulsomed-login-logo" alt="{{sitename}}">
+            <img src="{{{loginlogo}}}" class="learnlingo-login-logo" alt="{{sitename}}">
         {{/loginlogo}}
         {{^loginlogo}}
-        <span class="pulsomed-brandmark" aria-hidden="true"><i class="fa fa-heartbeat"></i></span>
-        <span class="pulsomed-wordmark">{{sitename}}</span>
+        <span class="learnlingo-brandmark" aria-hidden="true"><i class="fa fa-graduation-cap"></i></span>
+        <span class="learnlingo-wordmark">{{sitename}}</span>
         {{/loginlogo}}
     </div>
     {{^leftinstructions}}
-        <span class="pulsomed-login-kicker">{{loginkicker}}</span>
+        <span class="learnlingo-login-kicker">{{loginkicker}}</span>
         <h1>{{logintitle}}</h1>
-        <p class="pulsomed-login-description">{{logindescription}}</p>
-        <ul class="pulsomed-login-benefits">
+        <p class="learnlingo-login-description">{{logindescription}}</p>
+        <ul class="learnlingo-login-benefits">
             <li><i class="fa fa-bolt" aria-hidden="true"></i>{{#str}}loginbenefitone, theme_learnlingo{{/str}}</li>
             <li><i class="fa fa-map-signs" aria-hidden="true"></i>{{#str}}loginbenefittwo, theme_learnlingo{{/str}}</li>
             <li><i class="fa fa-line-chart" aria-hidden="true"></i>{{#str}}loginbenefitthree, theme_learnlingo{{/str}}</li>
         </ul>
-        <p class="pulsomed-login-tagline">{{logintagline}}</p>
+        <p class="learnlingo-login-tagline">{{logintagline}}</p>
     {{/leftinstructions}}
     {{#leftinstructions}}
         <div class="mx-auto text-start">

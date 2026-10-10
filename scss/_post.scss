@@ -1,21 +1,21 @@
-// PulsoMed visual identity.
+// learnlingo visual identity.
 :root {
-    --pulsomed-primary: #{$primary};
-    --pulsomed-accent: #{$pulsomed-accent};
-    --pulsomed-ink: #{$body-color};
-    --pulsomed-muted: #727681;
-    --pulsomed-surface: #FFF;
-    --pulsomed-canvas: #{$body-bg};
-    --pulsomed-border: #E4E6EB;
-    --pulsomed-shadow: 0 4px 0 rgba(37, 42, 55, .07);
-    --pulsomed-shadow-hover: 0 8px 18px rgba(37, 42, 55, .11);
+    --learnlingo-primary: #{$primary};
+    --learnlingo-accent: #{$learnlingo-accent};
+    --learnlingo-ink: #{$body-color};
+    --learnlingo-muted: #68756d;
+    --learnlingo-surface: #FFF;
+    --learnlingo-canvas: #{$body-bg};
+    --learnlingo-border: #E1E9DD;
+    --learnlingo-shadow: 0 4px 0 rgba(37, 42, 55, .07);
+    --learnlingo-shadow-hover: 0 8px 18px rgba(37, 42, 55, .11);
 }
 html {
     scroll-behavior: smooth;
 }
 body {
-    color: var(--pulsomed-ink);
-    background: var(--pulsomed-canvas);
+    color: var(--learnlingo-ink);
+    background: var(--learnlingo-canvas);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
 }
@@ -53,14 +53,14 @@ h6,
 .dimmed_text,
 .course-description-item,
 .small-info {
-    color: var(--pulsomed-muted) !important;
+    color: var(--learnlingo-muted) !important;
 }
 // Header and brand.
 .navbar.fixed-top {
     min-height: 74px;
     padding: .65rem 1.25rem;
     background: rgba(255, 255, 255, .97) !important;
-    border-bottom: 1px solid var(--pulsomed-border);
+    border-bottom: 1px solid var(--learnlingo-border);
     box-shadow: none;
     backdrop-filter: blur(12px);
 }
@@ -68,10 +68,10 @@ h6,
     max-width: 1500px;
     margin: 0 auto;
 }
-.navbar-brand.pulsomed-navbar-brand {
+.navbar-brand.learnlingo-navbar-brand {
     gap: .7rem;
     min-width: 190px;
-    color: var(--pulsomed-ink);
+    color: var(--learnlingo-ink);
     text-decoration: none;
 }
 .navbar-brand .logo {
@@ -80,7 +80,7 @@ h6,
     height: 44px;
     object-fit: contain;
 }
-.pulsomed-brandmark {
+.learnlingo-brandmark {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -88,28 +88,28 @@ h6,
     width: 42px;
     height: 42px;
     color: #FFF;
-    background: linear-gradient(145deg, $pulsomed-accent, $primary 70%);
+    background: linear-gradient(145deg, $learnlingo-accent, $primary 70%);
     border-radius: 13px;
     box-shadow: 0 4px 0 darken($primary, 10%);
 }
-.pulsomed-brandmark .fa {
+.learnlingo-brandmark .fa {
     margin: 0;
     font-size: 1.15rem;
 }
-.pulsomed-wordmark {
-    color: var(--pulsomed-ink);
+.learnlingo-wordmark {
+    color: var(--learnlingo-ink);
     font-size: 1.18rem;
     font-weight: 850;
     letter-spacing: -.06em;
     line-height: 1;
 }
-.pulsomed-wordmark-accent {
+.learnlingo-wordmark-accent {
     color: $primary;
 }
 // Page frame.
 #page-wrapper,
 #page.drawers {
-    background: var(--pulsomed-canvas);
+    background: var(--learnlingo-canvas);
 }
 #page.drawers {
     padding-left: 0;
@@ -131,7 +131,7 @@ h6,
     margin-bottom: 1.25rem;
 }
 .page-header-headings h1 {
-    color: var(--pulsomed-ink);
+    color: var(--learnlingo-ink);
     font-size: clamp(1.8rem, 3vw, 2.45rem);
     font-weight: 800;
 }
@@ -139,57 +139,57 @@ h6,
     gap: .15rem;
     padding: .65rem .85rem;
     background: #FFF;
-    border: 1px solid var(--pulsomed-border);
+    border: 1px solid var(--learnlingo-border);
     border-radius: 12px;
 }
 .breadcrumb-item a {
-    color: var(--pulsomed-muted);
+    color: var(--learnlingo-muted);
 }
 #region-main {
     background: transparent;
 }
-// Dashboard welcome area based on the PulsoMed interface.
-.pulsomed-dashboard-grid {
+// Dashboard welcome area based on the learnlingo interface.
+.learnlingo-dashboard-grid {
     display: grid;
     grid-template-columns: minmax(0, 2.55fr) minmax(255px, .9fr);
     gap: 1.4rem;
     margin-bottom: 1.7rem;
 }
-.pulsomed-dashboard-hero {
+.learnlingo-dashboard-hero {
     position: relative;
     min-height: 350px;
     padding: clamp(2rem, 5vw, 3.2rem);
     overflow: hidden;
     color: #FFF;
-    background: linear-gradient(125deg, $pulsomed-accent 0%, $primary 55%, darken($primary, 7%) 100%);
+    background: linear-gradient(125deg, $learnlingo-accent 0%, $primary 55%, darken($primary, 7%) 100%);
     border-radius: 29px;
     box-shadow: 0 9px 0 rgba($primary, .14);
 }
-.pulsomed-dashboard-hero::before,
-.pulsomed-dashboard-hero::after {
+.learnlingo-dashboard-hero::before,
+.learnlingo-dashboard-hero::after {
     position: absolute;
     content: "";
     border: 1px solid rgba(255, 255, 255, .2);
     border-radius: 50%;
 }
-.pulsomed-dashboard-hero::before {
+.learnlingo-dashboard-hero::before {
     top: -120px;
     right: -20px;
     width: 430px;
     height: 430px;
 }
-.pulsomed-dashboard-hero::after {
+.learnlingo-dashboard-hero::after {
     top: 20px;
     right: 75px;
     width: 285px;
     height: 285px;
 }
-.pulsomed-dashboard-copy {
+.learnlingo-dashboard-copy {
     position: relative;
     z-index: 2;
     max-width: 60%;
 }
-.pulsomed-eyebrow {
+.learnlingo-eyebrow {
     display: inline-flex;
     align-items: center;
     gap: .5rem;
@@ -202,7 +202,7 @@ h6,
     border: 1px solid rgba(255, 255, 255, .28);
     border-radius: 999px;
 }
-.pulsomed-dashboard-title {
+.learnlingo-dashboard-title {
     max-width: 610px;
     margin-bottom: .9rem;
     color: #FFF;
@@ -211,7 +211,7 @@ h6,
     letter-spacing: -.055em;
     line-height: .98;
 }
-.pulsomed-dashboard-description {
+.learnlingo-dashboard-description {
     max-width: 590px;
     margin-bottom: 1.45rem;
     color: rgba(255, 255, 255, .92);
@@ -219,7 +219,7 @@ h6,
     font-weight: 560;
     line-height: 1.65;
 }
-.pulsomed-dashboard-cta {
+.learnlingo-dashboard-cta {
     display: inline-flex;
     align-items: center;
     gap: .65rem;
@@ -229,17 +229,17 @@ h6,
     background: #FFF;
     border: 0;
     border-radius: 13px;
-    box-shadow: 0 5px 0 rgba(87, 14, 23, .2);
+    box-shadow: 0 5px 0 rgba($primary, .20);
     font-weight: 800;
     text-decoration: none;
     transition: transform .18s ease, box-shadow .18s ease;
 }
-.pulsomed-dashboard-cta:hover {
+.learnlingo-dashboard-cta:hover {
     color: darken($primary, 13%);
     transform: translateY(-2px);
-    box-shadow: 0 7px 0 rgba(87, 14, 23, .2);
+    box-shadow: 0 7px 0 rgba($primary, .20);
 }
-.pulsomed-mascot {
+.learnlingo-hero-illustration {
     position: absolute;
     right: 8%;
     bottom: 2.2rem;
@@ -249,49 +249,35 @@ h6,
     justify-content: center;
     width: 155px;
     height: 180px;
-    color: #4E5565;
+    color: $primary;
     background: #FFF;
-    border-radius: 50% 50% 44% 44% / 56% 56% 42% 42%;
-    box-shadow: 0 8px 0 rgba(112, 20, 31, .18);
-    transform: rotate(-3deg);
+    border-radius: 32px;
+    box-shadow: 0 8px 0 rgba($primary, .22);
+    transform: rotate(-7deg);
 }
-.pulsomed-mascot .fa {
+.learnlingo-hero-illustration .fa {
     margin: 0;
     font-size: 4.2rem;
 }
-.pulsomed-mascot::before {
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    width: 52px;
-    height: 18px;
-    content: "+";
-    color: $primary;
-    font-size: 3rem;
-    font-weight: 900;
-    line-height: .25;
-    text-align: center;
-    transform: translateX(-50%);
-}
-.pulsomed-goal-card {
+.learnlingo-goal-card {
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 350px;
     padding: 1.5rem;
     background: #FFF;
-    border: 1px solid var(--pulsomed-border);
+    border: 1px solid var(--learnlingo-border);
     border-radius: 25px;
-    box-shadow: var(--pulsomed-shadow);
+    box-shadow: var(--learnlingo-shadow);
 }
-.pulsomed-goal-heading {
+.learnlingo-goal-heading {
     display: flex;
     align-items: center;
     align-self: stretch;
     gap: .75rem;
     margin-bottom: 1.25rem;
 }
-.pulsomed-goal-icon {
+.learnlingo-goal-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -302,7 +288,7 @@ h6,
     background: rgba($primary, .08);
     border-radius: 13px;
 }
-.pulsomed-goal-kicker {
+.learnlingo-goal-kicker {
     display: block;
     color: #9699A1;
     font-size: .7rem;
@@ -310,14 +296,14 @@ h6,
     letter-spacing: .08em;
     text-transform: uppercase;
 }
-.pulsomed-goal-title {
+.learnlingo-goal-title {
     display: block;
     margin-top: .1rem;
-    color: var(--pulsomed-ink);
+    color: var(--learnlingo-ink);
     font-size: 1rem;
     font-weight: 800;
 }
-.pulsomed-goal-ring {
+.learnlingo-goal-ring {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -327,40 +313,40 @@ h6,
     background: conic-gradient($primary 0 82%, #ECEEF2 82% 100%);
     border-radius: 50%;
 }
-.pulsomed-goal-ring-inner {
+.learnlingo-goal-ring-inner {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100px;
     height: 100px;
-    color: var(--pulsomed-ink);
+    color: var(--learnlingo-ink);
     background: #FFF;
     border-radius: 50%;
 }
-.pulsomed-goal-ring-inner strong {
+.learnlingo-goal-ring-inner strong {
     font-size: 1.45rem;
     letter-spacing: -.04em;
 }
-.pulsomed-goal-ring-inner small {
-    color: var(--pulsomed-muted);
+.learnlingo-goal-ring-inner small {
+    color: var(--learnlingo-muted);
 }
-.pulsomed-goal-copy {
+.learnlingo-goal-copy {
     margin: 0 0 1.1rem;
-    color: var(--pulsomed-muted);
+    color: var(--learnlingo-muted);
     font-size: .86rem;
     line-height: 1.5;
     text-align: center;
 }
-.pulsomed-goal-card .btn {
+.learnlingo-goal-card .btn {
     width: 100%;
     margin-top: auto;
 }
 // Course renderer front page.
-.pulsomed-home {
+.learnlingo-home {
     width: 100%;
 }
-.pulsomed-resume-card {
+.learnlingo-resume-card {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
@@ -368,11 +354,11 @@ h6,
     margin-bottom: 2.25rem;
     padding: 1.2rem 1.35rem;
     background: #FFF;
-    border: 1px solid var(--pulsomed-border);
+    border: 1px solid var(--learnlingo-border);
     border-radius: 20px;
-    box-shadow: var(--pulsomed-shadow);
+    box-shadow: var(--learnlingo-shadow);
 }
-.pulsomed-resume-icon {
+.learnlingo-resume-icon {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -382,27 +368,27 @@ h6,
     background: rgba($primary, .08);
     border-radius: 16px;
 }
-.pulsomed-resume-icon .fa {
+.learnlingo-resume-icon .fa {
     margin: 0;
     font-size: 1.45rem;
 }
-.pulsomed-resume-main {
+.learnlingo-resume-main {
     display: grid;
     min-width: 0;
 }
-.pulsomed-resume-label,
-.pulsomed-course-card-kicker {
+.learnlingo-resume-label,
+.learnlingo-course-card-kicker {
     color: #91959F;
     font-size: .68rem;
     font-weight: 850;
     letter-spacing: .075em;
     text-transform: uppercase;
 }
-.pulsomed-resume-title {
+.learnlingo-resume-title {
     width: fit-content;
     margin: .12rem 0;
     overflow: hidden;
-    color: var(--pulsomed-ink);
+    color: var(--learnlingo-ink);
     font-size: 1.08rem;
     font-weight: 820;
     line-height: 1.35;
@@ -410,14 +396,14 @@ h6,
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.pulsomed-resume-title:hover {
+.learnlingo-resume-title:hover {
     color: $primary;
 }
-.pulsomed-resume-category {
-    color: var(--pulsomed-muted);
+.learnlingo-resume-category {
+    color: var(--learnlingo-muted);
     font-size: .78rem;
 }
-.pulsomed-resume-progress {
+.learnlingo-resume-progress {
     display: grid;
     grid-template-columns: minmax(120px, 1fr) auto;
     align-items: center;
@@ -425,12 +411,12 @@ h6,
     max-width: 720px;
     margin-top: .7rem;
 }
-.pulsomed-resume-progress strong {
+.learnlingo-resume-progress strong {
     color: $primary;
     font-size: .78rem;
     white-space: nowrap;
 }
-.pulsomed-resume-action {
+.learnlingo-resume-action {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -443,38 +429,38 @@ h6,
     text-decoration: none;
     transition: transform .16s ease, box-shadow .16s ease;
 }
-.pulsomed-resume-action:hover {
+.learnlingo-resume-action:hover {
     color: #FFF;
     box-shadow: 0 6px 0 darken($primary, 11%);
     transform: translateY(-2px);
 }
-.pulsomed-resume-action .fa {
+.learnlingo-resume-action .fa {
     margin: 0 0 0 .15rem;
 }
-.pulsomed-home-courses {
+.learnlingo-home-courses {
     margin-bottom: 2.5rem;
 }
-.pulsomed-home-section-heading {
+.learnlingo-home-section-heading {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
     gap: 1rem;
     margin-bottom: 1.15rem;
 }
-.pulsomed-home-section-heading > div > span {
+.learnlingo-home-section-heading > div > span {
     color: $primary;
     font-size: .72rem;
     font-weight: 850;
     letter-spacing: .08em;
     text-transform: uppercase;
 }
-.pulsomed-home-section-heading h2 {
+.learnlingo-home-section-heading h2 {
     margin: .22rem 0 0;
-    color: var(--pulsomed-ink);
+    color: var(--learnlingo-ink);
     font-size: clamp(1.5rem, 3vw, 2.15rem);
     font-weight: 850;
 }
-.pulsomed-home-section-heading > a {
+.learnlingo-home-section-heading > a {
     display: inline-flex;
     align-items: center;
     gap: .45rem;
@@ -484,35 +470,35 @@ h6,
     font-weight: 800;
     text-decoration: none;
 }
-.pulsomed-home-section-heading > a:hover .fa {
+.learnlingo-home-section-heading > a:hover .fa {
     transform: translateX(3px);
 }
-.pulsomed-home-section-heading .fa {
+.learnlingo-home-section-heading .fa {
     margin: 0;
     transition: transform .16s ease;
 }
-.pulsomed-home-course-grid {
+.learnlingo-home-course-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1.2rem;
 }
-.pulsomed-course-card {
+.learnlingo-course-card {
     display: flex;
     flex-direction: column;
     min-width: 0;
     overflow: hidden;
     background: #FFF;
-    border: 1px solid var(--pulsomed-border);
+    border: 1px solid var(--learnlingo-border);
     border-radius: 20px;
-    box-shadow: var(--pulsomed-shadow);
+    box-shadow: var(--learnlingo-shadow);
     transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
 }
-.pulsomed-course-card:hover {
+.learnlingo-course-card:hover {
     border-color: rgba($primary, .22);
-    box-shadow: var(--pulsomed-shadow-hover);
+    box-shadow: var(--learnlingo-shadow-hover);
     transform: translateY(-4px);
 }
-.pulsomed-course-card-media {
+.learnlingo-course-card-media {
     position: relative;
     display: flex;
     align-items: center;
@@ -522,37 +508,37 @@ h6,
     color: rgba(255, 255, 255, .88);
     text-decoration: none;
 }
-.pulsomed-course-tone-1 {
-    background: linear-gradient(135deg, $pulsomed-accent, $primary);
+.learnlingo-course-tone-1 {
+    background: linear-gradient(135deg, $learnlingo-accent, $primary);
 }
-.pulsomed-course-tone-2 {
+.learnlingo-course-tone-2 {
     background: linear-gradient(135deg, #F5A23B, #F36A3F);
 }
-.pulsomed-course-tone-3 {
+.learnlingo-course-tone-3 {
     background: linear-gradient(135deg, #6D7DE8, #9D65D7);
 }
-.pulsomed-course-card-media img {
+.learnlingo-course-card-media img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform .3s ease;
 }
-.pulsomed-course-card:hover .pulsomed-course-card-media img {
+.learnlingo-course-card:hover .learnlingo-course-card-media img {
     transform: scale(1.04);
 }
-.pulsomed-course-card-media > .fa {
+.learnlingo-course-card-media > .fa {
     margin: 0;
     font-size: 3.2rem;
     opacity: .72;
 }
-.pulsomed-course-card-media > span {
+.learnlingo-course-card-media > span {
     position: absolute;
     top: .8rem;
     left: .8rem;
     max-width: calc(100% - 1.6rem);
     padding: .38rem .62rem;
     overflow: hidden;
-    color: var(--pulsomed-ink);
+    color: var(--learnlingo-ink);
     background: rgba(255, 255, 255, .93);
     border-radius: 999px;
     box-shadow: 0 2px 0 rgba(37, 42, 55, .08);
@@ -561,36 +547,36 @@ h6,
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.pulsomed-course-card-body {
+.learnlingo-course-card-body {
     display: flex;
     flex: 1;
     flex-direction: column;
     padding: 1.05rem 1.1rem 1.15rem;
 }
-.pulsomed-course-card-body h3 {
+.learnlingo-course-card-body h3 {
     margin: .25rem 0 .9rem;
     font-size: 1.08rem;
     line-height: 1.35;
 }
-.pulsomed-course-card-body h3 a {
-    color: var(--pulsomed-ink);
+.learnlingo-course-card-body h3 a {
+    color: var(--learnlingo-ink);
     font-weight: 820;
     text-decoration: none;
 }
-.pulsomed-course-card-body h3 a:hover {
+.learnlingo-course-card-body h3 a:hover {
     color: $primary;
 }
-.pulsomed-course-card-progress {
+.learnlingo-course-card-progress {
     display: grid;
     gap: .42rem;
     margin-top: auto;
 }
-.pulsomed-course-card-progress span {
-    color: var(--pulsomed-muted);
+.learnlingo-course-card-progress span {
+    color: var(--learnlingo-muted);
     font-size: .72rem;
     font-weight: 700;
 }
-.pulsomed-course-card-action {
+.learnlingo-course-card-action {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -603,21 +589,21 @@ h6,
     border-top: 1px solid #ECEEF2;
     text-decoration: none;
 }
-.pulsomed-course-card-action .fa {
+.learnlingo-course-card-action .fa {
     margin: 0;
 }
-.pulsomed-home-empty {
+.learnlingo-home-empty {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
     gap: 1rem;
     padding: 1.4rem;
     background: #FFF;
-    border: 1px solid var(--pulsomed-border);
+    border: 1px solid var(--learnlingo-border);
     border-radius: 20px;
-    box-shadow: var(--pulsomed-shadow);
+    box-shadow: var(--learnlingo-shadow);
 }
-.pulsomed-home-empty > .fa {
+.learnlingo-home-empty > .fa {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -628,13 +614,13 @@ h6,
     background: rgba($primary, .08);
     border-radius: 14px;
 }
-.pulsomed-home-empty h3,
-.pulsomed-home-empty p {
+.learnlingo-home-empty h3,
+.learnlingo-home-empty p {
     margin: 0;
 }
-.pulsomed-home-empty p {
+.learnlingo-home-empty p {
     margin-top: .25rem;
-    color: var(--pulsomed-muted);
+    color: var(--learnlingo-muted);
 }
 // Buttons, inputs and feedback.
 .btn {
@@ -666,7 +652,7 @@ h6,
 }
 .btn-secondary,
 .btn-outline-secondary {
-    color: var(--pulsomed-ink);
+    color: var(--learnlingo-ink);
     background: #FFF;
     border-color: #D9DCE3;
     box-shadow: 0 3px 0 rgba(37, 42, 55, .08);
@@ -696,7 +682,7 @@ h6,
 .form-file-input,
 .form-control-static {
     min-height: 46px;
-    color: var(--pulsomed-ink);
+    color: var(--learnlingo-ink);
     background-color: #FFF;
     border-color: #DFE1E7;
     box-shadow: inset 0 1px 0 rgba(37, 42, 55, .02);
@@ -714,7 +700,7 @@ h6,
     font-weight: 750;
 }
 .input-group-text {
-    color: var(--pulsomed-muted);
+    color: var(--learnlingo-muted);
     background: #F8F8FA;
     border-color: #DFE1E7;
 }
@@ -735,7 +721,7 @@ h6,
     border-radius: 999px;
 }
 .progress-bar {
-    background: linear-gradient(90deg, $pulsomed-accent, $primary);
+    background: linear-gradient(90deg, $learnlingo-accent, $primary);
     border-radius: inherit;
 }
 // Cards, dashboard blocks and course grids.
@@ -746,16 +732,16 @@ h6,
 .course-info-container,
     //.generalbox,
 .boxaligncenter {
-    border: 1px solid var(--pulsomed-border);
+    border: 1px solid var(--learnlingo-border);
     border-radius: 20px;
-    box-shadow: var(--pulsomed-shadow);
+    box-shadow: var(--learnlingo-shadow);
 }
 .card,
 .block,
 .coursebox,
 .dashboard-card,
 .course-info-container {
-    background: var(--pulsomed-surface);
+    background: var(--learnlingo-surface);
 }
 .card-header,
 .block .card-title {
@@ -763,7 +749,7 @@ h6,
     border-bottom-color: #ECEEF2;
 }
 .block .card-title {
-    color: var(--pulsomed-ink);
+    color: var(--learnlingo-ink);
     font-size: 1.05rem;
     font-weight: 800;
 }
@@ -779,7 +765,7 @@ h6,
 .coursebox:hover,
 .course-summaryitem:hover {
     border-color: rgba($primary, .22);
-    box-shadow: var(--pulsomed-shadow-hover);
+    box-shadow: var(--learnlingo-shadow-hover);
     transform: translateY(-3px);
 }
 .dashboard-card .dashboard-card-img,
@@ -798,7 +784,7 @@ h6,
 .dashboard-card .coursename,
 .coursebox .coursename,
 .course-summaryitem .coursename {
-    color: var(--pulsomed-ink);
+    color: var(--learnlingo-ink);
     font-weight: 800;
 }
 .block_myoverview .nav-tabs,
@@ -810,7 +796,7 @@ h6,
     border-radius: 14px;
 }
 .block_myoverview .nav-link {
-    color: var(--pulsomed-muted);
+    color: var(--learnlingo-muted);
     border: 0;
     border-radius: 10px;
 }
@@ -826,7 +812,7 @@ h6,
     border: 1px solid #ECEEF2 !important;
     border-radius: 12px !important;
 }
-// Native Moodle front page transformed into the PulsoMed course showcase.
+// Native Moodle front page transformed into the learnlingo course showcase.
 #page-site-index #site-news-forum,
 #page-site-index #frontpage-available-course-list,
 #page-site-index #frontpage-course-list,
@@ -837,9 +823,9 @@ h6,
 #page-site-index #site-news-forum {
     padding: 1.35rem;
     background: #FFF;
-    border: 1px solid var(--pulsomed-border);
+    border: 1px solid var(--learnlingo-border);
     border-radius: 20px;
-    box-shadow: var(--pulsomed-shadow);
+    box-shadow: var(--learnlingo-shadow);
 }
 #page-site-index #site-news-forum h2,
 #page-site-index #frontpage-available-course-list > h2,
@@ -848,24 +834,9 @@ h6,
 #page-site-index #frontpage-category-combo > h2 {
     position: relative;
     margin-bottom: 1.2rem;
-    padding-top: 1.15rem;
-    color: var(--pulsomed-ink);
+    color: var(--learnlingo-ink);
     font-size: clamp(1.45rem, 3vw, 2rem);
     font-weight: 850;
-}
-#page-site-index #site-news-forum h2::before,
-#page-site-index #frontpage-available-course-list > h2::before,
-#page-site-index #frontpage-course-list > h2::before,
-#page-site-index #frontpage-category-names > h2::before,
-#page-site-index #frontpage-category-combo > h2::before {
-    position: absolute;
-    top: 0;
-    left: 0;
-    color: $primary;
-    content: "PULSOMED";
-    font-size: .68rem;
-    font-weight: 850;
-    letter-spacing: .09em;
 }
 #page-site-index .frontpage-course-list-all,
 #page-site-index .frontpage-course-list-enrolled {
@@ -896,7 +867,7 @@ h6,
     height: 155px;
     margin: 0;
     overflow: hidden;
-    background: linear-gradient(135deg, rgba($primary, .11), rgba($pulsomed-accent, .2));
+    background: linear-gradient(135deg, rgba($primary, .11), rgba($learnlingo-accent, .2));
 }
 #page-site-index .frontpage-course-list-all .coursebox .courseimage img,
 #page-site-index .frontpage-course-list-enrolled .coursebox .courseimage img {
@@ -923,7 +894,7 @@ h6,
 }
 #page-site-index .frontpage-course-list-all .coursebox .coursename a,
 #page-site-index .frontpage-course-list-enrolled .coursebox .coursename a {
-    color: var(--pulsomed-ink);
+    color: var(--learnlingo-ink);
     font-weight: 820;
     text-decoration: none;
 }
@@ -940,7 +911,7 @@ h6,
 #page-site-index .frontpage-course-list-enrolled .coursebox .teachers {
     margin: 0;
     padding: 0;
-    color: var(--pulsomed-muted);
+    color: var(--learnlingo-muted);
     font-size: .78rem;
     list-style: none;
 }
@@ -961,9 +932,9 @@ h6,
 #page-site-index #frontpage-category-combo .course_category_tree {
     padding: 1.25rem;
     background: #FFF;
-    border: 1px solid var(--pulsomed-border);
+    border: 1px solid var(--learnlingo-border);
     border-radius: 20px;
-    box-shadow: var(--pulsomed-shadow);
+    box-shadow: var(--learnlingo-shadow);
 }
 #page-site-index .course_category_tree .category > .info {
     margin-bottom: .55rem;
@@ -976,7 +947,7 @@ h6,
     margin: 0;
 }
 #page-site-index .course_category_tree .categoryname a {
-    color: var(--pulsomed-ink);
+    color: var(--learnlingo-ink);
     font-weight: 800;
     text-decoration: none;
 }
@@ -993,9 +964,9 @@ h6,
     margin-bottom: 1.25rem;
     padding: 0;
     background: #FFF;
-    border: 1px solid var(--pulsomed-border);
+    border: 1px solid var(--learnlingo-border);
     border-radius: 15px;
-    box-shadow: var(--pulsomed-shadow);
+    box-shadow: var(--learnlingo-shadow);
     .navigation {
         border: 0;
         background-color: transparent;
@@ -1006,7 +977,7 @@ h6,
     }
     .nav-link {
         padding: .7rem .95rem;
-        color: var(--pulsomed-muted);
+        color: var(--learnlingo-muted);
         border: 0 !important;
         border-radius: 11px;
     }
@@ -1022,9 +993,9 @@ h6,
     margin-bottom: 1rem;
     padding: 1.15rem;
     background: #FFF;
-    border: 1px solid var(--pulsomed-border);
+    border: 1px solid var(--learnlingo-border);
     border-radius: 20px;
-    box-shadow: var(--pulsomed-shadow);
+    box-shadow: var(--learnlingo-shadow);
 }
 .course-section .sectionname,
 .course-section .section-title {
@@ -1056,16 +1027,16 @@ h6,
 }
 .activityname a,
 .instancename {
-    color: var(--pulsomed-ink);
+    color: var(--learnlingo-ink);
     font-weight: 750;
 }
 .activity-navigation {
     margin-top: 1.5rem;
     padding: 1rem;
     background: #FFF;
-    border: 1px solid var(--pulsomed-border);
+    border: 1px solid var(--learnlingo-border);
     border-radius: 17px;
-    box-shadow: var(--pulsomed-shadow);
+    box-shadow: var(--learnlingo-shadow);
 }
 .completion-info,
 .automatic-completion-conditions .badge {
@@ -1098,7 +1069,7 @@ h6,
     border-bottom-color: #E6E8ED;
 }
 .nav-tabs .nav-link {
-    color: var(--pulsomed-muted);
+    color: var(--learnlingo-muted);
     border: 0;
     border-radius: 10px 10px 0 0;
 }
@@ -1109,7 +1080,7 @@ h6,
 }
 .dropdown-menu {
     padding: .5rem;
-    border: 1px solid var(--pulsomed-border);
+    border: 1px solid var(--learnlingo-border);
     border-radius: 14px;
     box-shadow: 0 12px 30px rgba(37, 42, 55, .13);
 }
@@ -1124,7 +1095,7 @@ h6,
 }
 .modal-content {
     overflow: hidden;
-    border: 1px solid var(--pulsomed-border);
+    border: 1px solid var(--learnlingo-border);
     border-radius: 20px;
     box-shadow: 0 20px 55px rgba(37, 42, 55, .18);
 }
@@ -1141,7 +1112,7 @@ h6,
 }
 .page-link {
     min-width: 39px;
-    color: var(--pulsomed-muted);
+    color: var(--learnlingo-muted);
     text-align: center;
     border-color: #E2E4E9;
     border-radius: 10px !important;
@@ -1153,7 +1124,7 @@ h6,
 // Drawers.
 .drawer {
     background: #FFF;
-    border-color: var(--pulsomed-border);
+    border-color: var(--learnlingo-border);
     box-shadow: 8px 0 25px rgba(37, 42, 55, .08);
 }
 .drawer-right {
@@ -1169,8 +1140,8 @@ h6,
 .drawer-toggles .drawer-toggler .btn {
     color: $primary;
     background: #FFF;
-    border: 1px solid var(--pulsomed-border);
-    box-shadow: var(--pulsomed-shadow);
+    border: 1px solid var(--learnlingo-border);
+    box-shadow: var(--learnlingo-shadow);
 }
 .courseindex .courseindex-item {
     margin-bottom: .2rem;
@@ -1184,13 +1155,13 @@ h6,
 }
 // Responsive adjustments.
 @media (max-width: 1199.98px) {
-    .pulsomed-home-course-grid {
+    .learnlingo-home-course-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-    .pulsomed-dashboard-copy {
+    .learnlingo-dashboard-copy {
         max-width: 68%;
     }
-    .pulsomed-mascot {
+    .learnlingo-hero-illustration {
         right: 5%;
         width: 125px;
         height: 150px;
@@ -1201,42 +1172,42 @@ h6,
         min-height: 64px;
         padding: .45rem .75rem;
     }
-    .navbar-brand.pulsomed-navbar-brand {
+    .navbar-brand.learnlingo-navbar-brand {
         min-width: auto;
         margin-right: .5rem !important;
     }
-    .pulsomed-brandmark {
+    .learnlingo-brandmark {
         flex-basis: 38px;
         width: 38px;
         height: 38px;
     }
-    .pulsomed-dashboard-grid {
+    .learnlingo-dashboard-grid {
         grid-template-columns: 1fr;
     }
-    .pulsomed-goal-card {
+    .learnlingo-goal-card {
         display: grid;
         grid-template-columns: auto 1fr auto;
         gap: 1rem;
         min-height: 0;
         align-items: center;
     }
-    .pulsomed-goal-heading {
+    .learnlingo-goal-heading {
         margin: 0;
     }
-    .pulsomed-goal-ring {
+    .learnlingo-goal-ring {
         width: 92px;
         height: 92px;
         margin: 0;
     }
-    .pulsomed-goal-ring-inner {
+    .learnlingo-goal-ring-inner {
         width: 68px;
         height: 68px;
     }
-    .pulsomed-goal-copy {
+    .learnlingo-goal-copy {
         margin: 0;
         text-align: left;
     }
-    .pulsomed-goal-card .btn {
+    .learnlingo-goal-card .btn {
         width: auto;
         margin: 0;
     }
@@ -1246,73 +1217,73 @@ h6,
         width: calc(100% - 1rem);
         margin-top: 1rem;
     }
-    .navbar-brand .pulsomed-wordmark {
+    .navbar-brand .learnlingo-wordmark {
         display: none;
     }
-    .pulsomed-dashboard-hero {
+    .learnlingo-dashboard-hero {
         min-height: 410px;
         padding: 1.6rem;
         border-radius: 23px;
     }
-    .pulsomed-dashboard-copy {
+    .learnlingo-dashboard-copy {
         max-width: 100%;
     }
-    .pulsomed-dashboard-title {
+    .learnlingo-dashboard-title {
         max-width: 100%;
         font-size: 2.15rem;
     }
-    .pulsomed-dashboard-description {
+    .learnlingo-dashboard-description {
         max-width: 100%;
         font-size: .98rem;
     }
-    .pulsomed-mascot {
+    .learnlingo-hero-illustration {
         right: 1.5rem;
         bottom: 1.3rem;
         width: 92px;
         height: 108px;
     }
-    .pulsomed-mascot .fa {
+    .learnlingo-hero-illustration .fa {
         font-size: 2.6rem;
     }
-    .pulsomed-mascot::before {
+    .learnlingo-hero-illustration::before {
         top: 14px;
         font-size: 2.1rem;
     }
-    .pulsomed-dashboard-cta {
+    .learnlingo-dashboard-cta {
         max-width: calc(100% - 110px);
         font-size: .88rem;
     }
-    .pulsomed-goal-card {
+    .learnlingo-goal-card {
         display: flex;
         align-items: stretch;
     }
-    .pulsomed-goal-heading {
+    .learnlingo-goal-heading {
         align-self: stretch;
     }
-    .pulsomed-goal-ring {
+    .learnlingo-goal-ring {
         align-self: center;
     }
-    .pulsomed-goal-copy {
+    .learnlingo-goal-copy {
         text-align: center;
     }
-    .pulsomed-goal-card .btn {
+    .learnlingo-goal-card .btn {
         width: 100%;
     }
-    .pulsomed-home-resume-card {
+    .learnlingo-home-resume-card {
         grid-template-columns: auto minmax(0, 1fr);
     }
-    .pulsomed-home-resume-action {
+    .learnlingo-home-resume-action {
         grid-column: 1 / -1;
         width: 100%;
     }
-    .pulsomed-home-section-heading {
+    .learnlingo-home-section-heading {
         align-items: flex-start;
         flex-direction: column;
     }
-    .pulsomed-home-course-grid {
+    .learnlingo-home-course-grid {
         grid-template-columns: 1fr;
     }
-    .pulsomed-home-empty {
+    .learnlingo-home-empty {
         padding: 2rem 1.25rem;
     }
     .course-section,
@@ -1339,7 +1310,7 @@ h6,
     #page.drawers {
         background: #FFF !important;
     }
-    .pulsomed-dashboard-grid,
+    .learnlingo-dashboard-grid,
     .drawer-toggles,
     .navbar.fixed-top,
     #page-footer {
@@ -1368,7 +1339,7 @@ h6,
 @import "moodle/course";
 @import "moodle/debug";
 
-.pulsomed-login-logo { display: block; max-width: min(100%, 280px); max-height: 100px; width: auto; height: auto; object-fit: contain; }
+.learnlingo-login-logo { display: block; max-width: min(100%, 280px); max-height: 100px; width: auto; height: auto; object-fit: contain; }
 
 
 // Full-width institutional HTML home, without affecting dashboards or course pages.
@@ -1390,7 +1361,7 @@ body.learnlingo-html-home-fullwidth .learnlingo-html-home {
 
 
 // Personal XP lives alongside (not instead of) Moodle course completion.
-.pulsomed-course-xp {
+.learnlingo-course-xp {
     display: inline-flex;
     gap: .35rem;
     align-items: center;
@@ -1399,14 +1370,14 @@ body.learnlingo-html-home-fullwidth .learnlingo-html-home {
     padding: .35rem .65rem;
     margin: .45rem 0;
     border-radius: 999px;
-    color: var(--pulsomed-text, #253347);
+    color: var(--learnlingo-ink, #263238);
     background: rgba($primary, .08);
     font-size: .82rem;
     font-weight: 700;
     line-height: 1.35;
 }
-.pulsomed-course-xp:hover,
-.pulsomed-course-xp:focus {
+.learnlingo-course-xp:hover,
+.learnlingo-course-xp:focus {
     background: rgba($primary, .14);
     text-decoration: none;
 }

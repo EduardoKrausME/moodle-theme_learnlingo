@@ -48,5 +48,44 @@ function xmldb_theme_learnlingo_upgrade(int $oldversion): bool {
         }
         upgrade_plugin_savepoint(true, 2026101001, 'theme', 'learnlingo');
     }
+
+    if ($oldversion < 2026101002) {
+        // Migrate only previously shipped values, never customised institutional branding.
+        $palette = [
+            'brandcolor' => ['#ef3340', '#58cc02'],
+            'accentcolor' => ['#ff6670', '#8be24a'],
+            'canvascolor' => ['#f5f6f8', '#f7faf5'],
+            'textcolor' => ['#252a37', '#263238'],
+        ];
+        foreach ($palette as $setting => [$previous, $replacement]) {
+            $current = get_config('theme_learnlingo', $setting);
+            if (is_string($current) && strcasecmp(trim($current), $previous) === 0) {
+                set_config($setting, $replacement, 'theme_learnlingo');
+            }
+        }
+
+        // Clear obsolete default copy only when a site stored the exact old wording.
+        $previousmessages = [
+            'dashboarddescriptiontext' => [
+                'Continue sua formação com aulas curtas, práticas e feitas para a rotina de quem cuida.',
+                'Continue your education with short, practical lessons made for the routine of those who care.',
+            ],
+            'loginpaneldescriptiontext' => [
+                'Experiências curtas e práticas, pensadas para a rotina de profissionais da saúde.',
+                'Short, practical learning experiences designed for healthcare professionals.',
+            ],
+            'loginpaneltitletext' => [
+                'Cuidado que vira conhecimento.',
+                'Care that becomes knowledge.',
+            ],
+        ];
+        foreach ($previousmessages as $setting => $values) {
+            $current = get_config('theme_learnlingo', $setting);
+            if (is_string($current) && in_array(trim($current), $values, true)) {
+                unset_config($setting, 'theme_learnlingo');
+            }
+        }
+        upgrade_plugin_savepoint(true, 2026101002, 'theme', 'learnlingo');
+    }
     return true;
 }

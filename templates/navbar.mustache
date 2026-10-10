@@ -62,7 +62,7 @@
             <span class="visually-hidden">{{#str}}sidepanel, core{{/str}}</span>
         </button>
 
-        <a href="{{{ config.homeurl }}}" class="navbar-brand pulsomed-navbar-brand d-flex align-items-center m-0 me-4 p-0 aabtn" aria-label="{{sitename}}">
+        <a href="{{{ config.homeurl }}}" class="navbar-brand learnlingo-navbar-brand d-flex align-items-center m-0 me-4 p-0 aabtn" aria-label="{{sitename}}">
 
             {{#hasbrandlogo}}
                 <img src="{{{brandlogo}}}" class="logo me-1" alt="{{sitename}}">
@@ -72,10 +72,10 @@
                 <img src="{{{output.get_compact_logo_url}}}" class="logo me-1" alt="{{sitename}}">
             {{/ output.should_display_navbar_logo }}
             {{^ output.should_display_navbar_logo }}
-                <span class="pulsomed-brandmark" aria-hidden="true">
-                    <i class="fa fa-heartbeat"></i>
+                <span class="learnlingo-brandmark" aria-hidden="true">
+                    <i class="fa fa-graduation-cap"></i>
                 </span>
-                <span class="pulsomed-wordmark">{{sitename}}</span>
+                <span class="learnlingo-wordmark">{{sitename}}</span>
             {{/ output.should_display_navbar_logo }}
             {{/hasbrandlogo}}
         </a>

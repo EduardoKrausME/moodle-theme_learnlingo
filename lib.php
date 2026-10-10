@@ -33,14 +33,14 @@
 function theme_learnlingo_get_pre_scss(theme_config $theme): string {
     global $CFG;
 
-    $brandcolor = !empty($theme->settings->brandcolor) ? $theme->settings->brandcolor : "#ef3340";
-    $accentcolor = !empty($theme->settings->accentcolor) ? $theme->settings->accentcolor : "#ff6670";
+    $brandcolor = !empty($theme->settings->brandcolor) ? $theme->settings->brandcolor : "#58cc02";
+    $accentcolor = !empty($theme->settings->accentcolor) ? $theme->settings->accentcolor : "#8be24a";
 
-    $canvascolor = !empty($theme->settings->canvascolor) ? $theme->settings->canvascolor : '#f5f6f8';
-    $textcolor = !empty($theme->settings->textcolor) ? $theme->settings->textcolor : '#252a37';
+    $canvascolor = !empty($theme->settings->canvascolor) ? $theme->settings->canvascolor : '#f7faf5';
+    $textcolor = !empty($theme->settings->textcolor) ? $theme->settings->textcolor : '#263238';
 
     $scss = "\$primary: {$brandcolor};\n";
-    $scss .= "\$pulsomed-accent: {$accentcolor};\n";
+    $scss .= "\$learnlingo-accent: {$accentcolor};\n";
     $scss .= "\$body-bg: {$canvascolor};\n";
     $scss .= "\$body-color: {$textcolor};\n";
     $scss .= "\$headings-color: {$textcolor};\n";

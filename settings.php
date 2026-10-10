@@ -52,7 +52,7 @@ if ($ADMIN->fulltree) {
         'theme_learnlingo/brandcolor',
         get_string('brandcolor', 'theme_learnlingo'),
         get_string('brandcolor_desc', 'theme_learnlingo'),
-        '#ef3340'
+        '#58cc02'
     );
     $setting->set_updatedcallback('theme_reset_all_caches');
     $settings->add($setting);
@@ -61,7 +61,7 @@ if ($ADMIN->fulltree) {
         'theme_learnlingo/accentcolor',
         get_string('accentcolor', 'theme_learnlingo'),
         get_string('accentcolor_desc', 'theme_learnlingo'),
-        '#ff6670'
+        '#8be24a'
     );
     $setting->set_updatedcallback('theme_reset_all_caches');
     $settings->add($setting);
@@ -80,7 +80,7 @@ if ($ADMIN->fulltree) {
     }
 
 
-    foreach (['canvascolor' => '#f5f6f8', 'textcolor' => '#252a37'] as $name => $default) {
+    foreach (['canvascolor' => '#f7faf5', 'textcolor' => '#263238'] as $name => $default) {
         $setting = new admin_setting_configcolourpicker(
             'theme_learnlingo/' . $name,
             get_string($name, 'theme_learnlingo'),

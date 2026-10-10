@@ -17,7 +17,7 @@ body#page-login-index {
     align-items: stretch;
     overflow: hidden;
     color: #fff;
-    background: linear-gradient(145deg, $pulsomed-accent 0%, $primary 58%, darken($primary, 8%) 100%);
+    background: linear-gradient(145deg, $learnlingo-accent 0%, $primary 58%, darken($primary, 8%) 100%);
 }
 
 .login-layout-left::before,
@@ -54,25 +54,25 @@ body#page-login-index {
     padding: clamp(3rem, 7vw, 7rem);
 }
 
-.pulsomed-login-brand {
+.learnlingo-login-brand {
     display: flex;
     align-items: center;
     gap: .75rem;
     margin-bottom: clamp(2.5rem, 7vh, 5rem);
 }
 
-.pulsomed-login-brand .pulsomed-brandmark {
+.learnlingo-login-brand .learnlingo-brandmark {
     color: $primary;
     background: #fff;
-    box-shadow: 0 5px 0 rgba(87, 14, 23, .18);
+    box-shadow: 0 5px 0 rgba($primary, .22);
 }
 
-.pulsomed-login-brand .pulsomed-wordmark,
-.pulsomed-login-brand .pulsomed-wordmark-accent {
+.learnlingo-login-brand .learnlingo-wordmark,
+.learnlingo-login-brand .learnlingo-wordmark-accent {
     color: #fff;
 }
 
-.pulsomed-login-kicker {
+.learnlingo-login-kicker {
     display: inline-flex;
     align-self: flex-start;
     margin-bottom: 1.2rem;
@@ -94,7 +94,7 @@ body#page-login-index {
     line-height: .98;
 }
 
-.pulsomed-login-description {
+.learnlingo-login-description {
     max-width: 530px;
     margin-bottom: 1.5rem;
     color: rgba(255, 255, 255, .9);
@@ -102,7 +102,7 @@ body#page-login-index {
     line-height: 1.65;
 }
 
-.pulsomed-login-benefits {
+.learnlingo-login-benefits {
     display: grid;
     gap: .75rem;
     margin: 0;
@@ -110,7 +110,7 @@ body#page-login-index {
     list-style: none;
 }
 
-.pulsomed-login-benefits li {
+.learnlingo-login-benefits li {
     display: flex;
     align-items: center;
     gap: .75rem;
@@ -118,7 +118,7 @@ body#page-login-index {
     font-weight: 650;
 }
 
-.pulsomed-login-benefits .fa {
+.learnlingo-login-benefits .fa {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -129,7 +129,7 @@ body#page-login-index {
     border-radius: 10px;
 }
 
-.pulsomed-login-tagline {
+.learnlingo-login-tagline {
     margin-top: 2rem;
     color: rgba(255, 255, 255, .78);
     font-size: .8rem;
@@ -162,12 +162,12 @@ body#page-login-index {
 }
 
 .loginform h1 {
-    color: var(--pulsomed-ink);
+    color: var(--learnlingo-ink);
     font-size: 2rem;
     font-weight: 850;
 }
 
-.pulsomed-login-brand-mobile {
+.learnlingo-login-brand-mobile {
     display: none;
     align-items: center;
     gap: .7rem;
@@ -197,5 +197,5 @@ body#page-login-index {
 }
 
 .login-cookiesnotice {
-    color: var(--pulsomed-muted);
+    color: var(--learnlingo-muted);
 }

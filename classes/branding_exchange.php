@@ -39,10 +39,10 @@ final class branding_exchange {
      */
     public static function definitions(): array {
         return [
-            'brandcolor' => ['color', '#ef3340'],
-            'accentcolor' => ['color', '#ff6670'],
-            'canvascolor' => ['color', '#f5f6f8'],
-            'textcolor' => ['color', '#252a37'],
+            'brandcolor' => ['color', '#58cc02'],
+            'accentcolor' => ['color', '#8be24a'],
+            'canvascolor' => ['color', '#f7faf5'],
+            'textcolor' => ['color', '#263238'],
             'dashboardeyebrowtext' => ['text', ''],
             'dashboarddescriptiontext' => ['text', ''],
             'loginpaneltitletext' => ['text', ''],

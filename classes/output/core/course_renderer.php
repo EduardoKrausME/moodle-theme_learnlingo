@@ -32,7 +32,7 @@ use moodle_url;
 use stdClass;
 
 /**
- * Replaces the standard Moodle front page with the PulsoMed experience.
+ * Replaces the standard Moodle front page with the learnlingo experience.
  */
 class course_renderer extends core_course_renderer {
 
@@ -241,7 +241,7 @@ class course_renderer extends core_course_renderer {
             'url' => new moodle_url('/course/view.php', ['id' => $course->id]),
             'imageurl' => $imageurl,
             'hasimage' => $imageurl !== '',
-            'toneclass' => 'pulsomed-course-tone-' . $tone,
+            'toneclass' => 'learnlingo-course-tone-' . $tone,
             'progress' => $progress === null ? 0 : $progress,
             'hasprogress' => $progress !== null,
             'progresslabel' => $progress === null
