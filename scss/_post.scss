@@ -70,7 +70,6 @@ h6,
 }
 .navbar-brand.learnlingo-navbar-brand {
     gap: .7rem;
-    min-width: 190px;
     color: var(--learnlingo-ink);
     text-decoration: none;
 }
@@ -1173,7 +1172,6 @@ h6,
         padding: .45rem .75rem;
     }
     .navbar-brand.learnlingo-navbar-brand {
-        min-width: auto;
         margin-right: .5rem !important;
     }
     .learnlingo-brandmark {
