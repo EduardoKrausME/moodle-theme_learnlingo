@@ -33,7 +33,7 @@ final class branding_exchange {
     /**
      * All portable theme settings, with their types and default values.
      *
-     * Binary uploaded logos remain in Moodle File API. SVG logos are portable.
+     * Uploaded logos, including SVG, remain in Moodle File API.
      *
      * @return array
      */
@@ -43,8 +43,6 @@ final class branding_exchange {
             'accentcolor' => ['color', '#ff6670'],
             'canvascolor' => ['color', '#f5f6f8'],
             'textcolor' => ['color', '#252a37'],
-            'logosvg' => ['svg', ''],
-            'loginlogosvg' => ['svg', ''],
             'dashboardeyebrowtext' => ['text', ''],
             'dashboarddescriptiontext' => ['text', ''],
             'loginpaneltitletext' => ['text', ''],
@@ -121,14 +119,9 @@ COMO CONDUZIR A CONVERSA
    Faça perguntas naturais, normalmente uma de cada vez.
 2. Investigue as cores: cor principal, destaque, fundo e texto.
    Pergunte se quer um visual claro/escuro e ofereça paletas se houver dúvidas.
-3. Pergunte se ele deseja modificar a logo. É possível gerar arte SVG
-   diretamente nas strings settings.logosvg e settings.loginlogosvg,
-   sem anexar arquivos. Se não quiser, preserve os valores atuais.
-   Use SVG puro com xmlns="http://www.w3.org/2000/svg", somente formas
-   simples (svg, g, path, rect, circle, ellipse, line, polyline,
-   polygon, text, tspan, title e desc) e atributos de apresentação.
-   Proibidos JavaScript, eventos, imagens externas, CSS, links e animações.
-   Não altere logos PNG/JPG enviadas pelo administrador ao Moodle.
+3. Pergunte se ele deseja modificar a logo. Logos são arquivos
+   gerenciados pelo Moodle (PNG, JPG, WebP ou SVG), não strings JSON.
+   Não inclua SVG no JSON; faça upload no campo de logo do tema.
 4. Pergunte que home deseja: "moodle" (padrão Moodle), "learnlingo"
    (visual LearnLingo) ou "html" (página personalizada).
    No modo "html", produza uma home responsiva em settings.homepagehtml
@@ -153,11 +146,11 @@ FORMATO OBRIGATÓRIO DA RESPOSTA FINAL
   schema_version deve continuar 1; plugin e repository não mudam.
 - As quatro cores são strings "#RRGGBB".
 - Campos true/false são booleanos JSON, não strings.
-- HTML, SCSS, SVG e todos os demais textos são strings JSON com
+- HTML, SCSS e todos os demais textos são strings JSON com
   aspas e quebras de linha devidamente escapadas.
 - Preserve todos os valores que não precisarem de alteração.
 - Não insira segredos, PHP, JavaScript, scripts externos ou conteúdo
-  executável. O SVG tem que ser autocontido e seguro.
+  executável.
 - Certifique-se de que a saída seja JSON válido e reproduza
   exatamente a estrutura fornecida. O importador rejeita chaves
   ausentes, desconhecidas, tipos incorretos e SVG inseguro.
@@ -213,7 +206,7 @@ PROMPT;
                     self::invalid_field($name);
                 }
                 $limits = ['color' => 7, 'text' => 1500, 'homepage' => 20,
-                    'html' => 150000, 'scss' => 80000, 'svg' => svg_logo::MAX_LENGTH];
+                    'html' => 150000, 'scss' => 80000];
                 if (strlen($value) > $limits[$type]) {
                     self::invalid_field($name);
                 }
@@ -225,9 +218,6 @@ PROMPT;
                 }
                 if ($type === 'text' && (str_contains($value, '<') ||
                         str_contains($value, '>') || str_contains($value, "\0"))) {
-                    self::invalid_field($name);
-                }
-                if ($type === 'svg' && $value !== '' && !svg_logo::is_valid($value)) {
                     self::invalid_field($name);
                 }
                 if (($type === 'html' || $type === 'scss') &&
