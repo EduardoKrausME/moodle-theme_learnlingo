@@ -8,7 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU GPL for details.
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Tests for full LearnLingo MCP settings integration.
@@ -25,18 +29,29 @@ use theme_learnlingo\mcp\get_settings;
 use theme_learnlingo\mcp\provider;
 use theme_learnlingo\mcp\update_settings;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Run with the optional local_mcp installed.
+ *
+ * @covers \theme_learnlingo\mcp\settings_service
  */
 final class mcp_settings_test extends advanced_testcase {
+    /**
+     * Skip tests when the optional MCP plugin is missing.
+     *
+     * @return void
+     */
     private function require_mcp(): void {
         if (!\core_component::get_component_directory('local_mcp')) {
             $this->markTestSkipped('This integration requires local_mcp.');
         }
     }
 
+    /**
+     * Return an authenticated administrator identity.
+     *
+     * @return authenticated_identity
+     */
     private function identity(): authenticated_identity {
         $this->setAdminUser();
         return new authenticated_identity((int)get_admin()->id, 'test', ['mcp:read', 'mcp:write']);
@@ -80,6 +95,8 @@ final class mcp_settings_test extends advanced_testcase {
     }
 
     /**
+     * Verify the expected behavior.
+     *
      * @return void
      */
     public function test_partial_update_preserves_unrelated_settings_and_accepts_both_scss_fields(): void {
@@ -157,6 +174,8 @@ final class mcp_settings_test extends advanced_testcase {
         $writer->execute($arguments, $identity);
         $after = $reader->execute(['include_images' => true], $identity);
         $this->assertSame('image/png', $after['images']['logo']['uploaded']['mimetype']);
+        $this->assertSame('/' . $after['images']['logo']['uploaded']['filename'],
+            get_config('theme_learnlingo', 'logo'));
         $this->assertNotEmpty($after['_mcp_content']);
         $this->assertSame($before['settings'], $after['settings']);
 
@@ -164,6 +183,7 @@ final class mcp_settings_test extends advanced_testcase {
             'expected_hash' => $after['state_hash']], $identity);
         $removed = $reader->execute([], $identity);
         $this->assertNull($removed['images']['logo']['uploaded']);
+        $this->assertSame('', get_config('theme_learnlingo', 'logo'));
     }
 
     public function test_image_operation_rejects_ambiguous_sources(): void {

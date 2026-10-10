@@ -123,7 +123,7 @@ $ishtmlhomepage = $PAGE->pagetype === 'site-index'
     && theme_learnlingo_homepage_html($PAGE->theme) !== '';
 $customfrontpage = $PAGE->pagetype === 'site-index'
     && !$PAGE->user_is_editing()
-    && ($ishtmlhomepage || ($homepagemode === 'learnlingo' && $showdashboardhero));
+    && ($ishtmlhomepage || $homepagemode === 'learnlingo');
 if ($ishtmlhomepage && (!isset($PAGE->theme->settings->homepagefullwidth)
         || !empty($PAGE->theme->settings->homepagefullwidth))) {
     $extraclasses[] = 'learnlingo-html-home-fullwidth';
@@ -196,6 +196,7 @@ if ($coursehero) {
         || !empty($PAGE->theme->settings->showpersonalxp);
     if (
         $showpersonalxp
+        && class_exists('\\local_personalxp\\service\\xp_manager')
         && isloggedin()
         && !isguestuser()
         && has_capability('local/personalxp:view', $coursecontext)

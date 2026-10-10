@@ -8,7 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU GPL for details.
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * MCP WRITE tool to update LearnLingo homepage settings.
@@ -29,14 +33,29 @@ use local_mcp\write\tool\base_tool;
  * Update home settings using the theme's existing configuration validator.
  */
 final class update_homepage extends base_tool {
+    /**
+     * Return the MCP tool identifier.
+     *
+     * @return string Result.
+     */
     public function get_name(): string {
         return 'learnlingo_update_homepage';
     }
 
+    /**
+     * Return the human-readable title.
+     *
+     * @return string Result.
+     */
     public function get_title(): string {
         return 'Update LearnLingo homepage';
     }
 
+    /**
+     * Describe this tool.
+     *
+     * @return string Result.
+     */
     public function get_description(): string {
         return 'Update the LearnLingo homepage mode, responsive HTML, full-width '
             . 'layout and optional SCSS. Reuses theme configuration validation, '
@@ -44,10 +63,20 @@ final class update_homepage extends base_tool {
             . 'Read the current state with learnlingo_get_homepage first.';
     }
 
+    /**
+     * Return the required capability.
+     *
+     * @return string Result.
+     */
     public function get_required_capability(): string {
         return 'moodle/site:config';
     }
 
+    /**
+     * Return the input JSON schema.
+     *
+     * @return array Result.
+     */
     public function get_input_schema(): array {
         return $this->object_schema([
             'mode' => ['type' => 'string', 'enum' => ['moodle', 'learnlingo', 'html'],
@@ -62,10 +91,21 @@ final class update_homepage extends base_tool {
         ]);
     }
 
+    /**
+     * Resolve the security context.
+     *
+     * @param array $arguments Input arguments.
+     * @return context Result.
+     */
     public function resolve_context(array $arguments): context {
         return context_system::instance();
     }
 
+    /**
+     * Indicate whether previews are supported.
+     *
+     * @return bool Result.
+     */
     public function supports_dry_run(): bool {
         return true;
     }

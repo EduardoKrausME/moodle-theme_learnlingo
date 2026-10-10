@@ -8,8 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Installation helpers for LearnLingo.
@@ -19,7 +22,6 @@
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die;
 
 /**
  * Populate the theme logo file areas from the packaged default when empty.
@@ -42,9 +44,16 @@ function theme_learnlingo_install_default_logos(): void {
     $fs = get_file_storage();
 
     foreach (['logo', 'loginlogo'] as $area) {
-        // This area already has a configured logo; leave it untouched.
-        if (trim((string)get_config('theme_learnlingo', $area)) !== '') {
-            continue;
+        // Preserve a configured logo if its file is still available.
+        $configured = trim((string)get_config('theme_learnlingo', $area));
+        if ($configured !== '') {
+            $relativepath = ltrim($configured, '/');
+            $existing = $fs->get_file_by_hash(sha1(
+                '/' . $context->id . '/theme_learnlingo/' . $area . '/0/' . $relativepath
+            ));
+            if ($existing && !$existing->is_directory()) {
+                continue;
+            }
         }
 
         $files = $fs->get_area_files($context->id, 'theme_learnlingo', $area, 0, 'id', false);

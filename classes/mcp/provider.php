@@ -8,7 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU GPL for details.
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Expose LearnLingo configuration as MCP tools.
@@ -29,7 +33,11 @@ use local_mcp\extension\write_provider_interface;
  * No lib.php callback is needed; the READ and WRITE tools retain separate scopes.
  */
 final class provider implements read_provider_interface, write_provider_interface {
-    /** @return \local_mcp\read\tool_interface[] */
+    /**
+     * Return available read tools.
+     *
+     * @return \local_mcp\read\tool_interface[]
+     */
     public function get_read_tools(): array {
         return self::available_tools([
             'learnlingo_get_homepage' => get_homepage::class,
@@ -37,7 +45,11 @@ final class provider implements read_provider_interface, write_provider_interfac
         ]);
     }
 
-    /** @return \local_mcp\write\tool_interface[] */
+    /**
+     * Return available write tools.
+     *
+     * @return \local_mcp\write\tool_interface[]
+     */
     public function get_write_tools(): array {
         return self::available_tools([
             'learnlingo_update_homepage' => update_homepage::class,

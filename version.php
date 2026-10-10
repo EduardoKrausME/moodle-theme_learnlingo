@@ -25,13 +25,11 @@
 defined('MOODLE_INTERNAL') || die;
 
 $plugin->component = 'theme_learnlingo';
-$plugin->version = 2026101003;
-$plugin->release = '1.5.8';
+$plugin->version = 2026101004;
+$plugin->release = '1.5.9';
 $plugin->requires = 2024100700;
 $plugin->maturity = MATURITY_STABLE;
 
 $plugin->dependencies = [
     'theme_boost' => 2024100700,
-    'local_ai_bridge' => 2026093001,
-    'local_personalxp' => 2026093001,
 ];

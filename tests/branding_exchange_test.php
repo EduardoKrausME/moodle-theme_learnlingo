@@ -8,7 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU GPL for details.
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Contract tests for the LearnLingo ChatGPT JSON exchange.
@@ -19,10 +23,11 @@
  */
 namespace theme_learnlingo;
 
-defined('MOODLE_INTERNAL') || die;
 
 /**
  * Round-trip validation and safe SVG checks.
+ *
+ * @covers \theme_learnlingo\branding_exchange
  */
 final class branding_exchange_test extends \advanced_testcase {
     /**
@@ -73,15 +78,13 @@ final class branding_exchange_test extends \advanced_testcase {
     }
 
     /**
-     * Home HTML, SCSS and SVG are part of the stable importable contract.
+     * Home HTML and SCSS are portable; logos remain in the Moodle File API.
      */
-    public function test_html_home_and_logo_roundtrip(): void {
+    public function test_html_home_and_scss_roundtrip(): void {
         $data = branding_exchange::export();
         $data['settings']['homepagemode'] = 'html';
         $data['settings']['homepagehtml'] = '<section><h1>Universidade Esportiva</h1></section>';
         $data['settings']['scss'] = '.learnlingo-html-home { padding: 2rem; }';
-        $data['settings']['logosvg'] = '<svg xmlns="http://www.w3.org/2000/svg" '
-            . 'viewBox="0 0 50 50"><circle cx="25" cy="25" r="20" fill="#ef3340"/></svg>';
         $this->assertSame($data, branding_exchange::parse(branding_exchange::json($data)));
     }
 }

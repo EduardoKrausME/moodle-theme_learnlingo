@@ -8,7 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU GPL for details.
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * MCP write access to all LearnLingo theme settings.
@@ -29,26 +33,51 @@ use theme_learnlingo\branding_exchange;
  * Apply validated partial changes, with confirmation and optimistic locking.
  */
 final class update_settings extends base_tool {
+    /**
+     * Return the MCP tool identifier.
+     *
+     * @return string Result.
+     */
     public function get_name(): string {
         return 'learnlingo_update_settings';
     }
 
+    /**
+     * Return the human-readable title.
+     *
+     * @return string Result.
+     */
     public function get_title(): string {
         return 'Update LearnLingo settings';
     }
 
+    /**
+     * Describe this tool.
+     *
+     * @return string Result.
+     */
     public function get_description(): string {
         return 'Update any subset of LearnLingo settings, including scsspre and scss, colors, '
-            . 'login/dashboard/course options, SVG logos, homepage HTML and uploaded PNG/JPEG/WebP logos. '
+            . 'login/dashboard/course options, homepage HTML and uploaded PNG/JPEG/WebP logos. '
             . 'Only specified settings are changed. Requires confirmation; read learnlingo_get_settings '
             . 'first and pass its state_hash in expected_hash to avoid concurrent overwrites. '
-            . 'An SVG logo, if configured, takes priority over the raster image for that area.';
+            . 'Uploaded logos are served directly from the theme File API.';
     }
 
+    /**
+     * Return the required capability.
+     *
+     * @return string Result.
+     */
     public function get_required_capability(): string {
         return 'moodle/site:config';
     }
 
+    /**
+     * Return the input JSON schema.
+     *
+     * @return array Result.
+     */
     public function get_input_schema(): array {
         $properties = [];
         foreach (branding_exchange::definitions() as $name => [$type, $default]) {
@@ -81,7 +110,7 @@ final class update_settings extends base_tool {
             ],
             'images' => [
                 'type' => 'object',
-                'description' => 'Optional uploaded raster logos. SVG logos are edited in settings.',
+                'description' => 'Optional uploaded raster logos; SVG can be uploaded using the theme settings.',
                 'properties' => ['logo' => $image, 'loginlogo' => $image],
                 'additionalProperties' => false,
             ],
@@ -92,14 +121,32 @@ final class update_settings extends base_tool {
         ]);
     }
 
+    /**
+     * Resolve the security context.
+     *
+     * @param array $arguments Input arguments.
+     * @return context Result.
+     */
     public function resolve_context(array $arguments): context {
         return context_system::instance();
     }
 
+    /**
+     * Indicate whether previews are supported.
+     *
+     * @return bool Result.
+     */
     public function supports_dry_run(): bool {
         return true;
     }
 
+    /**
+     * Preview the requested changes.
+     *
+     * @param array $arguments Input arguments.
+     * @param authenticated_identity $identity Connected user.
+     * @return array Result.
+     */
     public function preview(array $arguments, authenticated_identity $identity): array {
         $prepared = settings_service::prepare($arguments);
         $settings = [];
@@ -127,6 +174,13 @@ final class update_settings extends base_tool {
         ];
     }
 
+    /**
+     * Execute the validated operation.
+     *
+     * @param array $arguments Input arguments.
+     * @param authenticated_identity $identity Connected user.
+     * @return array Result.
+     */
     public function execute(array $arguments, authenticated_identity $identity): array {
         $prepared = settings_service::prepare($arguments);
         settings_service::apply($prepared, $identity->userid);

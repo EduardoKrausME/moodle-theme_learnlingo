@@ -8,8 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Tests for the packaged default theme logos.
@@ -21,10 +24,11 @@
 
 namespace theme_learnlingo;
 
-defined('MOODLE_INTERNAL') || die;
 
 /**
  * Installation callback should fill missing logos without losing uploads.
+ *
+ * @coversNothing
  */
 final class default_logo_test extends \advanced_testcase {
     /**
@@ -109,5 +113,25 @@ final class default_logo_test extends \advanced_testcase {
         $this->assertSame('institution-logo', $file->get_content());
         $this->assertFalse($fs->get_file($context->id, 'theme_learnlingo', 'logo', 0, '/', 'default-logo.svg'));
         $this->assertSame('/default-logo.svg', get_config('theme_learnlingo', 'loginlogo'));
+    }
+
+    /**
+     * Repair the setting when an old file was deleted but its path remained.
+     *
+     * @return void
+     */
+    public function test_install_repairs_stale_logo_path(): void {
+        global $CFG;
+        $this->resetAfterTest();
+        require_once($CFG->dirroot . '/theme/learnlingo/db/install.php');
+        $this->clear_logo('logo');
+        set_config('logo', '/missing-old-logo.svg', 'theme_learnlingo');
+
+        \theme_learnlingo_install_default_logos();
+
+        $this->assertSame('/default-logo.svg', get_config('theme_learnlingo', 'logo'));
+        $file = get_file_storage()->get_file(\context_system::instance()->id,
+            'theme_learnlingo', 'logo', 0, '/', 'default-logo.svg');
+        $this->assertNotFalse($file);
     }
 }

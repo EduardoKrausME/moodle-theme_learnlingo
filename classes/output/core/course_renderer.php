@@ -69,14 +69,13 @@ class course_renderer extends core_course_renderer {
             ]);
             return \html_writer::div($content, 'learnlingo-html-home');
         }
-        if (!$this->customfrontpageenabled()) {
-            return parent::frontpage();
-        }
-
+ 
         global $USER;
 
         list($courses, $isenrolledlist) = $this->getfrontpagecourses();
-        $showwelcome = isloggedin() && !isguestuser();
+        $showwelcome = isloggedin() && !isguestuser()
+            && (!isset($this->page->theme->settings->showdashboardhero)
+                || !empty($this->page->theme->settings->showdashboardhero));
         $coursecards = [];
         $tone = 1;
 
@@ -85,9 +84,17 @@ class course_renderer extends core_course_renderer {
             $tone = $tone === 3 ? 1 : $tone + 1;
         }
 
+        // Continue cards must represent real, unfinished activity, not the first catalog item.
         $featuredcourse = null;
-        if (!empty($coursecards)) {
-            $featuredcourse = array_shift($coursecards);
+        if ($isenrolledlist) {
+            foreach ($coursecards as $index => $candidate) {
+                if ($candidate['hasprogress'] &&
+                        $candidate['progress'] > 0 && $candidate['progress'] < 100) {
+                    $featuredcourse = $candidate;
+                    unset($coursecards[$index]);
+                    break;
+                }
+            }
         }
 
         $firstname = $showwelcome && !empty($USER->firstname)
@@ -153,8 +160,7 @@ class course_renderer extends core_course_renderer {
      * @return bool
      */
     protected function customfrontpageenabled(): bool {
-        return !isset($this->page->theme->settings->showdashboardhero)
-            || !empty($this->page->theme->settings->showdashboardhero);
+        return theme_learnlingo_homepage_mode($this->page->theme) === 'learnlingo';
     }
 
     /**
@@ -273,8 +279,8 @@ class course_renderer extends core_course_renderer {
                 $file->get_contextid(),
                 $file->get_component(),
                 $file->get_filearea(),
-                "",
-                "",
+                $file->get_itemid(),
+                $file->get_filepath(),
                 $file->get_filename(),
                 false
             )->out(false);

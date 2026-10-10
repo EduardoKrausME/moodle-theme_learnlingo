@@ -8,7 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU GPL for details.
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * MCP read access to all LearnLingo theme settings.
@@ -28,20 +32,40 @@ use local_mcp\security\authenticated_identity;
  * Return all portable settings and the uploaded raster logo metadata.
  */
 final class get_settings implements tool_interface {
+    /**
+     * Return the MCP tool identifier.
+     *
+     * @return string Result.
+     */
     public function get_name(): string {
         return 'learnlingo_get_settings';
     }
 
+    /**
+     * Return the human-readable title.
+     *
+     * @return string Result.
+     */
     public function get_title(): string {
         return 'Read all LearnLingo settings';
     }
 
+    /**
+     * Describe this tool.
+     *
+     * @return string Result.
+     */
     public function get_description(): string {
-        return 'Read all LearnLingo theme settings, including both SCSS fields, colors, SVG logos, '
+        return 'Read all LearnLingo theme settings, including both SCSS fields, colors, '
             . 'homepage, login texts, course display options and uploaded raster logos. '
             . 'Returns a state_hash for learnlingo_update_settings. Set include_images to view uploaded logos.';
     }
 
+    /**
+     * Return the input JSON schema.
+     *
+     * @return array Result.
+     */
     public function get_input_schema(): array {
         return [
             'type' => 'object',
@@ -55,14 +79,32 @@ final class get_settings implements tool_interface {
         ];
     }
 
+    /**
+     * Return the required capability.
+     *
+     * @return string Result.
+     */
     public function get_required_capability(): string {
         return 'moodle/site:config';
     }
 
+    /**
+     * Resolve the security context.
+     *
+     * @param array $arguments Input arguments.
+     * @return context Result.
+     */
     public function resolve_context(array $arguments): context {
         return context_system::instance();
     }
 
+    /**
+     * Execute the validated operation.
+     *
+     * @param array $arguments Input arguments.
+     * @param authenticated_identity $identity Connected user.
+     * @return array Result.
+     */
     public function execute(array $arguments, authenticated_identity $identity): array {
         return settings_service::snapshot(!empty($arguments['include_images']));
     }

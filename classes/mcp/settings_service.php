@@ -8,7 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU GPL for details.
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Validated settings and logo operations for the LearnLingo MCP extension.
@@ -70,10 +74,7 @@ final class settings_service {
                 $metadata = null;
                 $hashimages[$area] = [];
             }
-            $images[$area] = [
-                'uploaded' => $metadata,
-                'svg_overrides_image' => $data['settings'][$area === 'logo' ? 'logosvg' : 'loginlogosvg'] !== '',
-            ];
+            $images[$area] = ['uploaded' => $metadata];
         }
         $data['images'] = $images;
         $data['state_hash'] = hash('sha256', json_encode(
@@ -173,8 +174,10 @@ final class settings_service {
             foreach (self::files($area) as $file) {
                 $file->delete();
             }
-            if (!$source['remove']) {
-                get_file_storage()->create_file_from_string([
+            if ($source['remove']) {
+                set_config($area, '', 'theme_learnlingo');
+            } else {
+                $file = get_file_storage()->create_file_from_string([
                     'contextid' => $context->id,
                     'component' => 'theme_learnlingo',
                     'filearea' => $area,
@@ -185,6 +188,8 @@ final class settings_service {
                     'mimetype' => $source['mime'],
                     'license' => 'allrightsreserved',
                 ], $source['bytes']);
+                // The storedfile setting holds the path, not merely a presence flag.
+                set_config($area, $file->get_filepath() . $file->get_filename(), 'theme_learnlingo');
             }
         }
         $transaction->allow_commit();

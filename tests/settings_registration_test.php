@@ -8,7 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU GPL for details.
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Administration settings registration regression tests.
@@ -20,10 +24,11 @@
 
 namespace theme_learnlingo;
 
-defined('MOODLE_INTERNAL') || die;
 
 /**
  * Ensure Moodle can find the LearnLingo page in either admin tree mode.
+ *
+ * @coversNothing
  */
 final class settings_registration_test extends \advanced_testcase {
     /**
@@ -32,6 +37,8 @@ final class settings_registration_test extends \advanced_testcase {
     public function test_settings_page_is_registered_in_both_admin_tree_modes(): void {
         $this->resetAfterTest();
         $this->setAdminUser();
+        global $CFG;
+        require_once($CFG->libdir . '/adminlib.php');
 
         // Moodle builds the lightweight tree for navigation before full settings are needed.
         $tree = \admin_get_root(true, false);

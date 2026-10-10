@@ -8,7 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU GPL for details.
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Tests LearnLingo's MCP provider and homepage tools.
@@ -25,13 +29,16 @@ use theme_learnlingo\mcp\provider;
 use theme_learnlingo\mcp\get_homepage;
 use theme_learnlingo\mcp\update_homepage;
 
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Tests run with local_mcp installed, as the integration is optional.
+ *
+ * @covers \theme_learnlingo\mcp\home_service
  */
 final class mcp_homepage_test extends advanced_testcase {
     /**
+     * Verify the expected behavior.
+     *
      * @return void
      */
     private function require_mcp(): void {
@@ -41,6 +48,8 @@ final class mcp_homepage_test extends advanced_testcase {
     }
 
     /**
+     * Verify the expected behavior.
+     *
      * @return void
      */
     public function test_provider_registers_separate_read_and_write_tools(): void {
@@ -62,6 +71,8 @@ final class mcp_homepage_test extends advanced_testcase {
     }
 
     /**
+     * Verify the expected behavior.
+     *
      * @return void
      */
     public function test_homepage_can_be_previewed_changed_and_read_back(): void {
@@ -97,6 +108,8 @@ final class mcp_homepage_test extends advanced_testcase {
     }
 
     /**
+     * Verify the expected behavior.
+     *
      * @return void
      */
     public function test_stale_state_hash_is_rejected(): void {
@@ -111,6 +124,8 @@ final class mcp_homepage_test extends advanced_testcase {
     }
 
     /**
+     * Verify the expected behavior.
+     *
      * @return void
      */
     public function test_script_tag_in_home_html_is_rejected(): void {
