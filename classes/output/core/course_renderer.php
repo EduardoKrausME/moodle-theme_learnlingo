@@ -69,7 +69,7 @@ class course_renderer extends core_course_renderer {
             ]);
             return \html_writer::div($content, 'learnlingo-html-home');
         }
- 
+
         global $USER;
 
         list($courses, $isenrolledlist) = $this->getfrontpagecourses();
