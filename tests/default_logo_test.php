@@ -153,7 +153,8 @@ final class default_logo_test extends advanced_testcase {
 
         $png = file_get_contents($CFG->dirroot . '/theme/learnlingo/pix/default-logo.png');
         $svg = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-            . "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1254\" height=\"1254\" viewBox=\"0 0 1254 1254\" role=\"img\" aria-label=\"LearnLingo - livro com capelo\">\n"
+            . "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1254\" height=\"1254\" " .
+            "       viewBox=\"0 0 1254 1254\" role=\"img\" aria-label=\"LearnLingo\">\n"
             . "  <title>LearnLingo</title>\n"
             . '  <image width="1254" height="1254" href="data:image/png;base64,'
             . base64_encode($png) . "\"/>\n</svg>\n";
