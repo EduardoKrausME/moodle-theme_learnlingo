@@ -58,6 +58,17 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
+    // Favicon file setting.
+    $setting = new admin_setting_configstoredfile(
+        "core_admin/favicon",
+        get_string("favicon", "theme_eadtraining"),
+        get_string("favicon_desc", "theme_eadtraining"),
+        "favicon", 0,
+        ["maxfiles" => 1, "accepted_types" => [".jpg", ".jpeg", ".png"]]
+    );
+    $setting->set_updatedcallback("theme_reset_all_caches");
+    $page->add($setting);
+
     foreach (['logo'] as $area) {
         $setting = new admin_setting_configstoredfile(
             'theme_learnlingo/' . $area,
