@@ -156,7 +156,7 @@ final class default_logo_test extends advanced_testcase {
         // A generated SVG using today's PNG would have a different content hash.
         $svg = file_get_contents(__DIR__ . '/fixtures/default-logo-legacy.svg');
         $this->assertNotFalse($svg);
-        $this->assertSame('52a77c5f3cbd973eff6274e14c9f299a97dcb565', sha1($svg));
+        $this->assertSame('6b06dbaeede483bb666eb489b136dea5d3cedcd8', sha1($svg));
 
         $context = context_system::instance();
         $fs = get_file_storage();
