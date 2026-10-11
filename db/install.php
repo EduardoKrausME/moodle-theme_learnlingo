@@ -89,6 +89,13 @@ function theme_learnlingo_migrate_default_logos(): void {
     $context = context_system::instance();
     $fs = get_file_storage();
 
+    // Match the exact historically shipped SVG, not the logo filename or SVG markup.
+    // Retain the previously accepted hash for sites which may already use that variant.
+    $legacyhashes = [
+        '52a77c5f3cbd973eff6274e14c9f299a97dcb565',
+        '6b06dbaeede483bb666eb489b136dea5d3cedcd8',
+    ];
+
     foreach (['logo', 'loginlogo'] as $area) {
         $configured = trim((string)get_config('theme_learnlingo', $area));
         if ($configured !== '' && $configured !== '/default-logo.svg') {
@@ -96,7 +103,7 @@ function theme_learnlingo_migrate_default_logos(): void {
         }
 
         $legacy = $fs->get_file($context->id, 'theme_learnlingo', $area, 0, '/', 'default-logo.svg');
-        if (!$legacy || $legacy->get_contenthash() !== '6b06dbaeede483bb666eb489b136dea5d3cedcd8') {
+        if (!$legacy || !in_array($legacy->get_contenthash(), $legacyhashes, true)) {
             continue;
         }
 

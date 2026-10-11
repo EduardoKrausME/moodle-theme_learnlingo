@@ -59,8 +59,11 @@ final class settings_service {
                     'contenthash' => $image->get_contenthash(),
                     'url' => (string)theme_config::load('learnlingo')->setting_file_url($area, $area),
                 ];
+                // File API metadata can outlive the physical blob; do not fail the
+                // entire MCP export if a logo is temporarily or permanently unreadable.
                 if ($includeimages && $image->get_filesize() <= image_service::MAX_INLINE_BYTES &&
-                        in_array($image->get_mimetype(), ['image/png', 'image/jpeg', 'image/webp'], true)) {
+                        in_array($image->get_mimetype(), ['image/png', 'image/jpeg', 'image/webp'], true) &&
+                        get_file_storage()->get_file_system()->is_file_readable_remotely_by_storedfile($image)) {
                     $content[] = [
                         'type' => 'image',
                         'mimeType' => $image->get_mimetype(),
