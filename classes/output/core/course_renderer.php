@@ -74,7 +74,7 @@ class course_renderer extends core_course_renderer {
                 'filter' => true,
                 'para' => false,
             ]);
-            return html_writer::div($content, 'learnlingo-html-home');
+            return "<div class=\"learnlingo-html-home\">{$content}</div>";
         }
 
         [$courses, $isenrolledlist] = $this->getfrontpagecourses();

@@ -130,7 +130,7 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback('theme_reset_all_caches');
     $settings->add($setting);
 
-    $setting = new admin_setting_confightmleditor(
+    $setting = new admin_setting_configtextarea(
         'theme_learnlingo/homepagehtml',
         get_string('homepagehtml', 'theme_learnlingo'),
         get_string('homepagehtml_desc', 'theme_learnlingo'),

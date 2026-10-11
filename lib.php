@@ -129,5 +129,5 @@ function theme_learnlingo_homepage_mode(theme_config $theme): string {
  * @return string
  */
 function theme_learnlingo_homepage_html(theme_config $theme): string {
-    return trim((string) ($theme->settings->homepagehtml ?? ''));
+    return $theme->settings->homepagehtml ?? '';
 }
