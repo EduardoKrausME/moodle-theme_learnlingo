@@ -61,8 +61,8 @@ if ($ADMIN->fulltree) {
     // Favicon file setting.
     $setting = new admin_setting_configstoredfile(
         "core_admin/favicon",
-        get_string("favicon", "theme_eadtraining"),
-        get_string("favicon_desc", "theme_eadtraining"),
+        get_string("favicon", "theme_learnlingo"),
+        get_string("favicon_desc", "theme_learnlingo"),
         "favicon", 0,
         ["maxfiles" => 1, "accepted_types" => [".jpg", ".jpeg", ".png"]]
     );
