@@ -24,29 +24,21 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-// Moodle creates theme setting pages hidden by default. The navigation tree can
-// be built with fulltree=false, so unhide the page outside the settings block.
-// Otherwise themesettinglearnlingo is never registered in the administration tree.
+// The admin tree must expose the settings page even when fulltree is false.
 $settings->hidden = false;
 
 if ($ADMIN->fulltree) {
-    $settings->add(new admin_setting_heading(
-        'theme_learnlingo/jsonbrandingheading',
-        get_string('jsonpagetitle', 'theme_learnlingo'),
-        html_writer::link(
-            new moodle_url('/theme/learnlingo/admin/branding_json.php'),
-            get_string('jsonopen', 'theme_learnlingo')
-        )
-    ));
+    // Boost's native tabs keep the same Moodle settings URL and setting names.
+    $settings = new theme_boost_admin_settingspage_tabs(
+        'themesettinglearnlingo',
+        get_string('configtitle', 'theme_learnlingo')
+    );
+    $settings->hidden = false;
 
-    $settings->add(new admin_setting_heading(
-        'theme_learnlingo/aibrandingheading',
-        get_string('aibranding', 'theme_learnlingo'),
-        html_writer::link(
-            new moodle_url('/theme/learnlingo/admin/branding_ai.php'),
-            get_string('aibrandingopen', 'theme_learnlingo')
-        )
-    ));
+    $page = new admin_settingpage(
+        'theme_learnlingo_branding',
+        get_string('brandingsettings', 'theme_learnlingo')
+    );
 
     $setting = new admin_setting_configcolourpicker(
         'theme_learnlingo/brandcolor',
@@ -55,7 +47,7 @@ if ($ADMIN->fulltree) {
         '#58cc02'
     );
     $setting->set_updatedcallback('theme_reset_all_caches');
-    $settings->add($setting);
+    $page->add($setting);
 
     $setting = new admin_setting_configcolourpicker(
         'theme_learnlingo/accentcolor',
@@ -64,9 +56,9 @@ if ($ADMIN->fulltree) {
         '#8be24a'
     );
     $setting->set_updatedcallback('theme_reset_all_caches');
-    $settings->add($setting);
+    $page->add($setting);
 
-    foreach (['logo', 'loginlogo'] as $area) {
+    foreach (['logo'] as $area) {
         $setting = new admin_setting_configstoredfile(
             'theme_learnlingo/' . $area,
             get_string($area, 'theme_learnlingo'),
@@ -76,7 +68,7 @@ if ($ADMIN->fulltree) {
             ['maxfiles' => 1, 'accepted_types' => ['.png', '.jpg', '.jpeg', '.webp', '.svg']]
         );
         $setting->set_updatedcallback('theme_reset_all_caches');
-        $settings->add($setting);
+        $page->add($setting);
     }
 
 
@@ -88,33 +80,15 @@ if ($ADMIN->fulltree) {
             $default
         );
         $setting->set_updatedcallback('theme_reset_all_caches');
-        $settings->add($setting);
+        $page->add($setting);
     }
 
-    foreach ([
-        'dashboardeyebrowtext' => '',
-        'dashboarddescriptiontext' => '',
-        'loginpaneltitletext' => '',
-        'loginpaneldescriptiontext' => '',
-        'loginpaneltaglinetext' => '',
-    ] as $name => $default) {
-        $setting = new admin_setting_configtext(
-            'theme_learnlingo/' . $name,
-            get_string($name, 'theme_learnlingo'),
-            get_string($name . '_desc', 'theme_learnlingo'),
-            $default,
-            PARAM_TEXT
-        );
-        $setting->set_updatedcallback('theme_reset_all_caches');
-        $settings->add($setting);
-    }
+    $settings->add($page);
 
-    // The existing LearnLingo landing page remains the default for existing sites.
-    $settings->add(new admin_setting_heading(
-        'theme_learnlingo/homepageheading',
-        get_string('homepageheading', 'theme_learnlingo'),
-        get_string('homepageheading_desc', 'theme_learnlingo')
-    ));
+    $page = new admin_settingpage(
+        'theme_learnlingo_homepage',
+        get_string('homepagesettings', 'theme_learnlingo')
+    );
 
     $setting = new admin_setting_configselect(
         'theme_learnlingo/homepagemode',
@@ -128,7 +102,7 @@ if ($ADMIN->fulltree) {
         ]
     );
     $setting->set_updatedcallback('theme_reset_all_caches');
-    $settings->add($setting);
+    $page->add($setting);
 
     $setting = new admin_setting_configtextarea(
         'theme_learnlingo/homepagehtml',
@@ -140,7 +114,7 @@ if ($ADMIN->fulltree) {
         '18'
     );
     $setting->set_updatedcallback('theme_reset_all_caches');
-    $settings->add($setting);
+    $page->add($setting);
 
     $setting = new admin_setting_configcheckbox(
         'theme_learnlingo/homepagefullwidth',
@@ -149,7 +123,29 @@ if ($ADMIN->fulltree) {
         1
     );
     $setting->set_updatedcallback('theme_reset_all_caches');
-    $settings->add($setting);
+    $page->add($setting);
+
+    $settings->add($page);
+
+    $page = new admin_settingpage(
+        'theme_learnlingo_dashboard',
+        get_string('dashboardsettings', 'theme_learnlingo')
+    );
+
+    foreach ([
+        'dashboardeyebrowtext' => '',
+        'dashboarddescriptiontext' => '',
+    ] as $name => $default) {
+        $setting = new admin_setting_configtext(
+            'theme_learnlingo/' . $name,
+            get_string($name, 'theme_learnlingo'),
+            get_string($name . '_desc', 'theme_learnlingo'),
+            $default,
+            PARAM_TEXT
+        );
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $page->add($setting);
+    }
 
     $setting = new admin_setting_configcheckbox(
         'theme_learnlingo/showdashboardhero',
@@ -158,13 +154,14 @@ if ($ADMIN->fulltree) {
         1
     );
     $setting->set_updatedcallback('theme_reset_all_caches');
-    $settings->add($setting);
+    $page->add($setting);
 
-    $settings->add(new admin_setting_heading(
-        'theme_learnlingo/courseheroheading',
-        get_string('courseheroheading', 'theme_learnlingo'),
-        get_string('courseheroheading_desc', 'theme_learnlingo')
-    ));
+    $settings->add($page);
+
+    $page = new admin_settingpage(
+        'theme_learnlingo_course',
+        get_string('coursesettings', 'theme_learnlingo')
+    );
 
     $setting = new admin_setting_configcheckbox(
         'theme_learnlingo/showcoursehero',
@@ -173,7 +170,7 @@ if ($ADMIN->fulltree) {
         1
     );
     $setting->set_updatedcallback('theme_reset_all_caches');
-    $settings->add($setting);
+    $page->add($setting);
 
     $setting = new admin_setting_configtext(
         'theme_learnlingo/courseheroeyebrow',
@@ -183,7 +180,7 @@ if ($ADMIN->fulltree) {
         PARAM_TEXT
     );
     $setting->set_updatedcallback('theme_reset_all_caches');
-    $settings->add($setting);
+    $page->add($setting);
 
     $setting = new admin_setting_configcheckbox(
         'theme_learnlingo/showcourseherosummary',
@@ -192,7 +189,7 @@ if ($ADMIN->fulltree) {
         1
     );
     $setting->set_updatedcallback('theme_reset_all_caches');
-    $settings->add($setting);
+    $page->add($setting);
 
     $setting = new admin_setting_configcheckbox(
         'theme_learnlingo/showcourseheroprogress',
@@ -201,7 +198,7 @@ if ($ADMIN->fulltree) {
         1
     );
     $setting->set_updatedcallback('theme_reset_all_caches');
-    $settings->add($setting);
+    $page->add($setting);
 
     $setting = new admin_setting_configcheckbox(
         'theme_learnlingo/showpersonalxp',
@@ -210,7 +207,50 @@ if ($ADMIN->fulltree) {
         1
     );
     $setting->set_updatedcallback('theme_reset_all_caches');
-    $settings->add($setting);
+    $page->add($setting);
+
+    $settings->add($page);
+
+    $page = new admin_settingpage(
+        'theme_learnlingo_login',
+        get_string('loginsettings', 'theme_learnlingo')
+    );
+
+    foreach (['loginlogo'] as $area) {
+        $setting = new admin_setting_configstoredfile(
+            'theme_learnlingo/' . $area,
+            get_string($area, 'theme_learnlingo'),
+            get_string($area . '_desc', 'theme_learnlingo'),
+            $area,
+            0,
+            ['maxfiles' => 1, 'accepted_types' => ['.png', '.jpg', '.jpeg', '.webp', '.svg']]
+        );
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $page->add($setting);
+    }
+
+    foreach ([
+        'loginpaneltitletext' => '',
+        'loginpaneldescriptiontext' => '',
+        'loginpaneltaglinetext' => '',
+    ] as $name => $default) {
+        $setting = new admin_setting_configtext(
+            'theme_learnlingo/' . $name,
+            get_string($name, 'theme_learnlingo'),
+            get_string($name . '_desc', 'theme_learnlingo'),
+            $default,
+            PARAM_TEXT
+        );
+        $setting->set_updatedcallback('theme_reset_all_caches');
+        $page->add($setting);
+    }
+
+    $settings->add($page);
+
+    $page = new admin_settingpage(
+        'theme_learnlingo_advanced',
+        get_string('scsssettings', 'theme_learnlingo')
+    );
 
     $setting = new admin_setting_configtextarea(
         'theme_learnlingo/scsspre',
@@ -220,7 +260,7 @@ if ($ADMIN->fulltree) {
         PARAM_RAW
     );
     $setting->set_updatedcallback('theme_reset_all_caches');
-    $settings->add($setting);
+    $page->add($setting);
 
     $setting = new admin_setting_configtextarea(
         'theme_learnlingo/scss',
@@ -230,5 +270,43 @@ if ($ADMIN->fulltree) {
         PARAM_RAW
     );
     $setting->set_updatedcallback('theme_reset_all_caches');
-    $settings->add($setting);
+    $page->add($setting);
+
+    $settings->add($page);
+
+    $page = new admin_settingpage(
+        'theme_learnlingo_ai',
+        get_string('aibranding', 'theme_learnlingo')
+    );
+
+    // These assistants use their own POST forms; keep them outside settings.php.
+    $page->add(new admin_setting_heading(
+        'theme_learnlingo/aibrandinglink',
+        '',
+        html_writer::tag('p', get_string('aibrandingdesc', 'theme_learnlingo')) .
+            html_writer::link(
+                new moodle_url('/theme/learnlingo/admin/branding_ai.php'),
+                get_string('aibrandingopen', 'theme_learnlingo')
+            )
+    ));
+
+    $settings->add($page);
+
+    $page = new admin_settingpage(
+        'theme_learnlingo_json',
+        get_string('jsonpagetitle', 'theme_learnlingo')
+    );
+
+    $page->add(new admin_setting_heading(
+        'theme_learnlingo/jsonbrandinglink',
+        '',
+        html_writer::tag('p', get_string('jsonpageintro', 'theme_learnlingo')) .
+            html_writer::link(
+                new moodle_url('/theme/learnlingo/admin/branding_json.php'),
+                get_string('jsonopen', 'theme_learnlingo')
+            )
+    ));
+
+    $settings->add($page);
+
 }
