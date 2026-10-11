@@ -47,7 +47,7 @@ function theme_learnlingo_get_pre_scss(theme_config $theme): string {
     $scss .= file_get_contents("{$CFG->dirroot}/theme/learnlingo/scss/_pre.scss");
 
     if (!empty($theme->settings->scsspre)) {
-        $scss .= PHP_EOL . $theme->settings->scsspre;
+        $scss .= "\n{$theme->settings->scsspre}";
     }
 
     return $scss;
@@ -64,7 +64,7 @@ function theme_learnlingo_get_pre_scss(theme_config $theme): string {
 function theme_learnlingo_get_extra_scss(theme_config $theme): string {
     global $CFG;
 
-    $scss = file_get_contents("{$CFG->dirroot}/theme/learnlingo/scss/_post.scss");
+    $scss = file_get_contents("{$CFG->dirroot}/theme/learnlingo/scss/_poss.scss");
 
     if (!empty($theme->settings->scss)) {
         $scss .= "\n{$theme->settings->scss}";
@@ -82,11 +82,20 @@ function theme_learnlingo_get_extra_scss(theme_config $theme): string {
  */
 function theme_learnlingo_logo_url(theme_config $theme, string $area): ?string {
     $url = $theme->setting_file_url($area, $area);
-    return $url ? (string) $url : null;
+    return $url ?: null;
 }
 
 /**
  * Serves logos uploaded through the theme configuration.
+ * @param $course
+ * @param $cm
+ * @param $context
+ * @param $filearea
+ * @param $args
+ * @param $forcedownload
+ * @param array $options
+ * @throws \core\exception\coding_exception
+ * @throws moodle_exception
  */
 function theme_learnlingo_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = []): void {
     if ($context->contextlevel !== CONTEXT_SYSTEM || !in_array($filearea, ['logo', 'loginlogo'], true)) {
@@ -103,6 +112,8 @@ function theme_learnlingo_pluginfile($course, $cm, $context, $filearea, $args, $
  * @param string $key Configuration key.
  * @param string $fallback Moodle language string identifier.
  * @return string
+ * @throws coding_exception
+ * @throws dml_exception
  */
 function theme_learnlingo_brand_text(string $key, string $fallback): string {
     $configured = get_config('theme_learnlingo', $key);

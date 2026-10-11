@@ -18,6 +18,12 @@ body {
     background: var(--learnlingo-canvas);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    &.learnlingo-html-home-fullwidth {
+        #page.drawers div[role=main] {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+    }
 }
 a {
     font-weight: 600;
