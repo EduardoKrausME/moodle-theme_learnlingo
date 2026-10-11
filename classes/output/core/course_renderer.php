@@ -67,14 +67,7 @@ class course_renderer extends core_course_renderer {
                 // An empty HTML configuration must not result in an empty site homepage.
                 return parent::frontpage();
             }
-            // Filter and clean editor HTML, without running arbitrary scripts or raw PHP.
-            $content = format_text($html, FORMAT_HTML, [
-                'context' => context_system::instance(),
-                'noclean' => false,
-                'filter' => true,
-                'para' => false,
-            ]);
-            return "<div class=\"learnlingo-html-home\">{$content}</div>";
+            return "<div class=\"learnlingo-html-home\">{$html}</div>";
         }
 
         [$courses, $isenrolledlist] = $this->getfrontpagecourses();
