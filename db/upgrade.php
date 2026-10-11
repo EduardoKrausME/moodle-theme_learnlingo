@@ -110,5 +110,12 @@ function xmldb_theme_learnlingo_upgrade(int $oldversion): bool {
         upgrade_plugin_savepoint(true, 2026101004, 'theme', 'learnlingo');
     }
 
+    if ($oldversion < 2026101005) {
+        // Migrate only the shipped default SVG, preserving customised uploads.
+        require_once(__DIR__ . '/install.php');
+        theme_learnlingo_migrate_default_logos();
+        upgrade_plugin_savepoint(true, 2026101005, 'theme', 'learnlingo');
+    }
+
     return true;
 }

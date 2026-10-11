@@ -52,7 +52,7 @@ final class default_logo_test extends advanced_testcase {
     }
 
     /**
-     * Both logos should be populated with the same bundled SVG.
+     * Both logos should be populated with the same bundled PNG.
      *
      * @return void
      */
@@ -71,11 +71,11 @@ final class default_logo_test extends advanced_testcase {
         $context = context_system::instance();
         $contenthashes = [];
         foreach (['logo', 'loginlogo'] as $area) {
-            $this->assertSame('/default-logo.svg', get_config('theme_learnlingo', $area));
-            $file = $fs->get_file($context->id, 'theme_learnlingo', $area, 0, '/', 'default-logo.svg');
+            $this->assertSame('/default-logo.png', get_config('theme_learnlingo', $area));
+            $file = $fs->get_file($context->id, 'theme_learnlingo', $area, 0, '/', 'default-logo.png');
             $this->assertNotFalse($file);
-            $this->assertSame('image/svg+xml', $file->get_mimetype());
-            $this->assertStringContainsString('<svg', $file->get_content());
+            $this->assertSame('image/png', $file->get_mimetype());
+            $this->assertSame("\x89PNG\r\n\x1a\n", substr($file->get_content(), 0, 8));
             $contenthashes[] = $file->get_contenthash();
         }
         $this->assertSame($contenthashes[0], $contenthashes[1]);
@@ -116,8 +116,8 @@ final class default_logo_test extends advanced_testcase {
 
         $this->assertSame('/institution.png', get_config('theme_learnlingo', 'logo'));
         $this->assertSame('institution-logo', $file->get_content());
-        $this->assertFalse($fs->get_file($context->id, 'theme_learnlingo', 'logo', 0, '/', 'default-logo.svg'));
-        $this->assertSame('/default-logo.svg', get_config('theme_learnlingo', 'loginlogo'));
+        $this->assertFalse($fs->get_file($context->id, 'theme_learnlingo', 'logo', 0, '/', 'default-logo.png'));
+        $this->assertSame('/default-logo.png', get_config('theme_learnlingo', 'loginlogo'));
     }
 
     /**
@@ -134,9 +134,64 @@ final class default_logo_test extends advanced_testcase {
 
         theme_learnlingo_install_default_logos();
 
-        $this->assertSame('/default-logo.svg', get_config('theme_learnlingo', 'logo'));
+        $this->assertSame('/default-logo.png', get_config('theme_learnlingo', 'logo'));
         $file = get_file_storage()->get_file(context_system::instance()->id,
-            'theme_learnlingo', 'logo', 0, '/', 'default-logo.svg');
+            'theme_learnlingo', 'logo', 0, '/', 'default-logo.png');
         $this->assertNotFalse($file);
+    }
+
+    /**
+     * Upgrading replaces only the original bundled SVG, not institutional uploads.
+     */
+    public function test_migration_replaces_only_packaged_svg(): void {
+        global $CFG;
+        $this->resetAfterTest();
+        require_once($CFG->dirroot . '/theme/learnlingo/db/install.php');
+
+        $this->clear_logo('logo');
+        $this->clear_logo('loginlogo');
+
+        $png = file_get_contents($CFG->dirroot . '/theme/learnlingo/pix/default-logo.png');
+        $svg = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+            . "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1254\" height=\"1254\" viewBox=\"0 0 1254 1254\" role=\"img\" aria-label=\"LearnLingo - livro com capelo\">\n"
+            . "  <title>LearnLingo</title>\n"
+            . '  <image width="1254" height="1254" href="data:image/png;base64,'
+            . base64_encode($png) . "\"/>\n</svg>\n";
+        $this->assertSame('6b06dbaeede483bb666eb489b136dea5d3cedcd8', sha1($svg));
+
+        $context = context_system::instance();
+        $fs = get_file_storage();
+        $fs->create_file_from_string([
+            'contextid' => $context->id,
+            'component' => 'theme_learnlingo',
+            'filearea' => 'logo',
+            'itemid' => 0,
+            'filepath' => '/',
+            'filename' => 'default-logo.svg',
+            'mimetype' => 'image/svg+xml',
+        ], $svg);
+        set_config('logo', '/default-logo.svg', 'theme_learnlingo');
+
+        $fs->create_file_from_string([
+            'contextid' => $context->id,
+            'component' => 'theme_learnlingo',
+            'filearea' => 'loginlogo',
+            'itemid' => 0,
+            'filepath' => '/',
+            'filename' => 'institution.png',
+            'mimetype' => 'image/png',
+        ], 'institution-logo');
+        set_config('loginlogo', '/institution.png', 'theme_learnlingo');
+
+        theme_learnlingo_migrate_default_logos();
+
+        $this->assertSame('/default-logo.png', get_config('theme_learnlingo', 'logo'));
+        $this->assertFalse($fs->get_file($context->id, 'theme_learnlingo', 'logo', 0, '/', 'default-logo.svg'));
+        $newlogo = $fs->get_file($context->id, 'theme_learnlingo', 'logo', 0, '/', 'default-logo.png');
+        $this->assertNotFalse($newlogo);
+        $this->assertSame($png, $newlogo->get_content());
+        $this->assertSame('/institution.png', get_config('theme_learnlingo', 'loginlogo'));
+        $this->assertSame('institution-logo', $fs->get_file($context->id,
+            'theme_learnlingo', 'loginlogo', 0, '/', 'institution.png')->get_content());
     }
 }
