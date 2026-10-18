@@ -24,6 +24,8 @@
 
 defined('MOODLE_INTERNAL') || die;
 
+global $PAGE, $OUTPUT;
+
 // The admin tree must expose the settings page even when fulltree is false.
 $settings->hidden = false;
 
