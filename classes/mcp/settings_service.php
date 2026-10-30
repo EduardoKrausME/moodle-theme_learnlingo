@@ -35,7 +35,7 @@ use theme_learnlingo\branding_exchange;
  */
 final class settings_service {
     /** Uploaded logo file areas in settings.php. */
-    private const FILEAREAS = ['logo', 'loginlogo'];
+    private const FILEAREAS = ['logo'];
 
     /**
      * Read all portable settings and existing uploaded image metadata.

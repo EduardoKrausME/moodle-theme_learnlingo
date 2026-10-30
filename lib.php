@@ -103,7 +103,7 @@ function theme_learnlingo_logo_url(theme_config $theme, string $area): ?string {
  * @throws moodle_exception
  */
 function theme_learnlingo_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = []): void {
-    if ($context->contextlevel !== CONTEXT_SYSTEM || $filearea !== 'loginlogo') {
+    if ($context->contextlevel !== CONTEXT_SYSTEM) {
         send_file_not_found();
     }
     // Moodle adds the theme revision to the URL. The core helper removes it

@@ -61,7 +61,7 @@ final class update_settings extends base_tool {
             . 'login/dashboard/course options, homepage HTML and uploaded PNG/JPEG site logos or PNG/JPEG/WebP login logos. '
             . 'Only specified settings are changed. Requires confirmation; read learnlingo_get_settings '
             . 'first and pass its state_hash in expected_hash to avoid concurrent overwrites. '
-            . 'The site logo uses core_admin; only loginlogo uses the theme File API.';
+            . 'The site logo uses core_admin.';
     }
 
     /**
@@ -106,12 +106,6 @@ final class update_settings extends base_tool {
                 'type' => 'object',
                 'description' => 'Only the settings that need to change. Other settings are preserved.',
                 'properties' => (object)$properties,
-                'additionalProperties' => false,
-            ],
-            'images' => [
-                'type' => 'object',
-                'description' => 'Optional uploaded raster logos; SVG can be uploaded using the theme settings.',
-                'properties' => ['logo' => $image, 'loginlogo' => $image],
                 'additionalProperties' => false,
             ],
             'expected_hash' => [

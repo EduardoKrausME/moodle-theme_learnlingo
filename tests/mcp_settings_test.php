@@ -74,7 +74,6 @@ final class mcp_settings_test extends advanced_testcase {
         $schema = (new update_settings())->get_input_schema();
         $this->assertArrayHasKey('scsspre', (array)$schema['properties']['settings']['properties']);
         $this->assertArrayHasKey('scss', (array)$schema['properties']['settings']['properties']);
-        $this->assertArrayHasKey('loginlogo', $schema['properties']['images']['properties']);
         $this->assertSame('moodle/site:config', (new update_settings())->get_required_capability());
         $this->assertTrue((new update_settings())->requires_confirmation());
         $this->assertTrue((new update_settings())->supports_dry_run());

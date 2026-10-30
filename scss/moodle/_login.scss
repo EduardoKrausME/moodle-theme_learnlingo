@@ -173,18 +173,6 @@ body#page-login-index {
 .login-cookiesnotice {
     color: var(--learnlingo-muted);
 }
-/* The theme login logo takes precedence over Moodle's general login logo. */
-.learnlingo-has-loginlogo .loginform #loginlogo,
-.learnlingo-has-loginlogo .loginform .learnlingo-login-brand-mobile {
-    display: none;
-}
-.learnlingo-mobile-login-brand .learnlingo-login-logo {
-    display: inline-block;
-    width: auto;
-    max-width: min(220px, 80%);
-    max-height: 130px;
-    object-fit: contain;
-}
 .login-container {
     .login-form {
         .toggle-sensitive-wrapper {

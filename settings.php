@@ -49,9 +49,7 @@ if ($ADMIN->fulltree) {
             "theme_learnlingo/mcp_banner",
             "",
             $OUTPUT->render_from_template("theme_learnlingo/mcp_banner", [
-                "mcp_banner_dismiss_url" => (new moodle_url(
-                    "/theme/learnlingo/dismiss-mcp-banner.php"
-                ))->out(false),
+                "mcp_banner_dismiss_url" => new moodle_url("/theme/learnlingo/dismiss-mcp-banner.php"),
             ])
         ));
     }
@@ -240,19 +238,6 @@ if ($ADMIN->fulltree) {
         'theme_learnlingo_login',
         get_string('loginsettings', 'theme_learnlingo')
     );
-
-    foreach (['loginlogo'] as $area) {
-        $setting = new admin_setting_configstoredfile(
-            'theme_learnlingo/' . $area,
-            get_string($area, 'theme_learnlingo'),
-            get_string($area . '_desc', 'theme_learnlingo'),
-            $area,
-            0,
-            ['maxfiles' => 1, 'accepted_types' => ['.png', '.jpg', '.jpeg', '.webp', '.svg']]
-        );
-        $setting->set_updatedcallback('theme_reset_all_caches');
-        $page->add($setting);
-    }
 
     foreach ([
         'loginpaneltitletext' => '',
