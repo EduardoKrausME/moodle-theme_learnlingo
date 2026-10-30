@@ -155,16 +155,16 @@ if ($ADMIN->fulltree) {
         get_string('dashboardsettings', 'theme_learnlingo')
     );
 
-    foreach ([
-        'dashboardeyebrowtext' => '',
-        'dashboarddescriptiontext' => '',
-    ] as $name => $default) {
+    $names = [
+        'dashboardeyebrowtext',
+        'dashboarddescriptiontext',
+    ];
+    foreach ($names as $name) {
         $setting = new admin_setting_configtext(
             'theme_learnlingo/' . $name,
             get_string($name, 'theme_learnlingo'),
             get_string($name . '_desc', 'theme_learnlingo'),
-            $default,
-            PARAM_TEXT
+            "", PARAM_TEXT
         );
         $setting->set_updatedcallback('theme_reset_all_caches');
         $page->add($setting);
@@ -239,17 +239,25 @@ if ($ADMIN->fulltree) {
         get_string('loginsettings', 'theme_learnlingo')
     );
 
-    foreach ([
-        'loginpaneltitletext' => '',
-        'loginpaneldescriptiontext' => '',
-        'loginpaneltaglinetext' => '',
-    ] as $name => $default) {
+    // Login Background image setting.
+    $name = 'theme_boost/loginbackgroundimage';
+    $title = get_string('loginbackgroundimage', 'theme_boost');
+    $description = get_string('loginbackgroundimage_desc', 'theme_boost');
+    $setting = new admin_setting_configstoredfile($name, $title, $description, 'loginbackgroundimage');
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+    $names = [
+        'loginpaneltitletext',
+        'loginpaneldescriptiontext',
+        'loginpaneltaglinetext',
+    ];
+    foreach ($names as $name) {
         $setting = new admin_setting_configtext(
             'theme_learnlingo/' . $name,
             get_string($name, 'theme_learnlingo'),
             get_string($name . '_desc', 'theme_learnlingo'),
-            $default,
-            PARAM_TEXT
+            "", PARAM_TEXT
         );
         $setting->set_updatedcallback('theme_reset_all_caches');
         $page->add($setting);
@@ -306,10 +314,10 @@ if ($ADMIN->fulltree) {
         'theme_learnlingo/jsonbrandinglink',
         '',
         html_writer::tag('p', get_string('jsonpageintro', 'theme_learnlingo')) .
-            html_writer::link(
-                new moodle_url('/theme/learnlingo/admin/branding_json.php'),
-                get_string('jsonopen', 'theme_learnlingo')
-            )
+        html_writer::link(
+            new moodle_url('/theme/learnlingo/admin/branding_json.php'),
+            get_string('jsonopen', 'theme_learnlingo')
+        )
     ));
 
     $settings->add($page);

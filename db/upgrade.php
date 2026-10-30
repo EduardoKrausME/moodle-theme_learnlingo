@@ -23,60 +23,11 @@
  */
 
 /**
- * Copy the previous theme-specific logo into Moodle's shared site logo area.
- * Existing core_admin logos always take precedence.
- *
- * @return void
- */
-function theme_learnlingo_migrate_logo_to_core(): void {
-    if (trim((string)get_config('core_admin', 'logo')) !== '') {
-        return;
-    }
-
-    $context = context_system::instance();
-    $fs = get_file_storage();
-
-    // An uploaded core logo may exist without a matching configuration entry.
-    $corefiles = $fs->get_area_files($context->id, 'core_admin', 'logo', 0, 'id', false);
-    if ($corefiles) {
-        $file = reset($corefiles);
-        set_config('logo', $file->get_filepath() . $file->get_filename(), 'core_admin');
-        return;
-    }
-
-    $legacy = trim((string)get_config('theme_learnlingo', 'logo'));
-    if ($legacy === '') {
-        return;
-    }
-
-    $relativepath = ltrim($legacy, '/');
-    $file = $fs->get_file_by_hash(sha1("/{$context->id}/theme_learnlingo/logo/0/{$relativepath}"));
-    if (!$file || $file->is_directory()) {
-        return;
-    }
-
-    $copy = $fs->create_file_from_storedfile([
-        'contextid' => $context->id,
-        'component' => 'core_admin',
-        'filearea' => 'logo',
-        'itemid' => 0,
-        'filepath' => $file->get_filepath(),
-        'filename' => $file->get_filename(),
-    ], $file);
-    set_config('logo', $copy->get_filepath() . $copy->get_filename(), 'core_admin');
-}
-
-/**
  * Upgrade LearnLingo.
  *
  * @param int $oldversion Previously installed version.
  * @return bool
  */
 function xmldb_theme_learnlingo_upgrade(int $oldversion): bool {
-    if ($oldversion < 2026103000) {
-        theme_learnlingo_migrate_logo_to_core();
-        upgrade_plugin_savepoint(true, 2026103000, 'theme', 'learnlingo');
-    }
-
     return true;
 }

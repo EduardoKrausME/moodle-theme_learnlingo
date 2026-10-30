@@ -66,4 +66,37 @@ function xmldb_theme_learnlingo_install(): void {
             set_config("logo", $file->get_filepath() . $file->get_filename(), "core_admin");
         }
     }
+
+    $source = "{$CFG->dirroot}/theme/learnlingo/pix/login_background.jpg";
+    if (file_exists($source)) {
+        $context = context_system::instance();
+        $fs = get_file_storage();
+
+        // Preserve a configured loginbackgroundimage if its file is still available.
+        $configured = trim((string)get_config("theme_boost", "loginbackgroundimage"));
+        $relativepath = ltrim($configured, "/");
+        $existing = $configured !== ""
+            ? $fs->get_file_by_hash(sha1("/{$context->id}/theme_boost/loginbackgroundimage/0/{$relativepath}"))
+            : false;
+        if (!($existing && !$existing->is_directory())) {
+            $files = $fs->get_area_files($context->id, "theme_boost", "loginbackgroundimage", 0, "id", false);
+            if ($files) {
+                // Recover a pre-existing upload whose configuration value is empty.
+                $file = reset($files);
+            } else {
+                $file = $fs->create_file_from_pathname([
+                    "contextid" => $context->id,
+                    "component" => "theme_boost",
+                    "filearea" => "loginbackgroundimage",
+                    "itemid" => 0,
+                    "filepath" => "/",
+                    "filename" => "login_background.jpg",
+                    "mimetype" => "image/jpg",
+                    "userid" => 0,
+                ], $source);
+            }
+
+            set_config("loginbackgroundimage", $file->get_filepath() . $file->get_filename(), "theme_boost");
+        }
+    }
 }
