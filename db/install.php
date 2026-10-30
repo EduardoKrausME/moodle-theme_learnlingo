@@ -22,103 +22,48 @@
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
-/**
- * Populate the theme logo file areas from the packaged default when empty.
- *
- * The stored file and the configuration path are both required by
- * admin_setting_configstoredfile / theme_config::setting_file_url().
- * Existing institutional logos are never replaced.
- *
- * @return void
- */
-function theme_learnlingo_install_default_logos(): void {
-    global $CFG;
-
-    $source = $CFG->dirroot . '/theme/learnlingo/pix/default-logo.png';
-    if (!is_readable($source)) {
-        throw new coding_exception('LearnLingo default logo file is missing: ' . $source);
-    }
-
-    $context = context_system::instance();
-    $fs = get_file_storage();
-
-    foreach (['logo', 'loginlogo'] as $area) {
-        // Preserve a configured logo if its file is still available.
-        $configured = trim((string)get_config('theme_learnlingo', $area));
-        if ($configured !== '') {
-            $relativepath = ltrim($configured, '/');
-            $existing = $fs->get_file_by_hash(sha1(
-                '/' . $context->id . '/theme_learnlingo/' . $area . '/0/' . $relativepath
-            ));
-            if ($existing && !$existing->is_directory()) {
-                continue;
-            }
-        }
-
-        $files = $fs->get_area_files($context->id, 'theme_learnlingo', $area, 0, 'id', false);
-        if ($files) {
-            // Recover a pre-existing upload whose configuration value is empty.
-            $file = reset($files);
-        } else {
-            $file = $fs->create_file_from_pathname([
-                'contextid' => $context->id,
-                'component' => 'theme_learnlingo',
-                'filearea' => $area,
-                'itemid' => 0,
-                'filepath' => '/',
-                'filename' => 'default-logo.png',
-                'mimetype' => 'image/png',
-                'userid' => 0,
-            ], $source);
-        }
-
-        set_config($area, $file->get_filepath() . $file->get_filename(), 'theme_learnlingo');
-    }
-}
-
-/**
- * Replace the exact former bundled SVG with the original PNG.
- *
- * The SVG used to be only a base64 wrapper around the PNG. Compare the
- * stored file's content hash to avoid replacing institution-supplied logos.
- *
- * @return void
- */
-function theme_learnlingo_migrate_default_logos(): void {
-    $context = context_system::instance();
-    $fs = get_file_storage();
-
-    // Match the exact historically shipped SVG, not the logo filename or SVG markup.
-    // Retain the previously accepted hash for sites which may already use that variant.
-    $legacyhashes = [
-        '52a77c5f3cbd973eff6274e14c9f299a97dcb565',
-        '6b06dbaeede483bb666eb489b136dea5d3cedcd8',
-    ];
-
-    foreach (['logo', 'loginlogo'] as $area) {
-        $configured = trim((string)get_config('theme_learnlingo', $area));
-        if ($configured !== '' && $configured !== '/default-logo.svg') {
-            continue;
-        }
-
-        $legacy = $fs->get_file($context->id, 'theme_learnlingo', $area, 0, '/', 'default-logo.svg');
-        if (!$legacy || !in_array($legacy->get_contenthash(), $legacyhashes, true)) {
-            continue;
-        }
-
-        $legacy->delete();
-        set_config($area, '', 'theme_learnlingo');
-    }
-
-    theme_learnlingo_install_default_logos();
-}
-
 /**
  * Seed the theme logos on a fresh installation.
  *
  * @return void
+ * @throws coding_exception
+ * @throws dml_exception
+ * @throws file_exception
+ * @throws stored_file_creation_exception
  */
 function xmldb_theme_learnlingo_install(): void {
-    theme_learnlingo_install_default_logos();
+    global $CFG;
+
+    $source = "{$CFG->dirroot}/theme/learnlingo/pix/default-logo.png";
+    if (file_exists($source)) {
+        $context = context_system::instance();
+        $fs = get_file_storage();
+
+        // Preserve a configured logo if its file is still available.
+        $configured = trim((string)get_config("theme_learnlingo", "logo"));
+        if ($configured !== "") {
+            $relativepath = ltrim($configured, "/");
+            $existing = $fs->get_file_by_hash(sha1("/{$context->id}/theme_learnlingo/logo/0/{$relativepath}"));
+            if (!($existing && !$existing->is_directory())) {
+                $files = $fs->get_area_files($context->id, "theme_learnlingo", "logo", 0, "id", false);
+                if ($files) {
+                    // Recover a pre-existing upload whose configuration value is empty.
+                    $file = reset($files);
+                } else {
+                    $file = $fs->create_file_from_pathname([
+                        "contextid" => $context->id,
+                        "component" => "theme_learnlingo",
+                        "filearea" => "logo",
+                        "itemid" => 0,
+                        "filepath" => "/",
+                        "filename" => "default-logo.png",
+                        "mimetype" => "image/png",
+                        "userid" => 0,
+                    ], $source);
+                }
+
+                set_config("logo", $file->get_filepath() . $file->get_filename(), "theme_learnlingo");
+            }
+        }
+    }
 }
