@@ -109,7 +109,6 @@ $string['jsonimporttitle'] = '2. Importe o JSON final';
 $string['jsonimportwarning'] = 'A importação substitui as configurações atuais de cores, textos, SCSS, HTML e SVG do tema. Revise os conteúdos gerados, especialmente HTML e SCSS, antes de importar. Arquivos de imagem enviados separadamente não serão excluídos.';
 $string['jsonopen'] = 'Exportar prompt para ChatGPT e importar configurações JSON';
 $string['jsonpageintro'] = 'Copie o prompt completo, cole em uma conversa do ChatGPT e responda às perguntas sobre a identidade da sua instituição. Quando receber o JSON final, cole-o no campo de importação abaixo.';
-$string['jsonpagetitle'] = 'Personalizar com ChatGPT (JSON)';
 $string['jsonpromptdesc'] = 'Este prompt já contém todas as configurações atuais, o repositório do plugin e as instruções para o ChatGPT conversar com você antes de gerar o resultado.';
 $string['jsonpromptlabel'] = 'Prompt completo com JSON atual';
 $string['jsonprompttitle'] = '1. Copie o prompt para o ChatGPT';

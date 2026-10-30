@@ -305,23 +305,18 @@ if ($ADMIN->fulltree) {
         get_string('aibranding', 'theme_learnlingo')
     );
 
-    // These assistants use their own POST forms; keep them outside settings.php.
-    $page->add(new admin_setting_heading(
-        'theme_learnlingo/aibrandinglink',
-        '',
-        html_writer::tag('p', get_string('aibrandingdesc', 'theme_learnlingo')) .
+    if (file_exists("{$CFG->dirroot}/local/ai_bridge/version.php")) {
+        // These assistants use their own POST forms; keep them outside settings.php.
+        $page->add(new admin_setting_heading(
+            'theme_learnlingo/aibrandinglink',
+            '',
+            html_writer::tag('p', get_string('aibrandingdesc', 'theme_learnlingo')) .
             html_writer::link(
                 new moodle_url('/theme/learnlingo/admin/branding_ai.php'),
                 get_string('aibrandingopen', 'theme_learnlingo')
             )
-    ));
-
-    $settings->add($page);
-
-    $page = new admin_settingpage(
-        'theme_learnlingo_json',
-        get_string('jsonpagetitle', 'theme_learnlingo')
-    );
+        ));
+    }
 
     $page->add(new admin_setting_heading(
         'theme_learnlingo/jsonbrandinglink',

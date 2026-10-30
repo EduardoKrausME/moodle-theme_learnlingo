@@ -72,7 +72,7 @@ echo html_writer::tag('label', get_string('jsonpromptlabel', 'theme_learnlingo')
 echo html_writer::tag('textarea', s($prompt), [
     'id' => 'learnlingo-brand-prompt',
     'class' => 'form-control mb-2 font-monospace',
-    'rows' => '23',
+    'rows' => '5',
     'readonly' => 'readonly',
     'spellcheck' => 'false',
 ]);
