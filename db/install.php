@@ -40,19 +40,19 @@ function xmldb_theme_learnlingo_install(): void {
         $fs = get_file_storage();
 
         // Preserve a configured logo if its file is still available.
-        $configured = trim((string)get_config("theme_learnlingo", "logo"));
+        $configured = trim((string)get_config("core_admin", "logo"));
         if ($configured !== "") {
             $relativepath = ltrim($configured, "/");
-            $existing = $fs->get_file_by_hash(sha1("/{$context->id}/theme_learnlingo/logo/0/{$relativepath}"));
+            $existing = $fs->get_file_by_hash(sha1("/{$context->id}/core_admin/logo/0/{$relativepath}"));
             if (!($existing && !$existing->is_directory())) {
-                $files = $fs->get_area_files($context->id, "theme_learnlingo", "logo", 0, "id", false);
+                $files = $fs->get_area_files($context->id, "core_admin", "logo", 0, "id", false);
                 if ($files) {
                     // Recover a pre-existing upload whose configuration value is empty.
                     $file = reset($files);
                 } else {
                     $file = $fs->create_file_from_pathname([
                         "contextid" => $context->id,
-                        "component" => "theme_learnlingo",
+                        "component" => "core_admin",
                         "filearea" => "logo",
                         "itemid" => 0,
                         "filepath" => "/",
@@ -62,7 +62,7 @@ function xmldb_theme_learnlingo_install(): void {
                     ], $source);
                 }
 
-                set_config("logo", $file->get_filepath() . $file->get_filename(), "theme_learnlingo");
+                set_config("logo", $file->get_filepath() . $file->get_filename(), "core_admin");
             }
         }
     }
