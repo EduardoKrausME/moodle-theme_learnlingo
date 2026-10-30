@@ -74,19 +74,24 @@ function theme_learnlingo_get_extra_scss(theme_config $theme): string {
 }
 
 /**
- * URL for an uploaded theme logo.
+ * URL for the shared Moodle site logo or the theme-specific login logo.
  *
  * @param theme_config $theme Theme settings.
  * @param string $area File area.
  * @return string|null
  */
 function theme_learnlingo_logo_url(theme_config $theme, string $area): ?string {
+    if ($area === 'logo') {
+        global $OUTPUT;
+        $url = $OUTPUT->get_logo_url();
+        return $url ? $url->out(false) : null;
+    }
     $url = $theme->setting_file_url($area, $area);
     return $url ?: null;
 }
 
 /**
- * Serves logos uploaded through the theme configuration.
+ * Serves the theme-specific login logo (the site logo is served by core_admin).
  * @param $course
  * @param $cm
  * @param $context
@@ -98,7 +103,7 @@ function theme_learnlingo_logo_url(theme_config $theme, string $area): ?string {
  * @throws moodle_exception
  */
 function theme_learnlingo_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = []): void {
-    if ($context->contextlevel !== CONTEXT_SYSTEM || !in_array($filearea, ['logo', 'loginlogo'], true)) {
+    if ($context->contextlevel !== CONTEXT_SYSTEM || $filearea !== 'loginlogo') {
         send_file_not_found();
     }
     // Moodle adds the theme revision to the URL. The core helper removes it

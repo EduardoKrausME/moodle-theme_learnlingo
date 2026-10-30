@@ -126,7 +126,7 @@ COMO CONDUZIR A CONVERSA
    Pergunte se quer um visual claro/escuro e ofereça paletas se houver dúvidas.
 3. Pergunte se ele deseja modificar a logo. Logos são arquivos
    gerenciados pelo Moodle (PNG, JPG, WebP ou SVG), não strings JSON.
-   Não inclua SVG no JSON; faça upload no campo de logo do tema.
+   Não inclua SVG no JSON; faça upload no campo de logo global do Moodle.
 4. Pergunte que home deseja: "moodle" (padrão Moodle), "learnlingo"
    (visual LearnLingo) ou "html" (página personalizada).
    No modo "html", produza uma home responsiva em settings.homepagehtml

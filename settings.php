@@ -86,18 +86,17 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback("theme_reset_all_caches");
     $page->add($setting);
 
-    foreach (['logo'] as $area) {
-        $setting = new admin_setting_configstoredfile(
-            'theme_learnlingo/' . $area,
-            get_string($area, 'theme_learnlingo'),
-            get_string($area . '_desc', 'theme_learnlingo'),
-            $area,
-            0,
-            ['maxfiles' => 1, 'accepted_types' => ['.png', '.jpg', '.jpeg', '.webp', '.svg']]
-        );
-        $setting->set_updatedcallback('theme_reset_all_caches');
-        $page->add($setting);
-    }
+    // Use the Moodle-wide site logo, shared with core's Appearance > Logos page.
+    $setting = new admin_setting_configstoredfile(
+        'core_admin/logo',
+        get_string('logo', 'theme_learnlingo'),
+        get_string('logo_desc', 'theme_learnlingo'),
+        'logo',
+        0,
+        ['maxfiles' => 1, 'accepted_types' => ['.jpg', '.png']]
+    );
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
 
     foreach (['canvascolor' => '#f7faf5', 'textcolor' => '#263238'] as $name => $default) {
         $setting = new admin_setting_configcolourpicker(

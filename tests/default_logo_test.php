@@ -26,200 +26,175 @@ namespace theme_learnlingo;
 
 use advanced_testcase;
 use context_system;
-use function theme_learnlingo_install_default_logos;
+use function theme_learnlingo_migrate_logo_to_core;
 use function xmldb_theme_learnlingo_install;
 
 /**
- * Installation callback should fill missing logos without losing uploads.
+ * The main logo is stored in core_admin; only loginlogo belongs to the theme.
  *
  * @coversNothing
  */
 final class default_logo_test extends advanced_testcase {
     /**
-     * Reset a logo file area to its empty state.
+     * Clear one stored file area and its matching configuration.
      *
-     * @param string $area File area.
-     * @return void
+     * @param string $component Moodle component.
+     * @param string $area File area and setting name.
      */
-    private function clear_logo(string $area): void {
+    private function clear_logo(string $component, string $area): void {
         $context = context_system::instance();
         $fs = get_file_storage();
-        foreach ($fs->get_area_files($context->id, 'theme_learnlingo', $area, 0, 'id', false) as $file) {
+        foreach ($fs->get_area_files($context->id, $component, $area, 0, 'id', false) as $file) {
             $file->delete();
         }
-        set_config($area, '', 'theme_learnlingo');
+        set_config($area, '', $component);
     }
 
     /**
-     * Both logos should be populated with the same bundled PNG.
+     * Add a representative uploaded logo without going through the admin form.
      *
-     * @return void
+     * @param string $component Moodle component.
+     * @param string $area File area.
+     * @param string $filename Filename.
+     * @param string $content File bytes.
+     * @return \stored_file
      */
-    public function test_install_creates_both_missing_logos(): void {
+    private function upload_logo(string $component, string $area, string $filename, string $content): \stored_file {
+        return get_file_storage()->create_file_from_string([
+            'contextid' => context_system::instance()->id,
+            'component' => $component,
+            'filearea' => $area,
+            'itemid' => 0,
+            'filepath' => '/',
+            'filename' => $filename,
+            'mimetype' => 'image/png',
+        ], $content);
+    }
+
+    /**
+     * A fresh installation sets the shared core logo, not a theme logo.
+     */
+    public function test_install_creates_missing_site_logo(): void {
         global $CFG;
         $this->resetAfterTest();
         require_once($CFG->dirroot . '/theme/learnlingo/db/install.php');
 
-        foreach (['logo', 'loginlogo'] as $area) {
-            $this->clear_logo($area);
-        }
+        $this->clear_logo('core_admin', 'logo');
+        xmldb_theme_learnlingo_install();
+
+        $this->assertSame('/default-logo.png', get_config('core_admin', 'logo'));
+        $file = get_file_storage()->get_file(context_system::instance()->id,
+            'core_admin', 'logo', 0, '/', 'default-logo.png');
+        $this->assertNotFalse($file);
+        $this->assertSame('image/png', $file->get_mimetype());
+        $this->assertSame("\x89PNG\r\n\x1a\n", substr($file->get_content(), 0, 8));
+
+        xmldb_theme_learnlingo_install();
+        $this->assertCount(1, get_file_storage()->get_area_files(
+            context_system::instance()->id, 'core_admin', 'logo', 0, 'id', false));
+    }
+
+    /**
+     * Installation must never replace an institution's existing site logo.
+     */
+    public function test_install_preserves_uploaded_site_logo(): void {
+        global $CFG;
+        $this->resetAfterTest();
+        require_once($CFG->dirroot . '/theme/learnlingo/db/install.php');
+
+        $this->clear_logo('core_admin', 'logo');
+        $file = $this->upload_logo('core_admin', 'logo', 'institution.png', 'institution-logo');
+        set_config('logo', '/institution.png', 'core_admin');
 
         xmldb_theme_learnlingo_install();
 
-        $fs = get_file_storage();
-        $context = context_system::instance();
-        $contenthashes = [];
-        foreach (['logo', 'loginlogo'] as $area) {
-            $this->assertSame('/default-logo.png', get_config('theme_learnlingo', $area));
-            $file = $fs->get_file($context->id, 'theme_learnlingo', $area, 0, '/', 'default-logo.png');
-            $this->assertNotFalse($file);
-            $this->assertSame('image/png', $file->get_mimetype());
-            $this->assertSame("\x89PNG\r\n\x1a\n", substr($file->get_content(), 0, 8));
-            $contenthashes[] = $file->get_contenthash();
-        }
-        $this->assertSame($contenthashes[0], $contenthashes[1]);
-
-        // Running the helper twice should not create duplicate files.
-        theme_learnlingo_install_default_logos();
-        foreach (['logo', 'loginlogo'] as $area) {
-            $this->assertCount(1, $fs->get_area_files($context->id, 'theme_learnlingo', $area, 0, 'id', false));
-        }
+        $this->assertSame('/institution.png', get_config('core_admin', 'logo'));
+        $this->assertSame('institution-logo', $file->get_content());
+        $this->assertFalse(get_file_storage()->get_file(context_system::instance()->id,
+            'core_admin', 'logo', 0, '/', 'default-logo.png'));
     }
 
     /**
-     * Existing logos must not be replaced with the theme's default.
-     *
-     * @return void
+     * A stale configuration is recovered from existing files, or from the packaged PNG.
      */
-    public function test_install_preserves_uploaded_logo(): void {
+    public function test_install_recovers_missing_or_stale_config(): void {
         global $CFG;
         $this->resetAfterTest();
         require_once($CFG->dirroot . '/theme/learnlingo/db/install.php');
 
-        $this->clear_logo('logo');
-        $this->clear_logo('loginlogo');
-        $context = context_system::instance();
-        $fs = get_file_storage();
-        $file = $fs->create_file_from_string([
-            'contextid' => $context->id,
-            'component' => 'theme_learnlingo',
-            'filearea' => 'logo',
-            'itemid' => 0,
-            'filepath' => '/',
-            'filename' => 'institution.png',
-            'mimetype' => 'image/png',
-        ], 'institution-logo');
+        $this->clear_logo('core_admin', 'logo');
+        $this->upload_logo('core_admin', 'logo', 'existing.png', 'existing-logo');
+        set_config('logo', '/missing.png', 'core_admin');
+        xmldb_theme_learnlingo_install();
+        $this->assertSame('/existing.png', get_config('core_admin', 'logo'));
+
+        $this->clear_logo('core_admin', 'logo');
+        set_config('logo', '/missing.png', 'core_admin');
+        xmldb_theme_learnlingo_install();
+        $this->assertSame('/default-logo.png', get_config('core_admin', 'logo'));
+    }
+
+    /**
+     * On upgrade a legacy theme logo is copied, leaving the old upload untouched.
+     */
+    public function test_upgrade_migrates_legacy_logo_to_core(): void {
+        global $CFG;
+        $this->resetAfterTest();
+        require_once($CFG->dirroot . '/theme/learnlingo/db/upgrade.php');
+
+        $this->clear_logo('core_admin', 'logo');
+        $this->clear_logo('theme_learnlingo', 'logo');
+        $legacy = $this->upload_logo('theme_learnlingo', 'logo', 'institution.png', 'custom');
         set_config('logo', '/institution.png', 'theme_learnlingo');
 
-        theme_learnlingo_install_default_logos();
+        theme_learnlingo_migrate_logo_to_core();
 
+        $this->assertSame('/institution.png', get_config('core_admin', 'logo'));
+        $copy = get_file_storage()->get_file(context_system::instance()->id,
+            'core_admin', 'logo', 0, '/', 'institution.png');
+        $this->assertNotFalse($copy);
+        $this->assertSame($legacy->get_contenthash(), $copy->get_contenthash());
         $this->assertSame('/institution.png', get_config('theme_learnlingo', 'logo'));
-        $this->assertSame('institution-logo', $file->get_content());
-        $this->assertFalse($fs->get_file($context->id, 'theme_learnlingo', 'logo', 0, '/', 'default-logo.png'));
-        $this->assertSame('/default-logo.png', get_config('theme_learnlingo', 'loginlogo'));
     }
 
     /**
-     * Repair the setting when an old file was deleted but its path remained.
-     *
-     * @return void
+     * An existing site logo always wins over the legacy theme logo.
      */
-    public function test_install_repairs_stale_logo_path(): void {
+    public function test_upgrade_keeps_existing_core_logo(): void {
         global $CFG;
         $this->resetAfterTest();
-        require_once($CFG->dirroot . '/theme/learnlingo/db/install.php');
-        $this->clear_logo('logo');
-        set_config('logo', '/missing-old-logo.svg', 'theme_learnlingo');
+        require_once($CFG->dirroot . '/theme/learnlingo/db/upgrade.php');
 
-        theme_learnlingo_install_default_logos();
+        $this->clear_logo('core_admin', 'logo');
+        $this->clear_logo('theme_learnlingo', 'logo');
+        $this->upload_logo('core_admin', 'logo', 'existing.png', 'core-logo');
+        set_config('logo', '/existing.png', 'core_admin');
+        $this->upload_logo('theme_learnlingo', 'logo', 'legacy.png', 'old-theme-logo');
+        set_config('logo', '/legacy.png', 'theme_learnlingo');
 
-        $this->assertSame('/default-logo.png', get_config('theme_learnlingo', 'logo'));
-        $file = get_file_storage()->get_file(context_system::instance()->id,
-            'theme_learnlingo', 'logo', 0, '/', 'default-logo.png');
-        $this->assertNotFalse($file);
+        theme_learnlingo_migrate_logo_to_core();
+
+        $this->assertSame('/existing.png', get_config('core_admin', 'logo'));
+        $this->assertFalse(get_file_storage()->get_file(context_system::instance()->id,
+            'core_admin', 'logo', 0, '/', 'legacy.png'));
     }
 
     /**
-     * Upgrading replaces only the original bundled SVG, not institutional uploads.
+     * Installing the global logo must not modify loginlogo.
      */
-    public function test_migration_replaces_only_packaged_svg(): void {
-        global $CFG;
-        $this->resetAfterTest();
-        require_once($CFG->dirroot . '/theme/learnlingo/db/install.php');
-
-        $this->clear_logo('logo');
-        $this->clear_logo('loginlogo');
-
-        $png = file_get_contents($CFG->dirroot . '/theme/learnlingo/pix/default-logo.png');
-        // This is the real SVG shipped before switching the packaged logo to PNG.
-        // A generated SVG using today's PNG would have a different content hash.
-        $svg = file_get_contents(__DIR__ . '/fixtures/default-logo-legacy.svg');
-        $this->assertNotFalse($svg);
-        $this->assertSame('6b06dbaeede483bb666eb489b136dea5d3cedcd8', sha1($svg));
-
-        $context = context_system::instance();
-        $fs = get_file_storage();
-        $fs->create_file_from_string([
-            'contextid' => $context->id,
-            'component' => 'theme_learnlingo',
-            'filearea' => 'logo',
-            'itemid' => 0,
-            'filepath' => '/',
-            'filename' => 'default-logo.svg',
-            'mimetype' => 'image/svg+xml',
-        ], $svg);
-        set_config('logo', '/default-logo.svg', 'theme_learnlingo');
-
-        $fs->create_file_from_string([
-            'contextid' => $context->id,
-            'component' => 'theme_learnlingo',
-            'filearea' => 'loginlogo',
-            'itemid' => 0,
-            'filepath' => '/',
-            'filename' => 'institution.png',
-            'mimetype' => 'image/png',
-        ], 'institution-logo');
-        set_config('loginlogo', '/institution.png', 'theme_learnlingo');
-
-        $this->assertSame('/default-logo.png', get_config('theme_learnlingo', 'logo'));
-        $this->assertFalse($fs->get_file($context->id, 'theme_learnlingo', 'logo', 0, '/', 'default-logo.svg'));
-        $newlogo = $fs->get_file($context->id, 'theme_learnlingo', 'logo', 0, '/', 'default-logo.png');
-        $this->assertNotFalse($newlogo);
-        $this->assertSame($png, $newlogo->get_content());
-        $this->assertSame('/institution.png', get_config('theme_learnlingo', 'loginlogo'));
-        $this->assertSame('institution-logo', $fs->get_file($context->id,
-            'theme_learnlingo', 'loginlogo', 0, '/', 'institution.png')->get_content());
-    }
-    /**
-     * A customised logo must be kept even when it uses the former default filename.
-     *
-     * @return void
-     */
-    public function test_migration_preserves_custom_svg_with_default_filename(): void {
+    public function test_install_preserves_independent_login_logo(): void {
         global $CFG;
         $this->resetAfterTest();
         require_once($CFG->dirroot . '/theme/learnlingo/db/install.php');
 
-        $this->clear_logo('logo');
-        $customsvg = '<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64">'
-            . '<title>Institution</title><rect width="64" height="64" fill="blue"/></svg>';
-        $context = context_system::instance();
-        $fs = get_file_storage();
-        $fs->create_file_from_string([
-            'contextid' => $context->id,
-            'component' => 'theme_learnlingo',
-            'filearea' => 'logo',
-            'itemid' => 0,
-            'filepath' => '/',
-            'filename' => 'default-logo.svg',
-            'mimetype' => 'image/svg+xml',
-        ], $customsvg);
-        set_config('logo', '/default-logo.svg', 'theme_learnlingo');
+        $this->clear_logo('core_admin', 'logo');
+        $this->clear_logo('theme_learnlingo', 'loginlogo');
+        $this->upload_logo('theme_learnlingo', 'loginlogo', 'login.png', 'login-image');
+        set_config('loginlogo', '/login.png', 'theme_learnlingo');
 
-        $this->assertSame('/default-logo.svg', get_config('theme_learnlingo', 'logo'));
-        $file = $fs->get_file($context->id, 'theme_learnlingo', 'logo', 0, '/', 'default-logo.svg');
-        $this->assertNotFalse($file);
-        $this->assertSame($customsvg, $file->get_content());
+        xmldb_theme_learnlingo_install();
+
+        $this->assertSame('/login.png', get_config('theme_learnlingo', 'loginlogo'));
+        $this->assertSame('/default-logo.png', get_config('core_admin', 'logo'));
     }
-
 }

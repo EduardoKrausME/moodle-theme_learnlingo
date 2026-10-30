@@ -180,15 +180,19 @@ final class mcp_settings_test extends advanced_testcase {
         $after = $reader->execute(['include_images' => true], $identity);
         $this->assertSame('image/png', $after['images']['logo']['uploaded']['mimetype']);
         $this->assertSame('/' . $after['images']['logo']['uploaded']['filename'],
-            get_config('theme_learnlingo', 'logo'));
+            get_config('core_admin', 'logo'));
         $this->assertNotEmpty($after['_mcp_content']);
+        $this->assertNotFalse(get_file_storage()->get_file(
+            \context_system::instance()->id, 'core_admin', 'logo', 0, '/',
+            $after['images']['logo']['uploaded']['filename']
+        ));
         $this->assertSame($before['settings'], $after['settings']);
 
         $writer->execute(['images' => ['logo' => ['remove' => true]],
             'expected_hash' => $after['state_hash']], $identity);
         $removed = $reader->execute([], $identity);
         $this->assertNull($removed['images']['logo']['uploaded']);
-        $this->assertSame('', get_config('theme_learnlingo', 'logo'));
+        $this->assertSame('', get_config('core_admin', 'logo'));
     }
 
     public function test_image_operation_rejects_ambiguous_sources(): void {

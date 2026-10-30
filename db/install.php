@@ -23,7 +23,7 @@
  */
 
 /**
- * Seed the theme logos on a fresh installation.
+ * Seed the Moodle-wide site logo on a fresh installation.
  *
  * @return void
  * @throws coding_exception
@@ -41,29 +41,29 @@ function xmldb_theme_learnlingo_install(): void {
 
         // Preserve a configured logo if its file is still available.
         $configured = trim((string)get_config("core_admin", "logo"));
-        if ($configured !== "") {
-            $relativepath = ltrim($configured, "/");
-            $existing = $fs->get_file_by_hash(sha1("/{$context->id}/core_admin/logo/0/{$relativepath}"));
-            if (!($existing && !$existing->is_directory())) {
-                $files = $fs->get_area_files($context->id, "core_admin", "logo", 0, "id", false);
-                if ($files) {
-                    // Recover a pre-existing upload whose configuration value is empty.
-                    $file = reset($files);
-                } else {
-                    $file = $fs->create_file_from_pathname([
-                        "contextid" => $context->id,
-                        "component" => "core_admin",
-                        "filearea" => "logo",
-                        "itemid" => 0,
-                        "filepath" => "/",
-                        "filename" => "default-logo.png",
-                        "mimetype" => "image/png",
-                        "userid" => 0,
-                    ], $source);
-                }
-
-                set_config("logo", $file->get_filepath() . $file->get_filename(), "core_admin");
+        $relativepath = ltrim($configured, "/");
+        $existing = $configured !== ""
+            ? $fs->get_file_by_hash(sha1("/{$context->id}/core_admin/logo/0/{$relativepath}"))
+            : false;
+        if (!($existing && !$existing->is_directory())) {
+            $files = $fs->get_area_files($context->id, "core_admin", "logo", 0, "id", false);
+            if ($files) {
+                // Recover a pre-existing upload whose configuration value is empty.
+                $file = reset($files);
+            } else {
+                $file = $fs->create_file_from_pathname([
+                    "contextid" => $context->id,
+                    "component" => "core_admin",
+                    "filearea" => "logo",
+                    "itemid" => 0,
+                    "filepath" => "/",
+                    "filename" => "default-logo.png",
+                    "mimetype" => "image/png",
+                    "userid" => 0,
+                ], $source);
             }
+
+            set_config("logo", $file->get_filepath() . $file->get_filename(), "core_admin");
         }
     }
 }

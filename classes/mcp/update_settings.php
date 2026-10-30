@@ -58,10 +58,10 @@ final class update_settings extends base_tool {
      */
     public function get_description(): string {
         return 'Update any subset of LearnLingo settings, including scsspre and scss, colors, '
-            . 'login/dashboard/course options, homepage HTML and uploaded PNG/JPEG/WebP logos. '
+            . 'login/dashboard/course options, homepage HTML and uploaded PNG/JPEG site logos or PNG/JPEG/WebP login logos. '
             . 'Only specified settings are changed. Requires confirmation; read learnlingo_get_settings '
             . 'first and pass its state_hash in expected_hash to avoid concurrent overwrites. '
-            . 'Uploaded logos are served directly from the theme File API.';
+            . 'The site logo uses core_admin; only loginlogo uses the theme File API.';
     }
 
     /**

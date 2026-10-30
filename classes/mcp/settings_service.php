@@ -44,6 +44,7 @@ final class settings_service {
      * @return array Snapshot and state_hash.
      */
     public static function snapshot(bool $includeimages = false): array {
+        global $OUTPUT;
         $data = branding_exchange::export();
         $images = [];
         $content = [];
@@ -52,12 +53,15 @@ final class settings_service {
             $files = self::files($area);
             $image = $files ? reset($files) : null;
             if ($image) {
+                $logourl = $area === 'logo'
+                    ? $OUTPUT->get_logo_url()
+                    : theme_config::load('learnlingo')->setting_file_url($area, $area);
                 $metadata = [
                     'filename' => $image->get_filename(),
                     'mimetype' => $image->get_mimetype(),
                     'filesize' => $image->get_filesize(),
                     'contenthash' => $image->get_contenthash(),
-                    'url' => (string)theme_config::load('learnlingo')->setting_file_url($area, $area),
+                    'url' => $logourl ? (string)$logourl : null,
                 ];
                 // File API metadata can outlive the physical blob; do not fail the
                 // entire MCP export if a logo is temporarily or permanently unreadable.
@@ -153,6 +157,10 @@ final class settings_service {
                 continue;
             }
             [$bytes, $mime, $ext] = image_service::decode($source);
+            if ($name === 'logo' && !in_array($mime, ['image/png', 'image/jpeg'], true)) {
+                throw new api_exception('invalid_logo_type', 400,
+                    'The Moodle site logo accepts PNG or JPEG files.');
+            }
             $images[$name] = ['remove' => false, 'bytes' => $bytes, 'mime' => $mime, 'extension' => $ext];
         }
         if (!$updates && !$images) {
@@ -176,15 +184,16 @@ final class settings_service {
         }
         $context = context_system::instance();
         foreach ($prepared['images'] as $area => $source) {
+            $component = $area === 'logo' ? 'core_admin' : 'theme_learnlingo';
             foreach (self::files($area) as $file) {
                 $file->delete();
             }
             if ($source['remove']) {
-                set_config($area, '', 'theme_learnlingo');
+                set_config($area, '', $component);
             } else {
                 $file = get_file_storage()->create_file_from_string([
                     'contextid' => $context->id,
-                    'component' => 'theme_learnlingo',
+                    'component' => $component,
                     'filearea' => $area,
                     'itemid' => 0,
                     'filepath' => '/',
@@ -194,7 +203,7 @@ final class settings_service {
                     'license' => 'allrightsreserved',
                 ], $source['bytes']);
                 // The storedfile setting holds the path, not merely a presence flag.
-                set_config($area, $file->get_filepath() . $file->get_filename(), 'theme_learnlingo');
+                set_config($area, $file->get_filepath() . $file->get_filename(), $component);
             }
         }
         $transaction->allow_commit();
@@ -209,8 +218,9 @@ final class settings_service {
      */
     private static function files(string $area): array {
         $context = context_system::instance();
+        $component = $area === 'logo' ? 'core_admin' : 'theme_learnlingo';
         return array_values(get_file_storage()->get_area_files(
-            $context->id, 'theme_learnlingo', $area, 0, 'id DESC', false
+            $context->id, $component, $area, 0, 'id DESC', false
         ));
     }
 }
