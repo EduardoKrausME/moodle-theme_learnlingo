@@ -24,6 +24,10 @@
 
 namespace theme_learnlingo;
 
+use core_renderer;
+use moodle_exception;
+use moodle_url;
+
 /**
  * Control visibility, dismissal and template data for the optional MCP notice.
  */
@@ -45,16 +49,16 @@ final class mcp_banner {
     /**
      * Persist a session-protected dismissal before processing other page actions.
      *
-     * @param \moodle_url $returnurl Page to display after the preference is saved.
+     * @param moodle_url $returnurl Page to display after the preference is saved.
      * @return void
      */
-    public static function dismiss_if_requested(\moodle_url $returnurl): void {
+    public static function dismiss_if_requested(moodle_url $returnurl): void {
         if (!optional_param("dismiss_mcp_banner", 0, PARAM_BOOL)) {
             return;
         }
         require_login();
         if (!is_siteadmin() || ($_SERVER["REQUEST_METHOD"] ?? "") !== "POST") {
-            throw new \moodle_exception("nopermissions", "error");
+            throw new moodle_exception("nopermissions", "error");
         }
         require_sesskey();
         set_user_preference(self::PREFERENCE_HIDDEN, "1");
@@ -64,11 +68,11 @@ final class mcp_banner {
     /**
      * Render the accessible Mustache notice using a page-scoped POST action.
      *
-     * @param \core_renderer $output Current Moodle renderer.
-     * @param \moodle_url $pageurl Page used as the dismissal endpoint.
+     * @param core_renderer $output Current Moodle renderer.
+     * @param moodle_url $pageurl Page used as the dismissal endpoint.
      * @return string Banner HTML or an empty string.
      */
-    public static function render(\core_renderer $output, \moodle_url $pageurl): string {
+    public static function render(core_renderer $output, moodle_url $pageurl): string {
         if (!self::should_show()) {
             return "";
         }

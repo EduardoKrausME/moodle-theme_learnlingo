@@ -23,7 +23,6 @@
  */
 namespace theme_learnlingo;
 
-
 use advanced_testcase;
 use invalid_parameter_exception;
 

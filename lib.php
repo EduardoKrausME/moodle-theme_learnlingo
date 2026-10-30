@@ -121,7 +121,6 @@ function theme_learnlingo_brand_text(string $key, string $fallback): string {
         ? $configured : get_string($fallback, 'theme_learnlingo');
 }
 
-
 /**
  * Resolve the site homepage mode, preserving the pre-existing LearnLingo home.
  *

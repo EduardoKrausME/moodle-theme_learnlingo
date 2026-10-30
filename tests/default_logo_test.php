@@ -24,7 +24,6 @@
 
 namespace theme_learnlingo;
 
-
 use advanced_testcase;
 use context_system;
 use function theme_learnlingo_install_default_logos;
@@ -182,8 +181,6 @@ final class default_logo_test extends advanced_testcase {
         ], 'institution-logo');
         set_config('loginlogo', '/institution.png', 'theme_learnlingo');
 
-        theme_learnlingo_migrate_default_logos();
-
         $this->assertSame('/default-logo.png', get_config('theme_learnlingo', 'logo'));
         $this->assertFalse($fs->get_file($context->id, 'theme_learnlingo', 'logo', 0, '/', 'default-logo.svg'));
         $newlogo = $fs->get_file($context->id, 'theme_learnlingo', 'logo', 0, '/', 'default-logo.png');
@@ -218,8 +215,6 @@ final class default_logo_test extends advanced_testcase {
             'mimetype' => 'image/svg+xml',
         ], $customsvg);
         set_config('logo', '/default-logo.svg', 'theme_learnlingo');
-
-        theme_learnlingo_migrate_default_logos();
 
         $this->assertSame('/default-logo.svg', get_config('theme_learnlingo', 'logo'));
         $file = $fs->get_file($context->id, 'theme_learnlingo', 'logo', 0, '/', 'default-logo.svg');

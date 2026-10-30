@@ -26,7 +26,6 @@
  */
 namespace theme_learnlingo;
 
-
 use DOMDocument;
 use DOMNode;
 

@@ -23,7 +23,6 @@
  */
 namespace theme_learnlingo;
 
-
 use invalid_parameter_exception;
 use JsonException;
 

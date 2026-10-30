@@ -35,7 +35,6 @@ use theme_learnlingo\mcp\get_settings;
 use theme_learnlingo\mcp\provider;
 use theme_learnlingo\mcp\update_settings;
 
-
 /**
  * Run with the optional local_mcp installed.
  *

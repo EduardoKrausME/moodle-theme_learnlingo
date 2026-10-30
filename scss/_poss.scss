@@ -3,7 +3,7 @@
     --learnlingo-primary: #{$primary};
     --learnlingo-accent: #{$learnlingo-accent};
     --learnlingo-ink: #{$body-color};
-    --learnlingo-muted: #68756d;
+    --learnlingo-muted: #68756D;
     --learnlingo-surface: #FFF;
     --learnlingo-canvas: #{$body-bg};
     --learnlingo-border: #E1E9DD;
@@ -1108,6 +1108,10 @@ h6,
 .modal-footer {
     border-color: #ECEEF2;
 }
+.modal {
+    overflow-x: initial !important;
+    overflow-y: initial !important;
+}
 .popover,
 .tooltip-inner {
     border-radius: 10px;
@@ -1342,10 +1346,14 @@ h6,
 @import "moodle/activityicons";
 @import "moodle/course";
 @import "moodle/debug";
-
-.learnlingo-login-logo { display: block; max-width: min(100%, 280px); max-height: 100px; width: auto; height: auto; object-fit: contain; }
-
-
+.learnlingo-login-logo {
+    display: block;
+    max-width: min(100%, 280px);
+    max-height: 100px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
 // Full-width institutional HTML home, without affecting dashboards or course pages.
 body.learnlingo-html-home-fullwidth #page.drawers .main-inner {
     width: 100%;
@@ -1362,8 +1370,6 @@ body.learnlingo-html-home-fullwidth #page.drawers #region-main {
 body.learnlingo-html-home-fullwidth .learnlingo-html-home {
     width: 100%;
 }
-
-
 // Personal XP lives alongside (not instead of) Moodle course completion.
 .learnlingo-course-xp {
     display: inline-flex;

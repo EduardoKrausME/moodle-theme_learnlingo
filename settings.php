@@ -22,6 +22,8 @@
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use theme_learnlingo\mcp_banner;
+
 defined('MOODLE_INTERNAL') || die;
 
 global $PAGE, $OUTPUT;
@@ -42,7 +44,7 @@ if ($ADMIN->fulltree) {
         get_string('brandingsettings', 'theme_learnlingo')
     );
 
-    if (\theme_learnlingo\mcp_banner::should_show()) {
+    if (mcp_banner::should_show()) {
         $PAGE->requires->css(new moodle_url("/theme/learnlingo/styles.css"));
         $page->add(new admin_setting_heading(
             "theme_learnlingo/mcp_banner",
@@ -96,7 +98,6 @@ if ($ADMIN->fulltree) {
         $setting->set_updatedcallback('theme_reset_all_caches');
         $page->add($setting);
     }
-
 
     foreach (['canvascolor' => '#f7faf5', 'textcolor' => '#263238'] as $name => $default) {
         $setting = new admin_setting_configcolourpicker(

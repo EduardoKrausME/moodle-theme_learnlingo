@@ -34,7 +34,6 @@ use theme_learnlingo\mcp\provider;
 use theme_learnlingo\mcp\get_homepage;
 use theme_learnlingo\mcp\update_homepage;
 
-
 /**
  * Tests run with local_mcp installed, as the integration is optional.
  *

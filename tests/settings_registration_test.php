@@ -24,7 +24,6 @@
 
 namespace theme_learnlingo;
 
-
 use admin_settingpage;
 use advanced_testcase;
 use function admin_get_root;
