@@ -45,7 +45,6 @@ if ($ADMIN->fulltree) {
     );
 
     if (mcp_banner::should_show()) {
-        $PAGE->requires->css(new moodle_url("/theme/learnlingo/styles.css"));
         $page->add(new admin_setting_heading(
             "theme_learnlingo/mcp_banner",
             "",
