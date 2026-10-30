@@ -28,15 +28,6 @@
     }
 }}
 <div class="login-layout-left-content">
-    <div class="learnlingo-login-brand">
-        {{#loginlogo}}
-            <img src="{{{loginlogo}}}" class="learnlingo-login-logo" alt="{{sitename}}">
-        {{/loginlogo}}
-        {{^loginlogo}}
-        <span class="learnlingo-brandmark" aria-hidden="true"><i class="fa fa-graduation-cap"></i></span>
-        <span class="learnlingo-wordmark">{{sitename}}</span>
-        {{/loginlogo}}
-    </div>
     {{^leftinstructions}}
         <span class="learnlingo-login-kicker">{{loginkicker}}</span>
         <h1>{{logintitle}}</h1>

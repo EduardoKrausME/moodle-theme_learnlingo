@@ -196,3 +196,6 @@ body#page-login-index {
         }
     }
 }
+body.pagelayout-login #page .login-layout-left::after {
+    display: none !important;
+}
