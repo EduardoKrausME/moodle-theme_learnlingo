@@ -59,7 +59,7 @@ final class course_renderer_test extends advanced_testcase {
         $renderer = new course_renderer_url_test_helper($PAGE, 'html');
         $url = $renderer->overview_image_url(new core_course_list_element($course));
 
-        $this->assertSame(0, $file->get_itemid());
+        $this->assertSame(0, (int)$file->get_itemid());
         $this->assertStringEndsWith(
             '/' . $context->id . '/course/overviewfiles/cover.png',
             parse_url($url, PHP_URL_PATH)
