@@ -29,7 +29,7 @@ use local_mcp\read\tool_interface;
 use local_mcp\security\authenticated_identity;
 
 /**
- * Return all portable settings and the uploaded raster logo metadata.
+ * Return all portable settings and the uploaded raster branding image metadata.
  */
 final class get_settings implements tool_interface {
     /**
@@ -60,9 +60,9 @@ final class get_settings implements tool_interface {
             . 'homepagescss (active on every page), scsspre (before Boost), '
             . 'scss (global after Boost), independent footermode, footerhtml '
             . 'and footerscss (only inside the HTML footer), traditional footer '
-            . 'columns, login/dashboard/course options and uploaded site logo. '
-            . 'Returns state_hash for learnlingo_update_settings; include_images '
-            . 'also returns small uploaded logo images.';
+            . 'columns, login/dashboard/course options, site logo and favicon. '
+            . 'Returns file metadata and state_hash for learnlingo_update_settings; '
+            . 'include_images also returns small uploaded branding images.';
     }
 
     /**
@@ -76,7 +76,7 @@ final class get_settings implements tool_interface {
             'properties' => [
                 'include_images' => [
                     'type' => 'boolean',
-                    'description' => 'Attach uploaded PNG/JPEG/WebP logos as images when they are at most 2 MiB each.',
+                    'description' => 'Attach uploaded PNG/JPEG site logos and favicons as images when they are at most 2 MiB each.',
                 ],
             ],
             'additionalProperties' => false,
