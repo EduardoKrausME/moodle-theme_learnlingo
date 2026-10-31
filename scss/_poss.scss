@@ -23,6 +23,28 @@ body {
             padding-left: 0 !important;
             padding-right: 0 !important;
         }
+        // Full-width institutional HTML home, without affecting dashboards or course pages.
+        #page.drawers {
+            .main-inner {
+                width: 100%;
+                max-width: none;
+                margin-top: 0;
+            }
+            #page-content {
+                padding: 0 !important;
+            }
+            #region-main {
+                margin: 0;
+                padding: 0;
+            }
+            .main-inner {
+                margin-bottom: 0 !important;
+                padding-bottom: 0 !important;
+            }
+        }
+        .learnlingo-html-home {
+            width: 100%;
+        }
     }
 }
 a {
@@ -1351,22 +1373,6 @@ h6,
     width: auto;
     height: auto;
     object-fit: contain;
-}
-// Full-width institutional HTML home, without affecting dashboards or course pages.
-body.learnlingo-html-home-fullwidth #page.drawers .main-inner {
-    width: 100%;
-    max-width: none;
-    margin-top: 0;
-}
-body.learnlingo-html-home-fullwidth #page.drawers #page-content {
-    padding: 0 !important;
-}
-body.learnlingo-html-home-fullwidth #page.drawers #region-main {
-    margin: 0;
-    padding: 0;
-}
-body.learnlingo-html-home-fullwidth .learnlingo-html-home {
-    width: 100%;
 }
 // Personal XP lives alongside (not instead of) Moodle course completion.
 .learnlingo-course-xp {
