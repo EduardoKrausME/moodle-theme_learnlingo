@@ -67,4 +67,55 @@ final class scoped_scss_test extends advanced_testcase {
         $this->assertSame('.footer-marker { margin: 2rem; }',
             get_config('theme_learnlingo', 'footerscss'));
     }
+
+    /**
+     * CSS custom properties on :root must be assigned to the frontpage body.
+     */
+    public function test_homepage_full_stylesheet_root_selectors_are_rebased(): void {
+        global $CFG;
+        $this->resetAfterTest();
+        require_once($CFG->dirroot . '/theme/learnlingo/lib.php');
+
+        set_config('homepagemode', 'html', 'theme_learnlingo');
+        set_config('homepagescss',
+            ':root{--home-ink:#123456}body#page-site-index .hero{color:var(--home-ink)}'
+                . '@media(max-width:600px){body .hero{padding:0}}', 'theme_learnlingo');
+        theme_reset_all_caches();
+
+        $scss = theme_learnlingo_get_extra_scss(theme_config::load('learnlingo'));
+
+        $this->assertStringContainsString(
+            "body#page-site-index {\n&{--home-ink:#123456}& .hero{color:var(--home-ink)}", $scss
+        );
+        $this->assertStringContainsString('@media(max-width:600px){& .hero{padding:0}}', $scss);
+        $this->assertStringNotContainsString('body#page-site-index :root', $scss);
+        $this->assertStringNotContainsString('body#page-site-index body', $scss);
+    }
+
+    /**
+     * Footer CSS with an explicit footer root must not target a nonexistent nested footer.
+     */
+    public function test_html_footer_full_stylesheet_root_selectors_are_rebased(): void {
+        global $CFG;
+        $this->resetAfterTest();
+        require_once($CFG->dirroot . '/theme/learnlingo/lib.php');
+
+        set_config('footermode', 'html', 'theme_learnlingo');
+        set_config('footerscss',
+            '#page-footer{background:#101f38}#page-footer .o90-footer{color:#fff}'
+                . '@media(max-width:600px){#page-footer .o90-footer{padding:1rem}}',
+            'theme_learnlingo');
+        theme_reset_all_caches();
+
+        $scss = theme_learnlingo_get_extra_scss(theme_config::load('learnlingo'));
+
+        $this->assertStringContainsString(
+            "#page-footer.learnlingo-site-footer.learnlingo-footer-html-mode {\n&{background:#101f38}"
+                . '& .o90-footer{color:#fff}', $scss
+        );
+        $this->assertStringContainsString(
+            '@media(max-width:600px){& .o90-footer{padding:1rem}}', $scss
+        );
+        $this->assertStringNotContainsString('#page-footer #page-footer', $scss);
+    }
 }

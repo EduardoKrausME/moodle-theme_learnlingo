@@ -69,6 +69,31 @@ function theme_learnlingo_get_pre_scss(theme_config $theme): string {
 }
 
 /**
+ * Scope an author's SCSS while recognising selectors that refer to the scope root.
+ *
+ * A complete CSS stylesheet can start with :root, body or #page-footer.
+ * Blindly nesting these selectors creates descendants that cannot match the DOM.
+ * Rebase only root selectors to Sass's parent selector (&); leave ordinary selectors
+ * and nested @media rules intact.
+ *
+ * @param string $scss Configured CSS/SCSS.
+ * @param string $scope Selector limiting where it may apply.
+ * @param string[] $rootselectors Root selectors accepted by this scope, longest first.
+ * @return string
+ */
+function theme_learnlingo_scope_scss(string $scss, string $scope, array $rootselectors): string {
+    $escaped = array_map(static function(string $selector): string {
+        return preg_quote($selector, '/');
+    }, $rootselectors);
+    // Match selector boundaries, not similar text inside a class name or property value.
+    $pattern = '/(^|[{},])(\s*)(?:' . implode('|', $escaped)
+        . ')(?=(?:\s*[\{.#:\[>,+~]|\s+[a-zA-Z*]))/m';
+    $normalized = preg_replace($pattern, '$1$2&', $scss);
+
+    return "\n{$scope} {\n{$normalized}\n}\n";
+}
+
+/**
  * Returns SCSS inserted after Boost's main SCSS.
  *
  * Use scss/post.scss for LearnLingo component styles and visual overrides.
@@ -86,15 +111,27 @@ function theme_learnlingo_get_extra_scss(theme_config $theme): string {
         $scss .= "\n{$theme->settings->scss}";
     }
 
-    // Nest homepage SCSS under Moodle's front-page body ID.
+    // Keep authored homepage CSS on the front page, including root custom properties.
     if (theme_learnlingo_homepage_mode($theme) !== 'moodle' && !empty($theme->settings->homepagescss)) {
-        $scss .= "\nbody#page-site-index {\n{$theme->settings->homepagescss}\n}\n";
+        $scss .= theme_learnlingo_scope_scss(
+            $theme->settings->homepagescss,
+            'body#page-site-index',
+            ['html body#page-site-index', 'body#page-site-index', 'html body', ':root', 'body', 'html']
+        );
     }
 
-    // HTML footer SCSS is disabled when the original Moodle-style footer is selected.
+    // HTML footer styles must target the existing #page-footer, not a nested copy.
     if (($theme->settings->footermode ?? 'moodle') === 'html' && !empty($theme->settings->footerscss)) {
-        $scss .= "\n#page-footer.learnlingo-site-footer.learnlingo-footer-html-mode {\n"
-            . "{$theme->settings->footerscss}\n}\n";
+        $scss .= theme_learnlingo_scope_scss(
+            $theme->settings->footerscss,
+            '#page-footer.learnlingo-site-footer.learnlingo-footer-html-mode',
+            [
+                '#page-footer.learnlingo-site-footer.learnlingo-footer-html-mode',
+                '#page-footer.learnlingo-site-footer',
+                '#page-footer',
+                ':root',
+            ]
+        );
     }
 
     return $scss;

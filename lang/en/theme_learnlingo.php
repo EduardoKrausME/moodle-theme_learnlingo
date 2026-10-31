@@ -185,6 +185,6 @@ $string['footermodemoodle'] = 'Current footer (Moodle)';
 $string['footermodehtml'] = 'Custom HTML footer';
 
 $string['homepagescss'] = 'Homepage SCSS';
-$string['homepagescss_desc'] = 'Styles used only on the site homepage in LearnLingo or HTML mode. SCSS is nested within body#page-site-index, so use & for the root or relative selectors for children.';
+$string['homepagescss_desc'] = 'Styles used only on the site homepage in LearnLingo or HTML mode. Supports full CSS selectors such as :root or body (automatically scoped to the homepage), as well as nested SCSS and relative selectors.';
 $string['footerscss'] = 'Footer SCSS';
-$string['footerscss_desc'] = 'Styles used only when the footer is in HTML mode. SCSS is nested within #page-footer.learnlingo-site-footer.learnlingo-footer-html-mode, so use & for the root or relative selectors for children.';
+$string['footerscss_desc'] = 'Styles used only when the footer is in HTML mode. Supports full CSS selectors such as #page-footer (automatically scoped to the HTML footer), as well as nested SCSS and relative selectors.';
