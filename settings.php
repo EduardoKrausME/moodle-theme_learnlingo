@@ -137,6 +137,66 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback("theme_reset_all_caches");
     $page->add($setting);
 
+    // Additional footer HTML belongs to the LearnLingo homepage.
+    $setting = new admin_setting_confightmleditor(
+        "theme_learnlingo/footerhtml",
+        get_string("footerhtml", "theme_learnlingo"),
+        get_string("footerhtml_desc", "theme_learnlingo"),
+        ""
+    );
+    $setting->set_updatedcallback("theme_reset_all_caches");
+    $page->add($setting);
+
+    $PAGE->requires->js_call_amd("theme_learnlingo/homepage_settings", "init");
+    $settings->add($page);
+
+    $page = new admin_settingpage(
+        "theme_learnlingo_footer",
+        get_string("footersettings", "theme_learnlingo")
+    );
+
+    $setting = new admin_setting_configcolourpicker(
+        "theme_learnlingo/footer_background_color",
+        get_string("footer_background_color", "theme_learnlingo"),
+        get_string("footer_background_color_desc", "theme_learnlingo"),
+        "#314755"
+    );
+    $setting->set_updatedcallback("theme_reset_all_caches");
+    $page->add($setting);
+
+    for ($i = 1; $i <= 4; $i++) {
+        $page->add(new admin_setting_heading(
+            "theme_learnlingo_footer_heading_{$i}",
+            get_string("footer_heading", "theme_learnlingo", $i),
+            ""
+        ));
+        $setting = new admin_setting_configtext(
+            "theme_learnlingo/footer_title_{$i}",
+            get_string("footer_title", "theme_learnlingo", $i),
+            get_string("footer_title_desc", "theme_learnlingo", $i),
+            "",
+            PARAM_TEXT
+        );
+        $setting->set_updatedcallback("theme_reset_all_caches");
+        $page->add($setting);
+        $setting = new admin_setting_confightmleditor(
+            "theme_learnlingo/footer_html_{$i}",
+            get_string("footer_html", "theme_learnlingo", $i),
+            get_string("footer_html_desc", "theme_learnlingo", $i),
+            ""
+        );
+        $setting->set_updatedcallback("theme_reset_all_caches");
+        $page->add($setting);
+    }
+
+    $setting = new admin_setting_configcheckbox(
+        "theme_learnlingo/footer_show_copywriter",
+        get_string("footer_show_copywriter", "theme_learnlingo"),
+        get_string("footer_show_copywriter_desc", "theme_learnlingo"),
+        1
+    );
+    $setting->set_updatedcallback("theme_reset_all_caches");
+    $page->add($setting);
     $settings->add($page);
 
     $page = new admin_settingpage(

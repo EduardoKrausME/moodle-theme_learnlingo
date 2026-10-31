@@ -1,25 +1,60 @@
-// Footer.
-#page-footer {
+// Adapted from the configurable theme_eadtraining footer.
+#page-footer.learnlingo-site-footer {
+    flex-shrink: 0;
     margin-top: 2rem;
-    background: transparent !important;
-}
+    padding: 0;
+    color: $learnlingo-footer-ink;
+    background: $learnlingo-footer-bg !important;
+    font-size: .9rem;
+    line-height: 1.55;
 
-.btn-footer-popover,
-.btn-footer-communication {
-    width: 48px !important;
-    height: 48px !important;
-    color: #fff !important;
-    background: $primary !important;
-    border: 0 !important;
-    box-shadow: 0 5px 0 darken($primary, 11%) !important;
-}
+    .footer-container {
+        display: grid;
+        grid-template-columns: repeat(var(--learnlingo-footer-columns, 1), minmax(0, 1fr));
+        gap: 2rem;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
 
-[data-region="footer-container-popover"]{
-    display:none;
-}
+        &.footer-container-2 { --learnlingo-footer-columns: 2; }
+        &.footer-container-3 { --learnlingo-footer-columns: 3; }
+        &.footer-container-4 { --learnlingo-footer-columns: 4; }
+    }
+    .footer-section-wrapper { min-width: 0; }
+    .footer-title {
+        margin: 0 0 1rem;
+        color: inherit;
+        font-size: 1.2rem;
+        line-height: 1.4;
+        font-weight: 700;
+    }
+    .footer-section-content { overflow-wrap: anywhere; }
+    .footer-section-content > :last-child,
+    .learnlingo-home-footer-html > :last-child { margin-bottom: 0; }
 
-.footer-content-popover {
-    border: 1px solid var(--learnlingo-border);
-    border-radius: 17px;
-    box-shadow: 0 15px 40px rgba(37, 42, 55, .14);
+    a {
+        color: inherit;
+        text-decoration: underline;
+        text-underline-offset: .15em;
+    }
+    a:hover, a:focus { color: inherit; text-decoration-thickness: 2px; }
+
+    .learnlingo-home-footer-html {
+        padding-top: 1rem;
+        padding-bottom: 2rem;
+        overflow-wrap: anywhere;
+    }
+    .footer-foot { padding: 1rem 0; background: rgba(0, 0, 0, .12); }
+    .footer-foot p { margin: 0; }
+
+    @media (max-width: 991.98px) {
+        .footer-container.footer-container-3,
+        .footer-container.footer-container-4 { --learnlingo-footer-columns: 2; }
+    }
+    @media (max-width: 575.98px) {
+        .footer-container {
+            --learnlingo-footer-columns: 1 !important;
+            gap: 1.5rem;
+        }
+    }
 }
+.learnlingo-home-intro { margin-bottom: 1.5rem; }

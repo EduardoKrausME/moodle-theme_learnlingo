@@ -83,4 +83,6 @@ $templatecontext = [
     'addblockbutton' => $addblockbutton,
 ];
 
+$templatecontext = array_merge($templatecontext, \theme_learnlingo\output\footer_renderer::mustache_data());
+
 echo $OUTPUT->render_from_template('theme_learnlingo/columns2', $templatecontext);

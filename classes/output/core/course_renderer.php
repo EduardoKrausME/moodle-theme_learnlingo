@@ -134,7 +134,13 @@ class course_renderer extends core_course_renderer {
             'showempty' => empty($featuredcourse) && empty($coursecards),
         ];
 
-        return $this->render_from_template('theme_learnlingo/frontpage', $data);
+        $homepage = $this->render_from_template('theme_learnlingo/frontpage', $data);
+        $extrahtml = theme_learnlingo_homepage_html($this->page->theme);
+        if (trim($extrahtml) !== '') {
+            // Preserve the LearnLingo course cards beneath the optional custom content.
+            $homepage = '<div class="learnlingo-home-intro">' . $extrahtml . '</div>' . $homepage;
+        }
+        return $homepage;
     }
 
     /**

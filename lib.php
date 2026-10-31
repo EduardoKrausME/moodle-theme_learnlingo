@@ -44,6 +44,21 @@ function theme_learnlingo_get_pre_scss(theme_config $theme): string {
     $scss .= "\$body-bg: {$canvascolor};\n";
     $scss .= "\$body-color: {$textcolor};\n";
     $scss .= "\$headings-color: {$textcolor};\n";
+    $footerbg = $theme->settings->footer_background_color ?? '#314755';
+    if (!is_string($footerbg) || !preg_match('/^#[0-9a-fA-F]{6}$/D', $footerbg)) {
+        $footerbg = '#314755';
+    }
+    // W3C relative luminance determines whether the footer needs light text.
+    $rgb = [hexdec(substr($footerbg, 1, 2)), hexdec(substr($footerbg, 3, 2)),
+        hexdec(substr($footerbg, 5, 2))];
+    $linear = array_map(static function($value) {
+        $channel = $value / 255;
+        return $channel <= 0.04045 ? $channel / 12.92 : pow(($channel + 0.055) / 1.055, 2.4);
+    }, $rgb);
+    $luminance = 0.2126 * $linear[0] + 0.7152 * $linear[1] + 0.0722 * $linear[2];
+    $footerink = $luminance > 0.179 ? '#263238' : '#ffffff';
+    $scss .= "\$learnlingo-footer-bg: {$footerbg};\n";
+    $scss .= "\$learnlingo-footer-ink: {$footerink};\n";
     $scss .= file_get_contents("{$CFG->dirroot}/theme/learnlingo/scss/_pre.scss");
 
     if (!empty($theme->settings->scsspre)) {

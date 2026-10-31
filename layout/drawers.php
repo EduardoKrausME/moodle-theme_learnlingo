@@ -126,8 +126,10 @@ $ishtmlhomepage = $PAGE->pagetype === 'site-index'
 $customfrontpage = $PAGE->pagetype === 'site-index'
     && !$PAGE->user_is_editing()
     && ($ishtmlhomepage || $homepagemode === 'learnlingo');
-if ($ishtmlhomepage && (!isset($PAGE->theme->settings->homepagefullwidth)
-        || !empty($PAGE->theme->settings->homepagefullwidth))) {
+if (($ishtmlhomepage || ($PAGE->pagetype === 'site-index' && $homepagemode === 'learnlingo'
+        && theme_learnlingo_homepage_html($PAGE->theme) !== ''))
+        && (!isset($PAGE->theme->settings->homepagefullwidth)
+            || !empty($PAGE->theme->settings->homepagefullwidth))) {
     $extraclasses[] = 'learnlingo-html-home-fullwidth';
 }
 
@@ -283,5 +285,7 @@ $templatecontext = [
     'goalcta' => get_string('goalcta', 'theme_learnlingo'),
     'coursesurl' => $coursesurl->out(false),
 ];
+
+$templatecontext = array_merge($templatecontext, \theme_learnlingo\output\footer_renderer::mustache_data());
 
 echo $OUTPUT->render_from_template('theme_learnlingo/drawers', $templatecontext);
