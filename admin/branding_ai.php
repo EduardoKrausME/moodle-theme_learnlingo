@@ -116,7 +116,6 @@ if ($action === 'apply') {
 }
 
 echo $OUTPUT->header();
-echo $OUTPUT->heading(get_string('aibranding', 'theme_learnlingo'));
 echo html_writer::tag('p', get_string('aibrandingdesc', 'theme_learnlingo'));
 if ($error !== '') {
     echo $OUTPUT->notification(s($error), 'error');
