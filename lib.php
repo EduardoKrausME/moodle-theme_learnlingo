@@ -111,13 +111,10 @@ function theme_learnlingo_get_extra_scss(theme_config $theme): string {
         $scss .= "\n{$theme->settings->scss}";
     }
 
-    // Keep authored homepage CSS on the front page, including root custom properties.
-    if (theme_learnlingo_homepage_mode($theme) !== 'moodle' && !empty($theme->settings->homepagescss)) {
-        $scss .= theme_learnlingo_scope_scss(
-            $theme->settings->homepagescss,
-            'body#page-site-index',
-            ['html body#page-site-index', 'body#page-site-index', 'html body', ':root', 'body', 'html']
-        );
+    // Homepage SCSS is a full stylesheet: it also styles shared navigation and footer elements.
+    // Do not wrap it in a frontpage selector or disable it when the Moodle homepage mode is selected.
+    if (!empty($theme->settings->homepagescss)) {
+        $scss .= "\n{$theme->settings->homepagescss}";
     }
 
     // HTML footer styles must target the existing #page-footer, not a nested copy.

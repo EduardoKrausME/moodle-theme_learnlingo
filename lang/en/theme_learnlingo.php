@@ -185,6 +185,6 @@ $string['footermodemoodle'] = 'Current footer (Moodle)';
 $string['footermodehtml'] = 'Custom HTML footer';
 
 $string['homepagescss'] = 'Homepage SCSS';
-$string['homepagescss_desc'] = 'Styles used only on the site homepage in LearnLingo or HTML mode. Supports full CSS selectors such as :root or body (automatically scoped to the homepage), as well as nested SCSS and relative selectors.';
+$string['homepagescss_desc'] = 'Styles included site-wide, regardless of homepage mode, so they can also style the shared navigation bar and footer. Use full CSS/SCSS selectors such as :root, body, nav or #page-footer; no homepage selector is added automatically.';
 $string['footerscss'] = 'Footer SCSS';
 $string['footerscss_desc'] = 'Styles used only when the footer is in HTML mode. Supports full CSS selectors such as #page-footer (automatically scoped to the HTML footer), as well as nested SCSS and relative selectors.';

@@ -16,16 +16,16 @@ use advanced_testcase;
 use theme_config;
 
 /**
- * Check that configurable SCSS does not leak outside its intended area.
+ * Check the global homepage SCSS and the HTML-footer-only SCSS.
  *
  * @package theme_learnlingo
  * @coversNothing
  */
 final class scoped_scss_test extends advanced_testcase {
     /**
-     * Home, HTML footer and global SCSS retain independent selectors.
+     * Homepage and global SCSS apply everywhere while footer SCSS remains scoped.
      */
-    public function test_each_scss_field_has_its_own_scope(): void {
+    public function test_homepage_is_global_and_footer_remains_scoped(): void {
         global $CFG;
         $this->resetAfterTest();
         require_once($CFG->dirroot . '/theme/learnlingo/lib.php');
@@ -39,16 +39,17 @@ final class scoped_scss_test extends advanced_testcase {
 
         $scss = theme_learnlingo_get_extra_scss(theme_config::load('learnlingo'));
         $this->assertStringContainsString('.global-marker { display: block; }', $scss);
-        $this->assertStringContainsString("body#page-site-index {\n.homepage-marker", $scss);
+        $this->assertStringContainsString("\n.homepage-marker { padding: 1rem; }", $scss);
+        $this->assertStringNotContainsString("body#page-site-index {\n.homepage-marker", $scss);
         $this->assertStringContainsString(
             "#page-footer.learnlingo-site-footer.learnlingo-footer-html-mode {\n.footer-marker", $scss
         );
     }
 
     /**
-     * Saved scoped styles do not apply in modes where their editors are hidden.
+     * Homepage styles remain active in Moodle homepage mode; footer styles still follow its mode.
      */
-    public function test_native_modes_disable_scoped_scss_without_erasing_it(): void {
+    public function test_moodle_mode_keeps_global_homepage_scss_and_disables_html_footer_scss(): void {
         global $CFG;
         $this->resetAfterTest();
         require_once($CFG->dirroot . '/theme/learnlingo/lib.php');
@@ -60,7 +61,7 @@ final class scoped_scss_test extends advanced_testcase {
         theme_reset_all_caches();
 
         $scss = theme_learnlingo_get_extra_scss(theme_config::load('learnlingo'));
-        $this->assertStringNotContainsString('.homepage-marker { padding: 1rem; }', $scss);
+        $this->assertStringContainsString('.homepage-marker { padding: 1rem; }', $scss);
         $this->assertStringNotContainsString('.footer-marker { margin: 2rem; }', $scss);
         $this->assertSame('.homepage-marker { padding: 1rem; }',
             get_config('theme_learnlingo', 'homepagescss'));
@@ -69,9 +70,9 @@ final class scoped_scss_test extends advanced_testcase {
     }
 
     /**
-     * CSS custom properties on :root must be assigned to the frontpage body.
+     * Full CSS selectors including root variables, menu, footer, and media queries remain untouched.
      */
-    public function test_homepage_full_stylesheet_root_selectors_are_rebased(): void {
+    public function test_homepage_css_works_across_the_entire_site(): void {
         global $CFG;
         $this->resetAfterTest();
         require_once($CFG->dirroot . '/theme/learnlingo/lib.php');
@@ -79,17 +80,18 @@ final class scoped_scss_test extends advanced_testcase {
         set_config('homepagemode', 'html', 'theme_learnlingo');
         set_config('homepagescss',
             ':root{--home-ink:#123456}body#page-site-index .hero{color:var(--home-ink)}'
-                . '@media(max-width:600px){body .hero{padding:0}}', 'theme_learnlingo');
+                . 'nav.navbar{background:#101f38}#page-footer{color:#fff}'
+                . '@media(max-width:600px){nav.navbar{padding:0}}', 'theme_learnlingo');
         theme_reset_all_caches();
 
         $scss = theme_learnlingo_get_extra_scss(theme_config::load('learnlingo'));
 
-        $this->assertStringContainsString(
-            "body#page-site-index {\n&{--home-ink:#123456}& .hero{color:var(--home-ink)}", $scss
-        );
-        $this->assertStringContainsString('@media(max-width:600px){& .hero{padding:0}}', $scss);
-        $this->assertStringNotContainsString('body#page-site-index :root', $scss);
-        $this->assertStringNotContainsString('body#page-site-index body', $scss);
+        $this->assertStringContainsString(':root{--home-ink:#123456}', $scss);
+        $this->assertStringContainsString('body#page-site-index .hero{color:var(--home-ink)}', $scss);
+        $this->assertStringContainsString('nav.navbar{background:#101f38}', $scss);
+        $this->assertStringContainsString('#page-footer{color:#fff}', $scss);
+        $this->assertStringContainsString('@media(max-width:600px){nav.navbar{padding:0}}', $scss);
+        $this->assertStringNotContainsString("body#page-site-index {\n:root", $scss);
     }
 
     /**

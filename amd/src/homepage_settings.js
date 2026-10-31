@@ -28,7 +28,8 @@ export const init = () => {
         const isLearnlingo = select.value === 'learnlingo';
         const isHtml = select.value === 'html';
         setVisible('homepagehtml', isLearnlingo || isHtml);
-        setVisible('homepagescss', isLearnlingo || isHtml);
+        // The stylesheet also controls shared navbar and footer elements on other pages.
+        setVisible('homepagescss', true);
         setVisible('homepagefullwidth', isLearnlingo || isHtml);
     };
     select.addEventListener('change', refresh);

@@ -183,6 +183,6 @@ $string['footermodemoodle'] = 'Rodapé atual (Moodle)';
 $string['footermodehtml'] = 'Rodapé em HTML personalizado';
 
 $string['homepagescss'] = 'SCSS da página inicial';
-$string['homepagescss_desc'] = 'Estilos exclusivos da home nos modos LearnLingo ou HTML. Aceita seletores CSS como :root ou body (ajustados automaticamente ao escopo da home), além de SCSS aninhado e seletores relativos.';
+$string['homepagescss_desc'] = 'Estilos aplicados em todo o site, independentemente do modo da home, inclusive para personalizar a navbar e o rodapé. Use seletores CSS/SCSS completos, como :root, body, nav ou #page-footer; nenhum seletor da home é adicionado automaticamente.';
 $string['footerscss'] = 'SCSS do rodapé';
 $string['footerscss_desc'] = 'Estilos exclusivos do rodapé no modo HTML. Aceita seletores CSS como #page-footer (ajustados automaticamente ao rodapé HTML), além de SCSS aninhado e seletores relativos.';
