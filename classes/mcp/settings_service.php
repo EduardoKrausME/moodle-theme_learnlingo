@@ -28,15 +28,14 @@ use local_mcp\course\file_url_normalizer;
 use local_mcp\course\image_service;
 use local_mcp\exception\api_exception;
 use stored_file;
-use theme_config;
 use theme_learnlingo\branding_exchange;
 
 /**
  * Use the same validation contract as the LearnLingo JSON importer.
  */
 final class settings_service {
-    /** Uploaded logo file areas in settings.php. */
-    private const FILEAREAS = ['logo'];
+    /** Uploaded site branding file areas in settings.php. */
+    private const FILEAREAS = ['logo', 'favicon'];
 
     /**
      * Read all portable settings and existing uploaded image metadata.
@@ -54,15 +53,18 @@ final class settings_service {
             $files = self::files($area);
             $image = $files ? reset($files) : null;
             if ($image) {
-                $logourl = $area === 'logo'
+                $imageurl = $area === 'logo'
                     ? $OUTPUT->get_logo_url()
-                    : theme_config::load('learnlingo')->setting_file_url($area, $area);
+                    : \moodle_url::make_pluginfile_url(
+                        $image->get_contextid(), 'core_admin', 'favicon', 0,
+                        $image->get_filepath(), $image->get_filename(), false
+                    );
                 $metadata = [
                     'filename' => $image->get_filename(),
                     'mimetype' => $image->get_mimetype(),
                     'filesize' => $image->get_filesize(),
                     'contenthash' => $image->get_contenthash(),
-                    'url' => $logourl ? (string)$logourl : null,
+                    'url' => $imageurl ? (string)$imageurl : null,
                 ];
                 // File API metadata can outlive the physical blob; do not fail the
                 // entire MCP export if a logo is temporarily or permanently unreadable.
@@ -140,6 +142,10 @@ final class settings_service {
         if (!is_array($requested)) {
             throw new api_exception('invalid_images', 400);
         }
+        if ($requested && !isset($arguments['expected_hash'])) {
+            throw new api_exception('expected_hash_required', 400,
+                'Read LearnLingo settings and provide expected_hash before replacing branding images.');
+        }
         foreach ($requested as $name => $source) {
             if (!in_array($name, self::FILEAREAS, true) || !is_array($source)) {
                 throw new api_exception('invalid_image_area', 400);
@@ -161,9 +167,9 @@ final class settings_service {
                 continue;
             }
             [$bytes, $mime, $ext] = image_service::decode($source);
-            if ($name === 'logo' && !in_array($mime, ['image/png', 'image/jpeg'], true)) {
-                throw new api_exception('invalid_logo_type', 400,
-                    'The Moodle site logo accepts PNG or JPEG files.');
+            if (!in_array($mime, ['image/png', 'image/jpeg'], true)) {
+                throw new api_exception('invalid_brand_image_type', 400,
+                    'The Moodle site logo and favicon accept PNG or JPEG files.');
             }
             $images[$name] = ['remove' => false, 'bytes' => $bytes, 'mime' => $mime, 'extension' => $ext];
         }
@@ -188,7 +194,7 @@ final class settings_service {
         }
         $context = context_system::instance();
         foreach ($prepared['images'] as $area => $source) {
-            $component = $area === 'logo' ? 'core_admin' : 'theme_learnlingo';
+            $component = 'core_admin';
             foreach (self::files($area) as $file) {
                 $file->delete();
             }
@@ -222,7 +228,7 @@ final class settings_service {
      */
     private static function files(string $area): array {
         $context = context_system::instance();
-        $component = $area === 'logo' ? 'core_admin' : 'theme_learnlingo';
+        $component = 'core_admin';
         return array_values(get_file_storage()->get_area_files(
             $context->id, $component, $area, 0, 'id DESC', false
         ));
