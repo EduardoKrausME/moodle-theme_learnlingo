@@ -115,41 +115,23 @@ if ($action === 'apply') {
     }
 }
 
-echo $OUTPUT->header();
-echo html_writer::tag('p', get_string('aibrandingdesc', 'theme_learnlingo'));
-if ($error !== '') {
-    echo $OUTPUT->notification(s($error), 'error');
-}
-echo html_writer::start_tag('form', ['method' => 'post', 'action' => $url]);
-echo html_writer::empty_tag('input', ['type' => 'hidden', 'name' => 'sesskey', 'value' => sesskey()]);
-echo html_writer::empty_tag('input', ['type' => 'hidden', 'name' => 'action', 'value' => 'generate']);
-echo html_writer::tag('label', get_string('aidescription', 'theme_learnlingo'),
-    ['for' => 'branding-description']);
-echo html_writer::tag('textarea', s($description), [
-    'id' => 'branding-description', 'name' => 'description', 'rows' => 5,
-    'class' => 'form-control mb-3', 'required' => 'required', 'maxlength' => 2000,
-]);
-echo html_writer::empty_tag('input', [
-    'type' => 'submit', 'class' => 'btn btn-primary',
-    'value' => get_string('aigenerate', 'theme_learnlingo'),
-]);
-echo html_writer::end_tag('form');
-
-if (!empty($SESSION->learnlingobrandproposal)) {
-    echo $OUTPUT->heading(get_string('aipreview', 'theme_learnlingo'), 3);
-    echo html_writer::start_tag('dl');
+$proposalfields = [];
+if (!empty($SESSION->learnlingobrandproposal) && is_array($SESSION->learnlingobrandproposal)) {
     foreach ($fields as $field) {
-        echo html_writer::tag('dt', s(get_string($field, 'theme_learnlingo')));
-        echo html_writer::tag('dd', s($SESSION->learnlingobrandproposal[$field]));
+        $proposalfields[] = [
+            'label' => get_string($field, 'theme_learnlingo'),
+            'value' => $SESSION->learnlingobrandproposal[$field],
+        ];
     }
-    echo html_writer::end_tag('dl');
-    echo html_writer::start_tag('form', ['method' => 'post', 'action' => $url]);
-    echo html_writer::empty_tag('input', ['type' => 'hidden', 'name' => 'sesskey', 'value' => sesskey()]);
-    echo html_writer::empty_tag('input', ['type' => 'hidden', 'name' => 'action', 'value' => 'apply']);
-    echo html_writer::empty_tag('input', [
-        'type' => 'submit', 'class' => 'btn btn-success',
-        'value' => get_string('aiapply', 'theme_learnlingo'),
-    ]);
-    echo html_writer::end_tag('form');
 }
+
+echo $OUTPUT->header();
+echo $OUTPUT->render_from_template('theme_learnlingo/branding_ai', [
+    'actionurl' => $url->out(false),
+    'sesskey' => sesskey(),
+    'description' => $description,
+    'error' => $error,
+    'hasproposal' => !empty($proposalfields),
+    'proposalfields' => $proposalfields,
+]);
 echo $OUTPUT->footer();

@@ -1,0 +1,45 @@
+{{!
+    @template theme_learnlingo/branding_ai
+
+    AI-assisted branding administration form. All values are escaped by Mustache.
+
+    Example context (json):
+    {
+        "actionurl": "/theme/learnlingo/admin/branding_ai.php",
+        "sesskey": "example",
+        "description": "A learning institution",
+        "error": "",
+        "hasproposal": true,
+        "proposalfields": [
+            {"label": "Primary colour", "value": "#123456"}
+        ]
+    }
+}}
+<p>{{#str}}aibrandingdesc, theme_learnlingo{{/str}}</p>
+{{#error}}
+    <div class="alert alert-danger" role="alert">{{error}}</div>
+{{/error}}
+<form method="post" action="{{actionurl}}">
+    <input type="hidden" name="sesskey" value="{{sesskey}}">
+    <input type="hidden" name="action" value="generate">
+    <label for="branding-description">{{#str}}aidescription, theme_learnlingo{{/str}}</label>
+    <textarea id="branding-description" name="description" rows="5"
+        class="form-control mb-3" required maxlength="2000">{{description}}</textarea>
+    <input type="submit" class="btn btn-primary"
+        value="{{#str}}aigenerate, theme_learnlingo{{/str}}">
+</form>
+{{#hasproposal}}
+    <h3>{{#str}}aipreview, theme_learnlingo{{/str}}</h3>
+    <dl>
+        {{#proposalfields}}
+            <dt>{{label}}</dt>
+            <dd>{{value}}</dd>
+        {{/proposalfields}}
+    </dl>
+    <form method="post" action="{{actionurl}}">
+        <input type="hidden" name="sesskey" value="{{sesskey}}">
+        <input type="hidden" name="action" value="apply">
+        <input type="submit" class="btn btn-success"
+            value="{{#str}}aiapply, theme_learnlingo{{/str}}">
+    </form>
+{{/hasproposal}}
