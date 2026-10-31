@@ -24,6 +24,7 @@
 
 namespace theme_learnlingo\mcp;
 
+use local_mcp\course\file_url_normalizer;
 use local_mcp\exception\api_exception;
 use theme_learnlingo\branding_exchange;
 
@@ -77,7 +78,11 @@ final class home_service {
             if (!array_key_exists($public, $arguments)) {
                 continue;
             }
-            $data['settings'][$setting] = $arguments[$public];
+            $value = $arguments[$public];
+            if ($setting === 'homepagehtml' && is_string($value)) {
+                $value = file_url_normalizer::normalize($value);
+            }
+            $data['settings'][$setting] = $value;
             $changes[] = $setting;
         }
         // In LearnLingo mode, homepagehtml is added above the native course cards,
