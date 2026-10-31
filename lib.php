@@ -81,8 +81,20 @@ function theme_learnlingo_get_extra_scss(theme_config $theme): string {
 
     $scss = file_get_contents("{$CFG->dirroot}/theme/learnlingo/scss/_poss.scss");
 
+    // The existing SCSS setting remains global for backwards compatibility.
     if (!empty($theme->settings->scss)) {
         $scss .= "\n{$theme->settings->scss}";
+    }
+
+    // Nest homepage SCSS under Moodle's front-page body ID.
+    if (theme_learnlingo_homepage_mode($theme) !== 'moodle' && !empty($theme->settings->homepagescss)) {
+        $scss .= "\nbody#page-site-index {\n{$theme->settings->homepagescss}\n}\n";
+    }
+
+    // HTML footer SCSS is disabled when the original Moodle-style footer is selected.
+    if (($theme->settings->footermode ?? 'moodle') === 'html' && !empty($theme->settings->footerscss)) {
+        $scss .= "\n#page-footer.learnlingo-site-footer.learnlingo-footer-html-mode {\n"
+            . "{$theme->settings->footerscss}\n}\n";
     }
 
     return $scss;

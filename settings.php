@@ -128,6 +128,18 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback("theme_reset_all_caches");
     $page->add($setting);
 
+    $setting = new admin_setting_configtextarea(
+        "theme_learnlingo/homepagescss",
+        get_string("homepagescss", "theme_learnlingo"),
+        get_string("homepagescss_desc", "theme_learnlingo"),
+        "",
+        PARAM_RAW,
+        "90",
+        "16"
+    );
+    $setting->set_updatedcallback("theme_reset_all_caches");
+    $page->add($setting);
+
     $setting = new admin_setting_configcheckbox(
         "theme_learnlingo/homepagefullwidth",
         get_string("homepagefullwidth", "theme_learnlingo"),
@@ -164,6 +176,18 @@ if ($ADMIN->fulltree) {
         get_string("footerhtml", "theme_learnlingo"),
         get_string("footerhtml_desc", "theme_learnlingo"),
         ""
+    );
+    $setting->set_updatedcallback("theme_reset_all_caches");
+    $page->add($setting);
+
+    $setting = new admin_setting_configtextarea(
+        "theme_learnlingo/footerscss",
+        get_string("footerscss", "theme_learnlingo"),
+        get_string("footerscss_desc", "theme_learnlingo"),
+        "",
+        PARAM_RAW,
+        "90",
+        "16"
     );
     $setting->set_updatedcallback("theme_reset_all_caches");
     $page->add($setting);

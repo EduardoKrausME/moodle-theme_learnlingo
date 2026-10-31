@@ -4,7 +4,7 @@
     margin-top: 2rem;
     padding: 0;
     color: $learnlingo-footer-ink;
-    background: $learnlingo-footer-bg !important;
+    background: $learnlingo-footer-bg;
     font-size: .9rem;
     line-height: 1.55;
 
@@ -45,6 +45,8 @@
     &.learnlingo-footer-html-mode {
         // The custom HTML controls its own width, spacing and layout.
         margin-top: 0;
+        background: transparent;
+        color: inherit;
     }
     .footer-foot { padding: 1rem 0; background: rgba(0, 0, 0, .12); }
     .footer-foot p { margin: 0; }

@@ -55,9 +55,11 @@ final class branding_exchange {
             'loginpaneltaglinetext' => ['text', ''],
             'homepagemode' => ['homepage', 'learnlingo'],
             'homepagehtml' => ['html', ''],
+            'homepagescss' => ['scss', ''],
             'homepagefullwidth' => ['bool', true],
             'footermode' => ['footermode', 'moodle'],
             'footerhtml' => ['html', ''],
+            'footerscss' => ['scss', ''],
             'footer_background_color' => ['color', '#314755'],
             'footer_title_1' => ['text', ''],
             'footer_html_1' => ['html', ''],
@@ -162,8 +164,11 @@ HOW TO CONDUCT THE CONVERSATION
    and "html" replaces the entire site footer with settings.footerhtml.
    Ask about footer columns (footer_title_1..4 and footer_html_1..4),
    background colour and credits only when using the "moodle" footer mode.
-   Use settings.scss for additional styles and
-   settings.scsspre for SCSS variables only when necessary.
+   Use settings.homepagescss for homepage-only styles and settings.footerscss
+   for HTML-footer-only styles. Both are nested inside their respective roots:
+   use "&" for the root or relative descendant selectors for its elements.
+   Use settings.scss only for global styles and settings.scsspre for global
+   variables when necessary.
 5. Ask whether the user wants to change institutional copy, login
    messaging and branding, the welcome message, course header,
    student progress, XP, and other configurable features.
@@ -267,6 +272,12 @@ PROMPT;
                 // No remote CSS imports or executable embeds in generated content.
                 if ($type === 'scss' &&
                         preg_match('~@import\s+(?:url\s*\(|[\x22\x27]https?://)~i', $value)) {
+                    self::invalid_field($name);
+                }
+                // Prevent page-scoped SCSS from generating unscoped Sass rules.
+                if (in_array($name, ['homepagescss', 'footerscss'], true) &&
+                        preg_match('~@(at-root|import|use|forward|extend|keyframes|font-face|charset|namespace|property)\b~i',
+                            $value)) {
                     self::invalid_field($name);
                 }
                 if ($type === 'html' &&
