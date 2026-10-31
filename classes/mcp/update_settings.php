@@ -57,13 +57,16 @@ final class update_settings extends base_tool {
      * @return string Result.
      */
     public function get_description(): string {
-        return 'Update any subset of LearnLingo settings, including scsspre and scss, colors, '
-            . 'login/dashboard/course options, homepage HTML/SCSS, footer mode and HTML/SCSS, '
-            . 'footer columns and colours, ' 
-            . 'footer credit visibility and uploaded PNG/JPEG site logos. '
-            . 'Only specified settings are changed. Requires confirmation; read learnlingo_get_settings '
-            . 'first and pass its state_hash in expected_hash to avoid concurrent overwrites. '
-            . 'The site logo uses core_admin.';
+        return 'Update LearnLingo colors, homepage modes and HTML, homepagescss '
+            . '(global on every page), scsspre (before Boost), scss (global '
+            . 'after Boost), footermode (moodle or html), footerhtml (inner HTML '
+            . 'of the existing site footer) and footerscss (only the HTML footer), '
+            . 'traditional footer columns/credits and login/dashboard/course '
+            . 'options. Homepage and footer modes are independent. Only specified '
+            . 'settings change; hidden/inactive fields retain their values. '
+            . 'Preview and explicit confirmation are required. Read '
+            . 'learnlingo_get_settings first and pass state_hash as expected_hash. '
+            . 'Site logos are stored in core_admin.';
     }
 
     /**
@@ -81,11 +84,76 @@ final class update_settings extends base_tool {
      * @return array Result.
      */
     public function get_input_schema(): array {
+        // Keep MCP field explanations in sync with the actual theme rendering behavior.
+        $descriptions = [
+            'brandcolor' => 'Primary brand color used by theme components.',
+            'accentcolor' => 'Secondary brand/accent color for highlighted elements.',
+            'canvascolor' => 'Main page background/canvas color.',
+            'textcolor' => 'Default text and heading color.',
+            'dashboardeyebrowtext' => 'Short label above the dashboard hero heading.',
+            'dashboarddescriptiontext' => 'Supporting description in the dashboard hero.',
+            'loginpaneltitletext' => 'Title displayed on the login panel.',
+            'loginpaneldescriptiontext' => 'Description displayed on the login panel.',
+            'loginpaneltaglinetext' => 'Short slogan displayed on the login panel.',
+            'homepagemode' => 'moodle: native homepage; learnlingo: theme homepage; '
+                . 'html: custom HTML homepage. Independent of footermode.',
+            'homepagehtml' => 'HTML above course cards in learnlingo mode, '
+                . 'main homepage content in html mode, hidden in moodle mode. '
+                . 'Use HTML markup without scripts.',
+            'homepagescss' => 'Global SCSS loaded on EVERY page in ALL homepage modes. '
+                . 'Can style the home, navbar, menus and footer. NOT automatically '
+                . 'scoped to home: use explicit homepage selectors for home-only rules. '
+                . 'Do not use bare & at stylesheet root or remote imports.',
+            'homepagefullwidth' => 'Use full available homepage width in learnlingo '
+                . 'or html mode; does not control the native moodle homepage.',
+            'footermode' => 'moodle: traditional four-column footer with optional '
+                . 'credits; html: custom footerhtml on every page. Independent '
+                . 'of homepagemode. Inactive footer fields retain their values.',
+            'footerhtml' => 'INNER HTML inserted into the existing page-footer '
+                . 'element and learnlingo-footer-custom-html wrapper on every page '
+                . 'ONLY when footermode=html. Do not add another <footer>, '
+                . '<html>, <head>, <body>, <style> or scripts; place CSS in footerscss.',
+            'footerscss' => 'SCSS active ONLY with footermode=html and automatically '
+                . 'nested under #page-footer.learnlingo-site-footer.learnlingo-footer-html-mode. '
+                . 'Use & { ... } for the footer root and relative descendant selectors '
+                . 'for its children; do not wrap another #page-footer or use body/html '
+                . 'selectors. Affects the custom footer on every page, not the rest of the site.',
+            'footer_background_color' => 'Background color for the traditional '
+                . 'moodle footer; for a custom HTML footer use footerscss.',
+            'footer_title_1' => 'Heading for traditional Moodle footer column 1; '
+                . 'hidden and not rendered when footermode=html.',
+            'footer_html_1' => 'HTML content for traditional Moodle footer column 1; '
+                . 'hidden and not rendered when footermode=html.',
+            'footer_title_2' => 'Heading for traditional Moodle footer column 2; '
+                . 'hidden and not rendered when footermode=html.',
+            'footer_html_2' => 'HTML content for traditional Moodle footer column 2; '
+                . 'hidden and not rendered when footermode=html.',
+            'footer_title_3' => 'Heading for traditional Moodle footer column 3; '
+                . 'hidden and not rendered when footermode=html.',
+            'footer_html_3' => 'HTML content for traditional Moodle footer column 3; '
+                . 'hidden and not rendered when footermode=html.',
+            'footer_title_4' => 'Heading for traditional Moodle footer column 4; '
+                . 'hidden and not rendered when footermode=html.',
+            'footer_html_4' => 'HTML content for traditional Moodle footer column 4; '
+                . 'hidden and not rendered when footermode=html.',
+            'footer_show_copywriter' => 'Show built-in credit line in traditional '
+                . 'moodle footer only; not rendered when footermode=html.',
+            'showdashboardhero' => 'Display the introductory dashboard hero.',
+            'showcoursehero' => 'Display the course header/hero.',
+            'courseheroeyebrow' => 'Short caption above the course hero heading.',
+            'showcourseherosummary' => 'Show course summary in the course hero.',
+            'showcourseheroprogress' => 'Show course progress in the course hero.',
+            'showpersonalxp' => 'Show the Personal XP feature.',
+            'scsspre' => 'Global pre-SCSS compiled BEFORE Boost/Bootstrap; use '
+                . 'for Sass variables and compile-time overrides.',
+            'scss' => 'Global SCSS compiled AFTER Boost on all pages, regardless '
+                . 'of homepage or footer modes. homepagescss is also global.',
+        ];
         $properties = [];
         foreach (branding_exchange::definitions() as $name => [$type, $default]) {
             $property = [
                 'type' => $type === 'bool' ? 'boolean' : 'string',
-                'description' => $name . ' (' . $type . ')',
+                'description' => $descriptions[$name] ?? $name . ' (' . $type . ')',
             ];
             if ($type === 'color') {
                 $property['pattern'] = '^#[A-Fa-f0-9]{6}$';
@@ -108,7 +176,8 @@ final class update_settings extends base_tool {
         return $this->object_schema([
             'settings' => [
                 'type' => 'object',
-                'description' => 'Only the settings that need to change. Other settings are preserved.',
+                'description' => 'Only the settings to change. Other values are preserved, '
+                    . 'including footer fields hidden by the currently selected mode.',
                 'properties' => (object)$properties,
                 'additionalProperties' => false,
             ],

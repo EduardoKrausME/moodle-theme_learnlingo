@@ -56,9 +56,13 @@ final class get_settings implements tool_interface {
      * @return string Result.
      */
     public function get_description(): string {
-        return 'Read all LearnLingo theme settings, including both SCSS fields, colors, '
-            . 'homepage, login texts, course display options and uploaded raster logos. '
-            . 'Returns a state_hash for learnlingo_update_settings. Set include_images to view uploaded logos.';
+        return 'Read all LearnLingo settings: colors, homepagehtml, global '
+            . 'homepagescss (active on every page), scsspre (before Boost), '
+            . 'scss (global after Boost), independent footermode, footerhtml '
+            . 'and footerscss (only inside the HTML footer), traditional footer '
+            . 'columns, login/dashboard/course options and uploaded site logo. '
+            . 'Returns state_hash for learnlingo_update_settings; include_images '
+            . 'also returns small uploaded logo images.';
     }
 
     /**

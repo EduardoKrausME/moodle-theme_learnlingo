@@ -97,7 +97,14 @@ final class mcp_homepage_test extends advanced_testcase {
         ];
 
         $this->assertSame('moodle/site:config', $writer->get_required_capability());
-        $this->assertArrayHasKey('homepagescss', $writer->get_input_schema()['properties']);
+        $schema = $writer->get_input_schema();
+        $this->assertArrayHasKey('homepagescss', $schema['properties']);
+        $this->assertStringContainsString('every page',
+            $schema['properties']['homepagescss']['description']);
+        $this->assertStringContainsString('footer',
+            $schema['properties']['homepagescss']['description']);
+        $this->assertStringContainsString('every page', $reader->get_description());
+        $this->assertStringContainsString('learnlingo_update_settings', $writer->get_description());
         $this->assertTrue($writer->requires_confirmation());
         $this->assertTrue($writer->supports_dry_run());
         $preview = $writer->preview($arguments, $identity);

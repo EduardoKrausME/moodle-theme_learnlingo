@@ -57,11 +57,14 @@ final class get_homepage implements tool_interface {
      * @return string Result.
      */
     public function get_description(): string {
-        return 'Read the LearnLingo theme homepage mode, custom HTML, full-width '
-            . 'setting, homepage-scoped homepagescss and legacy global scss. '
-            . 'Footer HTML and footerscss are configured separately via learnlingo_get_settings. '
-            . 'Returns a state_hash used to avoid overwriting '
-            . 'concurrent changes with learnlingo_update_homepage.';
+        return 'Read the LearnLingo homepage mode, homepagehtml, full-width setting, '
+            . 'homepagescss and scss. homepagehtml appears above course cards in '
+            . 'learnlingo mode, replaces homepage content in html mode and is hidden '
+            . 'in moodle mode. homepagescss is compiled on every page in every homepage '
+            . 'mode, including shared navigation and footer elements; it is NOT '
+            . 'homepage-scoped. scss is also global. Footer mode, footerhtml and '
+            . 'footerscss are read separately with learnlingo_get_settings. '
+            . 'Returns state_hash for concurrency-safe learnlingo_update_homepage.';
     }
 
     /**

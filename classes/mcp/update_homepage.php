@@ -57,12 +57,15 @@ final class update_homepage extends base_tool {
      * @return string Result.
      */
     public function get_description(): string {
-        return 'Update the LearnLingo homepage mode, responsive HTML, full-width '
-            . 'layout, homepage-specific homepagescss and legacy global scss. '
-            . 'Use learnlingo_update_settings for footermode, footerhtml and footerscss. '
-            . 'Reuses theme configuration validation, '
-            . 'previews changes and requires explicit confirmation. '
-            . 'Read the current state with learnlingo_get_homepage first.';
+        return 'Update homepage mode (moodle, learnlingo or html), homepagehtml, '
+            . 'full-width layout, homepagescss or global scss. homepagehtml is '
+            . 'shown above course cards in learnlingo mode and is the main content '
+            . 'in html mode. homepagescss is compiled on every page in all modes; '
+            . 'it can style the homepage, navbar, menus and shared footer. '
+            . 'Use explicit homepage selectors for homepage-only rules. '
+            . 'For footermode, footerhtml and footer-scoped footerscss use '
+            . 'learnlingo_update_settings. Validates changes, previews them and '
+            . 'requires explicit confirmation. Read learnlingo_get_homepage first.';
     }
 
     /**
@@ -82,14 +85,27 @@ final class update_homepage extends base_tool {
     public function get_input_schema(): array {
         return $this->object_schema([
             'mode' => ['type' => 'string', 'enum' => ['moodle', 'learnlingo', 'html'],
-                'description' => 'Homepage rendering mode. HTML updates preserve LearnLingo mode.'],
+                'description' => 'moodle: native homepage; learnlingo: theme homepage; '
+                    . 'html: custom homepage. Independent of footermode.'],
             'html' => ['type' => 'string',
-                'description' => 'HTML home content, validated against the LearnLingo JSON configuration rules.'],
-            'fullwidth' => ['type' => 'boolean'],
+                'description' => 'homepagehtml: HTML above course cards in learnlingo mode, '
+                    . 'main homepage content in html mode, hidden in moodle mode. '
+                    . 'If mode is omitted, updating HTML preserves learnlingo mode '
+                    . 'or activates html mode when the previous mode is different. '
+                    . 'Use HTML markup without scripts.'],
+            'fullwidth' => ['type' => 'boolean',
+                'description' => 'homepagefullwidth: use full available width '
+                    . 'for learnlingo and html homepage modes; irrelevant in moodle mode.'],
             'homepagescss' => ['type' => 'string',
-                'description' => 'Scoped homepage SCSS for LearnLingo and HTML homepage modes only.'],
+                'description' => 'Full SCSS stylesheet compiled on every page regardless '
+                    . 'of homepagemode; also styles the navbar, menu and footer. '
+                    . 'NOT automatically scoped to the homepage. Use explicit '
+                    . 'homepage selectors for homepage-only rules. Do not use a '
+                    . 'bare & at stylesheet root or remote CSS imports.'],
             'scss' => ['type' => 'string',
-                'description' => 'Legacy global SCSS (affects all pages). Use homepagescss for home-only styles.'],
+                'description' => 'Global SCSS compiled after Boost on all pages, '
+                    . 'independent of homepagemode and footermode. '
+                    . 'homepagescss is also global, not homepage-only.'],
             'expected_hash' => ['type' => 'string',
                 'description' => 'Optional state_hash from learnlingo_get_homepage for concurrency checking.'],
         ]);

@@ -82,6 +82,19 @@ final class mcp_settings_test extends advanced_testcase {
             $schema['properties']['settings']['properties']['footermode']['enum']);
         $this->assertArrayHasKey('footer_html_4', (array)$schema['properties']['settings']['properties']);
         $this->assertArrayHasKey('footer_background_color', (array)$schema['properties']['settings']['properties']);
+        $properties = (array)$schema['properties']['settings']['properties'];
+        $definitions = branding_exchange::definitions();
+        $this->assertCount(count($definitions), $properties);
+        foreach ($definitions as $name => [$type, $default]) {
+            $this->assertArrayHasKey($name, $properties);
+            $this->assertNotSame($name . ' (' . $type . ')', $properties[$name]['description']);
+        }
+        $this->assertStringContainsString('EVERY page', $properties['homepagescss']['description']);
+        $this->assertStringContainsString('footermode=html', $properties['footerscss']['description']);
+        $this->assertStringContainsString('existing page-footer', $properties['footerhtml']['description']);
+        $this->assertStringContainsString('traditional', $properties['footer_title_1']['description']);
+        $this->assertStringContainsString('before boost', strtolower(
+            (new get_settings())->get_description()));
         $this->assertSame('moodle/site:config', (new update_settings())->get_required_capability());
         $this->assertTrue((new update_settings())->requires_confirmation());
         $this->assertTrue((new update_settings())->supports_dry_run());
