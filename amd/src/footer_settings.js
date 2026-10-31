@@ -27,6 +27,7 @@ export const init = () => {
     const refresh = () => {
         const isHtml = select.value === 'html';
         setVisible('footerhtml', isHtml);
+        setVisible('footerscss', isHtml);
         setVisible('footer_background_color', !isHtml);
         for (let index = 1; index <= 4; index++) {
             setVisible('footer_title_' + index, !isHtml);
