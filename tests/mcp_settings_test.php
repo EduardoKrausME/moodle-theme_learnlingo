@@ -406,7 +406,7 @@ final class mcp_settings_test extends advanced_testcase {
         $this->assertStringContainsString('/core_admin/favicon/', $favicon['url']);
         $this->assertSame('/' . $favicon['filename'], get_config('core_admin', 'favicon'));
         $this->assertNotFalse(get_file_storage()->get_file(
-            \\context_system::instance()->id, 'core_admin', 'favicon', 0, '/', $favicon['filename']
+            \context_system::instance()->id, 'core_admin', 'favicon', 0, '/', $favicon['filename']
         ));
         $this->assertSame($logohash, $withfavicon['images']['logo']['uploaded']['contenthash']);
         $this->assertSame($before['settings'], $withfavicon['settings']);
