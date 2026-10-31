@@ -58,7 +58,8 @@ final class get_homepage implements tool_interface {
      */
     public function get_description(): string {
         return 'Read the LearnLingo theme homepage mode, custom HTML, full-width '
-            . 'setting, homepage footer HTML and custom SCSS. Returns a state_hash used to avoid overwriting '
+            . 'setting and custom SCSS. Footer HTML is configured separately via learnlingo_get_settings. '
+            . 'Returns a state_hash used to avoid overwriting '
             . 'concurrent changes with learnlingo_update_homepage.';
     }
 

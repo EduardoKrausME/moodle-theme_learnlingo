@@ -56,6 +56,7 @@ final class branding_exchange {
             'homepagemode' => ['homepage', 'learnlingo'],
             'homepagehtml' => ['html', ''],
             'homepagefullwidth' => ['bool', true],
+            'footermode' => ['footermode', 'moodle'],
             'footerhtml' => ['html', ''],
             'footer_background_color' => ['color', '#314755'],
             'footer_title_1' => ['text', ''],
@@ -155,10 +156,13 @@ HOW TO CONDUCT THE CONVERSATION
 4. Ask which homepage layout is preferred: "moodle" (Moodle default),
    "learnlingo" (LearnLingo layout), or "html" (custom page).
    In "html" mode, settings.homepagehtml replaces the homepage content.
-   In "learnlingo" mode, settings.homepagehtml appears above the course cards,
-   and settings.footerhtml appears at the end of the homepage. Ask about
-   the footer columns (footer_title_1..4 and footer_html_1..4), background
-   colour and credits. Use settings.scss for additional styles and
+   In "learnlingo" mode, settings.homepagehtml appears above the course cards.
+   Independently select the footer mode in settings.footermode:
+   "moodle" preserves the existing four-column footer and its credits,
+   and "html" replaces the entire site footer with settings.footerhtml.
+   Ask about footer columns (footer_title_1..4 and footer_html_1..4),
+   background colour and credits only when using the "moodle" footer mode.
+   Use settings.scss for additional styles and
    settings.scsspre for SCSS variables only when necessary.
 5. Ask whether the user wants to change institutional copy, login
    messaging and branding, the welcome message, course header,
@@ -239,7 +243,7 @@ PROMPT;
                     self::invalid_field($name);
                 }
                 $limits = ['color' => 7, 'text' => 1500, 'homepage' => 20,
-                    'html' => 150000, 'scss' => 80000];
+                    'footermode' => 6, 'html' => 150000, 'scss' => 80000];
                 if (strlen($value) > $limits[$type]) {
                     self::invalid_field($name);
                 }
@@ -247,6 +251,9 @@ PROMPT;
                     self::invalid_field($name);
                 }
                 if ($type === 'homepage' && !in_array($value, ['learnlingo', 'moodle', 'html'], true)) {
+                    self::invalid_field($name);
+                }
+                if ($type === 'footermode' && !in_array($value, ['moodle', 'html'], true)) {
                     self::invalid_field($name);
                 }
                 if ($type === 'text' && (str_contains($value, '<') ||

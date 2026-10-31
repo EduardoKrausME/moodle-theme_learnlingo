@@ -86,6 +86,7 @@ final class branding_exchange_test extends advanced_testcase {
         $data = branding_exchange::export();
         $data['settings']['homepagemode'] = 'html';
         $data['settings']['homepagehtml'] = '<section><h1>Universidade Esportiva</h1></section>';
+        $data['settings']['footermode'] = 'html';
         $data['settings']['footerhtml'] = '<p>Footer content</p>';
         $data['settings']['footer_background_color'] = '#304050';
         $data['settings']['footer_title_1'] = 'Contact';
@@ -96,6 +97,16 @@ final class branding_exchange_test extends advanced_testcase {
     }
     /**
      * Footer HTML must pass the same import validator as homepage HTML.
+     */
+    public function test_invalid_footer_mode_is_rejected(): void {
+        $data = branding_exchange::export();
+        $data['settings']['footermode'] = 'javascript';
+        $this->expectException(invalid_parameter_exception::class);
+        branding_exchange::parse(branding_exchange::json($data));
+    }
+
+    /**
+     * Reject executable HTML in any footer field.
      */
     public function test_footer_script_is_rejected(): void {
         $data = branding_exchange::export();

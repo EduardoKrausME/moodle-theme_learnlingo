@@ -36,7 +36,6 @@ final class home_service {
         'mode' => 'homepagemode',
         'html' => 'homepagehtml',
         'fullwidth' => 'homepagefullwidth',
-        'footerhtml' => 'footerhtml',
         'scss' => 'scss',
     ];
 
