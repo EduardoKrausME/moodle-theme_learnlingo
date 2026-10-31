@@ -137,6 +137,9 @@ final class mcp_settings_test extends advanced_testcase {
         $identity = $this->identity();
         set_config('homepagescss', '.navbar { color: #123456; }', 'theme_learnlingo');
         set_config('scss', '.other { display: block; }', 'theme_learnlingo');
+        set_config('footermode', 'moodle', 'theme_learnlingo');
+        set_config('footerhtml', '', 'theme_learnlingo');
+        set_config('footerscss', '', 'theme_learnlingo');
         $reader = new get_settings();
         $before = $reader->execute([], $identity);
         $patch = [
