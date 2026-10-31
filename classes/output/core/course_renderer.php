@@ -283,7 +283,7 @@ class course_renderer extends core_course_renderer {
                 $file->get_contextid(),
                 $file->get_component(),
                 $file->get_filearea(),
-                $file->get_itemid(),
+                null, // Course overviewfiles URLs omit the stored itemid (0).
                 $file->get_filepath(),
                 $file->get_filename(),
                 false
