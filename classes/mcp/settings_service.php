@@ -24,6 +24,7 @@
 namespace theme_learnlingo\mcp;
 
 use context_system;
+use local_mcp\course\file_url_normalizer;
 use local_mcp\course\image_service;
 use local_mcp\exception\api_exception;
 use stored_file;
@@ -120,6 +121,9 @@ final class settings_service {
         foreach ($input as $name => $value) {
             if (!array_key_exists($name, $definitions)) {
                 throw new api_exception('unknown_setting', 400, 'Unknown LearnLingo setting: ' . $name);
+            }
+            if ($definitions[$name][0] === 'html' && is_string($value)) {
+                $value = file_url_normalizer::normalize($value);
             }
             $data['settings'][$name] = $value;
         }
