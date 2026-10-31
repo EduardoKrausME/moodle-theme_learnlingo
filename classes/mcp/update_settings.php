@@ -66,7 +66,8 @@ final class update_settings extends base_tool {
             . 'settings change; hidden/inactive fields retain their values. '
             . 'Preview and explicit confirmation are required. Read '
             . 'learnlingo_get_settings first and pass state_hash as expected_hash. '
-            . 'Site logos are stored in core_admin.';
+            . 'Site logos and favicons use core_admin and can be replaced or removed '
+            . 'through images.logo or images.favicon (Base64 or public HTTPS).';
     }
 
     /**
@@ -167,8 +168,8 @@ final class update_settings extends base_tool {
         $image = [
             'type' => 'object',
             'properties' => [
-                'image_base64' => ['type' => 'string', 'description' => 'Base64 PNG, JPEG or WebP (5 MiB maximum).'],
-                'image_url' => ['type' => 'string', 'description' => 'Public HTTPS URL of a PNG, JPEG or WebP image.'],
+                'image_base64' => ['type' => 'string', 'description' => 'Base64 PNG or JPEG (5 MiB maximum).'],
+                'image_url' => ['type' => 'string', 'description' => 'Public HTTPS URL of a PNG or JPEG image.'],
                 'remove' => ['type' => 'boolean', 'description' => 'Set true to remove the uploaded image.'],
             ],
             'additionalProperties' => false,
@@ -179,6 +180,16 @@ final class update_settings extends base_tool {
                 'description' => 'Only the settings to change. Other values are preserved, '
                     . 'including footer fields hidden by the currently selected mode.',
                 'properties' => (object)$properties,
+                'additionalProperties' => false,
+            ],
+            'images' => [
+                'type' => 'object',
+                'description' => 'Upload, replace or remove site branding images. Provide expected_hash. '
+                    . 'Only the supplied file areas change; logo and favicon are independent.',
+                'properties' => [
+                    'logo' => $image,
+                    'favicon' => $image,
+                ],
                 'additionalProperties' => false,
             ],
             'expected_hash' => [
