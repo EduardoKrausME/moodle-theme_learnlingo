@@ -155,6 +155,37 @@ final class mcp_settings_test extends advanced_testcase {
         $this->assertNotSame($before['state_hash'], $after['state_hash']);
     }
 
+    /**
+     * Full settings updates also normalize course image and summary URLs in HTML fields.
+     */
+    public function test_settings_normalize_legacy_course_file_urls_in_html(): void {
+        $this->require_mcp();
+        $this->resetAfterTest();
+        $identity = $this->identity();
+        $reader = new get_settings();
+        $writer = new update_settings();
+        $before = $reader->execute([], $identity);
+        $arguments = [
+            'expected_hash' => $before['state_hash'],
+            'settings' => [
+                'homepagehtml' => '<img src="/pluginfile.php/23/course/overviewfiles/0/cover.png">',
+                'footerhtml' => '<a href="/pluginfile.php/23/course/summary/0/guide.pdf">Guide</a>',
+                'footer_html_1' => '<img src="/pluginfile.php/23/course/section/0/keep.png">',
+            ],
+        ];
+        $preview = $writer->preview($arguments, $identity);
+        $this->assertContains('homepagehtml', $preview['changed_settings']);
+        $this->assertContains('footerhtml', $preview['changed_settings']);
+        $writer->execute($arguments, $identity);
+        $after = $reader->execute([], $identity);
+        $this->assertSame('<img src="/pluginfile.php/23/course/overviewfiles/cover.png">',
+            $after['settings']['homepagehtml']);
+        $this->assertSame('<a href="/pluginfile.php/23/course/summary/guide.pdf">Guide</a>',
+            $after['settings']['footerhtml']);
+        $this->assertSame('<img src="/pluginfile.php/23/course/section/0/keep.png">',
+            $after['settings']['footer_html_1']);
+    }
+
     public function test_stale_hash_is_rejected_without_writing(): void {
         $this->require_mcp();
         $this->resetAfterTest();
