@@ -56,17 +56,7 @@
             title="{{{ sitename }}}"
             data-region="site-home-link"
             class="aabtn text-reset d-flex align-items-center h-100">
-            {{#hasbrandlogo}}
-                <img src="{{{brandlogo}}}" class="logo" alt="{{sitename}}">
-            {{/hasbrandlogo}}
-            {{^hasbrandlogo}}
-            {{# output.should_display_navbar_logo }}
-                <img src="{{{output.get_compact_logo_url}}}" class="logo" alt="{{sitename}}">
-            {{/ output.should_display_navbar_logo }}
-            {{^ output.should_display_navbar_logo }}
-                <span class="sitename" title="{{{ sitename }}}">{{{ sitename }}}</span>
-            {{/ output.should_display_navbar_logo }}
-            {{/hasbrandlogo}}
+            <span class="sitename" title="{{sitename}}">{{sitename}}</span>
         </a>
     {{/drawerheading}}
     {{$drawercontent}}
