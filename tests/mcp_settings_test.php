@@ -85,6 +85,13 @@ final class mcp_settings_test extends advanced_testcase {
             $schema['properties']['settings']['properties']['footermode']['enum']);
         $this->assertArrayHasKey('footer_html_4', (array)$schema['properties']['settings']['properties']);
         $this->assertArrayHasKey('footer_background_color', (array)$schema['properties']['settings']['properties']);
+        $this->assertArrayHasKey('images', $schema['properties']);
+        $imageschema = $schema['properties']['images'];
+        $this->assertEqualsCanonicalizing(['logo', 'favicon'], array_keys($imageschema['properties']));
+        $this->assertFalse($imageschema['additionalProperties']);
+        $this->assertArrayHasKey('image_base64', $imageschema['properties']['favicon']['properties']);
+        $this->assertArrayHasKey('image_url', $imageschema['properties']['favicon']['properties']);
+        $this->assertArrayHasKey('remove', $imageschema['properties']['favicon']['properties']);
         $properties = (array)$schema['properties']['settings']['properties'];
         $definitions = branding_exchange::definitions();
         $this->assertCount(count($definitions), $properties);
@@ -362,6 +369,80 @@ final class mcp_settings_test extends advanced_testcase {
         $removed = $reader->execute([], $identity);
         $this->assertNull($removed['images']['logo']['uploaded']);
         $this->assertSame('', get_config('core_admin', 'logo'));
+    }
+
+    /**
+     * The favicon is stored independently in the native core_admin file area.
+     */
+    public function test_uploaded_favicon_preserves_logo_and_other_settings(): void {
+        $this->require_mcp();
+        $this->resetAfterTest();
+        $identity = $this->identity();
+        $reader = new get_settings();
+        $writer = new update_settings();
+        $png = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/y9sAAAAASUVORK5CYII=';
+
+        $before = $reader->execute([], $identity);
+        $writer->execute([
+            'expected_hash' => $before['state_hash'],
+            'images' => ['logo' => ['image_base64' => $png]],
+        ], $identity);
+        $withlogo = $reader->execute([], $identity);
+        $logohash = $withlogo['images']['logo']['uploaded']['contenthash'];
+        $this->assertNull($withlogo['images']['favicon']['uploaded']);
+
+        $patch = [
+            'expected_hash' => $withlogo['state_hash'],
+            'images' => ['favicon' => ['image_base64' => 'data:image/png;base64,' . $png]],
+        ];
+        $preview = $writer->preview($patch, $identity);
+        $this->assertSame('replace', $preview['images_summary']['favicon']['action']);
+        $this->assertSame([], $preview['changed_settings']);
+        $writer->execute($patch, $identity);
+        $withfavicon = $reader->execute(['include_images' => true], $identity);
+        $favicon = $withfavicon['images']['favicon']['uploaded'];
+        $this->assertSame('image/png', $favicon['mimetype']);
+        $this->assertNotEmpty($favicon['url']);
+        $this->assertStringContainsString('/core_admin/favicon/', $favicon['url']);
+        $this->assertSame('/' . $favicon['filename'], get_config('core_admin', 'favicon'));
+        $this->assertNotFalse(get_file_storage()->get_file(
+            \context_system::instance()->id, 'core_admin', 'favicon', 0, '/', $favicon['filename']
+        ));
+        $this->assertSame($logohash, $withfavicon['images']['logo']['uploaded']['contenthash']);
+        $this->assertSame($before['settings'], $withfavicon['settings']);
+        $this->assertCount(2, $withfavicon['_mcp_content']);
+
+        $writer->execute([
+            'expected_hash' => $withfavicon['state_hash'],
+            'images' => ['favicon' => ['remove' => true]],
+        ], $identity);
+        $removed = $reader->execute([], $identity);
+        $this->assertNull($removed['images']['favicon']['uploaded']);
+        $this->assertSame('', get_config('core_admin', 'favicon'));
+        $this->assertSame($logohash, $removed['images']['logo']['uploaded']['contenthash']);
+        $this->assertSame($before['settings'], $removed['settings']);
+    }
+
+    /**
+     * Uploads require a read-before-write hash to prevent stale favicon replacement.
+     */
+    public function test_favicon_upload_requires_current_hash(): void {
+        $this->require_mcp();
+        $this->resetAfterTest();
+        $identity = $this->identity();
+        $writer = new update_settings();
+        $png = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/y9sAAAAASUVORK5CYII=';
+        try {
+            $writer->preview(['images' => ['favicon' => ['image_base64' => $png]]], $identity);
+            $this->fail('A favicon replacement without expected_hash must be rejected.');
+        } catch (api_exception $e) {
+            $this->assertNotEmpty($e->getMessage());
+        }
+        $this->expectException(api_exception::class);
+        $writer->preview([
+            'expected_hash' => str_repeat('0', 64),
+            'images' => ['favicon' => ['image_base64' => $png]],
+        ], $identity);
     }
 
     public function test_image_operation_rejects_ambiguous_sources(): void {
