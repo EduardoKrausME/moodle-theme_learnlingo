@@ -8,39 +8,58 @@
 // @module theme_learnlingo/footer_settings
 
 /**
- * Toggle the mode-specific footer fields, preserving the configured values.
+ * Toggle the mode-specific footer fields without clearing saved settings.
+ *
+ * Moodle renders admin_setting_heading as a bare h3.main, not as a setting
+ * wrapper with an id. Find each heading relative to its first column field.
  */
 export const init = () => {
     const select = document.getElementById('id_s_theme_learnlingo_footermode');
     if (!select) {
         return;
     }
-    const setVisible = (name, visible) => {
+
+    const getSettingRow = (name) => {
         const input = document.getElementById('id_s_theme_learnlingo_' + name);
-        const wrapper = document.getElementById('admin-' + name) ||
+        return document.getElementById('admin-' + name) ||
+            document.getElementById('admin-theme_learnlingo_' + name) ||
             input?.closest('.form-item, .fitem, .form-group');
-        if (wrapper) {
-            wrapper.classList.toggle('d-none', !visible);
-            wrapper.setAttribute('aria-hidden', visible ? 'false' : 'true');
+    };
+
+    const setVisible = (element, visible) => {
+        if (!element) {
+            return;
+        }
+        element.classList.toggle('d-none', !visible);
+        element.setAttribute('aria-hidden', visible ? 'false' : 'true');
+    };
+
+    const setColumnHeadingVisible = (index, visible) => {
+        // core_admin/setting_heading.mustache emits h3.main with no id.
+        const row = getSettingRow('footer_title_' + index);
+        const previous = row?.previousElementSibling;
+        if (previous?.matches('h3.main')) {
+            setVisible(previous, visible);
         }
     };
+
     const refresh = () => {
         const isHtml = select.value === 'html';
-        setVisible('footerhtml', isHtml);
-        setVisible('footerscss', isHtml);
-        setVisible('footer_background_color', !isHtml);
+
+        // HTML mode displays only the mode selector and the HTML/SCSS editors.
+        setVisible(getSettingRow('footerhtml'), isHtml);
+        setVisible(getSettingRow('footerscss'), isHtml);
+
+        // Keep every existing Moodle-footer setting for when the mode changes back.
+        setVisible(getSettingRow('footer_background_color'), !isHtml);
         for (let index = 1; index <= 4; index++) {
-            setVisible('footer_title_' + index, !isHtml);
-            setVisible('footer_html_' + index, !isHtml);
-            const heading = document.getElementById('admin-theme_learnlingo_footer_heading_' + index) ||
-                document.getElementById('admin-footer_heading_' + index);
-            if (heading) {
-                heading.classList.toggle('d-none', isHtml);
-                heading.setAttribute('aria-hidden', isHtml ? 'true' : 'false');
-            }
+            setColumnHeadingVisible(index, !isHtml);
+            setVisible(getSettingRow('footer_title_' + index), !isHtml);
+            setVisible(getSettingRow('footer_html_' + index), !isHtml);
         }
-        setVisible('footer_show_copywriter', !isHtml);
+        setVisible(getSettingRow('footer_show_copywriter'), !isHtml);
     };
+
     select.addEventListener('change', refresh);
     refresh();
 };
