@@ -35,8 +35,9 @@ final class home_service {
     private const FIELDS = [
         'mode' => 'homepagemode',
         'html' => 'homepagehtml',
+        'homepagescss' => 'homepagescss',
         'fullwidth' => 'homepagefullwidth',
-        'scss' => 'scss',
+        'scss' => 'scss', // Legacy global SCSS: keep compatible with existing clients.
     ];
 
     /**

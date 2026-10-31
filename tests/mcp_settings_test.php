@@ -74,6 +74,8 @@ final class mcp_settings_test extends advanced_testcase {
         $schema = (new update_settings())->get_input_schema();
         $this->assertArrayHasKey('scsspre', (array)$schema['properties']['settings']['properties']);
         $this->assertArrayHasKey('scss', (array)$schema['properties']['settings']['properties']);
+        $this->assertArrayHasKey('homepagescss', (array)$schema['properties']['settings']['properties']);
+        $this->assertArrayHasKey('footerscss', (array)$schema['properties']['settings']['properties']);
         $this->assertArrayHasKey('footerhtml', (array)$schema['properties']['settings']['properties']);
         $this->assertArrayHasKey('footermode', (array)$schema['properties']['settings']['properties']);
         $this->assertSame(['moodle', 'html'],
@@ -122,6 +124,8 @@ final class mcp_settings_test extends advanced_testcase {
                 'brandcolor' => '#123abc',
                 'scsspre' => '$border-radius: 0.25rem;',
                 'scss' => '.custom-header { color: #123abc; }',
+                'homepagescss' => '.welcome { color: #123abc; }',
+                'footerscss' => '& { background: #abcdef; }',
                 'showcourseheroprogress' => false,
                 'footermode' => 'html',
                 'footerhtml' => '<section><p>Custom footer</p></section>',
@@ -139,6 +143,8 @@ final class mcp_settings_test extends advanced_testcase {
         $this->assertSame('#123abc', $after['settings']['brandcolor']);
         $this->assertSame('$border-radius: 0.25rem;', $after['settings']['scsspre']);
         $this->assertSame('.custom-header { color: #123abc; }', $after['settings']['scss']);
+        $this->assertSame('.welcome { color: #123abc; }', $after['settings']['homepagescss']);
+        $this->assertSame('& { background: #abcdef; }', $after['settings']['footerscss']);
         $this->assertFalse($after['settings']['showcourseheroprogress']);
         $this->assertSame('html', $after['settings']['footermode']);
         $this->assertSame('<section><p>Custom footer</p></section>', $after['settings']['footerhtml']);

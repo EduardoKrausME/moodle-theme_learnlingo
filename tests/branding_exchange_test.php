@@ -86,8 +86,10 @@ final class branding_exchange_test extends advanced_testcase {
         $data = branding_exchange::export();
         $data['settings']['homepagemode'] = 'html';
         $data['settings']['homepagehtml'] = '<section><h1>Universidade Esportiva</h1></section>';
+        $data['settings']['homepagescss'] = '.welcome { margin: 1rem; }';
         $data['settings']['footermode'] = 'html';
         $data['settings']['footerhtml'] = '<p>Footer content</p>';
+        $data['settings']['footerscss'] = '& { padding: 2rem; }';
         $data['settings']['footer_background_color'] = '#304050';
         $data['settings']['footer_title_1'] = 'Contact';
         $data['settings']['footer_html_1'] = '<p>Office</p>';
@@ -111,6 +113,15 @@ final class branding_exchange_test extends advanced_testcase {
     public function test_footer_script_is_rejected(): void {
         $data = branding_exchange::export();
         $data['settings']['footer_html_2'] = '<script>alert(1)</script>';
+        $this->expectException(invalid_parameter_exception::class);
+        branding_exchange::parse(branding_exchange::json($data));
+    }
+    /**
+     * Scoped SCSS must not bypass the nesting root.
+     */
+    public function test_scoped_scss_rejects_at_root(): void {
+        $data = branding_exchange::export();
+        $data['settings']['footerscss'] = '@at-root body { display: none; }';
         $this->expectException(invalid_parameter_exception::class);
         branding_exchange::parse(branding_exchange::json($data));
     }

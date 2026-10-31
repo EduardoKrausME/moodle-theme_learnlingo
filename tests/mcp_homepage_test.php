@@ -92,10 +92,12 @@ final class mcp_homepage_test extends advanced_testcase {
         $arguments = [
             'html' => $html,
             'fullwidth' => true,
+            'homepagescss' => '.welcome { padding: 1rem; }',
             'expected_hash' => $before['state_hash'],
         ];
 
         $this->assertSame('moodle/site:config', $writer->get_required_capability());
+        $this->assertArrayHasKey('homepagescss', $writer->get_input_schema()['properties']);
         $this->assertTrue($writer->requires_confirmation());
         $this->assertTrue($writer->supports_dry_run());
         $preview = $writer->preview($arguments, $identity);
@@ -107,6 +109,8 @@ final class mcp_homepage_test extends advanced_testcase {
         $after = $reader->execute([], $identity);
         $this->assertSame('learnlingo', $after['mode']);
         $this->assertSame($html, $after['html']);
+        $this->assertSame('.welcome { padding: 1rem; }', $after['homepagescss']);
+        $this->assertSame(strlen('.welcome { padding: 1rem; }'), $result['homepagescss_bytes']);
         $this->assertTrue($after['fullwidth']);
         $this->assertNotSame($before['state_hash'], $after['state_hash']);
     }

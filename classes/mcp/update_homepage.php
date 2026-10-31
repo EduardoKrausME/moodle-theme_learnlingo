@@ -58,7 +58,8 @@ final class update_homepage extends base_tool {
      */
     public function get_description(): string {
         return 'Update the LearnLingo homepage mode, responsive HTML, full-width '
-            . 'layout and optional SCSS. Use learnlingo_update_settings for footermode and footerhtml. '
+            . 'layout, homepage-specific homepagescss and legacy global scss. '
+            . 'Use learnlingo_update_settings for footermode, footerhtml and footerscss. '
             . 'Reuses theme configuration validation, '
             . 'previews changes and requires explicit confirmation. '
             . 'Read the current state with learnlingo_get_homepage first.';
@@ -85,8 +86,10 @@ final class update_homepage extends base_tool {
             'html' => ['type' => 'string',
                 'description' => 'HTML home content, validated against the LearnLingo JSON configuration rules.'],
             'fullwidth' => ['type' => 'boolean'],
+            'homepagescss' => ['type' => 'string',
+                'description' => 'Scoped homepage SCSS for LearnLingo and HTML homepage modes only.'],
             'scss' => ['type' => 'string',
-                'description' => 'Optional custom theme SCSS, validated against the theme rules.'],
+                'description' => 'Legacy global SCSS (affects all pages). Use homepagescss for home-only styles.'],
             'expected_hash' => ['type' => 'string',
                 'description' => 'Optional state_hash from learnlingo_get_homepage for concurrency checking.'],
         ]);
@@ -127,6 +130,8 @@ final class update_homepage extends base_tool {
             'fullwidth_after' => $prepared['after']['fullwidth'],
             'html_bytes_before' => strlen($prepared['before']['html']),
             'html_bytes_after' => strlen($prepared['after']['html']),
+            'homepagescss_bytes_before' => strlen($prepared['before']['homepagescss']),
+            'homepagescss_bytes_after' => strlen($prepared['after']['homepagescss']),
             'scss_bytes_before' => strlen($prepared['before']['scss']),
             'scss_bytes_after' => strlen($prepared['after']['scss']),
             'changed_settings' => array_keys($prepared['settings']),
@@ -150,6 +155,7 @@ final class update_homepage extends base_tool {
             'mode' => $current['mode'],
             'fullwidth' => $current['fullwidth'],
             'html_bytes' => strlen($current['html']),
+            'homepagescss_bytes' => strlen($current['homepagescss']),
             'scss_bytes' => strlen($current['scss']),
             'state_hash' => $current['state_hash'],
             'changed_settings' => array_keys($prepared['settings']),

@@ -58,7 +58,8 @@ final class update_settings extends base_tool {
      */
     public function get_description(): string {
         return 'Update any subset of LearnLingo settings, including scsspre and scss, colors, '
-            . 'login/dashboard/course options, homepage HTML, footer mode and HTML, footer columns and colours, ' 
+            . 'login/dashboard/course options, homepage HTML/SCSS, footer mode and HTML/SCSS, '
+            . 'footer columns and colours, ' 
             . 'footer credit visibility and uploaded PNG/JPEG site logos. '
             . 'Only specified settings are changed. Requires confirmation; read learnlingo_get_settings '
             . 'first and pass its state_hash in expected_hash to avoid concurrent overwrites. '
