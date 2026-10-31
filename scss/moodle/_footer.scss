@@ -29,7 +29,7 @@
     }
     .footer-section-content { overflow-wrap: anywhere; }
     .footer-section-content > :last-child,
-    .learnlingo-home-footer-html > :last-child { margin-bottom: 0; }
+    .learnlingo-footer-custom-html > :last-child { margin-bottom: 0; }
 
     a {
         color: inherit;
@@ -38,10 +38,13 @@
     }
     a:hover, a:focus { color: inherit; text-decoration-thickness: 2px; }
 
-    .learnlingo-home-footer-html {
-        padding-top: 1rem;
-        padding-bottom: 2rem;
+    .learnlingo-footer-custom-html {
+        width: 100%;
         overflow-wrap: anywhere;
+    }
+    &.learnlingo-footer-html-mode {
+        // The custom HTML controls its own width, spacing and layout.
+        margin-top: 0;
     }
     .footer-foot { padding: 1rem 0; background: rgba(0, 0, 0, .12); }
     .footer-foot p { margin: 0; }

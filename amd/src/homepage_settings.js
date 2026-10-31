@@ -29,7 +29,6 @@ export const init = () => {
         const isHtml = select.value === 'html';
         setVisible('homepagehtml', isLearnlingo || isHtml);
         setVisible('homepagefullwidth', isLearnlingo || isHtml);
-        setVisible('footerhtml', isLearnlingo);
     };
     select.addEventListener('change', refresh);
     refresh();
