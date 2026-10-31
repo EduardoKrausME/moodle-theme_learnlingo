@@ -92,6 +92,7 @@ final class mcp_homepage_test extends advanced_testcase {
         $arguments = [
             'html' => $html,
             'fullwidth' => true,
+            'footerhtml' => '<p>Contact and privacy</p>',
             'expected_hash' => $before['state_hash'],
         ];
 
@@ -99,15 +100,17 @@ final class mcp_homepage_test extends advanced_testcase {
         $this->assertTrue($writer->requires_confirmation());
         $this->assertTrue($writer->supports_dry_run());
         $preview = $writer->preview($arguments, $identity);
-        $this->assertSame('html', $preview['mode_after']);
+        $this->assertSame('learnlingo', $preview['mode_after']);
         $this->assertArrayNotHasKey('html', $preview);
 
         $result = $writer->execute($arguments, $identity);
         $this->assertTrue($result['success']);
         $after = $reader->execute([], $identity);
-        $this->assertSame('html', $after['mode']);
+        $this->assertSame('learnlingo', $after['mode']);
+        $this->assertSame('<p>Contact and privacy</p>', $after['footerhtml']);
         $this->assertSame($html, $after['html']);
         $this->assertTrue($after['fullwidth']);
+        $this->assertSame(strlen('<p>Contact and privacy</p>'), $result['footerhtml_bytes']);
         $this->assertNotSame($before['state_hash'], $after['state_hash']);
     }
 

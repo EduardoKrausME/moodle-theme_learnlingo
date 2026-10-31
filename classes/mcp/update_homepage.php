@@ -58,7 +58,7 @@ final class update_homepage extends base_tool {
      */
     public function get_description(): string {
         return 'Update the LearnLingo homepage mode, responsive HTML, full-width '
-            . 'layout and optional SCSS. Reuses theme configuration validation, '
+            . 'layout, homepage footer HTML and optional SCSS. Reuses theme configuration validation, '
             . 'previews changes and requires explicit confirmation. '
             . 'Read the current state with learnlingo_get_homepage first.';
     }
@@ -80,10 +80,12 @@ final class update_homepage extends base_tool {
     public function get_input_schema(): array {
         return $this->object_schema([
             'mode' => ['type' => 'string', 'enum' => ['moodle', 'learnlingo', 'html'],
-                'description' => 'Homepage rendering mode. Providing html alone also activates HTML mode.'],
+                'description' => 'Homepage rendering mode. HTML updates preserve LearnLingo mode.'],
             'html' => ['type' => 'string',
                 'description' => 'HTML home content, validated against the LearnLingo JSON configuration rules.'],
             'fullwidth' => ['type' => 'boolean'],
+            'footerhtml' => ['type' => 'string',
+                'description' => 'HTML footer shown only on the LearnLingo homepage.'],
             'scss' => ['type' => 'string',
                 'description' => 'Optional custom theme SCSS, validated against the theme rules.'],
             'expected_hash' => ['type' => 'string',
@@ -124,6 +126,8 @@ final class update_homepage extends base_tool {
             'mode_after' => $prepared['after']['mode'],
             'fullwidth_before' => $prepared['before']['fullwidth'],
             'fullwidth_after' => $prepared['after']['fullwidth'],
+            'footerhtml_bytes_before' => strlen($prepared['before']['footerhtml']),
+            'footerhtml_bytes_after' => strlen($prepared['after']['footerhtml']),
             'html_bytes_before' => strlen($prepared['before']['html']),
             'html_bytes_after' => strlen($prepared['after']['html']),
             'scss_bytes_before' => strlen($prepared['before']['scss']),
@@ -149,6 +153,7 @@ final class update_homepage extends base_tool {
             'mode' => $current['mode'],
             'fullwidth' => $current['fullwidth'],
             'html_bytes' => strlen($current['html']),
+            'footerhtml_bytes' => strlen($current['footerhtml']),
             'scss_bytes' => strlen($current['scss']),
             'state_hash' => $current['state_hash'],
             'changed_settings' => array_keys($prepared['settings']),

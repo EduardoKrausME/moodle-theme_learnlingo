@@ -74,6 +74,9 @@ final class mcp_settings_test extends advanced_testcase {
         $schema = (new update_settings())->get_input_schema();
         $this->assertArrayHasKey('scsspre', (array)$schema['properties']['settings']['properties']);
         $this->assertArrayHasKey('scss', (array)$schema['properties']['settings']['properties']);
+        $this->assertArrayHasKey('footerhtml', (array)$schema['properties']['settings']['properties']);
+        $this->assertArrayHasKey('footer_html_4', (array)$schema['properties']['settings']['properties']);
+        $this->assertArrayHasKey('footer_background_color', (array)$schema['properties']['settings']['properties']);
         $this->assertSame('moodle/site:config', (new update_settings())->get_required_capability());
         $this->assertTrue((new update_settings())->requires_confirmation());
         $this->assertTrue((new update_settings())->supports_dry_run());
@@ -117,6 +120,9 @@ final class mcp_settings_test extends advanced_testcase {
                 'scsspre' => '$border-radius: 0.25rem;',
                 'scss' => '.custom-header { color: #123abc; }',
                 'showcourseheroprogress' => false,
+                'footer_background_color' => '#123456',
+                'footer_title_1' => 'Contact',
+                'footer_html_1' => '<p>Example contact</p>',
             ],
         ];
         $preview = $writer->preview($patch, $identity);
@@ -129,6 +135,9 @@ final class mcp_settings_test extends advanced_testcase {
         $this->assertSame('$border-radius: 0.25rem;', $after['settings']['scsspre']);
         $this->assertSame('.custom-header { color: #123abc; }', $after['settings']['scss']);
         $this->assertFalse($after['settings']['showcourseheroprogress']);
+        $this->assertSame('#123456', $after['settings']['footer_background_color']);
+        $this->assertSame('Contact', $after['settings']['footer_title_1']);
+        $this->assertSame('<p>Example contact</p>', $after['settings']['footer_html_1']);
         $this->assertSame($before['settings']['homepagemode'], $after['settings']['homepagemode']);
         $this->assertNotSame($before['state_hash'], $after['state_hash']);
     }

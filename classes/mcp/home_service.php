@@ -36,6 +36,7 @@ final class home_service {
         'mode' => 'homepagemode',
         'html' => 'homepagehtml',
         'fullwidth' => 'homepagefullwidth',
+        'footerhtml' => 'footerhtml',
         'scss' => 'scss',
     ];
 
@@ -79,8 +80,10 @@ final class home_service {
             $data['settings'][$setting] = $arguments[$public];
             $changes[] = $setting;
         }
-        // Supplying new HTML without a mode activates that HTML as the homepage.
-        if (array_key_exists('html', $arguments) && !array_key_exists('mode', $arguments)) {
+        // In LearnLingo mode, homepagehtml is added above the native course cards,
+        // so an HTML update must not silently change the selected homepage mode.
+        if (array_key_exists('html', $arguments) && !array_key_exists('mode', $arguments)
+                && $before['mode'] !== 'learnlingo') {
             $data['settings']['homepagemode'] = 'html';
             $changes[] = 'homepagemode';
         }

@@ -86,7 +86,21 @@ final class branding_exchange_test extends advanced_testcase {
         $data = branding_exchange::export();
         $data['settings']['homepagemode'] = 'html';
         $data['settings']['homepagehtml'] = '<section><h1>Universidade Esportiva</h1></section>';
+        $data['settings']['footerhtml'] = '<p>Footer content</p>';
+        $data['settings']['footer_background_color'] = '#304050';
+        $data['settings']['footer_title_1'] = 'Contact';
+        $data['settings']['footer_html_1'] = '<p>Office</p>';
+        $data['settings']['footer_show_copywriter'] = false;
         $data['settings']['scss'] = '.learnlingo-html-home { padding: 2rem; }';
         $this->assertSame($data, branding_exchange::parse(branding_exchange::json($data)));
+    }
+    /**
+     * Footer HTML must pass the same import validator as homepage HTML.
+     */
+    public function test_footer_script_is_rejected(): void {
+        $data = branding_exchange::export();
+        $data['settings']['footer_html_2'] = '<script>alert(1)</script>';
+        $this->expectException(invalid_parameter_exception::class);
+        branding_exchange::parse(branding_exchange::json($data));
     }
 }

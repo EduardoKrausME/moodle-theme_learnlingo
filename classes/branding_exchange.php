@@ -56,6 +56,17 @@ final class branding_exchange {
             'homepagemode' => ['homepage', 'learnlingo'],
             'homepagehtml' => ['html', ''],
             'homepagefullwidth' => ['bool', true],
+            'footerhtml' => ['html', ''],
+            'footer_background_color' => ['color', '#314755'],
+            'footer_title_1' => ['text', ''],
+            'footer_html_1' => ['html', ''],
+            'footer_title_2' => ['text', ''],
+            'footer_html_2' => ['html', ''],
+            'footer_title_3' => ['text', ''],
+            'footer_html_3' => ['html', ''],
+            'footer_title_4' => ['text', ''],
+            'footer_html_4' => ['html', ''],
+            'footer_show_copywriter' => ['bool', true],
             'showdashboardhero' => ['bool', true],
             'showcoursehero' => ['bool', true],
             'courseheroeyebrow' => ['text', get_string('courseheroeyebrowdefault', 'theme_learnlingo')],
@@ -143,9 +154,11 @@ HOW TO CONDUCT THE CONVERSATION
    to upload the file separately.
 4. Ask which homepage layout is preferred: "moodle" (Moodle default),
    "learnlingo" (LearnLingo layout), or "html" (custom page).
-   In "html" mode, generate a responsive homepage in
-   settings.homepagehtml using HTML without scripts and content appropriate
-   for the institution. Use settings.scss for additional styles and
+   In "html" mode, settings.homepagehtml replaces the homepage content.
+   In "learnlingo" mode, settings.homepagehtml appears above the course cards,
+   and settings.footerhtml appears at the end of the homepage. Ask about
+   the footer columns (footer_title_1..4 and footer_html_1..4), background
+   colour and credits. Use settings.scss for additional styles and
    settings.scsspre for SCSS variables only when necessary.
 5. Ask whether the user wants to change institutional copy, login
    messaging and branding, the welcome message, course header,
