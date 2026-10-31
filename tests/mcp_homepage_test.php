@@ -120,6 +120,32 @@ final class mcp_homepage_test extends advanced_testcase {
      *
      * @return void
      */
+    /**
+     * MCP HTML updates normalize legacy course file URLs before approval and persistence.
+     */
+    public function test_homepage_normalizes_course_file_urls_on_write(): void {
+        $this->require_mcp();
+        $this->resetAfterTest();
+        $this->setAdminUser();
+        $identity = new authenticated_identity((int)get_admin()->id,
+            'test', ['mcp:read', 'mcp:write']);
+        $writer = new update_homepage();
+        $before = (new get_homepage())->execute([], $identity);
+        $html = '<img src="/pluginfile.php/23/course/overviewfiles/0/cover.png">'
+            . '<a href="/pluginfile.php/23/course/summary/0/guide.pdf">Guide</a>'
+            . '<img src="/pluginfile.php/23/course/section/0/keep.png">';
+        $normalized = '<img src="/pluginfile.php/23/course/overviewfiles/cover.png">'
+            . '<a href="/pluginfile.php/23/course/summary/guide.pdf">Guide</a>'
+            . '<img src="/pluginfile.php/23/course/section/0/keep.png">';
+
+        $arguments = ['html' => $html, 'expected_hash' => $before['state_hash']];
+        $preview = $writer->preview($arguments, $identity);
+        $this->assertSame(strlen($normalized), $preview['html_bytes_after']);
+        $writer->execute($arguments, $identity);
+        $after = (new get_homepage())->execute([], $identity);
+        $this->assertSame($normalized, $after['html']);
+    }
+
     public function test_stale_state_hash_is_rejected(): void {
         $this->require_mcp();
         $this->resetAfterTest();
