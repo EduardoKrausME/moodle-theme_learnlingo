@@ -35,14 +35,26 @@ use function admin_get_root;
  */
 final class settings_registration_test extends advanced_testcase {
     /**
-     * Every string used by the JSON branding page must be available in both bundled languages.
+     * Every translation used by the branding pages must exist in both bundled languages.
      */
-    public function test_branding_json_page_strings_exist_in_both_languages(): void {
+    public function test_branding_admin_page_strings_exist_in_both_languages(): void {
         global $CFG;
-        $source = file_get_contents($CFG->dirroot . '/theme/learnlingo/admin/branding_json.php');
-        preg_match_all("/get_string\\(\\s*'([^']+)'\\s*,\\s*'theme_learnlingo'/", $source, $matches);
-        $identifiers = array_unique($matches[1]);
-        $this->assertNotEmpty($identifiers);
+        $identifiers = [];
+        foreach ([
+            'admin/branding_json.php',
+            'admin/branding_ai.php',
+            'templates/branding_json.mustache',
+            'templates/branding_ai.mustache',
+        ] as $path) {
+            $source = file_get_contents($CFG->dirroot . '/theme/learnlingo/' . $path);
+            preg_match_all("/get_string\\(\\s*'([^']+)'\\s*,\\s*'theme_learnlingo'/", $source, $phpmatches);
+            preg_match_all('/\{\{#str\}\}\s*([a-z0-9_]+)\s*,\s*theme_learnlingo\s*\{\{\/str\}\}/',
+                $source, $templatematches);
+            $identifiers = array_merge($identifiers, $phpmatches[1], $templatematches[1]);
+        }
+        $identifiers = array_unique($identifiers);
+        $this->assertContains('jsonpagetitle', $identifiers);
+        $this->assertContains('aigenerate', $identifiers);
 
         foreach (['en', 'pt_br'] as $language) {
             $string = [];
@@ -52,6 +64,59 @@ final class settings_registration_test extends advanced_testcase {
                     "Missing {$language} translation for {$identifier}");
             }
         }
+    }
+
+    /**
+     * Branding page markup belongs in Mustache, not in hand-assembled PHP fragments.
+     */
+    public function test_branding_admin_pages_do_not_use_html_writer(): void {
+        global $CFG;
+        foreach (['admin/branding_ai.php', 'admin/branding_json.php', 'settings.php'] as $path) {
+            $source = file_get_contents($CFG->dirroot . '/theme/learnlingo/' . $path);
+            $this->assertStringNotContainsString('html_writer::', $source, $path);
+        }
+        foreach (['branding_ai', 'branding_json', 'branding_admin_link'] as $name) {
+            $path = $CFG->dirroot . '/theme/learnlingo/templates/' . $name . '.mustache';
+            $this->assertFileExists($path);
+        }
+    }
+
+    /**
+     * User-provided content must remain escaped inside the new Mustache forms.
+     */
+    public function test_branding_templates_escape_user_input(): void {
+        $this->resetAfterTest();
+        $this->setAdminUser();
+        global $OUTPUT;
+
+        $ai = $OUTPUT->render_from_template('theme_learnlingo/branding_ai', [
+            'actionurl' => '/theme/learnlingo/admin/branding_ai.php',
+            'sesskey' => 'test',
+            'description' => '<script>alert(1)</script>',
+            'error' => '<img src=x onerror=alert(1)>',
+            'hasproposal' => true,
+            'proposalfields' => [['label' => 'Institution', 'value' => '<b>unsafe</b>']],
+        ]);
+        $this->assertStringNotContainsString('<script>', $ai);
+        $this->assertStringNotContainsString('<img src=x', $ai);
+        $this->assertStringNotContainsString('<b>unsafe</b>', $ai);
+        $this->assertStringContainsString('&lt;script&gt;', $ai);
+        $this->assertStringContainsString('name="action" value="generate"', $ai);
+        $this->assertStringContainsString('name="action" value="apply"', $ai);
+
+        $json = $OUTPUT->render_from_template('theme_learnlingo/branding_json', [
+            'actionurl' => '/theme/learnlingo/admin/branding_json.php',
+            'sesskey' => 'test',
+            'saved' => false,
+            'error' => '',
+            'prompt' => '<script>alert(1)</script>',
+            'importjson' => '</textarea><script>alert(1)</script>',
+            'exportjson' => '{"name":"<test>"}',
+        ]);
+        $this->assertStringNotContainsString('</textarea><script>', $json);
+        $this->assertStringContainsString('&lt;script&gt;', $json);
+        $this->assertStringContainsString('&lt;test&gt;', $json);
+        $this->assertStringContainsString('name="action" value="import"', $json);
     }
 
     /**
