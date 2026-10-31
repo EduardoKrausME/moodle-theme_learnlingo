@@ -34,8 +34,12 @@ use theme_learnlingo\branding_exchange;
  * Use the same validation contract as the LearnLingo JSON importer.
  */
 final class settings_service {
-    /** Uploaded site branding file areas in settings.php. */
-    private const FILEAREAS = ['logo', 'favicon'];
+    /** Uploaded branding file areas and their Moodle File API components. */
+    private const FILEAREAS = [
+        'logo' => 'core_admin',
+        'favicon' => 'core_admin',
+        'loginlogo' => 'theme_learnlingo',
+    ];
 
     /**
      * Read all portable settings and existing uploaded image metadata.
@@ -49,16 +53,21 @@ final class settings_service {
         $images = [];
         $content = [];
         $hashimages = [];
-        foreach (self::FILEAREAS as $area) {
+        foreach (self::FILEAREAS as $area => $component) {
             $files = self::files($area);
             $image = $files ? reset($files) : null;
             if ($image) {
-                $imageurl = $area === 'logo'
-                    ? $OUTPUT->get_logo_url()
-                    : \moodle_url::make_pluginfile_url(
+                if ($area === 'logo') {
+                    $imageurl = $OUTPUT->get_logo_url();
+                } else if ($area === 'loginlogo') {
+                    // Use the theme revision in the URL, as admin_setting_configstoredfile does.
+                    $imageurl = \theme_config::load('learnlingo')->setting_file_url('loginlogo', 'loginlogo');
+                } else {
+                    $imageurl = \moodle_url::make_pluginfile_url(
                         $image->get_contextid(), 'core_admin', 'favicon', 0,
                         $image->get_filepath(), $image->get_filename(), false
                     );
+                }
                 $metadata = [
                     'filename' => $image->get_filename(),
                     'mimetype' => $image->get_mimetype(),
@@ -147,7 +156,7 @@ final class settings_service {
                 'Read LearnLingo settings and provide expected_hash before replacing branding images.');
         }
         foreach ($requested as $name => $source) {
-            if (!in_array($name, self::FILEAREAS, true) || !is_array($source)) {
+            if (!array_key_exists($name, self::FILEAREAS) || !is_array($source)) {
                 throw new api_exception('invalid_image_area', 400);
             }
             foreach (array_keys($source) as $key) {
@@ -167,9 +176,14 @@ final class settings_service {
                 continue;
             }
             [$bytes, $mime, $ext] = image_service::decode($source);
-            if (!in_array($mime, ['image/png', 'image/jpeg'], true)) {
+            $allowedmimes = $name === 'loginlogo'
+                ? ['image/png', 'image/jpeg', 'image/webp']
+                : ['image/png', 'image/jpeg'];
+            if (!in_array($mime, $allowedmimes, true)) {
                 throw new api_exception('invalid_brand_image_type', 400,
-                    'The Moodle site logo and favicon accept PNG or JPEG files.');
+                    $name === 'loginlogo'
+                        ? 'The login logo accepts PNG, JPEG or WebP images through MCP.'
+                        : 'The Moodle site logo and favicon accept PNG or JPEG files.');
             }
             $images[$name] = ['remove' => false, 'bytes' => $bytes, 'mime' => $mime, 'extension' => $ext];
         }
@@ -194,7 +208,7 @@ final class settings_service {
         }
         $context = context_system::instance();
         foreach ($prepared['images'] as $area => $source) {
-            $component = 'core_admin';
+            $component = self::FILEAREAS[$area];
             foreach (self::files($area) as $file) {
                 $file->delete();
             }
@@ -228,7 +242,7 @@ final class settings_service {
      */
     private static function files(string $area): array {
         $context = context_system::instance();
-        $component = 'core_admin';
+        $component = self::FILEAREAS[$area];
         return array_values(get_file_storage()->get_area_files(
             $context->id, $component, $area, 0, 'id DESC', false
         ));

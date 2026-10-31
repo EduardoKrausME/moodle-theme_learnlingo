@@ -87,7 +87,9 @@ final class mcp_settings_test extends advanced_testcase {
         $this->assertArrayHasKey('footer_background_color', (array)$schema['properties']['settings']['properties']);
         $this->assertArrayHasKey('images', $schema['properties']);
         $imageschema = $schema['properties']['images'];
-        $this->assertEqualsCanonicalizing(['logo', 'favicon'], array_keys($imageschema['properties']));
+        $this->assertEqualsCanonicalizing(['logo', 'favicon', 'loginlogo'], array_keys($imageschema['properties']));
+        $this->assertStringContainsString('WebP',
+            $imageschema['properties']['loginlogo']['properties']['image_base64']['description']);
         $this->assertFalse($imageschema['additionalProperties']);
         $this->assertArrayHasKey('image_base64', $imageschema['properties']['favicon']['properties']);
         $this->assertArrayHasKey('image_url', $imageschema['properties']['favicon']['properties']);
@@ -421,6 +423,69 @@ final class mcp_settings_test extends advanced_testcase {
         $this->assertSame('', get_config('core_admin', 'favicon'));
         $this->assertSame($logohash, $removed['images']['logo']['uploaded']['contenthash']);
         $this->assertSame($before['settings'], $removed['settings']);
+    }
+
+    /**
+     * MCP manages the login-only logo without touching the global Moodle branding.
+     */
+    public function test_login_logo_can_be_read_replaced_and_removed_independently(): void {
+        $this->require_mcp();
+        $this->resetAfterTest();
+        $identity = $this->identity();
+        $reader = new get_settings();
+        $writer = new update_settings();
+        $png = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/y9sAAAAASUVORK5CYII=';
+
+        $before = $reader->execute([], $identity);
+        $this->assertNull($before['images']['loginlogo']['uploaded']);
+        $global = get_config('core_admin', 'logo');
+        $favicon = get_config('core_admin', 'favicon');
+
+        $patch = [
+            'expected_hash' => $before['state_hash'],
+            'images' => ['loginlogo' => ['image_base64' => $png]],
+        ];
+        $preview = $writer->preview($patch, $identity);
+        $this->assertSame('replace', $preview['images_summary']['loginlogo']['action']);
+        $this->assertSame([], $preview['changed_settings']);
+        $writer->execute($patch, $identity);
+
+        $after = $reader->execute(['include_images' => true], $identity);
+        $uploaded = $after['images']['loginlogo']['uploaded'];
+        $this->assertSame('image/png', $uploaded['mimetype']);
+        $this->assertStringContainsString('/theme_learnlingo/loginlogo/', $uploaded['url']);
+        $this->assertSame('/' . $uploaded['filename'], get_config('theme_learnlingo', 'loginlogo'));
+        $this->assertNotFalse(get_file_storage()->get_file(
+            \\context_system::instance()->id, 'theme_learnlingo', 'loginlogo', 0, '/', $uploaded['filename']
+        ));
+        $this->assertNotEmpty($after['_mcp_content']);
+        $this->assertNotSame($before['state_hash'], $after['state_hash']);
+        $this->assertSame($before['settings'], $after['settings']);
+        $this->assertSame($global, get_config('core_admin', 'logo'));
+        $this->assertSame($favicon, get_config('core_admin', 'favicon'));
+
+        $writer->execute([
+            'expected_hash' => $after['state_hash'],
+            'images' => ['loginlogo' => ['remove' => true]],
+        ], $identity);
+        $removed = $reader->execute([], $identity);
+        $this->assertNull($removed['images']['loginlogo']['uploaded']);
+        $this->assertSame('', get_config('theme_learnlingo', 'loginlogo'));
+        $this->assertSame($global, get_config('core_admin', 'logo'));
+        $this->assertSame($favicon, get_config('core_admin', 'favicon'));
+    }
+
+    /**
+     * The login logo has the same optimistic locking as the global logo.
+     */
+    public function test_login_logo_upload_requires_current_hash(): void {
+        $this->require_mcp();
+        $this->resetAfterTest();
+        $identity = $this->identity();
+        $writer = new update_settings();
+        $png = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/y9sAAAAASUVORK5CYII=';
+        $this->expectException(api_exception::class);
+        $writer->preview(['images' => ['loginlogo' => ['image_base64' => $png]]], $identity);
     }
 
     /**

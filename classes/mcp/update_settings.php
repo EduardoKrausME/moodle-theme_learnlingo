@@ -66,8 +66,10 @@ final class update_settings extends base_tool {
             . 'settings change; hidden/inactive fields retain their values. '
             . 'Preview and explicit confirmation are required. Read '
             . 'learnlingo_get_settings first and pass state_hash as expected_hash. '
-            . 'Site logos and favicons use core_admin and can be replaced or removed '
-            . 'through images.logo or images.favicon (Base64 or public HTTPS).';
+            . 'The shared site logo and favicon use core_admin; the separate login '
+            . 'logo uses theme_learnlingo. Read and update them through images.logo, '
+            . 'images.favicon and images.loginlogo (Base64 or public HTTPS), '
+            . 'without changing the other image areas.';
     }
 
     /**
@@ -174,6 +176,9 @@ final class update_settings extends base_tool {
             ],
             'additionalProperties' => false,
         ];
+        $loginimage = $image;
+        $loginimage['properties']['image_base64']['description'] = 'Base64 PNG, JPEG or WebP (5 MiB maximum).';
+        $loginimage['properties']['image_url']['description'] = 'Public HTTPS URL of a PNG, JPEG or WebP image.';
         return $this->object_schema([
             'settings' => [
                 'type' => 'object',
@@ -184,11 +189,12 @@ final class update_settings extends base_tool {
             ],
             'images' => [
                 'type' => 'object',
-                'description' => 'Upload, replace or remove site branding images. Provide expected_hash. '
-                    . 'Only the supplied file areas change; logo and favicon are independent.',
+                'description' => 'Upload, replace or remove branding images. Provide expected_hash. '
+                    . 'Only the supplied file areas change; the global logo, favicon and login logo are independent.',
                 'properties' => [
                     'logo' => $image,
                     'favicon' => $image,
+                    'loginlogo' => $loginimage,
                 ],
                 'additionalProperties' => false,
             ],

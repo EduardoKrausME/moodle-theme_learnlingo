@@ -60,7 +60,7 @@ final class get_settings implements tool_interface {
             . 'homepagescss (active on every page), scsspre (before Boost), '
             . 'scss (global after Boost), independent footermode, footerhtml '
             . 'and footerscss (only inside the HTML footer), traditional footer '
-            . 'columns, login/dashboard/course options, site logo and favicon. '
+            . 'columns, login/dashboard/course options, shared site logo, login-only logo and favicon. '
             . 'Returns file metadata and state_hash for learnlingo_update_settings; '
             . 'include_images also returns small uploaded branding images.';
     }
@@ -76,7 +76,7 @@ final class get_settings implements tool_interface {
             'properties' => [
                 'include_images' => [
                     'type' => 'boolean',
-                    'description' => 'Attach uploaded PNG/JPEG site logos and favicons as images when they are at most 2 MiB each.',
+                    'description' => 'Attach uploaded PNG/JPEG/WebP branding images (including login logo) when they are at most 2 MiB each.',
                 ],
             ],
             'additionalProperties' => false,
