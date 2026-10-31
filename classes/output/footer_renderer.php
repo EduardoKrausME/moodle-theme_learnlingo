@@ -14,7 +14,7 @@ namespace theme_learnlingo\output;
 use context_system;
 
 /**
- * Export the footer columns and optional homepage footer for templates.
+ * Export either the existing footer columns or a custom HTML footer.
  *
  * @package theme_learnlingo
  * @copyright 2026 Eduardo Kraus
@@ -27,14 +27,24 @@ final class footer_renderer {
      * @return array
      */
     public static function mustache_data(): array {
-        global $PAGE;
+        $htmlmode = get_config('theme_learnlingo', 'footermode') === 'html';
         $data = [
+            'footer_mode_html' => $htmlmode,
+            'footer_mode_moodle' => !$htmlmode,
             'footercount' => 0,
             'footercontents' => [],
             'footer_show_copywriter' => get_config('theme_learnlingo', 'footer_show_copywriter') !== '0',
-            'show_home_footer_html' => false,
-            'home_footer_html' => '',
+            'footer_custom_html' => '',
         ];
+        if ($htmlmode) {
+            $html = (string)(get_config('theme_learnlingo', 'footerhtml') ?: '');
+            $data['footer_custom_html'] = format_text($html, FORMAT_HTML, [
+                'context' => context_system::instance(),
+                'filter' => false,
+                'noclean' => false,
+            ]);
+            return $data;
+        }
         $context = context_system::instance();
         for ($i = 1; $i <= 4; $i++) {
             $html = (string)(get_config('theme_learnlingo', "footer_html_{$i}") ?: '');
@@ -50,15 +60,6 @@ final class footer_renderer {
         }
         $data['footercount'] = count($data['footercontents']);
 
-        if ($PAGE->pagetype === 'site-index' && !$PAGE->user_is_editing()
-                && theme_learnlingo_homepage_mode($PAGE->theme) === 'learnlingo') {
-            $html = (string)(get_config('theme_learnlingo', 'footerhtml') ?: '');
-            if (trim($html) !== '') {
-                $data['home_footer_html'] = format_text($html, FORMAT_HTML,
-                    ['context' => $context, 'filter' => false, 'noclean' => false]);
-                $data['show_home_footer_html'] = true;
-            }
-        }
         return $data;
     }
 }

@@ -19,7 +19,11 @@
         "footer_show_copywriter": true
     }
 }}
-<footer id="page-footer" class="learnlingo-site-footer">
+<footer id="page-footer" class="learnlingo-site-footer {{#footer_mode_html}}learnlingo-footer-html-mode{{/footer_mode_html}}">
+    {{#footer_mode_html}}
+        <div class="learnlingo-footer-custom-html">{{{footer_custom_html}}}</div>
+    {{/footer_mode_html}}
+    {{#footer_mode_moodle}}
     {{#footercount}}
         <div class="footer-container footer-container-{{footercount}} container">
             {{#footercontents}}
@@ -33,10 +37,6 @@
         </div>
     {{/footercount}}
 
-    {{#show_home_footer_html}}
-        <div class="learnlingo-home-footer-html container">{{{home_footer_html}}}</div>
-    {{/show_home_footer_html}}
-
     {{#footer_show_copywriter}}
         <div class="footer-foot">
             <div class="container">
@@ -48,6 +48,7 @@
             </div>
         </div>
     {{/footer_show_copywriter}}
+    {{/footer_mode_moodle}}
 
     <div class="footer-content-debugging footer-dark bg-dark text-light d-none">
         <div class="container-fluid footer-dark-inner">

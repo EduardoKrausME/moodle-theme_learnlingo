@@ -137,7 +137,28 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback("theme_reset_all_caches");
     $page->add($setting);
 
-    // Additional footer HTML belongs to the LearnLingo homepage.
+    $PAGE->requires->js_call_amd("theme_learnlingo/homepage_settings", "init");
+    $settings->add($page);
+
+    $page = new admin_settingpage(
+        "theme_learnlingo_footer",
+        get_string("footersettings", "theme_learnlingo")
+    );
+
+    // Default mode preserves the previously configured footer.
+    $setting = new admin_setting_configselect(
+        "theme_learnlingo/footermode",
+        get_string("footermode", "theme_learnlingo"),
+        get_string("footermode_desc", "theme_learnlingo"),
+        "moodle",
+        [
+            "moodle" => get_string("footermodemoodle", "theme_learnlingo"),
+            "html" => get_string("footermodehtml", "theme_learnlingo"),
+        ]
+    );
+    $setting->set_updatedcallback("theme_reset_all_caches");
+    $page->add($setting);
+
     $setting = new admin_setting_confightmleditor(
         "theme_learnlingo/footerhtml",
         get_string("footerhtml", "theme_learnlingo"),
@@ -147,13 +168,7 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback("theme_reset_all_caches");
     $page->add($setting);
 
-    $PAGE->requires->js_call_amd("theme_learnlingo/homepage_settings", "init");
-    $settings->add($page);
-
-    $page = new admin_settingpage(
-        "theme_learnlingo_footer",
-        get_string("footersettings", "theme_learnlingo")
-    );
+    $PAGE->requires->js_call_amd("theme_learnlingo/footer_settings", "init");
 
     $setting = new admin_setting_configcolourpicker(
         "theme_learnlingo/footer_background_color",

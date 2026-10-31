@@ -164,8 +164,8 @@ $string['textcolor'] = 'Cor do texto';
 $string['textcolor_desc'] = 'Cor principal dos textos e títulos.';
 
 // Configurable footer adapted from theme_eadtraining.
-$string['footerhtml'] = 'HTML adicional do rodapé da home LearnLingo';
-$string['footerhtml_desc'] = 'Exibido após as colunas do rodapé somente na home LearnLingo. O HTML é filtrado antes da exibição.';
+$string['footerhtml'] = 'HTML personalizado do rodapé';
+$string['footerhtml_desc'] = 'Substitui o rodapé atual em todas as páginas no modo HTML. O HTML é filtrado antes da exibição.';
 $string['footersettings'] = 'Rodapé';
 $string['footer_background_color'] = 'Cor de fundo do rodapé';
 $string['footer_background_color_desc'] = 'Cor de fundo do rodapé. O contraste do texto é calculado automaticamente.';
@@ -177,3 +177,7 @@ $string['footer_html_desc'] = 'Conteúdo HTML da coluna {$a}. Colunas vazias nã
 $string['footer_show_copywriter'] = 'Exibir créditos do desenvolvedor e do Moodle';
 $string['footer_show_copywriter_desc'] = 'Mostra ou oculta os créditos na parte inferior do rodapé.';
 $string['footer_copywriter'] = 'Tema desenvolvido por';
+$string['footermode'] = 'Modelo do rodapé';
+$string['footermode_desc'] = 'Moodle mantém o rodapé atual de colunas configuráveis, enquanto HTML substitui seu conteúdo.';
+$string['footermodemoodle'] = 'Rodapé atual (Moodle)';
+$string['footermodehtml'] = 'Rodapé em HTML personalizado';

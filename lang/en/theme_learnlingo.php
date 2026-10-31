@@ -166,8 +166,8 @@ $string['textcolor'] = 'Text colour';
 $string['textcolor_desc'] = 'Main text and heading colour.';
 
 // Configurable footer adapted from theme_eadtraining.
-$string['footerhtml'] = 'Additional LearnLingo homepage footer HTML';
-$string['footerhtml_desc'] = 'Displayed below the footer columns only on the LearnLingo homepage. HTML is cleaned before rendering.';
+$string['footerhtml'] = 'Custom footer HTML';
+$string['footerhtml_desc'] = 'Replaces the existing footer on every page in HTML mode. HTML is cleaned before rendering.';
 $string['footersettings'] = 'Footer';
 $string['footer_background_color'] = 'Footer background colour';
 $string['footer_background_color_desc'] = 'Background colour for the footer. Text contrast is calculated automatically.';
@@ -179,3 +179,7 @@ $string['footer_html_desc'] = 'Rich HTML content for column {$a}. Empty columns 
 $string['footer_show_copywriter'] = 'Display developer and Moodle credits';
 $string['footer_show_copywriter_desc'] = 'Show or hide credits at the bottom of the footer.';
 $string['footer_copywriter'] = 'Theme by';
+$string['footermode'] = 'Footer layout';
+$string['footermode_desc'] = 'Moodle keeps the current configurable columns; HTML replaces the footer content.';
+$string['footermodemoodle'] = 'Current footer (Moodle)';
+$string['footermodehtml'] = 'Custom HTML footer';
