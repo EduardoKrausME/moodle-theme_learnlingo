@@ -335,6 +335,18 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback("theme_reset_all_caches");
     $page->add($setting);
 
+    // Optional logo for the login form, independent of the Moodle-wide site logo.
+    $setting = new admin_setting_configstoredfile(
+        "theme_learnlingo/loginlogo",
+        get_string("loginlogo", "theme_learnlingo"),
+        get_string("loginlogo_desc", "theme_learnlingo"),
+        "loginlogo",
+        0,
+        ["maxfiles" => 1, "accepted_types" => [".png", ".jpg", ".jpeg", ".webp", ".svg"]]
+    );
+    $setting->set_updatedcallback("theme_reset_all_caches");
+    $page->add($setting);
+
     $names = [
         "loginpaneltitletext",
         "loginpaneldescriptiontext",
