@@ -58,6 +58,7 @@ final class provider implements read_provider_interface, write_provider_interfac
             'learnlingo_update_homepage' => update_homepage::class,
             'learnlingo_update_settings' => update_settings::class,
             'learnlingo_update_styles' => update_styles::class,
+            'learnlingo_update_footer' => update_footer::class,
         ]);
     }
 
