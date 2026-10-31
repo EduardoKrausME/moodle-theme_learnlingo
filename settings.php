@@ -402,22 +402,22 @@ if ($ADMIN->fulltree) {
         $page->add(new admin_setting_heading(
             "theme_learnlingo/aibrandinglink",
             "",
-            html_writer::tag("p", get_string("aibrandingdesc", "theme_learnlingo")) .
-            html_writer::link(
-                new moodle_url("/theme/learnlingo/admin/branding_ai.php"),
-                get_string("aibrandingopen", "theme_learnlingo")
-            )
+            $OUTPUT->render_from_template("theme_learnlingo/branding_admin_link", [
+                "description" => get_string("aibrandingdesc", "theme_learnlingo"),
+                "url" => (new moodle_url("/theme/learnlingo/admin/branding_ai.php"))->out(false),
+                "label" => get_string("aibrandingopen", "theme_learnlingo"),
+            ])
         ));
     }
 
     $page->add(new admin_setting_heading(
         "theme_learnlingo/jsonbrandinglink",
         "",
-        html_writer::tag("p", get_string("jsonpageintro", "theme_learnlingo")) .
-        html_writer::link(
-            new moodle_url("/theme/learnlingo/admin/branding_json.php"),
-            get_string("jsonopen", "theme_learnlingo")
-        )
+        $OUTPUT->render_from_template("theme_learnlingo/branding_admin_link", [
+            "description" => get_string("jsonpageintro", "theme_learnlingo"),
+            "url" => (new moodle_url("/theme/learnlingo/admin/branding_json.php"))->out(false),
+            "label" => get_string("jsonopen", "theme_learnlingo"),
+        ])
     ));
 
     $settings->add($page);
