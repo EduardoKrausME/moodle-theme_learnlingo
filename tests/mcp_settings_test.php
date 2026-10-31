@@ -34,6 +34,7 @@ use theme_learnlingo\mcp\get_homepage;
 use theme_learnlingo\mcp\get_settings;
 use theme_learnlingo\mcp\provider;
 use theme_learnlingo\mcp\update_settings;
+use theme_learnlingo\mcp\update_styles;
 
 /**
  * Run with the optional local_mcp installed.
@@ -69,8 +70,9 @@ final class mcp_settings_test extends advanced_testcase {
         $writenames = array_map(static fn($tool): string => $tool->get_name(), $provider->get_write_tools());
         $this->assertContains('learnlingo_get_settings', $readnames);
         $this->assertContains('learnlingo_update_settings', $writenames);
+        $this->assertContains('learnlingo_update_styles', $writenames);
         $this->assertCount(2, $readnames);
-        $this->assertCount(2, $writenames);
+        $this->assertCount(3, $writenames);
         $schema = (new update_settings())->get_input_schema();
         $this->assertArrayHasKey('scsspre', (array)$schema['properties']['settings']['properties']);
         $this->assertArrayHasKey('scss', (array)$schema['properties']['settings']['properties']);
@@ -101,6 +103,104 @@ final class mcp_settings_test extends advanced_testcase {
         $issues = [];
         tool_schema::normalize($schema, $issues);
         $this->assertSame([], array_values(array_filter($issues, static fn($issue): bool => !$issue['repaired'])));
+    }
+
+    /**
+     * A small, explicit schema exposes the custom HTML/SCSS write fields.
+     */
+    public function test_styles_tool_schema_and_confirmation(): void {
+        $this->require_mcp();
+        $tool = new update_styles();
+        $schema = $tool->get_input_schema();
+        $props = (array)$schema['properties']['settings']['properties'];
+        $this->assertEqualsCanonicalizing([
+            'homepagemode', 'homepagehtml', 'homepagescss',
+            'footermode', 'footerhtml', 'footerscss', 'scsspre', 'scss',
+        ], array_keys($props));
+        $this->assertSame(['moodle', 'html'], $props['footermode']['enum']);
+        $this->assertStringContainsString('globally', $props['homepagescss']['description']);
+        $this->assertStringContainsString('automatically scoped', $props['footerscss']['description']);
+        $this->assertSame('moodle/site:config', $tool->get_required_capability());
+        $this->assertTrue($tool->requires_confirmation());
+        $this->assertTrue($tool->supports_dry_run());
+        $issues = [];
+        tool_schema::normalize($schema, $issues);
+        $this->assertSame([], array_values(array_filter($issues, static fn($issue): bool => !$issue['repaired'])));
+    }
+
+    /**
+     * Moving shared rules from homepage to global must be a single safe write.
+     */
+    public function test_styles_tool_moves_css_without_duplicates_and_preserves_other_fields(): void {
+        $this->require_mcp();
+        $this->resetAfterTest();
+        $identity = $this->identity();
+        set_config('homepagescss', '.navbar { color: #123456; }', 'theme_learnlingo');
+        set_config('scss', '.other { display: block; }', 'theme_learnlingo');
+        $reader = new get_settings();
+        $before = $reader->execute([], $identity);
+        $patch = [
+            'expected_hash' => $before['state_hash'],
+            'settings' => [
+                'scss' => $before['settings']['scss'] . "\n" . $before['settings']['homepagescss'],
+                'homepagescss' => '',
+                'footermode' => 'html',
+                'footerhtml' => '<section><p>About us</p></section>',
+                'footerscss' => '& { padding: 2rem; }',
+            ],
+        ];
+        $tool = new update_styles();
+        $preview = $tool->preview($patch, $identity);
+        $this->assertEqualsCanonicalizing(array_keys($patch['settings']), $preview['changed_settings']);
+        $this->assertSame(0, $preview['settings_summary']['homepagescss']['bytes_after']);
+        $this->assertTrue($preview['requires_confirmation']);
+        $result = $tool->execute($patch, $identity);
+        $this->assertTrue($result['success']);
+        $after = $reader->execute([], $identity);
+        $this->assertSame('', $after['settings']['homepagescss']);
+        $this->assertSame(1, substr_count($after['settings']['scss'], '.navbar { color: #123456; }'));
+        $this->assertSame('html', $after['settings']['footermode']);
+        $this->assertSame('<section><p>About us</p></section>', $after['settings']['footerhtml']);
+        $this->assertSame('& { padding: 2rem; }', $after['settings']['footerscss']);
+        $this->assertSame($before['settings']['footer_title_1'], $after['settings']['footer_title_1']);
+        $this->assertSame($before['settings']['homepagehtml'], $after['settings']['homepagehtml']);
+    }
+
+    /**
+     * The new writer cannot silently bypass read-before-write or its allowlist.
+     */
+    public function test_styles_tool_requires_hash_and_rejects_other_settings(): void {
+        $this->require_mcp();
+        $this->resetAfterTest();
+        $identity = $this->identity();
+        $tool = new update_styles();
+        try {
+            $tool->preview(['settings' => ['homepagescss' => '']], $identity);
+            $this->fail('A missing expected_hash must be rejected.');
+        } catch (api_exception $e) {
+            $this->assertNotEmpty($e->getMessage());
+        }
+        $before = (new get_settings())->execute([], $identity);
+        $this->expectException(api_exception::class);
+        $tool->preview([
+            'expected_hash' => $before['state_hash'],
+            'settings' => ['brandcolor' => '#ffffff'],
+        ], $identity);
+    }
+
+    /**
+     * Reuse the JSON importer constraints for dangerous SCSS.
+     */
+    public function test_styles_tool_rejects_invalid_scoped_scss(): void {
+        $this->require_mcp();
+        $this->resetAfterTest();
+        $identity = $this->identity();
+        $before = (new get_settings())->execute([], $identity);
+        $this->expectException(invalid_parameter_exception::class);
+        (new update_styles())->preview([
+            'expected_hash' => $before['state_hash'],
+            'settings' => ['footerscss' => '@at-root body { display: none; }'],
+        ], $identity);
     }
 
     /**
