@@ -58,7 +58,6 @@ $prompt = branding_exchange::prompt($export);
 $exportjson = branding_exchange::json($export);
 
 echo $OUTPUT->header();
-echo $OUTPUT->heading(get_string('jsonpagetitle', 'theme_learnlingo'));
 if (optional_param('saved', 0, PARAM_BOOL)) {
     echo $OUTPUT->notification(get_string('jsonimportsuccess', 'theme_learnlingo'), 'success');
 }
