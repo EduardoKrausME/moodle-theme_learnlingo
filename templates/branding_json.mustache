@@ -1,0 +1,51 @@
+{{!
+    @template theme_learnlingo/branding_json
+
+    JSON export and import administration page. Textareas are escaped by Mustache.
+
+    Example context (json):
+    {
+        "actionurl": "/theme/learnlingo/admin/branding_json.php",
+        "sesskey": "example",
+        "saved": false,
+        "error": "",
+        "prompt": "Prompt text",
+        "importjson": "",
+        "exportjson": "{}"
+    }
+}}
+<h2>{{#str}}jsonpagetitle, theme_learnlingo{{/str}}</h2>
+{{#saved}}
+    <div class="alert alert-success" role="status">{{#str}}jsonimportsuccess, theme_learnlingo{{/str}}</div>
+{{/saved}}
+<p>{{#str}}jsonpageintro, theme_learnlingo{{/str}}</p>
+<p class="text-muted">{{#str}}jsonfilesnote, theme_learnlingo{{/str}}</p>
+
+<h3>{{#str}}jsonprompttitle, theme_learnlingo{{/str}}</h3>
+<p>{{#str}}jsonpromptdesc, theme_learnlingo{{/str}}</p>
+<label for="learnlingo-brand-prompt" class="form-label">{{#str}}jsonpromptlabel, theme_learnlingo{{/str}}</label>
+<textarea id="learnlingo-brand-prompt" class="form-control mb-2 font-monospace"
+    rows="5" readonly spellcheck="false">{{prompt}}</textarea>
+<button type="button" id="learnlingo-copy-prompt" class="btn btn-secondary mb-4">
+    {{#str}}jsoncopy, theme_learnlingo{{/str}}
+</button>
+
+<h3>{{#str}}jsonimporttitle, theme_learnlingo{{/str}}</h3>
+<p>{{#str}}jsonimportdesc, theme_learnlingo{{/str}}</p>
+{{#error}}
+    <div class="alert alert-danger" role="alert">{{error}}</div>
+{{/error}}
+<form action="{{actionurl}}" method="post">
+    <input type="hidden" name="sesskey" value="{{sesskey}}">
+    <input type="hidden" name="action" value="import">
+    <label for="learnlingo-brand-json" class="form-label">{{#str}}jsonimportlabel, theme_learnlingo{{/str}}</label>
+    <textarea id="learnlingo-brand-json" name="importjson" class="form-control mb-3 font-monospace"
+        rows="20" required spellcheck="false">{{importjson}}</textarea>
+    <p class="text-muted">{{#str}}jsonimportwarning, theme_learnlingo{{/str}}</p>
+    <input type="submit" value="{{#str}}jsonimportbutton, theme_learnlingo{{/str}}" class="btn btn-primary">
+</form>
+
+<h3 class="mt-5">{{#str}}jsonrawtitle, theme_learnlingo{{/str}}</h3>
+<p>{{#str}}jsonrawdesc, theme_learnlingo{{/str}}</p>
+<textarea id="learnlingo-brand-raw" class="form-control font-monospace"
+    rows="10" readonly spellcheck="false">{{exportjson}}</textarea>
