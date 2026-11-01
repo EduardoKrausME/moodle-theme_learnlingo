@@ -54,6 +54,17 @@ if ($ADMIN->fulltree) {
         ));
     }
 
+    // Accessible after installation as well as during first-run onboarding.
+    $page->add(new admin_setting_heading(
+        'theme_learnlingo/visualsetuplink',
+        '',
+        $OUTPUT->render_from_template('theme_learnlingo/branding_admin_link', [
+            'description' => get_string('setupsettingsdesc', 'theme_learnlingo'),
+            'url' => (new moodle_url('/theme/learnlingo/admin/setup.php'))->out(false),
+            'label' => get_string('setupsettingslink', 'theme_learnlingo'),
+        ])
+    ));
+
     $colors = [
         "brandcolor" => "#58cc02",
         "accentcolor" => "#8be24a",
