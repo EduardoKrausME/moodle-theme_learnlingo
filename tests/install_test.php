@@ -52,6 +52,7 @@ final class install_test extends \advanced_testcase {
                 : (string)($type === 'bool' ? (int)$default : $default);
             $this->assertSame($expected, (string)get_config('theme_learnlingo', $name), $name);
         }
+        $this->assertSame('config', (string)get_config('theme_learnlingo', 'homepagehtml'));
         $this->assertSame('1', (string)get_config('theme_learnlingo', 'setup_pending'));
         $this->assertSame('custom.ico', get_config('core_admin', 'favicon'));
     }
