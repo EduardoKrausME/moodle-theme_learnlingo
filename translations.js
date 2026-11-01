@@ -263,4 +263,9 @@ window.LearnLingoEnglish = {
   'ter você aqui.': 'to have you here.',
   'Seu próximo passo começa agora.': 'Your next step starts now.',
   'Acesse sua conta': 'Sign in to your account'
+  'Código aberto · Baseado no Boost ·': 'Open source · Built on Boost ·',
+  'Criado com ❤️ por Eduardo Kraus': 'Made with ❤️ by Eduardo Kraus',
+  'Escolha onde prefere baixar a versão publicada:': 'Choose where to download the latest release:',
+  'Última versão no GitHub ↗': 'Latest release on GitHub ↗',
+  'Moodle Marketplace ↗': 'Moodle Marketplace ↗',
 };
