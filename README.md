@@ -1,49 +1,47 @@
-# LearnLingo Moodle Theme
+# LearnLingo
 
-LearnLingo is a Moodle theme that customizes the homepage, dashboard,
-course views and login experience. Its appearance can be configured from
-the theme settings, or exported/imported through the JSON branding screen.
+LearnLingo is a learning-focused Moodle theme with a playful visual identity, customizable homepage, course presentation, dashboard, login screen and footer. It gives institutions more control over how learners experience a Moodle site without changing how Moodle courses, activities or grades work.
 
-## Optional integration with Moodle MCP
+The theme is inspired by approachable language-learning interfaces, with emphasis on clear calls to action and visible learning progress.
 
-When the `local_mcp` plugin is installed, LearnLingo automatically
-registers its MCP tools via `classes/mcp/provider.php`. The integration
-does not require adding callbacks to `lib.php`, installing a separate
-MCP subplugin, or enabling a new theme setting.
+## What can administrators customize?
 
-The class implements `local_mcp\extension\read_provider_interface` and
-`local_mcp\extension\write_provider_interface` and exposes:
+### Site identity
 
-- `learnlingo_get_homepage` (READ): retrieve homepage mode, raw HTML,
-  full-width flag, custom SCSS and a `state_hash` for change detection.
-- `learnlingo_update_homepage` (WRITE): update the homepage mode, HTML,
-  full-width flag or custom SCSS with a preview and explicit confirmation.
-  Supplying HTML without `mode` activates the custom HTML homepage.
+Administrators can adjust the theme's colors, site logo, favicon and other visual settings to match the institution. Branding choices apply across the experience rather than requiring teachers to style individual course pages.
 
-Both tools require the Moodle capability `moodle/site:config` in the system
-context in addition to the MCP token's READ or WRITE permission.
-The WRITE tool uses the existing LearnLingo JSON validation to reject
-unsafe HTML/SCSS, optionally checks `expected_hash` for concurrency and
-resets the theme cache after saving. All unspecified theme settings are
-preserved.
+### Homepage
 
-Example payload for `learnlingo_update_homepage`:
+LearnLingo supports different homepage presentations, including its own learning-focused homepage, Moodle's standard front page and custom HTML content. Custom styling can be applied where a more tailored institutional homepage is needed.
 
-```json
-{
-  "mode": "html",
-  "html": "<main class=\"landing\"><h1>LearnLingo</h1></main>",
-  "fullwidth": true,
-  "expected_hash": "value returned by learnlingo_get_homepage"
-}
-```
+### Dashboard and courses
 
-Without `local_mcp`, the theme works normally; these classes are loaded
-only when requested by an installed MCP provider. After updating both
-plugins, refresh the custom MCP connection in ChatGPT to discover the tools.
+The learner dashboard and course pages have configurable visual elements, including introductory areas, course information and progress presentation. Administrators can choose which optional elements appear instead of filling every screen with repeated information.
 
-### Integração MCP — configurações do tema
+### Login and footer
 
-Com o `local_mcp` instalado, o LearnLingo registra automaticamente quatro ferramentas: `learnlingo_get_homepage` e `learnlingo_update_homepage` para a página inicial, além de `learnlingo_get_settings` e `learnlingo_update_settings` para todas as configurações. A leitura completa inclui cores, textos, opções de cursos e painel, `scsspre`, `scss`, HTML da home e metadados das imagens `logo`
+The login experience can use its own branding and imagery. The footer can retain Moodle's standard presentation or use custom institutional content, with configurable appearance and sections.
 
-A atualização geral recebe somente os campos desejados em `settings` e, opcionalmente, imagens em `images` por Base64 ou URL HTTPS (PNG, JPEG ou WebP, máximo 5 MiB), ou `remove: true`. A leitura oferece `state_hash`, que deve ser enviado como `expected_hash` para evitar sobrescrita concorrente; a gravação exige permissão `moodle/site:config`, escopo MCP de escrita e confirmação explícita. O SCSS e demais campos usam a mesma validação da importação JSON, e as alterações invalidam o cache do tema. A logo principal é a logo global do Moodle (`core_admin/logo`, PNG ou JPEG). Na instalação nova, a logo global recebe `pix/default-logo.png` apenas quando ainda não existe uma imagem configurada; em atualizações, uma logo antiga do tema é copiada somente se não houver logo global. O MCP altera os arquivos e seus caminhos de configuração conjuntamente.
+## Guided site configuration
+
+LearnLingo includes visual configuration options to help administrators make related branding and homepage decisions in one place. This is particularly useful when a Moodle site needs a coherent public homepage, course appearance and login screen rather than a collection of independent customizations.
+
+The theme also provides an option to export and import branding settings as JSON, making it easier to reproduce a reviewed visual configuration on another site.
+
+## Customize LearnLingo with ChatGPT or Claude
+
+LearnLingo can optionally connect to ChatGPT or Claude through the Moodle MCP plugin (`local_mcp`). This allows an administrator to describe the changes they want in ordinary language, such as adjusting homepage content, changing colors or refining theme settings.
+
+The assistant can inspect supported current settings before proposing changes. Updates require the permissions and explicit confirmation configured for the Moodle connection, helping administrators review what will change before publication.
+
+This integration is optional: LearnLingo works normally without ChatGPT, Claude or the Moodle MCP plugin.
+
+## Good practices
+
+A learning-focused visual design still needs accessible colors, readable text, responsive layouts and clear navigation. Review the actual learner experience on desktop and mobile, especially when using custom HTML or styling.
+
+For institutions with several course types, verify the dashboard, a representative course page, the login screen and the homepage after major branding changes.
+
+**Compatibility:** Moodle 4.5 or newer.
+
+**License:** GNU GPL v3 or later.
