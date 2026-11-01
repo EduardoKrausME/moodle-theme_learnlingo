@@ -76,7 +76,8 @@ final class get_settings implements tool_interface {
             'properties' => [
                 'include_images' => [
                     'type' => 'boolean',
-                    'description' => 'Attach PNG/JPEG/WebP branding images of up to 2 MiB; ICO favicons are returned as metadata only.',
+                    'description' => 'Attach PNG/JPEG/WebP branding images of up to 2 MiB; '
+                    . 'ICO favicons are returned as metadata only.',
                 ],
             ],
             'additionalProperties' => false,
