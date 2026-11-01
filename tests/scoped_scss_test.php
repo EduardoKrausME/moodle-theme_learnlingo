@@ -8,7 +8,12 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+
 
 namespace theme_learnlingo;
 
@@ -19,6 +24,8 @@ use theme_config;
  * Check the global homepage SCSS and the HTML-footer-only SCSS.
  *
  * @package theme_learnlingo
+ * @copyright 2026 Eduardo Kraus
+ * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @coversNothing
  */
 final class scoped_scss_test extends advanced_testcase {
