@@ -83,8 +83,8 @@ final class hook_listener {
 
         // Resume the next uncompleted step if the administrator left the
         // wizard and then returned to the site homepage.
-        $completed = max(0, min(3, (int)get_config('theme_learnlingo', 'setup_completed_step')));
-        $nextstep = min(3, $completed + 1);
+        $completed = max(0, (int)get_config('theme_learnlingo', 'setup_completed_step'));
+        $nextstep = setup_steps::next($CFG, $completed);
         redirect(new moodle_url('/theme/learnlingo/admin/setup.php', ['step' => $nextstep]));
     }
 }
