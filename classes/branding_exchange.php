@@ -58,6 +58,7 @@ final class branding_exchange {
             'homepagescss' => ['scss', ''],
             'homepagefullwidth' => ['bool', true],
             'homepagepubliccourses' => ['courseids', ''],
+            'homepagepubliccoursesperpage' => ['pagecount', '4'],
             'footermode' => ['footermode', 'moodle'],
             'footerhtml' => ['html', ''],
             'footerscss' => ['scss', ''],
@@ -358,7 +359,7 @@ PROMPT;
                 }
                 $limits = ['color' => 7, 'text' => 1500, 'homepage' => 20,
                     'footermode' => 6, 'html' => 150000, 'scss' => 80000,
-                    'courseids' => 8000];
+                    'courseids' => 8000, 'pagecount' => 2];
                 if (strlen($value) > $limits[$type]) {
                     self::invalid_field($name);
                 }
@@ -366,6 +367,9 @@ PROMPT;
                     self::invalid_field($name);
                 }
                 if ($type === 'homepage' && !in_array($value, ['learnlingo', 'moodle', 'html'], true)) {
+                    self::invalid_field($name);
+                }
+                if ($type === 'pagecount' && !preg_match('/^(?:[1-9]|1[0-2])$/D', $value)) {
                     self::invalid_field($name);
                 }
                 if ($type === 'courseids' && $value !== '' &&
