@@ -361,3 +361,13 @@
 .ll-setup-login__left {min-height:180px}
 .ll-setup-login__fields {grid-template-columns:1fr}
 }
+
+/* Step 1: show the currently stored site identity inside each upload surface. */
+.ll-setup-assets__upload {display:flex;flex-direction:column;gap:.7rem;min-width:0}
+.ll-setup-assets__preview--upload {position:relative;width:100%;height:145px;min-height:145px;padding:1rem 1rem 1.7rem;cursor:pointer;border:2px dashed #c4d7df;transition:border-color .2s,background-color .2s}
+.ll-setup-assets__preview--upload:hover {border-color:#278b57;background:#f5fbf7}
+.ll-setup-assets__upload:focus-within .ll-setup-assets__preview--upload {outline:2px solid #278b57;outline-offset:2px}
+.ll-setup-assets__preview--upload .ll-setup-assets__logo {max-height:90px;max-width:95%}
+.ll-setup-assets__preview--upload .ll-setup-assets__favicon {width:auto;height:auto;max-width:64px;max-height:64px}
+.ll-setup-assets__preview-current {position:absolute;left:50%;bottom:.45rem;transform:translateX(-50%);font-size:.76rem;line-height:1.4;font-weight:750;color:#315b43;background:#ecf8f0;border-radius:5px;padding:.15rem .5rem;white-space:nowrap}
+.ll-setup-assets__upload>input[type="file"] {display:block;width:100%;max-width:100%;background:#fff;height:auto}
