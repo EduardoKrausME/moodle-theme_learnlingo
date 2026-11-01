@@ -146,31 +146,95 @@ final class homepage_context {
     public static function schema(): array {
         return [
             'field' => 'homepagehtml',
-            'rendered_by' => 'PHP Mustache on each homepage request',
+            'scope' => 'Mustache is evaluated exclusively inside homepagehtml. '
+                . 'Native Moodle/parent theme Mustache templates, footerhtml and SCSS are unchanged.',
+            'rendered_by' => 'Server-side PHP Mustache, for the current visitor on each homepage request.',
+            'instructions' => [
+                'When asked to design or edit the LearnLingo home, first call '
+                    . 'learnlingo_get_homepage and read its mustache instructions, fields and examples. '
+                    . 'Reuse the actual placeholders instead of hardcoding a particular user, '
+                    . 'course name, image URL, enrollment or progress percentage.',
+                'homepagehtml is rendered above built-in cards in learnlingo mode, replaces '
+                    . 'homepage content in html mode and is unused in moodle mode. '
+                    . 'Preserve the selected mode unless the administrator asks to change it.',
+                'Use {{#isloggedin}}...{{/isloggedin}} for authenticated content and '
+                    . '{{^isloggedin}}...{{/isloggedin}} for guest content. '
+                    . 'The user object is available only to the signed-in visitor.',
+                'Use {{#courses}}...{{/courses}} for visible catalogue courses, '
+                    . '{{#mycourses}}...{{/mycourses}} for the signed-in visitor own '
+                    . 'enrolled courses, and {{#cohorts}}...{{/cohorts}} for that '
+                    . 'visitor own cohorts. Use the hascourses, hasmycourses, '
+                    . 'hascohorts and hasimage flags for optional sections.',
+                'Show progress using {{#hasprogress}} and {{progress}} inside '
+                    . '{{#mycourses}}; if hasprogress is false do not claim a 0% '
+                    . 'completion rate. The public courses list does not contain '
+                    . 'personalized completion information.',
+                'Render course images with {{#hasimage}}<img src="{{imageurl}}" alt="">'
+                    . '{{/hasimage}} and links with {{url}}; let the server provide '
+                    . 'course names, summaries and categories dynamically.',
+                'For logged-out visitors, homepagepubliccourses / MCP publiccourses '
+                    . 'selects visible course IDs in the catalogue. Empty selection '
+                    . 'means all visible accessible courses in Moodle sort order. '
+                    . 'This never makes hidden courses public or enrolls users.',
+                'Mustache interpolates values and conditions; it cannot perform '
+                    . 'database queries, JavaScript, PHP, or Moodle helper calls. '
+                    . 'Do not generate executable scripts, partials or lambdas.',
+                'Keep semantic responsive HTML in homepagehtml and CSS/SCSS in '
+                    . 'homepagescss. Beware homepagescss is applied globally on every '
+                    . 'page, so scope homepage-only rules with explicit selectors.',
+                'Text and URL values are HTML-escaped in PHP, even inside triple-brace '
+                    . 'tags. Prefer ordinary {{variable}} syntax for readability.',
+                'Only the guest public catalogue uses a shared MUC cache with a '
+                    . '300-second TTL, invalidated by course/category events and '
+                    . 'homepage setting updates. The final rendered HTML, visitor '
+                    . 'profile, course enrollments and progress are never placed '
+                    . 'in this shared cache; do not introduce shared caching of '
+                    . 'personalized homepage HTML.',
+                'Preview writes and request explicit approval before updating '
+                    . 'the homepage. Keep other theme settings and native templates unchanged.',
+            ],
             'fields' => [
-                'isloggedin, isguest' => 'Booleans. Guest visitors never receive user, mycourses or cohorts data.',
-                'site' => 'fullname, shortname, url',
-                'user' => 'Only for the logged-in visitor: id, firstname, lastname, fullname, email, profileurl, lang',
-                'courses' => 'Visible catalogue courses; guest selection follows homepagepubliccourses, empty means all.',
-                'mycourses' => 'Only the visitor own enrolments, with progress. Never returned to guests.',
-                'cohorts' => 'Only visible cohorts of the current logged-in user: id, name, idnumber.',
-                'hascourses, hasmycourses, hascohorts' => 'Boolean list guards.',
-                'coursecount, mycoursecount' => 'List sizes.',
-                'loginurl, dashboardurl, mycoursesurl, coursesurl' => 'Internal navigation URLs.',
-                'course item' => 'id, fullname, shortname, summary, categoryname, url, imageurl, hasimage, '
-                    . 'startdate, enddate, progress, hasprogress, completed, enrolled',
+                'isloggedin, isguest' => 'Booleans. isguest is true for anonymous or guest sessions.',
+                'site' => 'fullname, shortname, url; available to all visitors.',
+                'user' => 'Own user only when signed in: id, firstname, lastname, fullname, email, profileurl, lang.',
+                'courses' => 'Visible public catalogue courses. homepagepubliccourses controls selection; '
+                    . 'empty selection means all visible accessible courses in Moodle sort order.',
+                'mycourses' => 'Only the signed-in visitor own enrolled courses, including completion progress. '
+                    . 'Empty for anonymous/guest users.',
+                'cohorts' => 'Only the current signed-in visitor own cohorts: id, name, idnumber. '
+                    . 'Empty for anonymous/guest users.',
+                'hascourses, hasmycourses, hascohorts' => 'Boolean flags for optional sections.',
+                'coursecount, mycoursecount' => 'Current counts of courses and enrolled courses.',
+                'loginurl, dashboardurl, mycoursesurl, coursesurl' => 'Moodle navigation URLs.',
+                'course item' => 'id, fullname, shortname, summary, categoryname, url, '
+                    . 'imageurl, hasimage, startdate, enddate, progress, '
+                    . 'hasprogress, completed, enrolled. startdate/enddate are Unix timestamps. '
+                    . 'Progress is a 0-100 integer; hasprogress indicates whether the figure is known.',
             ],
             'examples' => [
-                '{{#isloggedin}}Olá {{user.firstname}}{{/isloggedin}}',
-                '{{^isloggedin}}<a href="{{loginurl}}">Entrar</a>{{/isloggedin}}',
-                '{{#courses}}<a href="{{url}}">{{fullname}}</a>{{/courses}}',
-                '{{#mycourses}}<a href="{{url}}">{{fullname}} ({{progress}}%)</a>{{/mycourses}}',
-                '{{#cohorts}}<span>{{name}}</span>{{/cohorts}}',
+                'Guest versus logged-in welcome: '
+                    . '{{#isloggedin}}<h2>Hello, {{user.firstname}}!</h2>'
+                    . '<a href="{{mycoursesurl}}">My courses</a>{{/isloggedin}}'
+                    . '{{^isloggedin}}<a href="{{loginurl}}">Sign in</a>{{/isloggedin}}',
+                'Public course cards: {{#courses}}<article>'
+                    . '{{#hasimage}}<img src="{{imageurl}}" alt="">{{/hasimage}}'
+                    . '<h3><a href="{{url}}">{{fullname}}</a></h3>'
+                    . '<p>{{summary}}</p></article>{{/courses}}',
+                'Own enrollments and completion: {{#isloggedin}}{{#hasmycourses}}'
+                    . '{{#mycourses}}<a href="{{url}}">{{fullname}}</a>'
+                    . '{{#hasprogress}}<progress value="{{progress}}" max="100">'
+                    . '{{progress}}%</progress>{{/hasprogress}}{{/mycourses}}'
+                    . '{{/hasmycourses}}{{/isloggedin}}',
+                'Own cohorts: {{#isloggedin}}{{#cohorts}}'
+                    . '<span>{{name}}</span>{{/cohorts}}{{/isloggedin}}',
+                'Empty course list: {{^hascourses}}<p>No courses available.</p>{{/hascourses}}',
             ],
             'security' => 'All context strings are HTML-escaped, including in triple-brace tags. '
-                . 'Progress and user data are evaluated per request; rendered HTML is never shared in cache.',
-            'cache' => 'Guest public catalogue uses MUC application cache (TTL 300 seconds), '
-                . 'invalidated by course/category change events and setting updates.',
+                . 'No data about other users is exposed; user, mycourses and cohorts are '
+                . 'empty for guests. Individual progress and user data are read per request.',
+            'cache' => 'Guest public catalogue uses a shared MUC application cache (TTL 300 seconds), '
+                . 'invalidated by course/category change events and setting updates. '
+                . 'No shared cache contains personalized or fully rendered homepage HTML.',
         ];
     }
 
