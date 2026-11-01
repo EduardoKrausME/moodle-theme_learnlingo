@@ -91,6 +91,8 @@ final class mcp_homepage_test extends advanced_testcase {
         $this->assertArrayHasKey('mustache', $before);
         $this->assertSame('homepagehtml', $before['mustache']['field']);
         $this->assertArrayHasKey('mycourses', $before['mustache']['fields']);
+        $this->assertArrayHasKey('coursepagination', $before['mustache']['fields']);
+        $this->assertSame('4', $before['publiccoursesperpage']);
         $this->assertArrayHasKey('courses', $before['mustache']['fields']);
         $this->assertArrayHasKey('cohorts', $before['mustache']['fields']);
         $this->assertNotEmpty($before['mustache']['instructions']);
@@ -113,6 +115,8 @@ final class mcp_homepage_test extends advanced_testcase {
         $schema = $writer->get_input_schema();
         $this->assertArrayHasKey('homepagescss', $schema['properties']);
         $this->assertArrayHasKey('publiccourses', $schema['properties']);
+        $this->assertArrayHasKey('publiccoursesperpage', $schema['properties']);
+        $this->assertStringContainsString('ONLY', $schema['properties']['publiccoursesperpage']['description']);
         $this->assertStringContainsString('Only mycourses',
             $schema['properties']['html']['description']);
         $this->assertStringContainsString('Mustache', $reader->get_description());
@@ -136,6 +140,7 @@ final class mcp_homepage_test extends advanced_testcase {
         $this->assertSame('learnlingo', $after['mode']);
         $this->assertSame($html, $after['html']);
         $this->assertSame('', $after['publiccourses']);
+        $this->assertSame('4', $after['publiccoursesperpage']);
         $this->assertSame('.welcome { padding: 1rem; }', $after['homepagescss']);
         $this->assertSame(strlen('.welcome { padding: 1rem; }'), $result['homepagescss_bytes']);
         $this->assertTrue($after['fullwidth']);
