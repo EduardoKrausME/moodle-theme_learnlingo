@@ -14,6 +14,8 @@ Administrators can adjust the theme's colors, site logo, favicon and other visua
 
 LearnLingo supports different homepage presentations, including its own learning-focused homepage, Moodle's standard front page and custom HTML content. Custom styling can be applied where a more tailored institutional homepage is needed.
 
+Administrators can select which public courses appear to visitors; leaving the selection empty displays all visible courses in Moodle order. The theme also offers a read-only [homepage data API](docs/home-api.md) for displaying a signed-in learner's name, course progress and cohorts, or highlighting the most viewed courses without exposing personal data to visitors.
+
 ### Dashboard and courses
 
 The learner dashboard and course pages have configurable visual elements, including introductory areas, course information and progress presentation. Administrators can choose which optional elements appear instead of filling every screen with repeated information.
