@@ -69,7 +69,7 @@ if ($ADMIN->fulltree) {
         "brandcolor" => "#58cc02",
         "accentcolor" => "#8be24a",
         "canvascolor" => "#f7faf5",
-        "textcolor" => "#263238"
+        "textcolor" => "#263238",
     ];
     foreach ($colors as $name => $default) {
         $setting = new admin_setting_configcolourpicker(
