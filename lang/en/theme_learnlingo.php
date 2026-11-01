@@ -44,6 +44,7 @@ $string['aipreview'] = 'Review the proposed values';
 $string['brandcolor'] = 'Primary colour';
 $string['brandcolor_desc'] = 'Main colour used for buttons, links and highlights.';
 $string['brandingsettings'] = 'Branding and colours';
+$string['cachedef_publiccourses'] = 'Public courses on the homepage';
 $string['canvascolor'] = 'Page background colour';
 $string['canvascolor_desc'] = 'Main background colour of the pages.';
 $string['choosereadme'] = 'LearnLingo is a Boost child theme designed for playful, gamified learning.';
