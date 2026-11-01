@@ -95,41 +95,49 @@
             </div>
             <div class="ll-setup-assets__grid">
                 <div class="ll-setup-assets__item">
-                    <div class="ll-setup-assets__preview" aria-hidden="true">
-                        {{#logoimageurl}}
-                            <img src="{{{logoimageurl}}}" alt="" class="ll-setup-assets__logo">
-                        {{/logoimageurl}}
-                        {{^logoimageurl}}
-                            <span class="ll-setup-assets__placeholder">LearnLingo</span>
-                        {{/logoimageurl}}
-                    </div>
                     <div class="ll-setup-assets__details">
                         <label for="ll-setup-logo">{{#str}}setupassetlogo, theme_learnlingo{{/str}}</label>
-                        <small>{{#str}}setupassetlogodesc, theme_learnlingo{{/str}}</small>
+                        <small id="ll-setup-logo-help">{{#str}}setupassetlogodesc, theme_learnlingo{{/str}}</small>
+                    </div>
+                    <div class="ll-setup-assets__upload">
+                        <label for="ll-setup-logo" class="ll-setup-assets__preview ll-setup-assets__preview--upload"
+                            aria-label="{{#str}}setupassetlogo, theme_learnlingo{{/str}}">
+                            {{#logoimageurl}}
+                                <img src="{{{logoimageurl}}}" alt="" class="ll-setup-assets__logo">
+                                <span class="ll-setup-assets__preview-current">
+                                    {{#str}}setupassetexisting, theme_learnlingo{{/str}}
+                                </span>
+                            {{/logoimageurl}}
+                            {{^logoimageurl}}
+                                <span class="ll-setup-assets__placeholder">LearnLingo</span>
+                            {{/logoimageurl}}
+                        </label>
                         <input id="ll-setup-logo" class="form-control" name="logo" type="file"
+                            aria-describedby="ll-setup-logo-help"
                             accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp">
-                        {{#logoimageurl}}
-                            <span class="ll-setup-assets__current">{{#str}}setupassetexisting, theme_learnlingo{{/str}}</span>
-                        {{/logoimageurl}}
                     </div>
                 </div>
                 <div class="ll-setup-assets__item">
-                    <div class="ll-setup-assets__preview ll-setup-assets__preview--favicon" aria-hidden="true">
-                        {{#faviconimageurl}}
-                            <img src="{{{faviconimageurl}}}" alt="" class="ll-setup-assets__favicon">
-                        {{/faviconimageurl}}
-                        {{^faviconimageurl}}
-                            <span class="ll-setup-assets__favicon-placeholder">L</span>
-                        {{/faviconimageurl}}
-                    </div>
                     <div class="ll-setup-assets__details">
                         <label for="ll-setup-favicon">{{#str}}setupassetfavicon, theme_learnlingo{{/str}}</label>
-                        <small>{{#str}}setupassetfavicondesc, theme_learnlingo{{/str}}</small>
+                        <small id="ll-setup-favicon-help">{{#str}}setupassetfavicondesc, theme_learnlingo{{/str}}</small>
+                    </div>
+                    <div class="ll-setup-assets__upload">
+                        <label for="ll-setup-favicon" class="ll-setup-assets__preview ll-setup-assets__preview--favicon ll-setup-assets__preview--upload"
+                            aria-label="{{#str}}setupassetfavicon, theme_learnlingo{{/str}}">
+                            {{#faviconimageurl}}
+                                <img src="{{{faviconimageurl}}}" alt="" class="ll-setup-assets__favicon">
+                                <span class="ll-setup-assets__preview-current">
+                                    {{#str}}setupassetexisting, theme_learnlingo{{/str}}
+                                </span>
+                            {{/faviconimageurl}}
+                            {{^faviconimageurl}}
+                                <span class="ll-setup-assets__favicon-placeholder">L</span>
+                            {{/faviconimageurl}}
+                        </label>
                         <input id="ll-setup-favicon" class="form-control" name="favicon" type="file"
+                            aria-describedby="ll-setup-favicon-help"
                             accept=".png,.jpg,.jpeg,.webp,.ico,image/png,image/jpeg,image/webp,image/x-icon,image/vnd.microsoft.icon">
-                        {{#faviconimageurl}}
-                            <span class="ll-setup-assets__current">{{#str}}setupassetexisting, theme_learnlingo{{/str}}</span>
-                        {{/faviconimageurl}}
                     </div>
                 </div>
             </div>
