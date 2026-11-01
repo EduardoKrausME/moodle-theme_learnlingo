@@ -34,8 +34,6 @@ use theme_learnlingo\output\footer_renderer;
  * @package theme_learnlingo
  * @copyright 2026 Eduardo Kraus
  * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @copyright 2026 Eduardo Kraus
- * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @covers \theme_learnlingo\output\footer_renderer
  */
 final class footer_renderer_test extends advanced_testcase {
