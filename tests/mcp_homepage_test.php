@@ -91,6 +91,16 @@ final class mcp_homepage_test extends advanced_testcase {
         $this->assertArrayHasKey('mustache', $before);
         $this->assertSame('homepagehtml', $before['mustache']['field']);
         $this->assertArrayHasKey('mycourses', $before['mustache']['fields']);
+        $this->assertArrayHasKey('courses', $before['mustache']['fields']);
+        $this->assertArrayHasKey('cohorts', $before['mustache']['fields']);
+        $this->assertNotEmpty($before['mustache']['instructions']);
+        $instructions = implode(' ', $before['mustache']['instructions']);
+        $this->assertStringContainsString('homepagehtml', $instructions);
+        $this->assertStringContainsString('{{#isloggedin}}', $instructions);
+        $this->assertStringContainsString('{{#mycourses}}', $instructions);
+        $this->assertStringContainsString('{{#hasprogress}}', $instructions);
+        $this->assertStringContainsString('MUC', $instructions);
+        $this->assertStringContainsString('Never', $instructions);
         $html = '<section class="welcome"><h1>New Moodle home</h1></section>';
         $arguments = [
             'html' => $html,
@@ -103,6 +113,11 @@ final class mcp_homepage_test extends advanced_testcase {
         $schema = $writer->get_input_schema();
         $this->assertArrayHasKey('homepagescss', $schema['properties']);
         $this->assertArrayHasKey('publiccourses', $schema['properties']);
+        $this->assertStringContainsString('Only mycourses',
+            $schema['properties']['html']['description']);
+        $this->assertStringContainsString('Mustache', $reader->get_description());
+        $this->assertStringContainsString('mustache.instructions', $reader->get_description());
+        $this->assertStringContainsString('mustache.instructions', $writer->get_description());
         $this->assertStringContainsString('every page',
             $schema['properties']['homepagescss']['description']);
         $this->assertStringContainsString('footer',
