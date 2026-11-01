@@ -207,3 +207,13 @@ function theme_learnlingo_homepage_mode(theme_config $theme): string {
 function theme_learnlingo_homepage_html(theme_config $theme): string {
     return $theme->settings->homepagehtml ?? '';
 }
+
+/**
+ * Invalidate the guest catalogue after home settings change in the admin UI.
+ *
+ * @return void
+ */
+function theme_learnlingo_homepage_cache_reset(): void {
+    \theme_learnlingo\homepage_context::purge_public_cache();
+    theme_reset_all_caches();
+}
