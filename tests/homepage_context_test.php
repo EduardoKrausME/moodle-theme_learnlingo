@@ -143,6 +143,27 @@ final class homepage_context_test extends advanced_testcase {
     }
 
     /**
+     * The real anonymous homepage context must use the configured page size.
+     */
+    public function test_guest_homepage_context_uses_configured_page_size(): void {
+        $this->resetAfterTest();
+        $this->setAdminUser();
+        set_config('homepagepubliccoursesperpage', '3', 'theme_learnlingo');
+        for ($i = 1; $i <= 5; $i++) {
+            $this->getDataGenerator()->create_course(['fullname' => 'Guest Course ' . $i]);
+        }
+        homepage_context::purge_public_cache();
+        $this->setGuestUser();
+
+        $data = homepage_context::data();
+        $this->assertCount(3, $data['courses']);
+        $this->assertSame(3, $data['coursecount']);
+        $this->assertSame(5, $data['coursepagination']['coursetotal']);
+        $this->assertSame(3, $data['coursepagination']['coursesperpage']);
+        $this->assertSame(2, $data['coursepagination']['coursepagecount']);
+    }
+
+    /**
      * Four public courses with a three-card layout must create two pages.
      */
     public function test_guest_pages_limit_courses_and_offer_navigation(): void {
