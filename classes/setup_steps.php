@@ -72,6 +72,25 @@ final class setup_steps {
     }
 
     /**
+     * Keep Moodle's post-login start page valid after disabling a page.
+     * The User preference, Site and custom home options remain unchanged.
+     *
+     * @param int $current Moodle's current default homepage.
+     * @param bool $dashboard Dashboard enabled.
+     * @param bool $mycourses My courses enabled.
+     * @return int Valid Moodle default homepage.
+     */
+    public static function default_homepage(int $current, bool $dashboard, bool $mycourses): int {
+        if (!$dashboard && $current === HOMEPAGE_MY) {
+            return HOMEPAGE_MYCOURSES;
+        }
+        if (!$mycourses && $current === HOMEPAGE_MYCOURSES) {
+            return HOMEPAGE_MY;
+        }
+        return $current;
+    }
+
+    /**
      * Find the next step without allowing inaccessible steps.
      *
      * @param object $cfg Moodle configuration.
