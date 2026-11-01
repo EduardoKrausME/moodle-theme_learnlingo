@@ -54,7 +54,7 @@ final class branding_exchange {
             'loginpaneldescriptiontext' => ['text', ''],
             'loginpaneltaglinetext' => ['text', ''],
             'homepagemode' => ['homepage', 'learnlingo'],
-            'homepagehtml' => ['html', ''],
+            'homepagehtml' => ['html', 'config'],
             'homepagescss' => ['scss', ''],
             'homepagefullwidth' => ['bool', true],
             'footermode' => ['footermode', 'moodle'],
