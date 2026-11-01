@@ -88,7 +88,7 @@ if (optional_param('action', '', PARAM_ALPHA) !== '') {
     if (($palette !== 'preserve' && !array_key_exists($palette, $palettes))
             || !in_array($mode, ['learnlingo', 'moodle', 'html'], true)
             || !in_array($footermode, ['moodle', 'html'], true)) {
-        throw new moodle_exception('invalidparameter', 'debug');
+        throw new invalid_parameter_exception('Unknown LearnLingo colour palette or layout');
     }
 
     if ($palette !== 'preserve') {
