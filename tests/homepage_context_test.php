@@ -129,6 +129,20 @@ final class homepage_context_test extends advanced_testcase {
     }
 
     /**
+     * A real core course event must invalidate the public MUC catalogue.
+     */
+    public function test_course_created_event_purges_public_cache(): void {
+        $this->resetAfterTest();
+        $this->setAdminUser();
+        $cache = cache::make('theme_learnlingo', 'publiccourses');
+        $cache->set('test_event_key', [['id' => 99]]);
+        $this->assertNotFalse($cache->get('test_event_key'));
+
+        $this->getDataGenerator()->create_course(['fullname' => 'New catalogue course']);
+        $this->assertFalse($cache->get('test_event_key'));
+    }
+
+    /**
      * MCP's context contract must document all supported dynamic lists.
      */
     public function test_contract_is_limited_to_homepagehtml(): void {
