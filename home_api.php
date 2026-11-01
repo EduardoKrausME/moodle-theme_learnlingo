@@ -48,6 +48,13 @@ if (!in_array($section, ['all', 'user', 'courses', 'publiccourses', 'cohorts', '
     exit;
 }
 
+// Match the site's forced-login policy without redirecting JSON consumers to HTML.
+if (!home_data::logged_in() && !empty($CFG->forcelogin)) {
+    http_response_code(401);
+    echo json_encode(['error' => 'login_required'], JSON_THROW_ON_ERROR);
+    exit;
+}
+
 // No user ID can be supplied. Profile, cohorts, enrolments and progress always
 // belong to the user authenticated by the Moodle session; guests receive none.
 echo json_encode(home_data::response($section, $limit, $offset),
