@@ -23,6 +23,7 @@
  */
 
 use theme_learnlingo\mcp_banner;
+use theme_learnlingo\local\home_data;
 
 defined('MOODLE_INTERNAL') || die;
 
@@ -145,6 +146,18 @@ if ($ADMIN->fulltree) {
         get_string("homepagefullwidth", "theme_learnlingo"),
         get_string("homepagefullwidth_desc", "theme_learnlingo"),
         1
+    );
+    $setting->set_updatedcallback("theme_reset_all_caches");
+    $page->add($setting);
+
+    // The selection is used by the LearnLingo course grid and the public JSON API.
+    // When nothing is selected, the home shows all accessible courses by sortorder.
+    $setting = new admin_setting_configmultiselect(
+        "theme_learnlingo/publiccourses",
+        get_string("publiccourses", "theme_learnlingo"),
+        get_string("publiccourses_desc", "theme_learnlingo"),
+        "",
+        home_data::public_course_options()
     );
     $setting->set_updatedcallback("theme_reset_all_caches");
     $page->add($setting);
