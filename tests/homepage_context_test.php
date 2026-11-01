@@ -143,6 +143,68 @@ final class homepage_context_test extends advanced_testcase {
     }
 
     /**
+     * Four public courses with a three-card layout must create two pages.
+     */
+    public function test_guest_pages_limit_courses_and_offer_navigation(): void {
+        $courses = [
+            ['id' => 11], ['id' => 12], ['id' => 13], ['id' => 14],
+        ];
+        $first = homepage_context::paginate_guest_courses($courses, 1, 3);
+        $this->assertSame([11, 12, 13], array_column($first['courses'], 'id'));
+        $this->assertSame(3, $first['coursecount']);
+        $this->assertSame(4, $first['coursetotal']);
+        $this->assertSame(3, $first['coursesperpage']);
+        $this->assertSame(3, $first['coursecolumns']);
+        $this->assertSame(2, $first['coursepagecount']);
+        $this->assertTrue($first['hasnextcoursepage']);
+        $this->assertFalse($first['haspreviouscoursepage']);
+        $this->assertCount(2, $first['coursepages']);
+        $this->assertStringContainsString('llcoursepage=2', $first['nextcoursepageurl']);
+
+        $second = homepage_context::paginate_guest_courses($courses, 2, 3);
+        $this->assertSame([14], array_column($second['courses'], 'id'));
+        $this->assertSame(1, $second['coursecolumns']);
+        $this->assertFalse($second['hasnextcoursepage']);
+        $this->assertTrue($second['haspreviouscoursepage']);
+        $this->assertSame(1, $second['coursepages'][0]['number']);
+        $this->assertTrue($second['coursepages'][1]['iscurrent']);
+    }
+
+    /**
+     * Never synthesize a fourth course to fill a visual four-card layout.
+     */
+    public function test_fewer_visible_courses_reduce_real_column_count(): void {
+        $courses = [['id' => 1], ['id' => 2], ['id' => 3]];
+        $page = homepage_context::paginate_guest_courses($courses, 1, 4);
+        $this->assertSame(4, $page['coursesperpage']);
+        $this->assertSame(3, $page['coursecolumns']);
+        $this->assertSame(3, $page['coursecount']);
+        $this->assertFalse($page['hascoursepages']);
+        $this->assertCount(3, $page['courses']);
+        $this->assertSame(1, homepage_context::paginate_guest_courses($courses, -9, 4)['coursepage']);
+        $this->assertSame(1, homepage_context::paginate_guest_courses($courses, 900, 4)['coursepage']);
+    }
+
+    /**
+     * The public visitor limit cannot truncate authenticated course enrollments.
+     */
+    public function test_guest_limit_does_not_affect_enrolled_courses(): void {
+        $this->resetAfterTest();
+        set_config('homepagepubliccoursesperpage', '1', 'theme_learnlingo');
+        $user = $this->getDataGenerator()->create_user();
+        $one = $this->getDataGenerator()->create_course();
+        $two = $this->getDataGenerator()->create_course();
+        $this->getDataGenerator()->enrol_user($user->id, $one->id);
+        $this->getDataGenerator()->enrol_user($user->id, $two->id);
+        $this->setUser($user);
+        $data = homepage_context::data();
+        $this->assertFalse($data['coursepagination']);
+        $this->assertSame(2, $data['mycoursecount']);
+        $this->assertSame(2, count($data['mycourses']));
+        $this->assertSame(1, homepage_context::guest_courses_per_page());
+    }
+
+    /**
      * MCP's context contract must document all supported dynamic lists.
      */
     public function test_contract_is_limited_to_homepagehtml(): void {
@@ -151,5 +213,8 @@ final class homepage_context_test extends advanced_testcase {
         $this->assertArrayHasKey('mycourses', $schema['fields']);
         $this->assertArrayHasKey('cohorts', $schema['fields']);
         $this->assertArrayHasKey('courses', $schema['fields']);
+        $this->assertArrayHasKey('coursepagination', $schema['fields']);
+        $this->assertStringContainsString('ONLY', implode(' ', $schema['instructions']));
+        $this->assertStringContainsString('coursecolumns', implode(' ', $schema['instructions']));
     }
 }
