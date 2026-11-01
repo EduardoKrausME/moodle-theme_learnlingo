@@ -24,6 +24,7 @@
 
 namespace theme_learnlingo\output\core;
 
+use theme_learnlingo\local\home_data;
 use context_course;
 use context_system;
 use core_completion\progress;
@@ -173,24 +174,11 @@ class course_renderer extends core_course_renderer {
      * @return array Two items: courses and whether these are enrolled courses.
      */
     protected function getfrontpagecourses(): array {
-        if (isloggedin() && !isguestuser()) {
-            $fields = 'id, fullname, shortname, summary, summaryformat, startdate, enddate, visible, category, sortorder';
-            $courses = enrol_get_my_courses($fields, 'sortorder ASC', 6);
-            if (!empty($courses)) {
-                return [array_values($courses), true];
-            }
-        }
+        [$courses, $enrolled] = home_data::homepage_courses();
 
-        $options = [
-            'recursive' => true,
-            'limit' => 6,
-            'summary' => true,
-            'coursecontacts' => true,
-            'customfields' => true,
-        ];
-        $courses = core_course_category::top()->get_courses($options);
-
-        return [array_values($courses), false];
+        // Preserve the compact personal dashboard, while the guest catalogue
+        // respects the full administrator selection (or all courses by default).
+        return [$enrolled ? array_slice($courses, 0, 6) : $courses, $enrolled];
     }
 
     /**
