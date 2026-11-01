@@ -167,6 +167,21 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback("theme_learnlingo_homepage_cache_reset");
     $page->add($setting);
 
+    // Limit ONLY the guest-facing {{#courses}} list; student lists are never paginated.
+    $perpageoptions = [];
+    foreach (range(1, 12) as $count) {
+        $perpageoptions[$count] = (string)$count;
+    }
+    $setting = new admin_setting_configselect(
+        "theme_learnlingo/homepagepubliccoursesperpage",
+        get_string("homepagepubliccoursesperpage", "theme_learnlingo"),
+        get_string("homepagepubliccoursesperpage_desc", "theme_learnlingo"),
+        "4",
+        $perpageoptions
+    );
+    $setting->set_updatedcallback("theme_learnlingo_homepage_cache_reset");
+    $page->add($setting);
+
     $PAGE->requires->js_call_amd("theme_learnlingo/homepage_settings", "init");
     $settings->add($page);
 
