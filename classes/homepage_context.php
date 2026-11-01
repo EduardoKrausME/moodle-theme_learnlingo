@@ -49,7 +49,9 @@ final class homepage_context {
             return $html;
         }
 
-        $engine = new \Mustache\Engine([
+        // Moodle 4.5 ships Mustache_Engine; newer releases use Mustache\Engine.
+        $engineclass = class_exists(\Mustache\Engine::class) ? \Mustache\Engine::class : \Mustache_Engine::class;
+        $engine = new $engineclass([
             // The context is already escaped so triple braces are safe too.
             'escape' => static function($value): string {
                 return (string)$value;
