@@ -139,8 +139,9 @@ if ($action !== '') {
             break;
 
         case 2:
-            // HTML mode is preserved until the administrator selects a new mode.
-            $mode = optional_param('homepagemode', '', PARAM_ALPHA);
+            // An existing HTML homepage is managed in the full theme settings
+            // or by authorized integrations, never replaced by this wizard.
+            $mode = $currentmode === 'html' ? '' : optional_param('homepagemode', '', PARAM_ALPHA);
             if (!in_array($mode, ['', 'learnlingo', 'moodle'], true)) {
                 throw new invalid_parameter_exception('Invalid LearnLingo homepage mode');
             }
@@ -358,6 +359,10 @@ echo $OUTPUT->render_from_template('theme_learnlingo/setup', [
     'logoimageurl' => \theme_learnlingo\setup_images::current_url('logo'),
     'faviconimageurl' => \theme_learnlingo\setup_images::current_url('favicon'),
     'customhtmlmode' => $currentmode === 'html',
+    'existinghomepagehtml' => $currentmode === 'html'
+        && !in_array(trim((string)get_config('theme_learnlingo', 'homepagehtml')), ['', 'config'], true),
+    'htmlsettingsurl' => (new moodle_url('/' . ($CFG->admin ?? 'admin') . '/settings.php',
+        ['section' => 'theme_learnlingo_homepage']))->out(false),
     'advancedurl' => (new moodle_url('/admin/settings.php',
         ['section' => 'theme_learnlingo_branding']))->out(false),
     'homeurl' => (new moodle_url('/'))->out(false),
