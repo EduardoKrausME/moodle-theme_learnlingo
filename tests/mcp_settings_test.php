@@ -80,6 +80,8 @@ final class mcp_settings_test extends advanced_testcase {
         $this->assertArrayHasKey('homepagescss', (array)$schema['properties']['settings']['properties']);
         $this->assertArrayHasKey('homepagepubliccourses',
             (array)$schema['properties']['settings']['properties']);
+        $this->assertArrayHasKey('homepagepubliccoursesperpage',
+            (array)$schema['properties']['settings']['properties']);
         $this->assertArrayHasKey('footerscss', (array)$schema['properties']['settings']['properties']);
         $this->assertArrayHasKey('footerhtml', (array)$schema['properties']['settings']['properties']);
         $this->assertArrayHasKey('footermode', (array)$schema['properties']['settings']['properties']);
@@ -109,6 +111,8 @@ final class mcp_settings_test extends advanced_testcase {
         $this->assertStringContainsString('{{#mycourses}}', $properties['homepagehtml']['description']);
         $this->assertStringContainsString('Moodle sort order',
             $properties['homepagepubliccourses']['description']);
+        $this->assertStringContainsString('ONLY',
+            $properties['homepagepubliccoursesperpage']['description']);
         $this->assertStringContainsString('homepage_mustache',
             (new get_settings())->get_description());
         $this->assertStringContainsString('traditional', $properties['footer_title_1']['description']);
