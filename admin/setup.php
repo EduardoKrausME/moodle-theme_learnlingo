@@ -89,7 +89,7 @@ if ($action !== '') {
             set_config('theme', 'learnlingo');
             theme_reset_all_caches();
         }
-        redirect($url);
+        redirect(new moodle_url($url, ['activated' => 1]));
     }
     if ($action !== 'save' || !$themeactive) {
         throw new moodle_exception('invalidrequest', 'error');
