@@ -133,6 +133,15 @@ if (($ishtmlhomepage || ($PAGE->pagetype === 'site-index' && $homepagemode === '
     $extraclasses[] = 'learnlingo-html-home-fullwidth';
 }
 
+// Bind only custom homepage HTML. Native Moodle pages and editing mode stay untouched.
+if ($customfrontpage && trim(theme_learnlingo_homepage_html($PAGE->theme)) !== '') {
+    $PAGE->requires->js_call_amd(
+        'theme_learnlingo/frontend',
+        'init',
+        [(new moodle_url('/theme/learnlingo/home_api.php'))->out(false)]
+    );
+}
+
 $bodyattributes = $OUTPUT->body_attributes($extraclasses);
 $coursesurl = new moodle_url('/my/courses.php');
 $dashboardtitle = $dashboardhero
