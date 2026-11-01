@@ -216,7 +216,10 @@ Homepage:
   {{#cohorts}}, {{progress}} and {{imageurl}} inside a course loop.
   The values represent the current visitor only; do not hardcode names,
   course IDs, enrolments or progress in generated HTML. The complete
-  variable reference is in learnlingo_get_homepage.mustache.
+  variable reference is in the mustache field returned by the MCP
+  learnlingo_get_homepage tool or the homepage_mustache field returned
+  by learnlingo_get_settings. Follow the instructions and examples
+  before creating static homepage HTML.
 - settings.homepagefullwidth: boolean controlling whether the LearnLingo
   or custom HTML homepage uses the full available width. Not relevant
   to the native "moodle" homepage.
