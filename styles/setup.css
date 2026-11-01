@@ -325,3 +325,39 @@
 .ll-setup-wizard__steps--four {grid-template-columns:1fr}
 .ll-setup-student__grid--selectable,.ll-setup-switches--student,.ll-setup-student__texts {grid-template-columns:1fr}
 }
+
+
+/* Optional student page + final Login wizard screen. */
+.ll-setup-wizard__steps--five {grid-template-columns:repeat(5,minmax(0,1fr))}
+.ll-setup-login__preview {display:grid;grid-template-columns:1fr 1fr;overflow:hidden;border-radius:16px;border:1px solid #dbe6ea;min-height:265px;background:#fdfefe}
+.ll-setup-login__left {position:relative;display:flex;align-items:center;min-height:265px;padding:clamp(1.25rem,3vw,2rem);background:linear-gradient(130deg,#153e39 0%,#238660 100%);color:#fff}
+.ll-setup-login__cover {position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ll-setup-login__left:after {content:"";position:absolute;inset:0;background:linear-gradient(100deg,#102c35cb,#14453c8c)}
+.ll-setup-login__leftcontent {position:relative;z-index:1;width:100%;max-width:280px}
+.ll-setup-login__eyebrow {display:block;font-size:.77rem;font-weight:750;color:#c1f7da;margin-bottom:.8rem}
+.ll-setup-login__leftcontent strong {display:block;font-size:clamp(1.2rem,2.3vw,1.75rem);line-height:1.25;font-weight:850;color:#fff;overflow-wrap:anywhere}
+.ll-setup-login__leftcontent p {font-size:.85rem;color:#e0ece8;line-height:1.55;margin:1rem 0 0;overflow-wrap:anywhere}
+.ll-setup-login__right {padding:1.7rem;display:flex;align-items:stretch;justify-content:center;flex-direction:column;gap:11px;background:#fff}
+.ll-setup-login__right strong {display:block;color:#233f4d;font-size:1.02rem;line-height:1.35}
+.ll-setup-login__brand {display:block;max-height:50px;max-width:180px;object-fit:contain;object-position:left center;margin-bottom:.5rem}
+.ll-setup-login__defaultbrand {font-size:1.2rem;font-weight:850;color:#21704b}
+.ll-setup-login__mockfield {display:block;padding:10px 12px;border:1px solid #d5e0e5;border-radius:7px;color:#84959e;background:#fafcfd;font-size:.76rem}
+.ll-setup-login__mockbutton {display:block;text-align:center;color:#fff;background:#1d8853;padding:10px 12px;font-weight:750;border-radius:7px;font-size:.84rem}
+.ll-setup-login__previewnote {font-size:.83rem;color:#667985;line-height:1.6;margin:.8rem 0 0}
+.ll-setup-login__previewnote a {font-weight:750;color:#216e4d;text-decoration:underline;text-underline-offset:3px}
+.ll-setup-assets__preview--loginlogo,.ll-setup-assets__preview--loginbackground {height:124px}
+.ll-setup-assets__background {width:100%;height:100%;object-fit:cover;border-radius:8px}
+.ll-setup-login__fields {display:grid;grid-template-columns:1fr 1.35fr;gap:1rem 1.25rem;margin-top:1.3rem}
+.ll-setup-login__fields>div {min-width:0}
+.ll-setup-login__fields label {display:block;font-weight:800;font-size:.9rem;margin:0 0 .45rem}
+.ll-setup-login__fields input,.ll-setup-login__fields textarea {width:100%}
+.ll-setup-login__preserve {margin:1.25rem 0 0;font-size:.84rem;line-height:1.6;color:#627685}
+@media (max-width:1000px) {
+.ll-setup-wizard__steps--five {grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (max-width:820px) {
+.ll-setup-wizard__steps--five {grid-template-columns:1fr}
+.ll-setup-login__preview {grid-template-columns:1fr}
+.ll-setup-login__left {min-height:180px}
+.ll-setup-login__fields {grid-template-columns:1fr}
+}
