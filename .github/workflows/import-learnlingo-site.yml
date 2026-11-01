@@ -1,4 +1,4 @@
-name: Import LearnLingo website into docs
+name: Import and verify LearnLingo website in docs
 
 on:
   push:
@@ -12,18 +12,18 @@ permissions:
 jobs:
   import-site:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           persist-credentials: true
-      - name: Mirror published site
+      - name: Mirror published site into temporary directory
         shell: bash
         run: |
           set -euo pipefail
           source_url="https://learnlingo.eduardokraus.chatgpt.site/"
-          mkdir -p docs
+          mirror_dir="$(mktemp -d)"
           wget \
             --execute robots=off \
             --page-requisites \
@@ -31,20 +31,42 @@ jobs:
             --adjust-extension \
             --no-parent \
             --no-host-directories \
-            --directory-prefix=docs \
+            --directory-prefix="$mirror_dir" \
             --user-agent="Mozilla/5.0 (compatible; LearnLingoSiteMirror/1.0)" \
             --timeout=30 \
             --tries=3 \
             "$source_url"
-          test -s docs/index.html
-          if ! grep -qi "learnlingo" docs/index.html; then
+          test -s "$mirror_dir/index.html"
+          if ! grep -qi "learnlingo" "$mirror_dir/index.html"; then
             echo "Downloaded page does not appear to be LearnLingo" >&2
             exit 1
           fi
+          mkdir -p docs
+          rsync -a --delete "$mirror_dir/" docs/
           touch docs/.nojekyll
           printf "Mirrored files:\n"
           find docs -type f -printf '%P (%s bytes)\n' | sort
-      - name: Commit site to docs
+          echo "Changes against previous snapshot:"
+          git status --short docs
+      - name: Validate files, local links, page sections and features
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 .github/scripts/audit-learnlingo-site.py
+          for script in docs/*.js; do
+            node --check "$script"
+          done
+          printf '\nJavaScript syntax checks passed.\n'
+      - name: Publish audit summary
+        if: always()
+        shell: bash
+        run: |
+          if test -f /tmp/learnlingo-site-audit.md; then
+            cat /tmp/learnlingo-site-audit.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Site download or validation failed before the report was generated." >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Commit verified website to docs
         shell: bash
         run: |
           set -euo pipefail
@@ -52,8 +74,8 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -A docs
           if git diff --cached --quiet; then
-            echo 'No changes to commit.'
+            echo 'Site is already identical to the published source.'
             exit 0
           fi
-          git commit -m 'Publish LearnLingo website snapshot in docs'
+          git commit -m 'Sync and verify LearnLingo website in docs'
           git push origin HEAD:master
