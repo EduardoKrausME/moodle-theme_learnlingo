@@ -272,3 +272,56 @@
 .ll-setup-wizard__actions-left {justify-content:center}
 .ll-setup-wizard__next {width:100%}
 }
+
+
+/* Onboarding page 4: choose Moodle's actual Dashboard/My courses navigation. */
+.ll-setup-wizard__steps--four {grid-template-columns:repeat(4,minmax(0,1fr))}
+.ll-setup-student__choicehint {color:#516876;line-height:1.65;margin:.25rem 0 1.1rem}
+.ll-setup-student__grid--selectable {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.1rem}
+.ll-setup-student__page--choice {position:relative;display:flex;flex-direction:column;min-width:0}
+.ll-setup-student__page--choice>input {position:absolute;opacity:0;width:1px;height:1px;inset:0}
+.ll-setup-student__choice {position:relative;display:flex;flex:1;flex-direction:column;cursor:pointer;border:2px solid #dce7ec;border-radius:15px;background:#fff;padding:1rem;transition:border-color .18s,box-shadow .18s}
+.ll-setup-student__choice:hover {border-color:#91baa5;box-shadow:0 8px 22px #19452d12}
+.ll-setup-student__page--choice>input:checked + label {border-color:#178c50;background:#f5fbf6;box-shadow:0 0 0 3px #178c5020}
+.ll-setup-student__page--choice>input:focus-visible + label {outline:3px solid #1d59b4;outline-offset:3px}
+.ll-setup-student__check {position:absolute;top:1.6rem;right:1.6rem;width:26px;height:26px;border:2px solid #bccdd5;border-radius:8px;color:transparent;display:grid;place-items:center;font-weight:900;background:#fff;z-index:1}
+.ll-setup-student__page--choice>input:checked + label .ll-setup-student__check {background:#20884f;border-color:#20884f;color:#fff}
+.ll-setup-student__preview {display:block;height:165px;border-radius:10px;overflow:hidden;border:1px solid #e2e9ee;background:#f8fafc;margin-bottom:1.1rem}
+.ll-setup-student__bar {display:flex;align-items:center;gap:5px;height:27px;background:#e9eff2;padding:0 9px}
+.ll-setup-student__bar>i {width:7px;height:7px;border-radius:50%;background:#bfcdd4}
+.ll-setup-student__hero {display:flex;flex-direction:column;gap:9px;padding:13px 15px;height:76px;background:linear-gradient(115deg,#dcebe3,#f5f9f3)}
+.ll-setup-student__hero strong {color:#275a3e;font-size:.85rem}
+.ll-setup-student__hero span {width:68%;height:6px;border-radius:5px;background:#bcd7cb}
+.ll-setup-student__hero span:last-child {width:45%}
+.ll-setup-student__preview--courses .ll-setup-student__hero {height:45px;background:#eff4fa}
+.ll-setup-student__preview--courses .ll-setup-student__hero strong {font-size:.78rem;color:#3a5378}
+.ll-setup-student__preview--courses .ll-setup-student__hero span {display:none}
+.ll-setup-student__tiles {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:10px 14px}
+.ll-setup-student__tiles span {height:40px;border-radius:5px;background:#d8e5ee;border:1px solid #cbd9e0}
+.ll-setup-student__tiles span:nth-child(2) {background:#dbeedc}
+.ll-setup-student__tiles span:nth-child(3) {background:#f4e7d9}
+.ll-setup-student__preview--dashboard .ll-setup-student__tiles {grid-template-columns:1.5fr 1fr 1fr}
+.ll-setup-student__page--choice strong {font-size:1.07rem;margin:.1rem 0 .45rem;display:block}
+.ll-setup-student__page--choice small {line-height:1.6;display:block;color:#516b79;font-size:.88rem;flex:1}
+.ll-setup-student__selectlabel {display:inline-flex;align-items:center;color:#247d4f;font-weight:800;margin:.9rem 0 .1rem;font-size:.84rem}
+.ll-setup-student__page--choice>a {font-size:.86rem;margin:.7rem .3rem .2rem;font-weight:700;color:#246c50;text-decoration:underline;text-underline-offset:3px}
+.ll-setup-student__warning {border:1px solid #d9e2e5;background:#f6f8f9;border-radius:12px;padding:1rem 1.2rem;margin-top:1.25rem;line-height:1.62}
+.ll-setup-student__warning strong {font-weight:800;display:block;margin-bottom:.35rem;color:#314e5c}
+.ll-setup-student__warning p {margin:.2rem 0 .6rem;color:#4c6370;font-size:.89rem}
+.ll-setup-student__warning .ll-setup-student__atleastone {margin-bottom:0;font-weight:750}
+.ll-setup-student__navigation {margin:1rem 0 0;color:#647887;font-size:.83rem}
+.ll-setup-student__navigation a {color:#216b4c;font-weight:700}
+.ll-setup-switches--student {grid-template-columns:repeat(2,minmax(0,1fr))}
+.ll-setup-student__texts {display:grid;gap:1rem;grid-template-columns:1fr 1.4fr;margin-top:1.3rem}
+.ll-setup-student__texts label {display:block;font-weight:800;margin-bottom:.4rem}
+.ll-setup-student__ai {margin-top:1.3rem;padding:1.35rem 1.5rem;border-radius:14px;background:#f7fafc;border:1px solid #dee8ed}
+.ll-setup-student__ai>strong {font-size:1.05rem;display:block;margin-bottom:.4rem}
+.ll-setup-student__ai>p {font-size:.9rem;color:#56707a;line-height:1.6}
+.ll-setup-student__ailinks {display:flex;gap:1rem;flex-wrap:wrap;margin:1rem 0}
+.ll-setup-student__ailinks a {font-weight:750;color:#1b7a53}
+.ll-setup-student__ai>button {font-weight:750}
+.ll-setup-student__ai label {display:block}
+@media (max-width:820px) {
+.ll-setup-wizard__steps--four {grid-template-columns:1fr}
+.ll-setup-student__grid--selectable,.ll-setup-switches--student,.ll-setup-student__texts {grid-template-columns:1fr}
+}
