@@ -178,8 +178,8 @@ echo $OUTPUT->render_from_template('theme_learnlingo/setup', [
     'mcpurl' => 'https://github.com/EduardoKrausME/moodle-local_mcp',
     'chatgpturl' => 'https://chatgpt.com/',
     'jsonurl' => (new moodle_url('/theme/learnlingo/admin/branding_json.php'))->out(false),
-    'prompt' => \\theme_learnlingo\\branding_exchange::prompt(
-        \\theme_learnlingo\\branding_exchange::export()),
+    'prompt' => \theme_learnlingo\\branding_exchange::prompt(
+        \theme_learnlingo\\branding_exchange::export()),
     'customhtmlmode' => $currentmode === 'html',
     'advancedurl' => (new moodle_url('/admin/settings.php',
         ['section' => 'theme_learnlingo_branding']))->out(false),
