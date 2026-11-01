@@ -100,7 +100,7 @@ final class mcp_homepage_test extends advanced_testcase {
         $this->assertStringContainsString('{{#mycourses}}', $instructions);
         $this->assertStringContainsString('{{#hasprogress}}', $instructions);
         $this->assertStringContainsString('MUC', $instructions);
-        $this->assertStringContainsString('Never', $instructions);
+        $this->assertStringContainsString('instead of hardcoding', $instructions);
         $html = '<section class="welcome"><h1>New Moodle home</h1></section>';
         $arguments = [
             'html' => $html,
