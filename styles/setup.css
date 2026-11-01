@@ -371,3 +371,11 @@
 .ll-setup-assets__preview--upload .ll-setup-assets__favicon {width:auto;height:auto;max-width:64px;max-height:64px}
 .ll-setup-assets__preview-current {position:absolute;left:50%;bottom:.45rem;transform:translateX(-50%);font-size:.76rem;line-height:1.4;font-weight:750;color:#315b43;background:#ecf8f0;border-radius:5px;padding:.15rem .5rem;white-space:nowrap}
 .ll-setup-assets__upload>input[type="file"] {display:block;width:100%;max-width:100%;background:#fff;height:auto}
+
+/* Step 2: existing HTML homepage is shown as a status, not a layout chooser. */
+.ll-setup-html-status {display:flex;gap:1rem;align-items:flex-start;padding:1.4rem;border:1px solid #d9e5de;background:#f7fbf8;border-radius:13px}
+.ll-setup-html-status__icon {display:grid;place-items:center;flex:none;width:34px;height:34px;background:#e2f3e7;color:#21794b;border-radius:50%;font-weight:850}
+.ll-setup-html-status strong {display:block;font-size:1.07rem;color:#244c38;margin-bottom:.5rem;line-height:1.4}
+.ll-setup-html-status p {color:#526779;font-size:.92rem;line-height:1.65;margin:0 0 1rem}
+.ll-setup-html-status .btn {border-radius:9px;font-weight:700}
+@media(max-width:600px){.ll-setup-html-status{flex-direction:column}.ll-setup-html-status .btn{width:100%}}
