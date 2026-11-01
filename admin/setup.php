@@ -87,8 +87,13 @@ if ($action !== '') {
     require_sesskey();
 
     if ($action === 'skip') {
+        // Declining onboarding must also disarm the homepage sentinel.
+        if ((string)get_config('theme_learnlingo', 'homepagehtml') === 'config') {
+            set_config('homepagehtml', '', 'theme_learnlingo');
+            theme_reset_all_caches();
+        }
         set_config('setup_pending', 0, 'theme_learnlingo');
-        redirect($adminurl);
+        redirect(new moodle_url('/'));
     }
     if ($action === 'activate') {
         // Changing the site's active theme always requires an explicit POST.
@@ -150,7 +155,12 @@ if ($action !== '') {
                 set_config($field, optional_param($field, 0, PARAM_BOOL), 'theme_learnlingo');
             }
             theme_reset_all_caches();
-            // ChatGPT, Claude and Moodle MCP are optional within Home and Footer.
+            // Once the final step is saved, remove the sentinel; otherwise
+            // visiting the home would keep offering the assistant forever.
+            // Preserve genuine HTML supplied by a user or an MCP/JSON import.
+            if ((string)get_config('theme_learnlingo', 'homepagehtml') === 'config') {
+                set_config('homepagehtml', '', 'theme_learnlingo');
+            }
             set_config('setup_pending', 0, 'theme_learnlingo');
             break;
     }
