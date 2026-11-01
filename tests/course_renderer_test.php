@@ -39,7 +39,11 @@ final class course_renderer_test extends advanced_testcase {
      * Course images use itemid 0 in storage but omit it from pluginfile URLs.
      */
     public function test_course_overview_image_url_does_not_include_itemid(): void {
-        global $PAGE;
+        global $CFG, $PAGE;
+
+        // The legacy course renderer is loaded by course/lib.php during web
+        // requests, but PHPUnit must load it before instantiating the theme renderer.
+        require_once($CFG->dirroot . '/course/renderer.php');
 
         $this->resetAfterTest();
         $this->setAdminUser();
@@ -56,7 +60,17 @@ final class course_renderer_test extends advanced_testcase {
             'filename' => 'cover.png',
         ], base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4z8DwHwAFgAI/ScL/nwAAAABJRU5ErkJggg=='));
 
-        $renderer = new course_renderer_url_test_helper($PAGE, 'html');
+        $renderer = new class($PAGE, 'html') extends course_renderer {
+            /**
+             * Expose the protected image URL helper for this integration test.
+             *
+             * @param core_course_list_element $course Course overview.
+             * @return string
+             */
+            public function overview_image_url(core_course_list_element $course): string {
+                return $this->getcourseimageurl($course);
+            }
+        };
         $url = $renderer->overview_image_url(new core_course_list_element($course));
 
         $this->assertSame(0, (int)$file->get_itemid());
@@ -68,15 +82,3 @@ final class course_renderer_test extends advanced_testcase {
     }
 }
 
-/**
- * Exposes the protected image URL method for an integration-level renderer test.
- */
-class course_renderer_url_test_helper extends course_renderer {
-    /**
-     * @param core_course_list_element $course Course list item.
-     * @return string
-     */
-    public function overview_image_url(core_course_list_element $course): string {
-        return $this->getcourseimageurl($course);
-    }
-}
