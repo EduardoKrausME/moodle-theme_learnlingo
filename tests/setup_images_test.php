@@ -132,6 +132,50 @@ final class setup_images_test extends \advanced_testcase {
     }
 
     /**
+     * Preserve transparent corners when a PNG logo is resized, without distortion.
+     *
+     * @return void
+     */
+    public function test_transparent_logo_preserves_alpha(): void {
+        global $CFG;
+
+        $this->resetAfterTest();
+        $this->setAdminUser();
+        $this->require_gd();
+
+        $source = tempnam($CFG->tempdir, 'll-test-alpha-');
+        $image = imagecreatetruecolor(2000, 1000);
+        imagealphablending($image, false);
+        imagesavealpha($image, true);
+        $transparent = imagecolorallocatealpha($image, 0, 0, 0, 127);
+        imagefill($image, 0, 0, $transparent);
+        $green = imagecolorallocatealpha($image, 0, 180, 100, 0);
+        imagefilledrectangle($image, 400, 250, 1600, 750, $green);
+        imagepng($image, $source);
+        imagedestroy($image);
+
+        try {
+            setup_images::save(['logo' => ['tmp_name' => $source]]);
+            $storedname = (string)get_config('core_admin', 'logo');
+            $contextid = \context_system::instance()->id;
+            $hash = sha1("/{$contextid}/core_admin/logo/0/" . ltrim($storedname, '/'));
+            $storedfile = get_file_storage()->get_file_by_hash($hash);
+            $this->assertNotFalse($storedfile);
+
+            $output = imagecreatefromstring($storedfile->get_content());
+            $this->assertSame(800, imagesx($output));
+            $this->assertSame(400, imagesy($output));
+            $corner = imagecolorsforindex($output, imagecolorat($output, 0, 0));
+            $center = imagecolorsforindex($output, imagecolorat($output, 400, 200));
+            $this->assertSame(127, $corner['alpha']);
+            $this->assertSame(0, $center['alpha']);
+            imagedestroy($output);
+        } finally {
+            @unlink($source);
+        }
+    }
+
+    /**
      * Omitted file inputs preserve the Moodle-wide logo and favicon settings.
      *
      * @return void
