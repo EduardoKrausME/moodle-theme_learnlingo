@@ -67,7 +67,8 @@ final class update_settings extends base_tool {
             . 'Preview and explicit confirmation are required. Read '
             . 'learnlingo_get_settings first and pass state_hash as expected_hash. '
             . 'The shared site logo and favicon use core_admin; the separate login '
-            . 'logo uses theme_learnlingo. Read and update them through images.logo, '
+            . 'logo uses theme_learnlingo. Favicon supports PNG, JPEG, WebP or ICO. '
+            . 'Read and update them through images.logo, '
             . 'images.favicon and images.loginlogo (Base64 or public HTTPS), '
             . 'without changing the other image areas.';
     }
@@ -176,6 +177,11 @@ final class update_settings extends base_tool {
             ],
             'additionalProperties' => false,
         ];
+        $faviconimage = $image;
+        $faviconimage['properties']['image_base64']['description'] =
+            'Base64 PNG, JPEG, WebP or ICO (5 MiB maximum).';
+        $faviconimage['properties']['image_url']['description'] =
+            'Public HTTPS URL of PNG, JPEG, WebP or ICO.';
         $loginimage = $image;
         $loginimage['properties']['image_base64']['description'] = 'Base64 PNG, JPEG or WebP (5 MiB maximum).';
         $loginimage['properties']['image_url']['description'] = 'Public HTTPS URL of a PNG, JPEG or WebP image.';
@@ -193,7 +199,7 @@ final class update_settings extends base_tool {
                     . 'Only the supplied file areas change; the global logo, favicon and login logo are independent.',
                 'properties' => [
                     'logo' => $image,
-                    'favicon' => $image,
+                    'favicon' => $faviconimage,
                     'loginlogo' => $loginimage,
                 ],
                 'additionalProperties' => false,

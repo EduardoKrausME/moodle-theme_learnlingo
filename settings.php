@@ -89,7 +89,7 @@ if ($ADMIN->fulltree) {
         get_string("favicon", "theme_learnlingo"),
         get_string("favicon_desc", "theme_learnlingo"),
         "favicon", 0,
-        ["maxfiles" => 1, "accepted_types" => [".jpg", ".jpeg", ".png"]]
+        ["maxfiles" => 1, "accepted_types" => ["image"]]
     );
     $setting->set_updatedcallback("theme_reset_all_caches");
     $page->add($setting);

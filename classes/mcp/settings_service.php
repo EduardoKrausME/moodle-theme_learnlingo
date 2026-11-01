@@ -138,11 +138,14 @@ final class settings_service {
             }
             $data['settings'][$name] = $value;
         }
-        // Validate the complete resulting document, not just the changed fields.
-        $validated = branding_exchange::parse(branding_exchange::json($data));
-        foreach ($input as $name => $unused) {
-            if ($before['settings'][$name] !== $validated['settings'][$name]) {
-                $updates[$name] = $validated['settings'][$name];
+        // Image-only operations must not fail because of unrelated legacy HTML/SCSS.
+        // Settings changes still validate the resulting document in full.
+        if ($input) {
+            $validated = branding_exchange::parse(branding_exchange::json($data));
+            foreach ($input as $name => $unused) {
+                if ($before['settings'][$name] !== $validated['settings'][$name]) {
+                    $updates[$name] = $validated['settings'][$name];
+                }
             }
         }
 
@@ -175,15 +178,22 @@ final class settings_service {
                 $images[$name] = ['remove' => true];
                 continue;
             }
-            [$bytes, $mime, $ext] = image_service::decode($source);
-            $allowedmimes = $name === 'loginlogo'
-                ? ['image/png', 'image/jpeg', 'image/webp']
-                : ['image/png', 'image/jpeg'];
+            // ICO files require their own decoder; the generic course image decoder
+            // intentionally supports raster PNG/JPEG/WebP only.
+            $decodedico = $name === 'favicon' ? self::decode_favicon_ico($source) : null;
+            [$bytes, $mime, $ext] = $decodedico ?? image_service::decode($source);
+            $allowedmimes = match ($name) {
+                'favicon' => ['image/png', 'image/jpeg', 'image/webp', 'image/vnd.microsoft.icon'],
+                'loginlogo' => ['image/png', 'image/jpeg', 'image/webp'],
+                default => ['image/png', 'image/jpeg'],
+            };
             if (!in_array($mime, $allowedmimes, true)) {
                 throw new api_exception('invalid_brand_image_type', 400,
-                    $name === 'loginlogo'
-                        ? 'The login logo accepts PNG, JPEG or WebP images through MCP.'
-                        : 'The Moodle site logo and favicon accept PNG or JPEG files.');
+                    match ($name) {
+                        'favicon' => 'The favicon accepts PNG, JPEG, WebP and ICO images through MCP.',
+                        'loginlogo' => 'The login logo accepts PNG, JPEG or WebP images through MCP.',
+                        default => 'The Moodle site logo accepts PNG or JPEG images.',
+                    });
             }
             $images[$name] = ['remove' => false, 'bytes' => $bytes, 'mime' => $mime, 'extension' => $ext];
         }
@@ -191,6 +201,110 @@ final class settings_service {
             throw new api_exception('no_changes', 400, 'Specify a changed setting or an image operation.');
         }
         return ['before' => $before, 'settings' => $updates, 'images' => $images];
+    }
+
+    /**
+     * Decode a favicon in the ICO container format, including the common data URI.
+     * All other formats are delegated to the tested local_mcp image decoder.
+     *
+     * @param array $source Source using image_base64 or image_url.
+     * @return array|null Bytes, MIME and extension, or null for a non-ICO input.
+     */
+    private static function decode_favicon_ico(array $source): ?array {
+        $hasbase64 = !empty($source['image_base64']);
+        $hasurl = !empty($source['image_url']);
+        if ($hasbase64 === $hasurl) {
+            // Let the shared decoder reject missing or ambiguous sources.
+            return null;
+        }
+        if ($hasbase64) {
+            $encoded = (string)$source['image_base64'];
+            $encoded = preg_replace('~^data:image/(?:x-icon|vnd\.microsoft\.icon);base64,~i', '', $encoded);
+            if (strlen($encoded) > (int)ceil(image_service::MAX_BYTES * 4 / 3) + 16) {
+                throw new api_exception('image_too_large', 400);
+            }
+            $bytes = base64_decode($encoded, true);
+            if ($bytes === false) {
+                return null;
+            }
+            if (substr($bytes, 0, 4) !== "\x00\x00\x01\x00") {
+                return null;
+            }
+        } else {
+            $url = (string)$source['image_url'];
+            $parts = parse_url($url);
+            if (!is_array($parts) || !preg_match('~\.ico$~i', (string)($parts['path'] ?? ''))) {
+                return null;
+            }
+            // Apply the same public HTTPS and no-redirect restrictions as image_service.
+            $hostname = strtolower(rtrim((string)($parts['host'] ?? ''), '.'));
+            if (($parts['scheme'] ?? '') !== 'https' || !$hostname ||
+                    isset($parts['user']) || isset($parts['pass']) || isset($parts['fragment']) ||
+                    (isset($parts['port']) && (int)$parts['port'] !== 443) ||
+                    filter_var($url, FILTER_VALIDATE_URL) === false ||
+                    $hostname === 'localhost' || str_ends_with($hostname, '.localhost') ||
+                    str_ends_with($hostname, '.local') ||
+                    filter_var(trim($hostname, '[]'), FILTER_VALIDATE_IP)) {
+                throw new api_exception('invalid_image_url', 400, 'Provide a public HTTPS favicon URL.');
+            }
+            $curl = new \curl();
+            $bytes = $curl->get($url, [
+                'CURLOPT_FOLLOWLOCATION' => false,
+                'CURLOPT_MAXREDIRS' => 0,
+                'CURLOPT_CONNECTTIMEOUT' => 5,
+                'CURLOPT_TIMEOUT' => 25,
+                'CURLOPT_MAXFILESIZE' => image_service::MAX_BYTES,
+                'CURLOPT_SSL_VERIFYPEER' => true,
+                'CURLOPT_SSL_VERIFYHOST' => 2,
+            ]);
+            if (!is_string($bytes) || (int)($curl->get_info()['http_code'] ?? 0) !== 200) {
+                throw new api_exception('image_download_failed', 400, 'The favicon URL is not publicly downloadable.');
+            }
+        }
+        if (strlen($bytes) > image_service::MAX_BYTES) {
+            throw new api_exception('image_too_large', 400);
+        }
+        if (!self::valid_favicon_ico($bytes)) {
+            throw new api_exception('unsupported_image', 400, 'Invalid ICO file.');
+        }
+        return [$bytes, 'image/vnd.microsoft.icon', 'ico'];
+    }
+
+    /**
+     * Validate the ICO directory and the bounds of its embedded PNG/DIB images.
+     * Do not trust a filename, MIME declaration or the first four bytes alone.
+     *
+     * @param string $bytes File content.
+     * @return bool
+     */
+    private static function valid_favicon_ico(string $bytes): bool {
+        $length = strlen($bytes);
+        if ($length < 22 || substr($bytes, 0, 4) !== "\x00\x00\x01\x00") {
+            return false;
+        }
+        $count = unpack('vcount', substr($bytes, 4, 2))['count'];
+        $directoryend = 6 + $count * 16;
+        if ($count < 1 || $count > 64 || $length < $directoryend) {
+            return false;
+        }
+        for ($i = 0; $i < $count; $i++) {
+            $entry = 6 + $i * 16;
+            $size = unpack('Vsize', substr($bytes, $entry + 8, 4))['size'];
+            $offset = unpack('Voffset', substr($bytes, $entry + 12, 4))['offset'];
+            if ($size < 8 || $offset < $directoryend || $offset > $length ||
+                    $size > $length - $offset) {
+                return false;
+            }
+            $signature = substr($bytes, $offset, 8);
+            if ($signature !== "\x89PNG\r\n\x1a\n") {
+                // Classic ICO images contain an uncompressed DIB info header.
+                $dibsize = unpack('Vsize', substr($bytes, $offset, 4))['size'];
+                if ($size < 40 || !in_array($dibsize, [40, 52, 56, 108, 124], true)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     /**

@@ -374,6 +374,76 @@ final class mcp_settings_test extends advanced_testcase {
     }
 
     /**
+     * An unrelated legacy setting must not prevent a favicon replacement.
+     */
+    public function test_image_only_upload_does_not_revalidate_legacy_scss(): void {
+        $this->require_mcp();
+        $this->resetAfterTest();
+        $identity = $this->identity();
+        set_config('homepagescss', '@import url(https://legacy.example.org/stylesheet.css);', 'theme_learnlingo');
+        $reader = new get_settings();
+        $before = $reader->execute([], $identity);
+        $png = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/y9sAAAAASUVORK5CYII=';
+
+        $writer = new update_settings();
+        $patch = [
+            'expected_hash' => $before['state_hash'],
+            'images' => ['favicon' => ['image_base64' => $png]],
+        ];
+        $preview = $writer->preview($patch, $identity);
+        $this->assertSame('replace', $preview['images_summary']['favicon']['action']);
+        $writer->execute($patch, $identity);
+        $after = $reader->execute([], $identity);
+        $this->assertSame('image/png', $after['images']['favicon']['uploaded']['mimetype']);
+        $this->assertSame($before['settings']['homepagescss'], $after['settings']['homepagescss']);
+    }
+
+    /**
+     * An ICO favicon is an image container, not a PNG/JPEG file.
+     */
+    public function test_ico_favicon_is_accepted_through_mcp(): void {
+        $this->require_mcp();
+        $this->resetAfterTest();
+        $identity = $this->identity();
+        $png = base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/y9sAAAAASUVORK5CYII=');
+        // Single 1 x 1 ICO directory entry with a PNG-encoded image.
+        $ico = hex2bin('0000010001000101000001002000')
+            . pack('V', strlen($png)) . pack('V', 22) . $png;
+        $reader = new get_settings();
+        $before = $reader->execute([], $identity);
+
+        $writer = new update_settings();
+        $patch = [
+            'expected_hash' => $before['state_hash'],
+            'images' => ['favicon' => ['image_base64' => 'data:image/x-icon;base64,' . base64_encode($ico)]],
+        ];
+        $preview = $writer->preview($patch, $identity);
+        $this->assertSame('image/vnd.microsoft.icon', $preview['images_summary']['favicon']['mimetype']);
+        $writer->execute($patch, $identity);
+        $after = $reader->execute([], $identity);
+        $this->assertSame('image/vnd.microsoft.icon', $after['images']['favicon']['uploaded']['mimetype']);
+        $this->assertStringEndsWith('.ico', $after['images']['favicon']['uploaded']['filename']);
+    }
+
+    /**
+     * Reject malformed icon directory offsets before creating stored files.
+     */
+    public function test_invalid_ico_rejected(): void {
+        $this->require_mcp();
+        $this->resetAfterTest();
+        $identity = $this->identity();
+        $reader = new get_settings();
+        $before = $reader->execute([], $identity);
+        $this->expectException(api_exception::class);
+        (new update_settings())->preview([
+            'expected_hash' => $before['state_hash'],
+            'images' => ['favicon' => ['image_base64' => base64_encode(
+                hex2bin('0000010001000101000001002000') . pack('V', 99) . pack('V', 22) . 'invalid'
+            )]],
+        ], $identity);
+    }
+
+    /**
      * The favicon is stored independently in the native core_admin file area.
      */
     public function test_uploaded_favicon_preserves_logo_and_other_settings(): void {
@@ -456,7 +526,7 @@ final class mcp_settings_test extends advanced_testcase {
         $this->assertStringContainsString('/theme_learnlingo/loginlogo/', $uploaded['url']);
         $this->assertSame('/' . $uploaded['filename'], get_config('theme_learnlingo', 'loginlogo'));
         $this->assertNotFalse(get_file_storage()->get_file(
-            \\context_system::instance()->id, 'theme_learnlingo', 'loginlogo', 0, '/', $uploaded['filename']
+            \context_system::instance()->id, 'theme_learnlingo', 'loginlogo', 0, '/', $uploaded['filename']
         ));
         $this->assertNotEmpty($after['_mcp_content']);
         $this->assertNotSame($before['state_hash'], $after['state_hash']);
