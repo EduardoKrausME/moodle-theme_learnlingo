@@ -210,5 +210,3 @@ function theme_learnlingo_homepage_html(theme_config $theme): string {
     // for administrators. Never expose it as literal homepage content.
     return $html === 'config' ? '' : $html;
 }
-
-
