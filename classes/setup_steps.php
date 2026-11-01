@@ -45,7 +45,8 @@ final class setup_steps {
      * @return bool
      */
     public static function mycourses_enabled(object $cfg): bool {
-        return !isset($cfg->enablemycourses) || (bool)$cfg->enablemycourses;
+        // Moodle 5.2+ defaults My courses to disabled on new installations.
+        return !empty($cfg->enablemycourses);
     }
 
     /**
@@ -56,6 +57,18 @@ final class setup_steps {
      */
     public static function count(object $cfg): int {
         return (self::dashboard_enabled($cfg) || self::mycourses_enabled($cfg)) ? 4 : 3;
+    }
+
+    /**
+     * Require at least one of Moodle's two personal landing pages to be on.
+     * The setup wizard deliberately does not make the site lose both paths.
+     *
+     * @param bool $dashboard Whether to enable Dashboard.
+     * @param bool $mycourses Whether to enable My courses.
+     * @return bool
+     */
+    public static function valid_selection(bool $dashboard, bool $mycourses): bool {
+        return $dashboard || $mycourses;
     }
 
     /**
