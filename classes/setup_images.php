@@ -101,8 +101,11 @@ final class setup_images {
                 || ($type === IMAGETYPE_JPEG && in_array($extension, ['jpg', 'jpeg'], true))
                 || ($type === IMAGETYPE_WEBP && $extension === 'webp'
                     && function_exists('imagecreatefromwebp'));
-            if (!$valid || !self::has_capacity((int)$info[0], (int)$info[1])) {
+            if (!$valid) {
                 throw new invalid_parameter_exception(get_string('setupimageformaterror', 'theme_learnlingo'));
+            }
+            if (!self::has_capacity((int)$info[0], (int)$info[1])) {
+                throw new invalid_parameter_exception(get_string('setupimagememoryerror', 'theme_learnlingo'));
             }
 
             $result[$field] = [
