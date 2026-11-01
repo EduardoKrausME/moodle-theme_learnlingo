@@ -78,6 +78,8 @@ final class mcp_settings_test extends advanced_testcase {
         $this->assertArrayHasKey('scsspre', (array)$schema['properties']['settings']['properties']);
         $this->assertArrayHasKey('scss', (array)$schema['properties']['settings']['properties']);
         $this->assertArrayHasKey('homepagescss', (array)$schema['properties']['settings']['properties']);
+        $this->assertArrayHasKey('homepagepubliccourses',
+            (array)$schema['properties']['settings']['properties']);
         $this->assertArrayHasKey('footerscss', (array)$schema['properties']['settings']['properties']);
         $this->assertArrayHasKey('footerhtml', (array)$schema['properties']['settings']['properties']);
         $this->assertArrayHasKey('footermode', (array)$schema['properties']['settings']['properties']);
@@ -104,6 +106,11 @@ final class mcp_settings_test extends advanced_testcase {
         $this->assertStringContainsString('EVERY page', $properties['homepagescss']['description']);
         $this->assertStringContainsString('footermode=html', $properties['footerscss']['description']);
         $this->assertStringContainsString('existing page-footer', $properties['footerhtml']['description']);
+        $this->assertStringContainsString('{{#mycourses}}', $properties['homepagehtml']['description']);
+        $this->assertStringContainsString('Moodle sort order',
+            $properties['homepagepubliccourses']['description']);
+        $this->assertStringContainsString('homepage_mustache',
+            (new get_settings())->get_description());
         $this->assertStringContainsString('traditional', $properties['footer_title_1']['description']);
         $this->assertStringContainsString('before boost', strtolower(
             (new get_settings())->get_description()));
@@ -244,6 +251,10 @@ final class mcp_settings_test extends advanced_testcase {
         $reader = new get_settings();
         $writer = new update_settings();
         $before = $reader->execute([], $identity);
+        $this->assertArrayHasKey('homepage_mustache', $before);
+        $this->assertSame('homepagehtml', $before['homepage_mustache']['field']);
+        $this->assertNotEmpty($before['homepage_mustache']['instructions']);
+        $this->assertArrayHasKey('mycourses', $before['homepage_mustache']['fields']);
         $patch = [
             'expected_hash' => $before['state_hash'],
             'settings' => [
