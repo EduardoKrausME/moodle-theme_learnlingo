@@ -50,52 +50,50 @@ A atualização geral recebe somente os campos desejados em `settings` e, opcion
 
 ## First-run visual setup
 
-A fresh installation stores the theme's portable defaults with `set_config()`
-using `theme_learnlingo\\branding_exchange::definitions()` (the same source
-of truth as the JSON/MCP tools). Existing values and uploaded file settings are
-not overwritten.
+New installs store theme settings defaults with `set_config()` and keep any
+previously uploaded site assets. Moodle's `core\hook\after_config` hook
+offers the first-run visual assistant to the site administrator after Moodle
+finishes installing or upgrading. The wizard never activates LearnLingo without
+an explicit confirmation if another site theme is still active.
 
-After Moodle finishes its normal installation/upgrade steps, the next regular
-GET to `/admin/index.php` by a site administrator opens
-`/theme/learnlingo/admin/setup.php`. The one-time redirection is registered
-through Moodle's `core\\hook\\after_config` in `db/hooks.php`, with guards for
-installation, upgrades, CLI, PHPUnit, Behat and maintenance. Selecting
-**Not now** stops the onboarding redirect. Upgrading an existing installation
-does not unexpectedly enable the wizard.
+The assistant consists of **three independently saved steps**:
 
-**Activation is always a separate, explicit decision:** if the active site
-theme is not `learnlingo`, the setup first asks whether to activate it.
-It never changes Moodle's global `theme` setting merely by visiting the page.
-Declining leaves the existing theme untouched. A site whose `config.php`
-forces another theme sees an explanation rather than an unexplained redirect
-loop.
+1. **Colours, logo and favicon**: choose one of six palettes or preserve the
+   institution's current colours. Optionally upload a PNG/JPEG site logo
+   (maximum 3 MiB), and a PNG/JPEG/ICO favicon (maximum 1 MiB). Uploads are
+   validated server-side before the palette or file settings are changed.
+   Assets are stored in the system context's **core_admin/logo** and
+   **core_admin/favicon** Moodle File API areas, matching the existing theme
+   settings; no parallel theme-specific logo/favicons are created.
+   Existing uploads are preserved when no replacement is selected.
+2. **Homepage**: visually compare the LearnLingo homepage and Moodle's
+   native homepage. A custom HTML homepage can still be selected in advanced
+   settings, and an existing HTML layout isn't silently discarded.
+   The screen includes the optional Moodle MCP and a copy/paste JSON prompt
+   for ChatGPT or Claude, focused on personalizing the homepage.
+3. **Footer and components**: choose the native or custom HTML footer, and
+   configure the visual switches. The same MCP and ChatGPT/Claude workflows
+   are offered for footer customization; there is no redundant fourth AI step.
 
-After activation, administrators see **two large illustrated homepage
-choices**: LearnLingo cards/hero or Moodle's native course layout. The third
-`homepagemode=html` mode remains available in advanced settings; if an
-existing HTML homepage is active, leaving the two radio buttons unselected
-preserves its mode and its content. Six predefined palettes, current-colour
-preservation, footer selection and component switches are also available.
+Each step saves only the settings relevant to that step and automatically
+opens the next. Returning to an earlier step doesn't reset subsequent settings.
+Finishing the third step clears the one-time onboarding marker. The setup page
+remains available afterwards from the theme's advanced settings.
 
-The lower sections present two independent ChatGPT workflows:
+The copy/paste prompts reuse `branding_exchange::export()` and the existing
+validated JSON importer at `/theme/learnlingo/admin/branding_json.php`.
+Moodle MCP remains optional, and updates made through an authorized MCP
+connection still require the existing explicit confirmation workflow.
+Logo/favicon uploads are regular Moodle admin operations, not JSON strings.
+Administrators should review site content before sharing a prompt externally.
 
-1. **Moodle MCP:** optional installation of `local_mcp`, tool discovery,
-   READ/WRITE scope, `moodle/site:config` capability and explicit write
-   confirmation.
-2. **Copy/paste without MCP:** the `branding_exchange::prompt()` exporter
-   embeds the current theme JSON into a ChatGPT conversation prompt. An existing
-   AMD clipboard helper copies it; the user pastes the generated JSON into
-   `/theme/learnlingo/admin/branding_json.php`, which validates it before
-   applying changes. Logos and other uploaded images remain separate.
-
-All page content is localized in PT-BR/EN and the screen uses scoped responsive
-CSS. Installing or selecting LearnLingo does not auto-apply a colour preset;
-saving the wizard changes only the explicitly selected options. To use the new
-hook immediately on an already-installed development site without increasing
-`version.php`, purge Moodle's caches.
-
-Run the installation regression tests on a Moodle site with PHPUnit configured:
+Run the existing installation PHPUnit tests on a Moodle site with PHPUnit
+configured:
 
 ```bash
 vendor/bin/phpunit --testsuite theme_learnlingo_testsuite
 ```
+
+This PR leaves `version.php` unchanged. On an already-installed development
+site, purge Moodle's caches to ensure the new hooks and Mustache templates
+are picked up.
