@@ -64,6 +64,12 @@ final class get_homepage implements tool_interface {
             . 'mode, including shared navigation and footer elements; it is NOT '
             . 'homepage-scoped. scss is also global. Footer mode, footerhtml and '
             . 'footerscss are read separately with learnlingo_get_settings. '
+            . 'Only homepagehtml supports server-rendered Mustache (PHP), with '
+            . '{{#courses}}, {{#mycourses}}, {{#cohorts}}, {{user.firstname}}, '
+            . '{{progress}} and {{#isloggedin}}. The response mustache field '
+            . 'documents every available variable, per-visitor privacy and cache. '
+            . 'publiccourses is a comma-separated list of visible course IDs for '
+            . 'anonymous visitors; empty means all visible courses in sort order. '
             . 'Returns state_hash for concurrency-safe learnlingo_update_homepage.';
     }
 
