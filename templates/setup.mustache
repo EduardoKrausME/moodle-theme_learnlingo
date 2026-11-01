@@ -1,6 +1,6 @@
 {{!
     @template theme_learnlingo/setup
-    Four-step installation wizard: each choice is persisted before navigation.
+    Three-step installation wizard: each choice is persisted before navigation.
 }}
 <div class="ll-setup ll-setup-wizard">
     <header class="ll-setup-wizard__top">
@@ -16,7 +16,7 @@
             <strong>{{#str}}setupwizardstepof, theme_learnlingo, {{step}}{{/str}}</strong>
             <span>{{progress}}%</span>
         </div>
-        <div class="ll-setup-wizard__meter" role="progressbar" aria-valuenow="{{step}}" aria-valuemin="1" aria-valuemax="4"
+        <div class="ll-setup-wizard__meter" role="progressbar" aria-valuenow="{{step}}" aria-valuemin="1" aria-valuemax="3"
             aria-label="{{#str}}setupwizardprogresslabel, theme_learnlingo{{/str}}">
             <span style="width: {{progress}}%;"></span>
         </div>
@@ -57,7 +57,7 @@
     {{/done}}
 
     {{^done}}
-        <form method="post" action="{{actionurl}}" class="ll-setup-form ll-setup-wizard__form">
+        <form method="post" action="{{actionurl}}" enctype="multipart/form-data" class="ll-setup-form ll-setup-wizard__form">
             <input type="hidden" name="sesskey" value="{{sesskey}}">
             <input type="hidden" name="step" value="{{step}}">
             {{#stepone}}
@@ -86,6 +86,54 @@
                     </div>
                 {{/palettes}}
             </div>
+        </section>
+        <section class="ll-setup-section ll-setup-assets" id="ll-setup-identity" aria-labelledby="ll-assets-heading">
+            <div class="ll-setup-section__heading">
+                <span class="ll-setup-number ll-setup-number--asset" aria-hidden="true">✦</span>
+                <div><h3 id="ll-assets-heading">{{#str}}setupassetsheading, theme_learnlingo{{/str}}</h3>
+                    <p>{{#str}}setupassetsintro, theme_learnlingo{{/str}}</p></div>
+            </div>
+            <div class="ll-setup-assets__grid">
+                <div class="ll-setup-assets__item">
+                    <div class="ll-setup-assets__preview" aria-hidden="true">
+                        {{#logoimageurl}}
+                            <img src="{{logoimageurl}}" alt="" class="ll-setup-assets__logo">
+                        {{/logoimageurl}}
+                        {{^logoimageurl}}
+                            <span class="ll-setup-assets__placeholder">LearnLingo</span>
+                        {{/logoimageurl}}
+                    </div>
+                    <div class="ll-setup-assets__details">
+                        <label for="ll-setup-logo">{{#str}}setupassetlogo, theme_learnlingo{{/str}}</label>
+                        <small>{{#str}}setupassetlogodesc, theme_learnlingo{{/str}}</small>
+                        <input id="ll-setup-logo" class="form-control" name="logo" type="file"
+                            accept=".png,.jpg,.jpeg,image/png,image/jpeg">
+                        {{#logoimageurl}}
+                            <span class="ll-setup-assets__current">{{#str}}setupassetexisting, theme_learnlingo{{/str}}</span>
+                        {{/logoimageurl}}
+                    </div>
+                </div>
+                <div class="ll-setup-assets__item">
+                    <div class="ll-setup-assets__preview ll-setup-assets__preview--favicon" aria-hidden="true">
+                        {{#faviconimageurl}}
+                            <img src="{{faviconimageurl}}" alt="" class="ll-setup-assets__favicon">
+                        {{/faviconimageurl}}
+                        {{^faviconimageurl}}
+                            <span class="ll-setup-assets__favicon-placeholder">L</span>
+                        {{/faviconimageurl}}
+                    </div>
+                    <div class="ll-setup-assets__details">
+                        <label for="ll-setup-favicon">{{#str}}setupassetfavicon, theme_learnlingo{{/str}}</label>
+                        <small>{{#str}}setupassetfavicondesc, theme_learnlingo{{/str}}</small>
+                        <input id="ll-setup-favicon" class="form-control" name="favicon" type="file"
+                            accept=".png,.jpg,.jpeg,.ico,image/png,image/jpeg,image/x-icon,image/vnd.microsoft.icon">
+                        {{#faviconimageurl}}
+                            <span class="ll-setup-assets__current">{{#str}}setupassetexisting, theme_learnlingo{{/str}}</span>
+                        {{/faviconimageurl}}
+                    </div>
+                </div>
+            </div>
+            <p class="ll-setup-assets__note">{{#str}}setupassetnote, theme_learnlingo{{/str}}</p>
         </section>
 
             {{/stepone}}
@@ -278,96 +326,7 @@
         </div>
     </aside>
             {{/stepthree}}
-            {{#stepfour}}
-                <div class="ll-setup-wizard__finalintro">
-                    <h3>{{#str}}setupaifinaltitle, theme_learnlingo{{/str}}</h3>
-                    <p>{{#str}}setupaifinaldesc, theme_learnlingo{{/str}}</p>
-                </div>
-    <section class="ll-setup-mcp ll-setup-mcp--wizard" id="ll-setup-mcp" aria-labelledby="ll-mcp-heading">
-        <div class="ll-setup-mcp__header">
-            <span class="ll-setup-kicker">{{#str}}setupmcpbadge, theme_learnlingo{{/str}}</span>
-            <h3 id="ll-mcp-heading">{{#str}}setupmcpheading, theme_learnlingo{{/str}}</h3>
-            <p>{{#str}}setupmcpintro, theme_learnlingo{{/str}}</p>
-        </div>
-        <div class="ll-setup-mcp__grid">
-            <article>
-                <span class="ll-setup-mcp__icon" aria-hidden="true">01</span>
-                <h4>{{#str}}setupmcpstepone, theme_learnlingo{{/str}}</h4>
-                <p>{{#str}}setupmcpsteponedesc, theme_learnlingo{{/str}}</p>
-            </article>
-            <article>
-                <span class="ll-setup-mcp__icon" aria-hidden="true">02</span>
-                <h4>{{#str}}setupmcpsteptwo, theme_learnlingo{{/str}}</h4>
-                <p>{{#str}}setupmcpsteptwodesc, theme_learnlingo{{/str}}</p>
-            </article>
-            <article>
-                <span class="ll-setup-mcp__icon" aria-hidden="true">03</span>
-                <h4>{{#str}}setupmcpstepthree, theme_learnlingo{{/str}}</h4>
-                <p>{{#str}}setupmcpstepthreedesc, theme_learnlingo{{/str}}</p>
-            </article>
-        </div>
-        <div class="ll-setup-mcp__tools">
-            <div>
-                <strong>{{#str}}setupmcpread, theme_learnlingo{{/str}}</strong>
-                <code>learnlingo_get_settings</code>
-                <code>learnlingo_get_homepage</code>
-            </div>
-            <div>
-                <strong>{{#str}}setupmcpwrite, theme_learnlingo{{/str}}</strong>
-                <code>learnlingo_update_settings</code>
-                <code>learnlingo_update_homepage</code>
-                <code>learnlingo_update_styles</code>
-                <code>learnlingo_update_footer</code>
-            </div>
-        </div>
-        <div class="ll-setup-mcp__bottom">
-            <p>
-                {{#mcpinstalled}}{{#str}}setupmcpinstalled, theme_learnlingo{{/str}}{{/mcpinstalled}}
-                {{^mcpinstalled}}{{#str}}setupmcpnotinstalled, theme_learnlingo{{/str}}{{/mcpinstalled}}
-            </p>
-            <a href="{{mcpurl}}" class="btn btn-outline-light" target="_blank" rel="noopener noreferrer">
-                {{#str}}setupmcpdocs, theme_learnlingo{{/str}}
-            </a>
-        </div>
-    </section>
 
-    <section class="ll-setup-prompt" id="ll-setup-prompt" aria-labelledby="ll-prompt-heading">
-        <div class="ll-setup-prompt__heading">
-            <span class="ll-setup-number">04</span>
-            <div>
-                <span class="ll-setup-prompt__eyebrow">{{#str}}setuppromptbadge, theme_learnlingo{{/str}}</span>
-                <h3 id="ll-prompt-heading">{{#str}}setuppromptheading, theme_learnlingo{{/str}}</h3>
-                <p>{{#str}}setuppromptintro, theme_learnlingo{{/str}}</p>
-            </div>
-        </div>
-        <div class="ll-setup-prompt__steps">
-            <span><b>1</b>{{#str}}setuppromptstepone, theme_learnlingo{{/str}}</span>
-            <span><b>2</b>{{#str}}setuppromptsteptwo, theme_learnlingo{{/str}}</span>
-            <span><b>3</b>{{#str}}setuppromptstepthree, theme_learnlingo{{/str}}</span>
-        </div>
-        <label class="ll-setup-prompt__label" for="learnlingo-brand-prompt">
-            {{#str}}setuppromptlabel, theme_learnlingo{{/str}}
-        </label>
-        <textarea id="learnlingo-brand-prompt" class="form-control ll-setup-prompt__textarea"
-            rows="6" readonly spellcheck="false">{{prompt}}</textarea>
-        <div class="ll-setup-prompt__actions">
-            <button type="button" id="learnlingo-copy-prompt" class="btn btn-primary">
-                {{#str}}setuppromptcopy, theme_learnlingo{{/str}}
-            </button>
-            <a href="{{claudeurl}}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-secondary">
-                {{#str}}setuppromptopenclaude, theme_learnlingo{{/str}}
-            </a>
-            <a href="{{chatgpturl}}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-secondary">
-                {{#str}}setuppromptopenchat, theme_learnlingo{{/str}}
-            </a>
-            <a href="{{jsonurl}}" class="ll-setup-prompt__import">
-                {{#str}}setuppromptimport, theme_learnlingo{{/str}}
-            </a>
-        </div>
-        <p class="ll-setup-prompt__note">{{#str}}setuppromptnote, theme_learnlingo{{/str}}</p>
-    </section>
-
-            {{/stepfour}}
             <div class="ll-setup-wizard__actions">
                 <div class="ll-setup-wizard__actions-left">
                     {{#hasprevious}}
