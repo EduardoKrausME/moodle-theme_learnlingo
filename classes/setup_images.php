@@ -360,13 +360,21 @@ final class setup_images {
         if (!in_array($field, ['logo', 'favicon'], true)) {
             return '';
         }
-        $relative = ltrim((string)get_config('core_admin', $field), '/');
+        $relative = trim((string)get_config('core_admin', $field), '/');
         if ($relative === '') {
             return '';
         }
+
+        // The Moodle setting stores the filename/path, not a pathnamehash.
+        // Use the File API to construct the canonical hash instead of manually
+        // hashing it (the file path must contain the separator after itemid).
+        $segments = explode('/', $relative);
+        $filename = array_pop($segments);
+        $filepath = '/' . ($segments ? implode('/', $segments) . '/' : '');
         $contextid = context_system::instance()->id;
-        $hash = sha1("/{$contextid}/core_admin/{$field}/0/{$relative}");
-        $file = get_file_storage()->get_file_by_hash($hash);
+        $file = get_file_storage()->get_file(
+            $contextid, 'core_admin', $field, 0, $filepath, $filename
+        );
         if (!$file || $file->is_directory()) {
             return '';
         }
