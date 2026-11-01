@@ -161,12 +161,29 @@ if ($action !== '') {
             break;
 
         case 4:
-            // This step is available only if Moodle enables Dashboard or My courses.
-            set_config('showwelcome', optional_param('showwelcome', 0, PARAM_BOOL), 'theme_learnlingo');
-            if ($dashboardenabled) {
-                set_config('showdashboardhero',
-                    optional_param('showdashboardhero', 0, PARAM_BOOL), 'theme_learnlingo');
+            // These are the actual Moodle-wide navigation settings, not a
+            // LearnLingo-only presentation toggle. Do not allow both off.
+            $newdashboard = (bool)optional_param('enabledashboard', 0, PARAM_BOOL);
+            $newmycourses = (bool)optional_param('enablemycourses', 0, PARAM_BOOL);
+            if (!\theme_learnlingo\setup_steps::valid_selection($newdashboard, $newmycourses)) {
+                throw new invalid_parameter_exception(get_string('setupstudentchooseone', 'theme_learnlingo'));
             }
+            set_config('enabledashboard', (int)$newdashboard);
+            set_config('enablemycourses', (int)$newmycourses);
+
+            // Do not leave the default post-login landing page pointing
+            // to a page that was just disabled through this wizard.
+            $defaulthomepage = (int)($CFG->defaulthomepage ?? HOMEPAGE_SITE);
+            if (!$newdashboard && $defaulthomepage === HOMEPAGE_MY) {
+                set_config('defaulthomepage', HOMEPAGE_MYCOURSES);
+            } else if (!$newmycourses && $defaulthomepage === HOMEPAGE_MYCOURSES) {
+                set_config('defaulthomepage', HOMEPAGE_MY);
+            }
+
+            set_config('showwelcome', optional_param('showwelcome', 0, PARAM_BOOL), 'theme_learnlingo');
+            // Persist the control even when the dashboard is newly enabled.
+            set_config('showdashboardhero',
+                optional_param('showdashboardhero', 0, PARAM_BOOL), 'theme_learnlingo');
             foreach (['dashboardeyebrowtext', 'dashboarddescriptiontext'] as $field) {
                 set_config($field, optional_param($field, '', PARAM_TEXT), 'theme_learnlingo');
             }
