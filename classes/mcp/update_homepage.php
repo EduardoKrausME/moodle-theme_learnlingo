@@ -65,7 +65,14 @@ final class update_homepage extends base_tool {
             . 'Use explicit homepage selectors for homepage-only rules. '
             . 'For footermode, footerhtml and footer-scoped footerscss use '
             . 'learnlingo_update_settings. Validates changes, previews them and '
-            . 'requires explicit confirmation. Read learnlingo_get_homepage first.';
+            . 'requires explicit confirmation. Read learnlingo_get_homepage first '
+            . 'for frontend_bindings and HTML examples. In homepagehtml, use '
+            . 'data-learnlingo-loop="courses|publiccourses|popular|cohorts" '
+            . 'on normal containers, {{fullname}}, {{url}}, {{progress}} in '
+            . 'repeated cards, data-learnlingo-text for profile fields, '
+            . 'data-learnlingo-if for loggedin and !loggedin, and '
+            . 'data-learnlingo-progress for progress bars. The theme loads '
+            . 'frontend.js and session-aware home_api.php automatically.';
     }
 
     /**
@@ -92,7 +99,15 @@ final class update_homepage extends base_tool {
                     . 'main homepage content in html mode, hidden in moodle mode. '
                     . 'If mode is omitted, updating HTML preserves learnlingo mode '
                     . 'or activates html mode when the previous mode is different. '
-                    . 'Use HTML markup without scripts.'],
+                    . 'Use HTML markup without scripts. Use '
+                    . 'data-learnlingo-loop="courses|publiccourses|popular|cohorts" '
+                    . 'on a container, with {{fullname}}, {{url}}, {{imageurl}}, '
+                    . '{{progress}}, {{views}} in its repeated child HTML. '
+                    . 'data-learnlingo-limit="4" controls list size. '
+                    . 'data-learnlingo-text="user.firstname" inserts profile text, '
+                    . 'data-learnlingo-if="loggedin" / "!loggedin" hides sections '
+                    . 'and data-learnlingo-progress="progress" builds progress bars. '
+                    . 'frontend.js fetches the API automatically; no inline JS.'],
             'fullwidth' => ['type' => 'boolean',
                 'description' => 'homepagefullwidth: use full available width '
                     . 'for learnlingo and html homepage modes; irrelevant in moodle mode.'],
