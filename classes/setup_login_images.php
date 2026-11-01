@@ -12,7 +12,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Process login-only assets from the LearnLingo onboarding assistant.
@@ -27,6 +27,7 @@ namespace theme_learnlingo;
 use context_system;
 use invalid_parameter_exception;
 use theme_config;
+use Throwable;
 
 /**
  * Store the login logo and background in their existing Moodle file areas.
@@ -61,8 +62,8 @@ final class setup_login_images {
                 continue;
             }
             if ($error !== UPLOAD_ERR_OK || !is_string($file['tmp_name'] ?? null)
-                    || !is_uploaded_file($file['tmp_name'])
-                    || !is_file($file['tmp_name']) || filesize($file['tmp_name']) <= 0) {
+                || !is_uploaded_file($file['tmp_name'])
+                || !is_file($file['tmp_name']) || filesize($file['tmp_name']) <= 0) {
                 throw new invalid_parameter_exception(get_string('setupimageuploaderror', 'theme_learnlingo'));
             }
             if (!extension_loaded('gd')) {
@@ -106,10 +107,14 @@ final class setup_login_images {
         $unit = strtolower(substr($limit, -1));
         if ($unit === 'g') {
             $number *= 1024 ** 3;
-        } else if ($unit === 'm') {
-            $number *= 1024 ** 2;
-        } else if ($unit === 'k') {
-            $number *= 1024;
+        } else {
+            if ($unit === 'm') {
+                $number *= 1024 ** 2;
+            } else {
+                if ($unit === 'k') {
+                    $number *= 1024;
+                }
+            }
         }
         return memory_get_usage(true) + $pixels * 7
             + (self::BACKGROUND_WIDTH * self::BACKGROUND_HEIGHT * 5) + 20 * 1024 ** 2 < $number;
@@ -166,7 +171,7 @@ final class setup_login_images {
                 imagefill($output, 0, 0, imagecolorallocate($output, 255, 255, 255));
             }
             if (!imagecopyresampled($output, $input, 0, 0, 0, 0,
-                    $newwidth, $newheight, $width, $height)) {
+                $newwidth, $newheight, $width, $height)) {
                 throw new invalid_parameter_exception(get_string('setupimageformaterror', 'theme_learnlingo'));
             }
             $path = @tempnam($CFG->tempdir, 'll-login-');
@@ -182,7 +187,7 @@ final class setup_login_images {
                 'extension' => $savepng ? 'png' : 'jpg',
                 'mimetype' => $savepng ? 'image/png' : 'image/jpeg',
             ];
-        } catch (\Throwable $error) {
+        } catch (Throwable $error) {
             if ($path !== false && is_file($path)) {
                 @unlink($path);
             }

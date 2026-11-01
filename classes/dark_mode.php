@@ -12,7 +12,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Optional local_boost_dark integration for LearnLingo.
@@ -23,6 +23,8 @@
  */
 
 namespace theme_learnlingo;
+
+use moodle_url;
 
 /**
  * Detect the installed Moodle plugin without changing its configuration.
@@ -78,10 +80,10 @@ final class dark_mode {
     /**
      * Use Moodle's configured admin directory; never assume a site URL.
      *
-     * @return \moodle_url
+     * @return moodle_url
      */
-    public static function install_url(): \moodle_url {
+    public static function install_url(): moodle_url {
         global $CFG;
-        return new \moodle_url('/' . ($CFG->admin ?? 'admin') . '/index.php');
+        return new moodle_url('/' . ($CFG->admin ?? 'admin') . '/index.php');
     }
 }

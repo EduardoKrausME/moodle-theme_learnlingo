@@ -34,6 +34,7 @@ use html_writer;
 use local_personalxp\service\xp_manager;
 use moodle_url;
 use stdClass;
+use theme_learnlingo\homepage_context;
 use function format_text;
 
 /**
@@ -67,7 +68,7 @@ class course_renderer extends core_course_renderer {
                 // An empty HTML configuration must not result in an empty site homepage.
                 return parent::frontpage();
             }
-            return '<div class="learnlingo-html-home">' . \theme_learnlingo\homepage_context::render($html) . '</div>';
+            return '<div class="learnlingo-html-home">' . homepage_context::render($html) . '</div>';
         }
 
         [$courses, $isenrolledlist] = $this->getfrontpagecourses();
@@ -88,7 +89,7 @@ class course_renderer extends core_course_renderer {
         if ($isenrolledlist) {
             foreach ($coursecards as $index => $candidate) {
                 if ($candidate['hasprogress'] &&
-                        $candidate['progress'] > 0 && $candidate['progress'] < 100) {
+                    $candidate['progress'] > 0 && $candidate['progress'] < 100) {
                     $featuredcourse = $candidate;
                     unset($coursecards[$index]);
                     break;
@@ -139,7 +140,7 @@ class course_renderer extends core_course_renderer {
         $extrahtml = theme_learnlingo_homepage_html($this->page->theme);
         if (trim($extrahtml) !== '') {
             // Preserve the LearnLingo course cards beneath the optional custom content.
-            $homepage = '<div class="learnlingo-home-intro">' . \theme_learnlingo\homepage_context::render($extrahtml)
+            $homepage = '<div class="learnlingo-home-intro">' . homepage_context::render($extrahtml)
                 . '</div>' . $homepage;
         }
         return $homepage;
@@ -153,8 +154,8 @@ class course_renderer extends core_course_renderer {
      */
     public function frontpage_section1() {
         if (!$this->page->user_is_editing()
-                && theme_learnlingo_homepage_mode($this->page->theme) === 'html'
-                && theme_learnlingo_homepage_html($this->page->theme) !== '') {
+            && theme_learnlingo_homepage_mode($this->page->theme) === 'html'
+            && theme_learnlingo_homepage_html($this->page->theme) !== '') {
             return '';
         }
         return parent::frontpage_section1();
@@ -215,7 +216,7 @@ class course_renderer extends core_course_renderer {
         }
 
         if ($progress !== null) {
-            $progress = max(0, min(100, (int) round($progress)));
+            $progress = max(0, min(100, (int)round($progress)));
         }
 
         $categoryname = '';
@@ -235,11 +236,11 @@ class course_renderer extends core_course_renderer {
         // Only the enrolled learner's own XP is shown, independently of course completion.
         $xpstate = null;
         if (isloggedin() && !isguestuser()
-                && class_exists('\\local_personalxp\\service\\xp_manager')
-                && xp_manager::is_enabled()) {
+            && class_exists('\\local_personalxp\\service\\xp_manager')
+            && xp_manager::is_enabled()) {
             $context = context_course::instance((int)$course->id, IGNORE_MISSING);
             if ($context && is_enrolled($context, $USER->id)
-                    && has_capability('local/personalxp:view', $context, $USER->id)) {
+                && has_capability('local/personalxp:view', $context, $USER->id)) {
                 $xpstate = xp_manager::get_course_display_state(
                     (int)$USER->id, (int)$course->id);
             }

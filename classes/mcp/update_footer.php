@@ -127,8 +127,10 @@ final class update_footer extends base_tool {
             ];
             if ($type === 'footermode') {
                 $property['enum'] = ['moodle', 'html'];
-            } else if ($type === 'color') {
-                $property['pattern'] = '^#[A-Fa-f0-9]{6}$';
+            } else {
+                if ($type === 'color') {
+                    $property['pattern'] = '^#[A-Fa-f0-9]{6}$';
+                }
             }
             $properties[$name] = $property;
         }
@@ -184,7 +186,7 @@ final class update_footer extends base_tool {
      */
     private static function prepare(array $arguments): array {
         if (!isset($arguments['expected_hash']) || !is_string($arguments['expected_hash']) ||
-                !preg_match('/^[a-f0-9]{64}$/D', $arguments['expected_hash'])) {
+            !preg_match('/^[a-f0-9]{64}$/D', $arguments['expected_hash'])) {
             throw new api_exception('expected_hash_required', 400,
                 'Read learnlingo_get_settings and supply its state_hash before updating the footer.');
         }
@@ -217,7 +219,7 @@ final class update_footer extends base_tool {
                 'bytes_after' => is_string($value) ? strlen($value) : null,
             ];
             if ($name === 'footermode' || $name === 'footer_show_copywriter' ||
-                    $name === 'footer_background_color') {
+                $name === 'footer_background_color') {
                 $summary[$name]['value_before'] = $before;
                 $summary[$name]['value_after'] = $value;
             }

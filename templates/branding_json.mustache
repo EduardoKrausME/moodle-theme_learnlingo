@@ -1,4 +1,20 @@
 {{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
     @template theme_learnlingo/branding_json
 
     JSON export and import administration page. Textareas are escaped by Mustache.
@@ -25,7 +41,7 @@
 <p>{{#str}}jsonpromptdesc, theme_learnlingo{{/str}}</p>
 <label for="learnlingo-brand-prompt" class="form-label">{{#str}}jsonpromptlabel, theme_learnlingo{{/str}}</label>
 <textarea id="learnlingo-brand-prompt" class="form-control mb-2 font-monospace"
-    rows="5" readonly spellcheck="false">{{prompt}}</textarea>
+          rows="5" readonly spellcheck="false">{{prompt}}</textarea>
 <button type="button" id="learnlingo-copy-prompt" class="btn btn-secondary mb-4">
     {{#str}}jsoncopy, theme_learnlingo{{/str}}
 </button>
@@ -40,7 +56,7 @@
     <input type="hidden" name="action" value="import">
     <label for="learnlingo-brand-json" class="form-label">{{#str}}jsonimportlabel, theme_learnlingo{{/str}}</label>
     <textarea id="learnlingo-brand-json" name="importjson" class="form-control mb-3 font-monospace"
-        rows="20" required spellcheck="false">{{importjson}}</textarea>
+              rows="20" required spellcheck="false">{{importjson}}</textarea>
     <p class="text-muted">{{#str}}jsonimportwarning, theme_learnlingo{{/str}}</p>
     <input type="submit" value="{{#str}}jsonimportbutton, theme_learnlingo{{/str}}" class="btn btn-primary">
 </form>
@@ -48,4 +64,4 @@
 <h3 class="mt-5">{{#str}}jsonrawtitle, theme_learnlingo{{/str}}</h3>
 <p>{{#str}}jsonrawdesc, theme_learnlingo{{/str}}</p>
 <textarea id="learnlingo-brand-raw" class="form-control font-monospace"
-    rows="10" readonly spellcheck="false">{{exportjson}}</textarea>
+          rows="10" readonly spellcheck="false">{{exportjson}}</textarea>

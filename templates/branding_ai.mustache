@@ -1,4 +1,20 @@
 {{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
     @template theme_learnlingo/branding_ai
 
     AI-assisted branding administration form. All values are escaped by Mustache.
@@ -24,9 +40,9 @@
     <input type="hidden" name="action" value="generate">
     <label for="branding-description">{{#str}}aidescription, theme_learnlingo{{/str}}</label>
     <textarea id="branding-description" name="description" rows="5"
-        class="form-control mb-3" required maxlength="2000">{{description}}</textarea>
+              class="form-control mb-3" required maxlength="2000">{{description}}</textarea>
     <input type="submit" class="btn btn-primary"
-        value="{{#str}}aigenerate, theme_learnlingo{{/str}}">
+           value="{{#str}}aigenerate, theme_learnlingo{{/str}}">
 </form>
 {{#hasproposal}}
     <h3>{{#str}}aipreview, theme_learnlingo{{/str}}</h3>
@@ -40,6 +56,6 @@
         <input type="hidden" name="sesskey" value="{{sesskey}}">
         <input type="hidden" name="action" value="apply">
         <input type="submit" class="btn btn-success"
-            value="{{#str}}aiapply, theme_learnlingo{{/str}}">
+               value="{{#str}}aiapply, theme_learnlingo{{/str}}">
     </form>
 {{/hasproposal}}

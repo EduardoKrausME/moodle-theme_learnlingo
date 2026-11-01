@@ -12,7 +12,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Conditions and safe choices for the optional student landing page step.
@@ -24,12 +24,15 @@
 
 namespace theme_learnlingo;
 
+use advanced_testcase;
+use stdClass;
+
 /**
  * Keep the wizard consistent with Moodle's enabled pages.
  *
  * @covers \theme_learnlingo\setup_steps
  */
-final class setup_steps_test extends \advanced_testcase {
+final class setup_steps_test extends advanced_testcase {
     /**
      * A fourth step appears if either Moodle page is enabled.
      */
@@ -59,7 +62,7 @@ final class setup_steps_test extends \advanced_testcase {
         $this->assertSame(5 + $darkextra, setup_steps::count($cfg));
         $this->assertSame(5 + $darkextra, setup_steps::next($cfg, 5 + $darkextra));
 
-        $cfg = new \stdClass();
+        $cfg = new stdClass();
         $this->assertTrue(setup_steps::dashboard_enabled($cfg));
         $this->assertFalse(setup_steps::mycourses_enabled($cfg));
     }

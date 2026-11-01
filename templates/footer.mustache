@@ -1,9 +1,18 @@
 {{!
     This file is part of Moodle - https://moodle.org/
+
     Moodle is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
     @template theme_learnlingo/footer
@@ -19,35 +28,36 @@
         "footer_show_copywriter": true
     }
 }}
-<footer id="page-footer" class="learnlingo-site-footer {{#footer_mode_html}}learnlingo-footer-html-mode{{/footer_mode_html}}">
+<footer id="page-footer"
+        class="learnlingo-site-footer {{#footer_mode_html}}learnlingo-footer-html-mode{{/footer_mode_html}}">
     {{#footer_mode_html}}
         <div class="learnlingo-footer-custom-html">{{{footer_custom_html}}}</div>
     {{/footer_mode_html}}
     {{#footer_mode_moodle}}
-    {{#footercount}}
-        <div class="footer-container footer-container-{{footercount}} container">
-            {{#footercontents}}
-                <section class="footer-section-wrapper">
-                    {{#footertitle}}
-                        <h2 class="footer-title">{{{footertitle}}}</h2>
-                    {{/footertitle}}
-                    <div class="footer-section-content">{{{footerhtml}}}</div>
-                </section>
-            {{/footercontents}}
-        </div>
-    {{/footercount}}
-
-    {{#footer_show_copywriter}}
-        <div class="footer-foot">
-            <div class="container">
-                <p class="text-center">
-                    {{#str}}footer_copywriter,theme_learnlingo{{/str}}
-                    <a href="https://eduardokraus.com" target="_blank" rel="noopener noreferrer">Eduardo Kraus</a>
-                    - Powered by <a href="https://moodle.org" target="_blank" rel="noopener noreferrer">Moodle</a>
-                </p>
+        {{#footercount}}
+            <div class="footer-container footer-container-{{footercount}} container">
+                {{#footercontents}}
+                    <section class="footer-section-wrapper">
+                        {{#footertitle}}
+                            <h2 class="footer-title">{{{footertitle}}}</h2>
+                        {{/footertitle}}
+                        <div class="footer-section-content">{{{footerhtml}}}</div>
+                    </section>
+                {{/footercontents}}
             </div>
-        </div>
-    {{/footer_show_copywriter}}
+        {{/footercount}}
+
+        {{#footer_show_copywriter}}
+            <div class="footer-foot">
+                <div class="container">
+                    <p class="text-center">
+                        {{#str}}footer_copywriter,theme_learnlingo{{/str}}
+                        <a href="https://eduardokraus.com" target="_blank" rel="noopener noreferrer">Eduardo Kraus</a>
+                        - Powered by <a href="https://moodle.org" target="_blank" rel="noopener noreferrer">Moodle</a>
+                    </p>
+                </div>
+            </div>
+        {{/footer_show_copywriter}}
     {{/footer_mode_moodle}}
 
     <div class="footer-content-debugging footer-dark bg-dark text-light d-none">

@@ -12,7 +12,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Offer first-run setup from the site homepage via Moodle's after_config hook.
@@ -22,11 +22,14 @@
  * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use core\hook\after_config;
+use theme_learnlingo\hook_listener;
+
 defined('MOODLE_INTERNAL') || die;
 
 $callbacks = [
     [
-        'hook' => \core\hook\after_config::class,
-        'callback' => [\theme_learnlingo\hook_listener::class, 'after_config'],
+        'hook' => after_config::class,
+        'callback' => [hook_listener::class, 'after_config'],
     ],
 ];

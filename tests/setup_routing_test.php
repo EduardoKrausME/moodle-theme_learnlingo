@@ -12,7 +12,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Verify that the onboarding marker cannot leak to the site homepage.
@@ -24,12 +24,16 @@
 
 namespace theme_learnlingo;
 
+use advanced_testcase;
+use theme_config;
+use function theme_learnlingo_homepage_html;
+
 /**
  * Tests for the site-home routing and reserved HTML value.
  *
  * @coversNothing
  */
-final class setup_routing_test extends \advanced_testcase {
+final class setup_routing_test extends advanced_testcase {
     /**
      * Never confuse Moodle's admin, courses, or user dashboards with the home.
      */
@@ -63,11 +67,11 @@ final class setup_routing_test extends \advanced_testcase {
         $this->resetAfterTest();
         require_once($CFG->dirroot . '/theme/learnlingo/lib.php');
 
-        $theme = \theme_config::load('learnlingo');
+        $theme = theme_config::load('learnlingo');
         $theme->settings->homepagehtml = 'config';
-        $this->assertSame('', \theme_learnlingo_homepage_html($theme));
+        $this->assertSame('', theme_learnlingo_homepage_html($theme));
 
         $theme->settings->homepagehtml = '<section>Real homepage</section>';
-        $this->assertSame('<section>Real homepage</section>', \theme_learnlingo_homepage_html($theme));
+        $this->assertSame('<section>Real homepage</section>', theme_learnlingo_homepage_html($theme));
     }
 }

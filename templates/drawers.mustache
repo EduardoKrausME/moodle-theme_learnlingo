@@ -101,19 +101,20 @@
             {{/closebuttonicon}}
         {{/ theme_learnlingo/drawer}}
     {{/hasblocks}}
-    <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container">
+    <div id="page" data-region="mainpage" data-usertour="scroller"
+         class="drawers {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container">
         <div id="topofscroll" class="main-inner">
             <div class="drawer-toggles d-flex">
                 {{#courseindex}}
                     <div class="drawer-toggler drawer-left-toggle open-nav d-print-none">
                         <button
-                            class="btn btn-icon icon-size-3"
-                            data-toggler="drawers"
-                            data-action="toggle"
-                            data-target="theme_learnlingo-drawers-courseindex"
-                            data-bs-toggle="tooltip"
-                            data-bs-placement="right"
-                            title="{{#str}}opendrawerindex, core{{/str}}">
+                                class="btn btn-icon icon-size-3"
+                                data-toggler="drawers"
+                                data-action="toggle"
+                                data-target="theme_learnlingo-drawers-courseindex"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="right"
+                                title="{{#str}}opendrawerindex, core{{/str}}">
                             <span class="visually-hidden">{{#str}}opendrawerindex, core{{/str}}</span>
                             <span class="dir-rtl-hide">{{#pix}} e/sidebar_right, core {{/pix}}</span>
                             <span class="dir-ltr-hide">{{#pix}} e/sidebar_left, core {{/pix}}</span>
@@ -123,13 +124,13 @@
                 {{#hasblocks}}
                     <div class="drawer-toggler drawer-right-toggle ms-auto d-print-none">
                         <button
-                            class="btn btn-icon icon-size-3"
-                            data-toggler="drawers"
-                            data-action="toggle"
-                            data-target="theme_learnlingo-drawers-blocks"
-                            data-bs-toggle="tooltip"
-                            data-bs-placement="right"
-                            title="{{#str}}opendrawerblocks, core{{/str}}">
+                                class="btn btn-icon icon-size-3"
+                                data-toggler="drawers"
+                                data-action="toggle"
+                                data-target="theme_learnlingo-drawers-blocks"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="right"
+                                title="{{#str}}opendrawerblocks, core{{/str}}">
                             <span class="visually-hidden">{{#str}}opendrawerblocks, core{{/str}}</span>
                             <span class="dir-rtl-hide">{{#pix}} e/sidebar_left, core {{/pix}}</span>
                             <span class="dir-ltr-hide">{{#pix}} e/sidebar_right, core {{/pix}}</span>
@@ -202,10 +203,10 @@
                         {{#courseprogressavailable}}
                             <div class="learnlingo-course-progress-summary">
                                 <div
-                                    class="learnlingo-course-progress-ring"
-                                    style="--learnlingo-course-progress: {{courseprogress}}%;"
-                                    role="img"
-                                    aria-label="{{courseprogresslabel}}">
+                                        class="learnlingo-course-progress-ring"
+                                        style="--learnlingo-course-progress: {{courseprogress}}%;"
+                                        role="img"
+                                        aria-label="{{courseprogresslabel}}">
                                     <span>{{courseprogress}}%</span>
                                 </div>
                                 <div class="learnlingo-course-progress-copy">
@@ -244,8 +245,8 @@
                             </a>
                             {{#personalxpactivityreward}}
                                 <span
-                                    class="d-none"
-                                    data-learnlingo-xp-reward="{{personalxpactivityrewardlabel}}">
+                                        class="d-none"
+                                        data-learnlingo-xp-reward="{{personalxpactivityrewardlabel}}">
                                 </span>
                             {{/personalxpactivityreward}}
                         {{/personalxp}}
@@ -263,9 +264,9 @@
             <div id="page-content" class="pb-3 d-print-block">
                 <div id="region-main-box">
                     {{#hasregionmainsettingsmenu}}
-                    <div id="region-main-settings-menu" class="d-print-none">
-                        <div> {{{ regionmainsettingsmenu }}} </div>
-                    </div>
+                        <div id="region-main-settings-menu" class="d-print-none">
+                            <div> {{{ regionmainsettingsmenu }}} </div>
+                        </div>
                     {{/hasregionmainsettingsmenu}}
                     <div id="region-main">
 
@@ -299,48 +300,48 @@
 </body>
 </html>
 {{#js}}
-M.util.js_pending('theme_boost/loader');
-require(['theme_boost/loader', 'theme_boost/drawer'], function(Loader, Drawer) {
+    M.util.js_pending('theme_boost/loader');
+    require(['theme_boost/loader', 'theme_boost/drawer'], function(Loader, Drawer) {
     Drawer.init();
     M.util.js_complete('theme_boost/loader');
-});
+    });
 
-(function() {
+    (function() {
     const decoratePersonalXpRewards = function() {
-        const config = document.querySelector('[data-learnlingo-xp-reward]');
-        if (!config) {
-            return;
-        }
+    const config = document.querySelector('[data-learnlingo-xp-reward]');
+    if (!config) {
+    return;
+    }
 
-        const reward = config.getAttribute('data-learnlingo-xp-reward');
-        if (!reward) {
-            return;
-        }
+    const reward = config.getAttribute('data-learnlingo-xp-reward');
+    if (!reward) {
+    return;
+    }
 
-        document.querySelectorAll('.course-content .activity-item').forEach(function(item) {
-            if (!item.querySelector('.activity-completion')) {
-                return;
-            }
+    document.querySelectorAll('.course-content .activity-item').forEach(function(item) {
+    if (!item.querySelector('.activity-completion')) {
+    return;
+    }
 
-            const title = item.querySelector('.activitytitle');
-            if (!title || title.querySelector('.learnlingo-xp-reward')) {
-                return;
-            }
+    const title = item.querySelector('.activitytitle');
+    if (!title || title.querySelector('.learnlingo-xp-reward')) {
+    return;
+    }
 
-            title.classList.add('learnlingo-activity-title-with-xp');
-            const chip = document.createElement('span');
-            chip.className = 'learnlingo-xp-reward';
-            chip.textContent = reward;
-            title.appendChild(chip);
-        });
+    title.classList.add('learnlingo-activity-title-with-xp');
+    const chip = document.createElement('span');
+    chip.className = 'learnlingo-xp-reward';
+    chip.textContent = reward;
+    title.appendChild(chip);
+    });
     };
 
     decoratePersonalXpRewards();
 
     const courseContent = document.querySelector('.course-content');
     if (courseContent && window.MutationObserver) {
-        const observer = new MutationObserver(decoratePersonalXpRewards);
-        observer.observe(courseContent, {childList: true, subtree: true});
+    const observer = new MutationObserver(decoratePersonalXpRewards);
+    observer.observe(courseContent, {childList: true, subtree: true});
     }
-})();
+    })();
 {{/js}}

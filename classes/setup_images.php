@@ -12,7 +12,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Site-wide logo and favicon uploads from LearnLingo's setup wizard.
@@ -30,6 +30,7 @@ namespace theme_learnlingo;
 use context_system;
 use invalid_parameter_exception;
 use moodle_url;
+use Throwable;
 
 /**
  * Normalize the institution's logo and favicon with PHP GD before storage.
@@ -66,7 +67,7 @@ final class setup_images {
                 continue;
             }
             if ($error !== UPLOAD_ERR_OK || !is_string($file['tmp_name'] ?? null)
-                    || !is_uploaded_file($file['tmp_name'])) {
+                || !is_uploaded_file($file['tmp_name'])) {
                 throw new invalid_parameter_exception(get_string('setupimageuploaderror', 'theme_learnlingo'));
             }
             if (!is_file($file['tmp_name']) || filesize($file['tmp_name']) <= 0) {
@@ -139,10 +140,14 @@ final class setup_images {
         $unit = strtolower(substr($limit, -1));
         if ($unit === 'g') {
             $number *= 1024 * 1024 * 1024;
-        } else if ($unit === 'm') {
-            $number *= 1024 * 1024;
-        } else if ($unit === 'k') {
-            $number *= 1024;
+        } else {
+            if ($unit === 'm') {
+                $number *= 1024 * 1024;
+            } else {
+                if ($unit === 'k') {
+                    $number *= 1024;
+                }
+            }
         }
 
         // Decoder memory + destination bitmap + native GD overhead + margin.
@@ -220,10 +225,12 @@ final class setup_images {
 
         if ($type === IMAGETYPE_JPEG) {
             $input = @imagecreatefromjpeg($source);
-        } else if ($type === IMAGETYPE_PNG) {
-            $input = @imagecreatefrompng($source);
         } else {
-            $input = function_exists('imagecreatefromwebp') ? @imagecreatefromwebp($source) : false;
+            if ($type === IMAGETYPE_PNG) {
+                $input = @imagecreatefrompng($source);
+            } else {
+                $input = function_exists('imagecreatefromwebp') ? @imagecreatefromwebp($source) : false;
+            }
         }
         if (!$input) {
             throw new invalid_parameter_exception(get_string('setupimageformaterror', 'theme_learnlingo'));
@@ -264,7 +271,7 @@ final class setup_images {
                 imagefill($output, 0, 0, $clear);
             }
             if (!imagecopyresampled($output, $input, $destx, $desty, 0, 0,
-                    $destwidth, $destheight, $width, $height)) {
+                $destwidth, $destheight, $width, $height)) {
                 throw new invalid_parameter_exception(get_string('setupimageformaterror', 'theme_learnlingo'));
             }
 
@@ -282,7 +289,7 @@ final class setup_images {
                 'mimetype' => $png ? 'image/png' : 'image/jpeg',
                 'generated' => true,
             ];
-        } catch (\Throwable $error) {
+        } catch (Throwable $error) {
             if ($path !== false && is_file($path)) {
                 @unlink($path);
             }

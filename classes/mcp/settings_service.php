@@ -21,14 +21,19 @@
  * @copyright 2026 Eduardo Kraus
  * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 namespace theme_learnlingo\mcp;
 
 use context_system;
+use curl;
 use local_mcp\course\file_url_normalizer;
 use local_mcp\course\image_service;
 use local_mcp\exception\api_exception;
+use moodle_url;
 use stored_file;
+use theme_config;
 use theme_learnlingo\branding_exchange;
+use theme_learnlingo\dark_mode;
 
 /**
  * Use the same validation contract as the LearnLingo JSON importer.
@@ -59,14 +64,16 @@ final class settings_service {
             if ($image) {
                 if ($area === 'logo') {
                     $imageurl = $OUTPUT->get_logo_url();
-                } else if ($area === 'loginlogo') {
-                    // Use the theme revision in the URL, as admin_setting_configstoredfile does.
-                    $imageurl = \theme_config::load('learnlingo')->setting_file_url('loginlogo', 'loginlogo');
                 } else {
-                    $imageurl = \moodle_url::make_pluginfile_url(
-                        $image->get_contextid(), 'core_admin', 'favicon', 0,
-                        $image->get_filepath(), $image->get_filename(), false
-                    );
+                    if ($area === 'loginlogo') {
+                        // Use the theme revision in the URL, as admin_setting_configstoredfile does.
+                        $imageurl = theme_config::load('learnlingo')->setting_file_url('loginlogo', 'loginlogo');
+                    } else {
+                        $imageurl = moodle_url::make_pluginfile_url(
+                            $image->get_contextid(), 'core_admin', 'favicon', 0,
+                            $image->get_filepath(), $image->get_filename(), false
+                        );
+                    }
                 }
                 $metadata = [
                     'filename' => $image->get_filename(),
@@ -78,8 +85,8 @@ final class settings_service {
                 // File API metadata can outlive the physical blob; do not fail the
                 // entire MCP export if a logo is temporarily or permanently unreadable.
                 if ($includeimages && $image->get_filesize() <= image_service::MAX_INLINE_BYTES &&
-                        in_array($image->get_mimetype(), ['image/png', 'image/jpeg', 'image/webp'], true) &&
-                        get_file_storage()->get_file_system()->is_file_readable_remotely_by_storedfile($image)) {
+                    in_array($image->get_mimetype(), ['image/png', 'image/jpeg', 'image/webp'], true) &&
+                    get_file_storage()->get_file_system()->is_file_readable_remotely_by_storedfile($image)) {
                     $content[] = [
                         'type' => 'image',
                         'mimeType' => $image->get_mimetype(),
@@ -100,7 +107,7 @@ final class settings_service {
         $data['images'] = $images;
         // Inform MCP clients about the site-wide preference without treating
         // an optional plugin's state as an editable LearnLingo JSON field.
-        $data['dark_mode'] = \theme_learnlingo\dark_mode::status();
+        $data['dark_mode'] = dark_mode::status();
         $data['state_hash'] = hash('sha256', json_encode(
             [$data['settings'], $hashimages],
             JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR
@@ -120,7 +127,7 @@ final class settings_service {
     public static function prepare(array $arguments): array {
         $before = self::snapshot();
         if (array_key_exists('expected_hash', $arguments) &&
-                !hash_equals($before['state_hash'], (string)$arguments['expected_hash'])) {
+            !hash_equals($before['state_hash'], (string)$arguments['expected_hash'])) {
             throw new api_exception('settings_changed', 409,
                 'The LearnLingo settings changed. Read them again before updating.');
         }
@@ -242,15 +249,15 @@ final class settings_service {
             // Apply the same public HTTPS and no-redirect restrictions as image_service.
             $hostname = strtolower(rtrim((string)($parts['host'] ?? ''), '.'));
             if (($parts['scheme'] ?? '') !== 'https' || !$hostname ||
-                    isset($parts['user']) || isset($parts['pass']) || isset($parts['fragment']) ||
-                    (isset($parts['port']) && (int)$parts['port'] !== 443) ||
-                    filter_var($url, FILTER_VALIDATE_URL) === false ||
-                    $hostname === 'localhost' || str_ends_with($hostname, '.localhost') ||
-                    str_ends_with($hostname, '.local') ||
-                    filter_var(trim($hostname, '[]'), FILTER_VALIDATE_IP)) {
+                isset($parts['user']) || isset($parts['pass']) || isset($parts['fragment']) ||
+                (isset($parts['port']) && (int)$parts['port'] !== 443) ||
+                filter_var($url, FILTER_VALIDATE_URL) === false ||
+                $hostname === 'localhost' || str_ends_with($hostname, '.localhost') ||
+                str_ends_with($hostname, '.local') ||
+                filter_var(trim($hostname, '[]'), FILTER_VALIDATE_IP)) {
                 throw new api_exception('invalid_image_url', 400, 'Provide a public HTTPS favicon URL.');
             }
-            $curl = new \curl();
+            $curl = new curl();
             $bytes = $curl->get($url, [
                 'CURLOPT_FOLLOWLOCATION' => false,
                 'CURLOPT_MAXREDIRS' => 0,
@@ -295,7 +302,7 @@ final class settings_service {
             $size = unpack('Vsize', substr($bytes, $entry + 8, 4))['size'];
             $offset = unpack('Voffset', substr($bytes, $entry + 12, 4))['offset'];
             if ($size < 8 || $offset < $directoryend || $offset > $length ||
-                    $size > $length - $offset) {
+                $size > $length - $offset) {
                 return false;
             }
             $signature = substr($bytes, $offset, 8);

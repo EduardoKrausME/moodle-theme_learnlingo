@@ -1,4 +1,20 @@
 {{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
     @template theme_learnlingo/setup
     Four to six independently saved steps; Dark Mode installation is optional.
 }}
@@ -16,8 +32,9 @@
             <strong>{{stepdisplay}}</strong>
             <span>{{progress}}%</span>
         </div>
-        <div class="ll-setup-wizard__meter" role="progressbar" aria-valuenow="{{step}}" aria-valuemin="1" aria-valuemax="{{stepcount}}"
-            aria-label="{{#str}}setupwizardprogresslabel, theme_learnlingo{{/str}}">
+        <div class="ll-setup-wizard__meter" role="progressbar" aria-valuenow="{{step}}" aria-valuemin="1"
+             aria-valuemax="{{stepcount}}"
+             aria-label="{{#str}}setupwizardprogresslabel, theme_learnlingo{{/str}}">
             <span style="width: {{progress}}%;"></span>
         </div>
         <ol class="ll-setup-wizard__steps {{#foursteps}}ll-setup-wizard__steps--four{{/foursteps}} {{#fivesteps}}ll-setup-wizard__steps--five{{/fivesteps}} {{#sixsteps}}ll-setup-wizard__steps--six{{/sixsteps}}">
@@ -25,12 +42,14 @@
                 <li class="{{#current}}is-current{{/current}} {{#done}}is-complete{{/done}} {{^available}}is-locked{{/available}}">
                     {{#available}}
                         <a href="{{{url}}}" {{#current}}aria-current="step"{{/current}}>
-                            <span class="ll-setup-wizard__step-number">{{number}}</span><span class="ll-setup-wizard__step-label">{{label}}</span>
+                            <span class="ll-setup-wizard__step-number">{{number}}</span><span
+                                class="ll-setup-wizard__step-label">{{label}}</span>
                         </a>
                     {{/available}}
                     {{^available}}
                         <span class="ll-setup-wizard__step-link">
-                            <span class="ll-setup-wizard__step-number">{{number}}</span><span class="ll-setup-wizard__step-label">{{label}}</span>
+                            <span class="ll-setup-wizard__step-number">{{number}}</span><span
+                                class="ll-setup-wizard__step-label">{{label}}</span>
                         </span>
                     {{/available}}
                 </li>
@@ -51,142 +70,151 @@
             <p>{{#str}}setupwizardfinisheddesc, theme_learnlingo{{/str}}</p>
             <div class="ll-setup-wizard__finishactions">
                 <a class="btn btn-primary" href="{{{homeurl}}}">{{#str}}setupviewsite, theme_learnlingo{{/str}}</a>
-                <a class="btn btn-outline-secondary" href="{{{advancedurl}}}">{{#str}}setupadvanced, theme_learnlingo{{/str}}</a>
+                <a class="btn btn-outline-secondary" href="{{{advancedurl}}}">{{#str}}
+                    setupadvanced, theme_learnlingo{{/str}}</a>
             </div>
         </div>
     {{/done}}
 
     {{^done}}
-        <form method="post" action="{{actionurl}}" enctype="multipart/form-data" class="ll-setup-form ll-setup-wizard__form">
+        <form method="post" action="{{actionurl}}" enctype="multipart/form-data"
+              class="ll-setup-form ll-setup-wizard__form">
             <input type="hidden" name="sesskey" value="{{sesskey}}">
             <input type="hidden" name="step" value="{{step}}">
             {{#stepone}}
-        <section class="ll-setup-section" id="ll-setup-colours" aria-labelledby="ll-colours-heading">
-            <div class="ll-setup-section__heading">
-                <span class="ll-setup-number">01</span>
-                <div><h3 id="ll-colours-heading">{{#str}}setupcolours, theme_learnlingo{{/str}}</h3>
-                    <p>{{#str}}setupcoloursdesc, theme_learnlingo{{/str}}</p></div>
-            </div>
-            <div class="ll-setup-palette-grid">
-                {{#palettes}}
-                    <div class="ll-setup-palette">
-                        <input class="ll-setup-input" type="radio" name="palette" id="ll-palette-{{value}}"
-                            value="{{value}}" {{#selected}}checked{{/selected}}>
-                        <label for="ll-palette-{{value}}" class="ll-setup-palette__card">
-                            <span class="ll-setup-palette__preview ll-setup-palette__preview--{{value}}" aria-hidden="true">
+                <section class="ll-setup-section" id="ll-setup-colours" aria-labelledby="ll-colours-heading">
+                    <div class="ll-setup-section__heading">
+                        <span class="ll-setup-number">01</span>
+                        <div><h3 id="ll-colours-heading">{{#str}}setupcolours, theme_learnlingo{{/str}}</h3>
+                            <p>{{#str}}setupcoloursdesc, theme_learnlingo{{/str}}</p></div>
+                    </div>
+                    <div class="ll-setup-palette-grid">
+                        {{#palettes}}
+                            <div class="ll-setup-palette">
+                                <input class="ll-setup-input" type="radio" name="palette" id="ll-palette-{{value}}"
+                                       value="{{value}}" {{#selected}}checked{{/selected}}>
+                                <label for="ll-palette-{{value}}" class="ll-setup-palette__card">
+                            <span class="ll-setup-palette__preview ll-setup-palette__preview--{{value}}"
+                                  aria-hidden="true">
                                 <span class="ll-setup-palette__swatch ll-setup-palette__swatch--primary"></span>
                                 <span class="ll-setup-palette__swatch ll-setup-palette__swatch--accent"></span>
                                 <span class="ll-setup-palette__swatch ll-setup-palette__swatch--canvas"></span>
                                 <span class="ll-setup-palette__swatch ll-setup-palette__swatch--ink"></span>
                             </span>
-                            <strong>{{label}}</strong>
-                            <small>{{description}}</small>
-                            <span class="ll-setup-selection" aria-hidden="true">✓</span>
-                        </label>
+                                    <strong>{{label}}</strong>
+                                    <small>{{description}}</small>
+                                    <span class="ll-setup-selection" aria-hidden="true">✓</span>
+                                </label>
+                            </div>
+                        {{/palettes}}
                     </div>
-                {{/palettes}}
-            </div>
-        </section>
-        <section class="ll-setup-section ll-setup-assets" id="ll-setup-identity" aria-labelledby="ll-assets-heading">
-            <div class="ll-setup-section__heading">
-                <span class="ll-setup-number ll-setup-number--asset" aria-hidden="true">✦</span>
-                <div><h3 id="ll-assets-heading">{{#str}}setupassetsheading, theme_learnlingo{{/str}}</h3>
-                    <p>{{#str}}setupassetsintro, theme_learnlingo{{/str}}</p></div>
-            </div>
-            <div class="ll-setup-assets__grid">
-                <div class="ll-setup-assets__item">
-                    <div class="ll-setup-assets__details">
-                        <label for="ll-setup-logo">{{#str}}setupassetlogo, theme_learnlingo{{/str}}</label>
-                        <small id="ll-setup-logo-help">{{#str}}setupassetlogodesc, theme_learnlingo{{/str}}</small>
+                </section>
+                <section class="ll-setup-section ll-setup-assets" id="ll-setup-identity"
+                         aria-labelledby="ll-assets-heading">
+                    <div class="ll-setup-section__heading">
+                        <span class="ll-setup-number ll-setup-number--asset" aria-hidden="true">✦</span>
+                        <div><h3 id="ll-assets-heading">{{#str}}setupassetsheading, theme_learnlingo{{/str}}</h3>
+                            <p>{{#str}}setupassetsintro, theme_learnlingo{{/str}}</p></div>
                     </div>
-                    <div class="ll-setup-assets__upload">
-                        <label for="ll-setup-logo" class="ll-setup-assets__preview ll-setup-assets__preview--upload"
-                            aria-label="{{#str}}setupassetlogo, theme_learnlingo{{/str}}">
-                            {{#logoimageurl}}
-                                <img src="{{{logoimageurl}}}" alt="" class="ll-setup-assets__logo">
-                                <span class="ll-setup-assets__preview-current">
-                                    {{#str}}setupassetexisting, theme_learnlingo{{/str}}
-                                </span>
-                            {{/logoimageurl}}
-                            {{^logoimageurl}}
-                                <span class="ll-setup-assets__placeholder">LearnLingo</span>
-                            {{/logoimageurl}}
-                        </label>
-                        <input id="ll-setup-logo" class="form-control" name="logo" type="file"
-                            aria-describedby="ll-setup-logo-help"
-                            accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp">
+                    <div class="ll-setup-assets__grid">
+                        <div class="ll-setup-assets__item">
+                            <div class="ll-setup-assets__details">
+                                <label for="ll-setup-logo">{{#str}}setupassetlogo, theme_learnlingo{{/str}}</label>
+                                <small id="ll-setup-logo-help">{{#str}}
+                                    setupassetlogodesc, theme_learnlingo{{/str}}</small>
+                            </div>
+                            <div class="ll-setup-assets__upload">
+                                <label for="ll-setup-logo"
+                                       class="ll-setup-assets__preview ll-setup-assets__preview--upload"
+                                       aria-label="{{#str}}setupassetlogo, theme_learnlingo{{/str}}">
+                                    {{#logoimageurl}}
+                                        <img src="{{{logoimageurl}}}" alt="" class="ll-setup-assets__logo">
+                                        <span class="ll-setup-assets__preview-current">
+                                            {{#str}}setupassetexisting, theme_learnlingo{{/str}}
+                                        </span>
+                                    {{/logoimageurl}}
+                                    {{^logoimageurl}}
+                                        <span class="ll-setup-assets__placeholder">LearnLingo</span>
+                                    {{/logoimageurl}}
+                                </label>
+                                <input id="ll-setup-logo" class="form-control" name="logo" type="file"
+                                       aria-describedby="ll-setup-logo-help"
+                                       accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp">
+                            </div>
+                        </div>
+                        <div class="ll-setup-assets__item">
+                            <div class="ll-setup-assets__details">
+                                <label for="ll-setup-favicon">{{#str}}
+                                    setupassetfavicon, theme_learnlingo{{/str}}</label>
+                                <small id="ll-setup-favicon-help">{{#str}}
+                                    setupassetfavicondesc, theme_learnlingo{{/str}}</small>
+                            </div>
+                            <div class="ll-setup-assets__upload">
+                                <label for="ll-setup-favicon"
+                                       class="ll-setup-assets__preview ll-setup-assets__preview--favicon ll-setup-assets__preview--upload"
+                                       aria-label="{{#str}}setupassetfavicon, theme_learnlingo{{/str}}">
+                                    {{#faviconimageurl}}
+                                        <img src="{{{faviconimageurl}}}" alt="" class="ll-setup-assets__favicon">
+                                        <span class="ll-setup-assets__preview-current">
+                                            {{#str}}setupassetexisting, theme_learnlingo{{/str}}
+                                        </span>
+                                    {{/faviconimageurl}}
+                                    {{^faviconimageurl}}
+                                        <span class="ll-setup-assets__favicon-placeholder">L</span>
+                                    {{/faviconimageurl}}
+                                </label>
+                                <input id="ll-setup-favicon" class="form-control" name="favicon" type="file"
+                                       aria-describedby="ll-setup-favicon-help"
+                                       accept=".png,.jpg,.jpeg,.webp,.ico,image/png,image/jpeg,image/webp,image/x-icon,image/vnd.microsoft.icon">
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="ll-setup-assets__item">
-                    <div class="ll-setup-assets__details">
-                        <label for="ll-setup-favicon">{{#str}}setupassetfavicon, theme_learnlingo{{/str}}</label>
-                        <small id="ll-setup-favicon-help">{{#str}}setupassetfavicondesc, theme_learnlingo{{/str}}</small>
-                    </div>
-                    <div class="ll-setup-assets__upload">
-                        <label for="ll-setup-favicon" class="ll-setup-assets__preview ll-setup-assets__preview--favicon ll-setup-assets__preview--upload"
-                            aria-label="{{#str}}setupassetfavicon, theme_learnlingo{{/str}}">
-                            {{#faviconimageurl}}
-                                <img src="{{{faviconimageurl}}}" alt="" class="ll-setup-assets__favicon">
-                                <span class="ll-setup-assets__preview-current">
-                                    {{#str}}setupassetexisting, theme_learnlingo{{/str}}
-                                </span>
-                            {{/faviconimageurl}}
-                            {{^faviconimageurl}}
-                                <span class="ll-setup-assets__favicon-placeholder">L</span>
-                            {{/faviconimageurl}}
-                        </label>
-                        <input id="ll-setup-favicon" class="form-control" name="favicon" type="file"
-                            aria-describedby="ll-setup-favicon-help"
-                            accept=".png,.jpg,.jpeg,.webp,.ico,image/png,image/jpeg,image/webp,image/x-icon,image/vnd.microsoft.icon">
-                    </div>
-                </div>
-            </div>
-            <p class="ll-setup-assets__note">{{#str}}setupassetnote, theme_learnlingo{{/str}}</p>
-        </section>
+                    <p class="ll-setup-assets__note">{{#str}}setupassetnote, theme_learnlingo{{/str}}</p>
+                </section>
 
             {{/stepone}}
             {{#steptwo}}
-        <section class="ll-setup-section" id="ll-setup-layout" aria-labelledby="ll-layout-heading">
-            <div class="ll-setup-section__heading">
-                <span class="ll-setup-number">02</span>
-                {{#customhtmlmode}}
-                    <div>
-                        <h3 id="ll-layout-heading">{{#str}}setuphtmlalreadytitle, theme_learnlingo{{/str}}</h3>
-                        <p>{{#str}}setuphtmlalreadyintro, theme_learnlingo{{/str}}</p>
+                <section class="ll-setup-section" id="ll-setup-layout" aria-labelledby="ll-layout-heading">
+                    <div class="ll-setup-section__heading">
+                        <span class="ll-setup-number">02</span>
+                        {{#customhtmlmode}}
+                            <div>
+                                <h3 id="ll-layout-heading">{{#str}}setuphtmlalreadytitle, theme_learnlingo{{/str}}</h3>
+                                <p>{{#str}}setuphtmlalreadyintro, theme_learnlingo{{/str}}</p>
+                            </div>
+                        {{/customhtmlmode}}
+                        {{^customhtmlmode}}
+                            <div>
+                                <h3 id="ll-layout-heading">{{#str}}setupformats, theme_learnlingo{{/str}}</h3>
+                                <p>{{#str}}setupformatsdesc, theme_learnlingo{{/str}}</p>
+                            </div>
+                        {{/customhtmlmode}}
                     </div>
-                {{/customhtmlmode}}
-                {{^customhtmlmode}}
-                    <div>
-                        <h3 id="ll-layout-heading">{{#str}}setupformats, theme_learnlingo{{/str}}</h3>
-                        <p>{{#str}}setupformatsdesc, theme_learnlingo{{/str}}</p>
-                    </div>
-                {{/customhtmlmode}}
-            </div>
-            {{#customhtmlmode}}
-                <div class="ll-setup-html-status" role="status">
-                    <span class="ll-setup-html-status__icon" aria-hidden="true">✓</span>
-                    <div>
-                        {{#existinghomepagehtml}}
-                            <strong>{{#str}}setuphtmlalreadyconfigured, theme_learnlingo{{/str}}</strong>
-                            <p>{{#str}}setuphtmlalreadypreserve, theme_learnlingo{{/str}}</p>
-                        {{/existinghomepagehtml}}
-                        {{^existinghomepagehtml}}
-                            <strong>{{#str}}setuphtmlalreadynocontent, theme_learnlingo{{/str}}</strong>
-                            <p>{{#str}}setuphtmlalreadyempty, theme_learnlingo{{/str}}</p>
-                        {{/existinghomepagehtml}}
-                        <a class="btn btn-outline-primary" href="{{{htmlsettingsurl}}}">
-                            {{#str}}setuphtmleditsettings, theme_learnlingo{{/str}}
-                        </a>
-                    </div>
-                </div>
-            {{/customhtmlmode}}
-            {{^customhtmlmode}}
-            <div class="ll-setup-format-grid ll-setup-home-grid">
-                {{#layouts}}
-                    <div class="ll-setup-format">
-                        <input class="ll-setup-input" type="radio" name="homepagemode"
-                            id="ll-layout-{{value}}" value="{{value}}" {{#selected}}checked{{/selected}}>
-                        <label for="ll-layout-{{value}}" class="ll-setup-format__card ll-setup-home-card">
+                    {{#customhtmlmode}}
+                        <div class="ll-setup-html-status" role="status">
+                            <span class="ll-setup-html-status__icon" aria-hidden="true">✓</span>
+                            <div>
+                                {{#existinghomepagehtml}}
+                                    <strong>{{#str}}setuphtmlalreadyconfigured, theme_learnlingo{{/str}}</strong>
+                                    <p>{{#str}}setuphtmlalreadypreserve, theme_learnlingo{{/str}}</p>
+                                {{/existinghomepagehtml}}
+                                {{^existinghomepagehtml}}
+                                    <strong>{{#str}}setuphtmlalreadynocontent, theme_learnlingo{{/str}}</strong>
+                                    <p>{{#str}}setuphtmlalreadyempty, theme_learnlingo{{/str}}</p>
+                                {{/existinghomepagehtml}}
+                                <a class="btn btn-outline-primary" href="{{{htmlsettingsurl}}}">
+                                    {{#str}}setuphtmleditsettings, theme_learnlingo{{/str}}
+                                </a>
+                            </div>
+                        </div>
+                    {{/customhtmlmode}}
+                    {{^customhtmlmode}}
+                        <div class="ll-setup-format-grid ll-setup-home-grid">
+                            {{#layouts}}
+                                <div class="ll-setup-format">
+                                    <input class="ll-setup-input" type="radio" name="homepagemode"
+                                           id="ll-layout-{{value}}" value="{{value}}" {{#selected}}checked{{/selected}}>
+                                    <label for="ll-layout-{{value}}" class="ll-setup-format__card ll-setup-home-card">
                             <span class="ll-setup-home-preview ll-setup-home-preview--{{value}}" aria-hidden="true">
                                 <span class="ll-setup-home-preview__window">
                                     <i></i><i></i><i></i>
@@ -231,424 +259,450 @@
                                     </span>
                                 {{/ismoodle}}
                             </span>
-                            <span class="ll-setup-home-card__info">
+                                        <span class="ll-setup-home-card__info">
                                 <strong>{{label}}</strong>
                                 <small>{{description}}</small>
                                 <em>{{#str}}setuppreviewillustration, theme_learnlingo{{/str}}</em>
                             </span>
-                            <span class="ll-setup-selection" aria-hidden="true">✓</span>
-                        </label>
-                    </div>
-                {{/layouts}}
-            </div>
-            <p class="ll-setup-hint">{{#str}}setuphtmladvancedhint, theme_learnlingo{{/str}}</p>
-            {{/customhtmlmode}}
-        </section>
+                                        <span class="ll-setup-selection" aria-hidden="true">✓</span>
+                                    </label>
+                                </div>
+                            {{/layouts}}
+                        </div>
+                        <p class="ll-setup-hint">{{#str}}setuphtmladvancedhint, theme_learnlingo{{/str}}</p>
+                    {{/customhtmlmode}}
+                </section>
 
-    <aside class="ll-setup-ai-hint" aria-labelledby="ll-setup-ai-title">
-        <div class="ll-setup-ai-hint__head">
-            <span class="ll-setup-ai-hint__logo" aria-hidden="true">✦</span>
-            <div>
-                {{#customhtmlmode}}
-                    <h4 id="ll-setup-ai-title">{{#str}}setuphtmlaititle, theme_learnlingo{{/str}}</h4>
-                    <p>{{#str}}setuphtmlaidesc, theme_learnlingo{{/str}}</p>
-                {{/customhtmlmode}}
-                {{^customhtmlmode}}
-                    <h4 id="ll-setup-ai-title">{{#str}}setupaihintheading, theme_learnlingo{{/str}}</h4>
-                    <p>{{#str}}setupaihintdesc, theme_learnlingo{{/str}}</p>
-                {{/customhtmlmode}}
-            </div>
-        </div>
-        <div class="ll-setup-ai-hint__paths">
-            <div>
-                <strong>{{#str}}setupaihintmcp, theme_learnlingo{{/str}}</strong>
-                <p>{{#str}}setupaihintmcpdesc, theme_learnlingo{{/str}}</p>
-                <a href="{{{mcpurl}}}" target="_blank" rel="noopener noreferrer">{{#str}}setupmcpdocs, theme_learnlingo{{/str}}</a>
-            </div>
-            <div>
-                <strong>{{#str}}setupaihintpaste, theme_learnlingo{{/str}}</strong>
-                <p>{{#str}}setupaihintpastedesc, theme_learnlingo{{/str}}</p>
-                <button type="button" id="learnlingo-copy-prompt" class="btn btn-outline-primary">
-                    {{#str}}setuppromptcopy, theme_learnlingo{{/str}}
-                </button>
-                <div class="ll-setup-ai-hint__links">
-                    <a href="{{{chatgpturl}}}" target="_blank" rel="noopener noreferrer">ChatGPT</a>
-                    <a href="{{{claudeurl}}}" target="_blank" rel="noopener noreferrer">Claude</a>
-                    <a href="{{{jsonurl}}}">{{#str}}setuppromptimport, theme_learnlingo{{/str}}</a>
-                </div>
-                <label for="learnlingo-brand-prompt" class="ll-setup-prompt__label">
-                    {{#str}}setuppromptlabel, theme_learnlingo{{/str}}
-                </label>
-                <textarea id="learnlingo-brand-prompt" class="form-control ll-setup-prompt__textarea"
-                    rows="3" readonly spellcheck="false">{{prompt}}</textarea>
-                <p class="ll-setup-ai-hint__privacy">{{#str}}setupaihintprivacy, theme_learnlingo{{/str}}</p>
-            </div>
-        </div>
-    </aside>
+                <aside class="ll-setup-ai-hint" aria-labelledby="ll-setup-ai-title">
+                    <div class="ll-setup-ai-hint__head">
+                        <span class="ll-setup-ai-hint__logo" aria-hidden="true">✦</span>
+                        <div>
+                            {{#customhtmlmode}}
+                                <h4 id="ll-setup-ai-title">{{#str}}setuphtmlaititle, theme_learnlingo{{/str}}</h4>
+                                <p>{{#str}}setuphtmlaidesc, theme_learnlingo{{/str}}</p>
+                            {{/customhtmlmode}}
+                            {{^customhtmlmode}}
+                                <h4 id="ll-setup-ai-title">{{#str}}setupaihintheading, theme_learnlingo{{/str}}</h4>
+                                <p>{{#str}}setupaihintdesc, theme_learnlingo{{/str}}</p>
+                            {{/customhtmlmode}}
+                        </div>
+                    </div>
+                    <div class="ll-setup-ai-hint__paths">
+                        <div>
+                            <strong>{{#str}}setupaihintmcp, theme_learnlingo{{/str}}</strong>
+                            <p>{{#str}}setupaihintmcpdesc, theme_learnlingo{{/str}}</p>
+                            <a href="{{{mcpurl}}}" target="_blank" rel="noopener noreferrer">{{#str}}
+                                setupmcpdocs, theme_learnlingo{{/str}}</a>
+                        </div>
+                        <div>
+                            <strong>{{#str}}setupaihintpaste, theme_learnlingo{{/str}}</strong>
+                            <p>{{#str}}setupaihintpastedesc, theme_learnlingo{{/str}}</p>
+                            <button type="button" id="learnlingo-copy-prompt" class="btn btn-outline-primary">
+                                {{#str}}setuppromptcopy, theme_learnlingo{{/str}}
+                            </button>
+                            <div class="ll-setup-ai-hint__links">
+                                <a href="{{{chatgpturl}}}" target="_blank" rel="noopener noreferrer">ChatGPT</a>
+                                <a href="{{{claudeurl}}}" target="_blank" rel="noopener noreferrer">Claude</a>
+                                <a href="{{{jsonurl}}}">{{#str}}setuppromptimport, theme_learnlingo{{/str}}</a>
+                            </div>
+                            <label for="learnlingo-brand-prompt" class="ll-setup-prompt__label">
+                                {{#str}}setuppromptlabel, theme_learnlingo{{/str}}
+                            </label>
+                            <textarea id="learnlingo-brand-prompt" class="form-control ll-setup-prompt__textarea"
+                                      rows="3" readonly spellcheck="false">{{prompt}}</textarea>
+                            <p class="ll-setup-ai-hint__privacy">{{#str}}
+                                setupaihintprivacy, theme_learnlingo{{/str}}</p>
+                        </div>
+                    </div>
+                </aside>
             {{/steptwo}}
             {{#stepthree}}
-        <section class="ll-setup-section" id="ll-setup-footer" aria-labelledby="ll-footer-heading">
-            <div class="ll-setup-section__heading">
-                <span class="ll-setup-number">03</span>
-                <div><h3 id="ll-footer-heading">{{#str}}setupfootersteptitle, theme_learnlingo{{/str}}</h3>
-                <p>{{#str}}setupfooterstepdesc, theme_learnlingo{{/str}}</p></div>
-            </div>
-            <div class="ll-setup-subsection ll-setup-subsection--footer">
-                <h4>{{#str}}setupfooterheading, theme_learnlingo{{/str}}</h4>
-                <div class="ll-setup-choice-list">
-                    {{#footers}}
-                        <label class="ll-setup-choice">
-                            <input type="radio" name="footermode" value="{{value}}" {{#selected}}checked{{/selected}}>
-                            <span><strong>{{label}}</strong><small>{{description}}</small></span>
-                        </label>
-                    {{/footers}}
-                </div>
-            </div>
-        </section>
+                <section class="ll-setup-section" id="ll-setup-footer" aria-labelledby="ll-footer-heading">
+                    <div class="ll-setup-section__heading">
+                        <span class="ll-setup-number">03</span>
+                        <div><h3 id="ll-footer-heading">{{#str}}setupfootersteptitle, theme_learnlingo{{/str}}</h3>
+                            <p>{{#str}}setupfooterstepdesc, theme_learnlingo{{/str}}</p></div>
+                    </div>
+                    <div class="ll-setup-subsection ll-setup-subsection--footer">
+                        <h4>{{#str}}setupfooterheading, theme_learnlingo{{/str}}</h4>
+                        <div class="ll-setup-choice-list">
+                            {{#footers}}
+                                <label class="ll-setup-choice">
+                                    <input type="radio" name="footermode" value="{{value}}"
+                                           {{#selected}}checked{{/selected}}>
+                                    <span><strong>{{label}}</strong><small>{{description}}</small></span>
+                                </label>
+                            {{/footers}}
+                        </div>
+                    </div>
+                </section>
 
-        <section class="ll-setup-section" id="ll-setup-components" aria-labelledby="ll-components-heading">
-            <div class="ll-setup-section__heading">
-                <span class="ll-setup-number">03</span>
-                <div><h3 id="ll-components-heading">{{#str}}setupcomponents, theme_learnlingo{{/str}}</h3>
-                    <p>{{#str}}setupcomponentsdesc, theme_learnlingo{{/str}}</p></div>
-            </div>
-            <div class="ll-setup-switches">
-                <label class="ll-setup-switch">
+                <section class="ll-setup-section" id="ll-setup-components" aria-labelledby="ll-components-heading">
+                    <div class="ll-setup-section__heading">
+                        <span class="ll-setup-number">03</span>
+                        <div><h3 id="ll-components-heading">{{#str}}setupcomponents, theme_learnlingo{{/str}}</h3>
+                            <p>{{#str}}setupcomponentsdesc, theme_learnlingo{{/str}}</p></div>
+                    </div>
+                    <div class="ll-setup-switches">
+                        <label class="ll-setup-switch">
                     <span><strong>{{#str}}homepagefullwidth, theme_learnlingo{{/str}}</strong>
                         <small>{{#str}}homepagefullwidth_desc, theme_learnlingo{{/str}}</small></span>
-                    <input type="checkbox" name="homepagefullwidth" value="1" {{#fullwidth}}checked{{/fullwidth}}>
-                </label>
-                <label class="ll-setup-switch">
+                            <input type="checkbox" name="homepagefullwidth" value="1"
+                                   {{#fullwidth}}checked{{/fullwidth}}>
+                        </label>
+                        <label class="ll-setup-switch">
                     <span><strong>{{#str}}showcoursehero, theme_learnlingo{{/str}}</strong>
                         <small>{{#str}}showcoursehero_desc, theme_learnlingo{{/str}}</small></span>
-                    <input type="checkbox" name="showcoursehero" value="1" {{#coursehero}}checked{{/coursehero}}>
-                </label>
-            </div>
-        </section>
+                            <input type="checkbox" name="showcoursehero" value="1"
+                                   {{#coursehero}}checked{{/coursehero}}>
+                        </label>
+                    </div>
+                </section>
 
 
-    <aside class="ll-setup-ai-hint" aria-labelledby="ll-setup-ai-title">
-        <div class="ll-setup-ai-hint__head">
-            <span class="ll-setup-ai-hint__logo" aria-hidden="true">✦</span>
-            <div>
-                <h4 id="ll-setup-ai-title">{{#str}}setupaihintheading, theme_learnlingo{{/str}}</h4>
-                <p>{{#str}}setupaihintdesc, theme_learnlingo{{/str}}</p>
-            </div>
-        </div>
-        <div class="ll-setup-ai-hint__paths">
-            <div>
-                <strong>{{#str}}setupaihintmcp, theme_learnlingo{{/str}}</strong>
-                <p>{{#str}}setupaihintmcpdesc, theme_learnlingo{{/str}}</p>
-                <a href="{{{mcpurl}}}" target="_blank" rel="noopener noreferrer">{{#str}}setupmcpdocs, theme_learnlingo{{/str}}</a>
-            </div>
-            <div>
-                <strong>{{#str}}setupaihintpaste, theme_learnlingo{{/str}}</strong>
-                <p>{{#str}}setupaihintpastedesc, theme_learnlingo{{/str}}</p>
-                <button type="button" id="learnlingo-copy-prompt" class="btn btn-outline-primary">
-                    {{#str}}setuppromptcopy, theme_learnlingo{{/str}}
-                </button>
-                <div class="ll-setup-ai-hint__links">
-                    <a href="{{{chatgpturl}}}" target="_blank" rel="noopener noreferrer">ChatGPT</a>
-                    <a href="{{{claudeurl}}}" target="_blank" rel="noopener noreferrer">Claude</a>
-                    <a href="{{{jsonurl}}}">{{#str}}setuppromptimport, theme_learnlingo{{/str}}</a>
-                </div>
-                <label for="learnlingo-brand-prompt" class="ll-setup-prompt__label">
-                    {{#str}}setuppromptlabel, theme_learnlingo{{/str}}
-                </label>
-                <textarea id="learnlingo-brand-prompt" class="form-control ll-setup-prompt__textarea"
-                    rows="3" readonly spellcheck="false">{{prompt}}</textarea>
-                <p class="ll-setup-ai-hint__privacy">{{#str}}setupaihintprivacy, theme_learnlingo{{/str}}</p>
-            </div>
-        </div>
-    </aside>
+                <aside class="ll-setup-ai-hint" aria-labelledby="ll-setup-ai-title">
+                    <div class="ll-setup-ai-hint__head">
+                        <span class="ll-setup-ai-hint__logo" aria-hidden="true">✦</span>
+                        <div>
+                            <h4 id="ll-setup-ai-title">{{#str}}setupaihintheading, theme_learnlingo{{/str}}</h4>
+                            <p>{{#str}}setupaihintdesc, theme_learnlingo{{/str}}</p>
+                        </div>
+                    </div>
+                    <div class="ll-setup-ai-hint__paths">
+                        <div>
+                            <strong>{{#str}}setupaihintmcp, theme_learnlingo{{/str}}</strong>
+                            <p>{{#str}}setupaihintmcpdesc, theme_learnlingo{{/str}}</p>
+                            <a href="{{{mcpurl}}}" target="_blank" rel="noopener noreferrer">{{#str}}
+                                setupmcpdocs, theme_learnlingo{{/str}}</a>
+                        </div>
+                        <div>
+                            <strong>{{#str}}setupaihintpaste, theme_learnlingo{{/str}}</strong>
+                            <p>{{#str}}setupaihintpastedesc, theme_learnlingo{{/str}}</p>
+                            <button type="button" id="learnlingo-copy-prompt" class="btn btn-outline-primary">
+                                {{#str}}setuppromptcopy, theme_learnlingo{{/str}}
+                            </button>
+                            <div class="ll-setup-ai-hint__links">
+                                <a href="{{{chatgpturl}}}" target="_blank" rel="noopener noreferrer">ChatGPT</a>
+                                <a href="{{{claudeurl}}}" target="_blank" rel="noopener noreferrer">Claude</a>
+                                <a href="{{{jsonurl}}}">{{#str}}setuppromptimport, theme_learnlingo{{/str}}</a>
+                            </div>
+                            <label for="learnlingo-brand-prompt" class="ll-setup-prompt__label">
+                                {{#str}}setuppromptlabel, theme_learnlingo{{/str}}
+                            </label>
+                            <textarea id="learnlingo-brand-prompt" class="form-control ll-setup-prompt__textarea"
+                                      rows="3" readonly spellcheck="false">{{prompt}}</textarea>
+                            <p class="ll-setup-ai-hint__privacy">{{#str}}
+                                setupaihintprivacy, theme_learnlingo{{/str}}</p>
+                        </div>
+                    </div>
+                </aside>
             {{/stepthree}}
             {{#stepfour}}
-        <section class="ll-setup-section ll-setup-student" id="ll-setup-student" aria-labelledby="ll-student-heading">
-            <div class="ll-setup-section__heading">
-                <span class="ll-setup-number">04</span>
-                <div>
-                    <h3 id="ll-student-heading">{{#str}}setupstudenttitle, theme_learnlingo{{/str}}</h3>
-                    <p>{{#str}}setupstudentintro, theme_learnlingo{{/str}}</p>
-                </div>
-            </div>
-            <p class="ll-setup-student__choicehint">{{#str}}setupstudentchooseintro, theme_learnlingo{{/str}}</p>
-            <div class="ll-setup-student__grid ll-setup-student__grid--selectable">
-                <div class="ll-setup-student__page ll-setup-student__page--choice">
-                    <input type="checkbox" id="ll-choose-dashboard" name="enabledashboard"
-                        value="1" {{#dashboardenabled}}checked{{/dashboardenabled}}>
-                    <label for="ll-choose-dashboard" class="ll-setup-student__choice">
-                        <span class="ll-setup-student__check" aria-hidden="true">✓</span>
-                        <span class="ll-setup-student__preview ll-setup-student__preview--dashboard" aria-hidden="true">
+                <section class="ll-setup-section ll-setup-student" id="ll-setup-student"
+                         aria-labelledby="ll-student-heading">
+                    <div class="ll-setup-section__heading">
+                        <span class="ll-setup-number">04</span>
+                        <div>
+                            <h3 id="ll-student-heading">{{#str}}setupstudenttitle, theme_learnlingo{{/str}}</h3>
+                            <p>{{#str}}setupstudentintro, theme_learnlingo{{/str}}</p>
+                        </div>
+                    </div>
+                    <p class="ll-setup-student__choicehint">{{#str}}
+                        setupstudentchooseintro, theme_learnlingo{{/str}}</p>
+                    <div class="ll-setup-student__grid ll-setup-student__grid--selectable">
+                        <div class="ll-setup-student__page ll-setup-student__page--choice">
+                            <input type="checkbox" id="ll-choose-dashboard" name="enabledashboard"
+                                   value="1" {{#dashboardenabled}}checked{{/dashboardenabled}}>
+                            <label for="ll-choose-dashboard" class="ll-setup-student__choice">
+                                <span class="ll-setup-student__check" aria-hidden="true">✓</span>
+                                <span class="ll-setup-student__preview ll-setup-student__preview--dashboard"
+                                      aria-hidden="true">
                             <span class="ll-setup-student__bar"><i></i><i></i><i></i></span>
                             <span class="ll-setup-student__hero">
-                                <strong>{{#str}}setupstudentpreviewwelcome, theme_learnlingo{{/str}}</strong><span></span><span></span>
+                                <strong>{{#str}}
+                                    setupstudentpreviewwelcome, theme_learnlingo{{/str}}</strong><span></span><span></span>
                             </span>
                             <span class="ll-setup-student__tiles"><span></span><span></span><span></span></span>
                         </span>
-                        <strong>{{#str}}setupstudentdashboard, theme_learnlingo{{/str}}</strong>
-                        <small>{{#str}}setupstudentdashboarddesc, theme_learnlingo{{/str}}</small>
-                        <span class="ll-setup-student__selectlabel">
-                            {{#str}}setupstudentselect, theme_learnlingo{{/str}}
-                        </span>
-                    </label>
-                    <a href="{{{dashboardurl}}}" target="_blank" rel="noopener noreferrer">
-                        {{#str}}setupstudentviewdashboard, theme_learnlingo{{/str}}
-                    </a>
-                </div>
-                <div class="ll-setup-student__page ll-setup-student__page--choice">
-                    <input type="checkbox" id="ll-choose-mycourses" name="enablemycourses"
-                        value="1" {{#mycoursesenabled}}checked{{/mycoursesenabled}}>
-                    <label for="ll-choose-mycourses" class="ll-setup-student__choice">
-                        <span class="ll-setup-student__check" aria-hidden="true">✓</span>
-                        <span class="ll-setup-student__preview ll-setup-student__preview--courses" aria-hidden="true">
+                                <strong>{{#str}}setupstudentdashboard, theme_learnlingo{{/str}}</strong>
+                                <small>{{#str}}setupstudentdashboarddesc, theme_learnlingo{{/str}}</small>
+                                <span class="ll-setup-student__selectlabel">
+                                    {{#str}}setupstudentselect, theme_learnlingo{{/str}}
+                                </span>
+                            </label>
+                            <a href="{{{dashboardurl}}}" target="_blank" rel="noopener noreferrer">
+                                {{#str}}setupstudentviewdashboard, theme_learnlingo{{/str}}
+                            </a>
+                        </div>
+                        <div class="ll-setup-student__page ll-setup-student__page--choice">
+                            <input type="checkbox" id="ll-choose-mycourses" name="enablemycourses"
+                                   value="1" {{#mycoursesenabled}}checked{{/mycoursesenabled}}>
+                            <label for="ll-choose-mycourses" class="ll-setup-student__choice">
+                                <span class="ll-setup-student__check" aria-hidden="true">✓</span>
+                                <span class="ll-setup-student__preview ll-setup-student__preview--courses"
+                                      aria-hidden="true">
                             <span class="ll-setup-student__bar"><i></i><i></i><i></i></span>
                             <span class="ll-setup-student__hero">
-                                <strong>{{#str}}setupstudentpreviewwelcome, theme_learnlingo{{/str}}</strong><span></span><span></span>
+                                <strong>{{#str}}
+                                    setupstudentpreviewwelcome, theme_learnlingo{{/str}}</strong><span></span><span></span>
                             </span>
                             <span class="ll-setup-student__tiles"><span></span><span></span><span></span></span>
                         </span>
-                        <strong>{{#str}}setupstudentmycourses, theme_learnlingo{{/str}}</strong>
-                        <small>{{#str}}setupstudentmycoursesdesc, theme_learnlingo{{/str}}</small>
-                        <span class="ll-setup-student__selectlabel">
-                            {{#str}}setupstudentselect, theme_learnlingo{{/str}}
-                        </span>
-                    </label>
-                    <a href="{{{mycoursesurl}}}" target="_blank" rel="noopener noreferrer">
-                        {{#str}}setupstudentviewmycourses, theme_learnlingo{{/str}}
-                    </a>
-                </div>
-            </div>
-            <div class="ll-setup-student__warning" role="note">
-                <strong>{{#str}}setupstudentduplicateheading, theme_learnlingo{{/str}}</strong>
-                <p>{{#str}}setupstudentduplicatedesc, theme_learnlingo{{/str}}</p>
-                <p class="ll-setup-student__atleastone">{{#str}}setupstudentchooseone, theme_learnlingo{{/str}}</p>
-            </div>
-            <p class="ll-setup-student__navigation">
-                {{#str}}setupstudentcoreflags, theme_learnlingo{{/str}}
-                <a href="{{{moodlenavigationurl}}}" target="_blank" rel="noopener noreferrer">
-                    {{#str}}setupstudentnavigation, theme_learnlingo{{/str}}
-                </a>
-            </p>
-        </section>
-        <section class="ll-setup-section" id="ll-setup-welcome" aria-labelledby="ll-welcome-heading">
-            <div class="ll-setup-section__heading">
-                <span class="ll-setup-number" aria-hidden="true">✦</span>
-                <div>
-                    <h3 id="ll-welcome-heading">{{#str}}setupstudentwelcometitle, theme_learnlingo{{/str}}</h3>
-                    <p>{{#str}}setupstudentwelcomedesc, theme_learnlingo{{/str}}</p>
-                </div>
-            </div>
-            <div class="ll-setup-switches ll-setup-switches--student">
-                <label class="ll-setup-switch">
+                                <strong>{{#str}}setupstudentmycourses, theme_learnlingo{{/str}}</strong>
+                                <small>{{#str}}setupstudentmycoursesdesc, theme_learnlingo{{/str}}</small>
+                                <span class="ll-setup-student__selectlabel">
+                                    {{#str}}setupstudentselect, theme_learnlingo{{/str}}
+                                </span>
+                            </label>
+                            <a href="{{{mycoursesurl}}}" target="_blank" rel="noopener noreferrer">
+                                {{#str}}setupstudentviewmycourses, theme_learnlingo{{/str}}
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ll-setup-student__warning" role="note">
+                        <strong>{{#str}}setupstudentduplicateheading, theme_learnlingo{{/str}}</strong>
+                        <p>{{#str}}setupstudentduplicatedesc, theme_learnlingo{{/str}}</p>
+                        <p class="ll-setup-student__atleastone">{{#str}}
+                            setupstudentchooseone, theme_learnlingo{{/str}}</p>
+                    </div>
+                    <p class="ll-setup-student__navigation">
+                        {{#str}}setupstudentcoreflags, theme_learnlingo{{/str}}
+                        <a href="{{{moodlenavigationurl}}}" target="_blank" rel="noopener noreferrer">
+                            {{#str}}setupstudentnavigation, theme_learnlingo{{/str}}
+                        </a>
+                    </p>
+                </section>
+                <section class="ll-setup-section" id="ll-setup-welcome" aria-labelledby="ll-welcome-heading">
+                    <div class="ll-setup-section__heading">
+                        <span class="ll-setup-number" aria-hidden="true">✦</span>
+                        <div>
+                            <h3 id="ll-welcome-heading">{{#str}}setupstudentwelcometitle, theme_learnlingo{{/str}}</h3>
+                            <p>{{#str}}setupstudentwelcomedesc, theme_learnlingo{{/str}}</p>
+                        </div>
+                    </div>
+                    <div class="ll-setup-switches ll-setup-switches--student">
+                        <label class="ll-setup-switch">
                     <span><strong>{{#str}}showwelcome, theme_learnlingo{{/str}}</strong>
                         <small>{{#str}}showwelcome_desc, theme_learnlingo{{/str}}</small></span>
-                    <input type="checkbox" name="showwelcome" value="1" {{#showwelcome}}checked{{/showwelcome}}>
-                </label>
-                <label class="ll-setup-switch">
+                            <input type="checkbox" name="showwelcome" value="1" {{#showwelcome}}checked{{/showwelcome}}>
+                        </label>
+                        <label class="ll-setup-switch">
                     <span><strong>{{#str}}showdashboardhero, theme_learnlingo{{/str}}</strong>
                         <small>{{#str}}setupstudentdashboardherohelp, theme_learnlingo{{/str}}</small></span>
-                    <input type="checkbox" name="showdashboardhero" value="1" {{#dashboardhero}}checked{{/dashboardhero}}>
-                </label>
-            </div>
-            <div class="ll-setup-student__texts">
-                <div>
-                    <label for="ll-student-eyebrow">{{#str}}dashboardeyebrowtext, theme_learnlingo{{/str}}</label>
-                    <input type="text" id="ll-student-eyebrow" name="dashboardeyebrowtext" class="form-control"
-                        maxlength="1500" value="{{dashboardeyebrowtext}}"
-                        placeholder="{{#str}}dashboardeyebrow, theme_learnlingo{{/str}}">
-                </div>
-                <div>
-                    <label for="ll-student-description">{{#str}}dashboarddescriptiontext, theme_learnlingo{{/str}}</label>
-                    <textarea id="ll-student-description" name="dashboarddescriptiontext" rows="3"
-                        maxlength="1500" class="form-control"
-                        placeholder="{{#str}}dashboarddescription, theme_learnlingo{{/str}}">{{dashboarddescriptiontext}}</textarea>
-                </div>
-            </div>
-        </section>
-        <aside class="ll-setup-student__ai">
-            <strong>{{#str}}setupstudentaiheading, theme_learnlingo{{/str}}</strong>
-            <p>{{#str}}setupstudentaidesc, theme_learnlingo{{/str}}</p>
-            <div class="ll-setup-student__ailinks">
-                <a href="{{{mcpurl}}}" target="_blank" rel="noopener noreferrer">Moodle MCP</a>
-                <a href="{{{chatgpturl}}}" target="_blank" rel="noopener noreferrer">ChatGPT</a>
-                <a href="{{{claudeurl}}}" target="_blank" rel="noopener noreferrer">Claude</a>
-                <a href="{{{jsonurl}}}">{{#str}}setuppromptimport, theme_learnlingo{{/str}}</a>
-            </div>
-            <button type="button" id="learnlingo-copy-prompt" class="btn btn-outline-primary">
-                {{#str}}setuppromptcopy, theme_learnlingo{{/str}}
-            </button>
-            <label class="ll-setup-prompt__label" for="learnlingo-brand-prompt">
-                {{#str}}setuppromptlabel, theme_learnlingo{{/str}}
-            </label>
-            <textarea id="learnlingo-brand-prompt" class="form-control ll-setup-prompt__textarea"
-                rows="3" readonly spellcheck="false">{{prompt}}</textarea>
-        </aside>
+                            <input type="checkbox" name="showdashboardhero" value="1"
+                                   {{#dashboardhero}}checked{{/dashboardhero}}>
+                        </label>
+                    </div>
+                    <div class="ll-setup-student__texts">
+                        <div>
+                            <label for="ll-student-eyebrow">{{#str}}
+                                dashboardeyebrowtext, theme_learnlingo{{/str}}</label>
+                            <input type="text" id="ll-student-eyebrow" name="dashboardeyebrowtext" class="form-control"
+                                   maxlength="1500" value="{{dashboardeyebrowtext}}"
+                                   placeholder="{{#str}}dashboardeyebrow, theme_learnlingo{{/str}}">
+                        </div>
+                        <div>
+                            <label for="ll-student-description">{{#str}}
+                                dashboarddescriptiontext, theme_learnlingo{{/str}}</label>
+                            <textarea id="ll-student-description" name="dashboarddescriptiontext" rows="3"
+                                      maxlength="1500" class="form-control"
+                                      placeholder="{{#str}}dashboarddescription, theme_learnlingo{{/str}}">{{dashboarddescriptiontext}}</textarea>
+                        </div>
+                    </div>
+                </section>
+                <aside class="ll-setup-student__ai">
+                    <strong>{{#str}}setupstudentaiheading, theme_learnlingo{{/str}}</strong>
+                    <p>{{#str}}setupstudentaidesc, theme_learnlingo{{/str}}</p>
+                    <div class="ll-setup-student__ailinks">
+                        <a href="{{{mcpurl}}}" target="_blank" rel="noopener noreferrer">Moodle MCP</a>
+                        <a href="{{{chatgpturl}}}" target="_blank" rel="noopener noreferrer">ChatGPT</a>
+                        <a href="{{{claudeurl}}}" target="_blank" rel="noopener noreferrer">Claude</a>
+                        <a href="{{{jsonurl}}}">{{#str}}setuppromptimport, theme_learnlingo{{/str}}</a>
+                    </div>
+                    <button type="button" id="learnlingo-copy-prompt" class="btn btn-outline-primary">
+                        {{#str}}setuppromptcopy, theme_learnlingo{{/str}}
+                    </button>
+                    <label class="ll-setup-prompt__label" for="learnlingo-brand-prompt">
+                        {{#str}}setuppromptlabel, theme_learnlingo{{/str}}
+                    </label>
+                    <textarea id="learnlingo-brand-prompt" class="form-control ll-setup-prompt__textarea"
+                              rows="3" readonly spellcheck="false">{{prompt}}</textarea>
+                </aside>
             {{/stepfour}}
             {{#steplogin}}
-        <section class="ll-setup-section ll-setup-login" id="ll-setup-login" aria-labelledby="ll-login-heading">
-            <div class="ll-setup-section__heading">
-                <span class="ll-setup-number">{{step}}</span>
-                <div>
-                    <h3 id="ll-login-heading">{{#str}}setuplogintitle, theme_learnlingo{{/str}}</h3>
-                    <p>{{#str}}setuploginintro, theme_learnlingo{{/str}}</p>
-                </div>
-            </div>
-            <div class="ll-setup-login__preview" role="img" aria-label="{{#str}}setuploginpreviewlabel, theme_learnlingo{{/str}}">
-                <div class="ll-setup-login__left">
-                    {{#loginbackgroundurl}}
-                        <img src="{{{loginbackgroundurl}}}" alt="" class="ll-setup-login__cover">
-                    {{/loginbackgroundurl}}
-                    <div class="ll-setup-login__leftcontent">
-                        <span class="ll-setup-login__eyebrow">{{#str}}dashboardeyebrow, theme_learnlingo{{/str}}</span>
-                        {{#loginpaneltitletext}}
-                            <strong>{{loginpaneltitletext}}</strong>
-                        {{/loginpaneltitletext}}
-                        {{^loginpaneltitletext}}
-                            <strong>{{#str}}loginpaneltitle, theme_learnlingo{{/str}}</strong>
-                        {{/loginpaneltitletext}}
-                        {{#loginpaneldescriptiontext}}
-                            <p>{{loginpaneldescriptiontext}}</p>
-                        {{/loginpaneldescriptiontext}}
-                        {{^loginpaneldescriptiontext}}
-                            <p>{{#str}}loginpaneldescription, theme_learnlingo{{/str}}</p>
-                        {{/loginpaneldescriptiontext}}
+                <section class="ll-setup-section ll-setup-login" id="ll-setup-login" aria-labelledby="ll-login-heading">
+                    <div class="ll-setup-section__heading">
+                        <span class="ll-setup-number">{{step}}</span>
+                        <div>
+                            <h3 id="ll-login-heading">{{#str}}setuplogintitle, theme_learnlingo{{/str}}</h3>
+                            <p>{{#str}}setuploginintro, theme_learnlingo{{/str}}</p>
+                        </div>
                     </div>
-                </div>
-                <div class="ll-setup-login__right">
-                    {{#loginlogourl}}
-                        <img src="{{{loginlogourl}}}" alt="" class="ll-setup-login__brand">
-                    {{/loginlogourl}}
-                    {{^loginlogourl}}
-                        {{#logoimageurl}}
-                            <img src="{{{logoimageurl}}}" alt="" class="ll-setup-login__brand">
-                        {{/logoimageurl}}
-                        {{^logoimageurl}}
-                            <span class="ll-setup-login__defaultbrand">LearnLingo</span>
-                        {{/logoimageurl}}
-                    {{/loginlogourl}}
-                    <strong>{{#str}}loginwelcomeback, theme_learnlingo{{/str}}</strong>
-                    <span class="ll-setup-login__mockfield">{{#str}}username, core{{/str}}</span>
-                    <span class="ll-setup-login__mockfield">{{#str}}password, core{{/str}}</span>
-                    <span class="ll-setup-login__mockbutton">{{#str}}login, core{{/str}}</span>
-                </div>
-            </div>
-            <p class="ll-setup-login__previewnote">
-                {{#str}}setuploginpreviewnote, theme_learnlingo{{/str}}
-                <a href="{{{loginpreviewurl}}}" target="_blank" rel="noopener noreferrer">
-                    {{#str}}setuploginview, theme_learnlingo{{/str}}
-                </a>
-            </p>
-        </section>
-        <section class="ll-setup-section ll-setup-login__settings" id="ll-setup-login-settings"
-            aria-labelledby="ll-login-settings-heading">
-            <div class="ll-setup-section__heading">
-                <span class="ll-setup-number" aria-hidden="true">✦</span>
-                <div>
-                    <h3 id="ll-login-settings-heading">{{#str}}setuploginassetsheading, theme_learnlingo{{/str}}</h3>
-                    <p>{{#str}}setuploginassetsintro, theme_learnlingo{{/str}}</p>
-                </div>
-            </div>
-            <div class="ll-setup-assets__grid">
-                <div class="ll-setup-assets__item">
-                    <div class="ll-setup-assets__preview ll-setup-assets__preview--loginlogo" aria-hidden="true">
-                        {{#loginlogourl}}
-                            <img src="{{{loginlogourl}}}" alt="" class="ll-setup-assets__logo">
-                        {{/loginlogourl}}
-                        {{^loginlogourl}}
-                            <span class="ll-setup-assets__placeholder">LearnLingo</span>
-                        {{/loginlogourl}}
+                    <div class="ll-setup-login__preview" role="img"
+                         aria-label="{{#str}}setuploginpreviewlabel, theme_learnlingo{{/str}}">
+                        <div class="ll-setup-login__left">
+                            {{#loginbackgroundurl}}
+                                <img src="{{{loginbackgroundurl}}}" alt="" class="ll-setup-login__cover">
+                            {{/loginbackgroundurl}}
+                            <div class="ll-setup-login__leftcontent">
+                                <span class="ll-setup-login__eyebrow">{{#str}}
+                                    dashboardeyebrow, theme_learnlingo{{/str}}</span>
+                                {{#loginpaneltitletext}}
+                                    <strong>{{loginpaneltitletext}}</strong>
+                                {{/loginpaneltitletext}}
+                                {{^loginpaneltitletext}}
+                                    <strong>{{#str}}loginpaneltitle, theme_learnlingo{{/str}}</strong>
+                                {{/loginpaneltitletext}}
+                                {{#loginpaneldescriptiontext}}
+                                    <p>{{loginpaneldescriptiontext}}</p>
+                                {{/loginpaneldescriptiontext}}
+                                {{^loginpaneldescriptiontext}}
+                                    <p>{{#str}}loginpaneldescription, theme_learnlingo{{/str}}</p>
+                                {{/loginpaneldescriptiontext}}
+                            </div>
+                        </div>
+                        <div class="ll-setup-login__right">
+                            {{#loginlogourl}}
+                                <img src="{{{loginlogourl}}}" alt="" class="ll-setup-login__brand">
+                            {{/loginlogourl}}
+                            {{^loginlogourl}}
+                                {{#logoimageurl}}
+                                    <img src="{{{logoimageurl}}}" alt="" class="ll-setup-login__brand">
+                                {{/logoimageurl}}
+                                {{^logoimageurl}}
+                                    <span class="ll-setup-login__defaultbrand">LearnLingo</span>
+                                {{/logoimageurl}}
+                            {{/loginlogourl}}
+                            <strong>{{#str}}loginwelcomeback, theme_learnlingo{{/str}}</strong>
+                            <span class="ll-setup-login__mockfield">{{#str}}username, core{{/str}}</span>
+                            <span class="ll-setup-login__mockfield">{{#str}}password, core{{/str}}</span>
+                            <span class="ll-setup-login__mockbutton">{{#str}}login, core{{/str}}</span>
+                        </div>
                     </div>
-                    <div class="ll-setup-assets__details">
-                        <label for="ll-login-logo">{{#str}}setuploginlogo, theme_learnlingo{{/str}}</label>
-                        <small>{{#str}}setuploginlogodesc, theme_learnlingo{{/str}}</small>
-                        <input id="ll-login-logo" name="loginlogo" type="file" class="form-control"
-                            accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp">
+                    <p class="ll-setup-login__previewnote">
+                        {{#str}}setuploginpreviewnote, theme_learnlingo{{/str}}
+                        <a href="{{{loginpreviewurl}}}" target="_blank" rel="noopener noreferrer">
+                            {{#str}}setuploginview, theme_learnlingo{{/str}}
+                        </a>
+                    </p>
+                </section>
+                <section class="ll-setup-section ll-setup-login__settings" id="ll-setup-login-settings"
+                         aria-labelledby="ll-login-settings-heading">
+                    <div class="ll-setup-section__heading">
+                        <span class="ll-setup-number" aria-hidden="true">✦</span>
+                        <div>
+                            <h3 id="ll-login-settings-heading">{{#str}}
+                                setuploginassetsheading, theme_learnlingo{{/str}}</h3>
+                            <p>{{#str}}setuploginassetsintro, theme_learnlingo{{/str}}</p>
+                        </div>
                     </div>
-                </div>
-                <div class="ll-setup-assets__item">
-                    <div class="ll-setup-assets__preview ll-setup-assets__preview--loginbackground" aria-hidden="true">
-                        {{#loginbackgroundurl}}
-                            <img src="{{{loginbackgroundurl}}}" alt="" class="ll-setup-assets__background">
-                        {{/loginbackgroundurl}}
-                        {{^loginbackgroundurl}}
-                            <span class="ll-setup-assets__placeholder">{{#str}}setuploginbackgroundplaceholder, theme_learnlingo{{/str}}</span>
-                        {{/loginbackgroundurl}}
+                    <div class="ll-setup-assets__grid">
+                        <div class="ll-setup-assets__item">
+                            <div class="ll-setup-assets__preview ll-setup-assets__preview--loginlogo"
+                                 aria-hidden="true">
+                                {{#loginlogourl}}
+                                    <img src="{{{loginlogourl}}}" alt="" class="ll-setup-assets__logo">
+                                {{/loginlogourl}}
+                                {{^loginlogourl}}
+                                    <span class="ll-setup-assets__placeholder">LearnLingo</span>
+                                {{/loginlogourl}}
+                            </div>
+                            <div class="ll-setup-assets__details">
+                                <label for="ll-login-logo">{{#str}}setuploginlogo, theme_learnlingo{{/str}}</label>
+                                <small>{{#str}}setuploginlogodesc, theme_learnlingo{{/str}}</small>
+                                <input id="ll-login-logo" name="loginlogo" type="file" class="form-control"
+                                       accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp">
+                            </div>
+                        </div>
+                        <div class="ll-setup-assets__item">
+                            <div class="ll-setup-assets__preview ll-setup-assets__preview--loginbackground"
+                                 aria-hidden="true">
+                                {{#loginbackgroundurl}}
+                                    <img src="{{{loginbackgroundurl}}}" alt="" class="ll-setup-assets__background">
+                                {{/loginbackgroundurl}}
+                                {{^loginbackgroundurl}}
+                                    <span class="ll-setup-assets__placeholder">{{#str}}
+                                        setuploginbackgroundplaceholder, theme_learnlingo{{/str}}</span>
+                                {{/loginbackgroundurl}}
+                            </div>
+                            <div class="ll-setup-assets__details">
+                                <label for="ll-login-background">{{#str}}
+                                    setuploginbackground, theme_learnlingo{{/str}}</label>
+                                <small>{{#str}}setuploginbackgrounddesc, theme_learnlingo{{/str}}</small>
+                                <input id="ll-login-background" name="loginbackground" type="file" class="form-control"
+                                       accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp">
+                            </div>
+                        </div>
                     </div>
-                    <div class="ll-setup-assets__details">
-                        <label for="ll-login-background">{{#str}}setuploginbackground, theme_learnlingo{{/str}}</label>
-                        <small>{{#str}}setuploginbackgrounddesc, theme_learnlingo{{/str}}</small>
-                        <input id="ll-login-background" name="loginbackground" type="file" class="form-control"
-                            accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp">
+                    <div class="ll-setup-login__fields">
+                        <div>
+                            <label for="ll-login-title">{{#str}}loginpaneltitletext, theme_learnlingo{{/str}}</label>
+                            <input id="ll-login-title" type="text" name="loginpaneltitletext" class="form-control"
+                                   value="{{loginpaneltitletext}}" maxlength="1500"
+                                   placeholder="{{#str}}loginpaneltitle, theme_learnlingo{{/str}}">
+                        </div>
+                        <div>
+                            <label for="ll-login-description">{{#str}}
+                                loginpaneldescriptiontext, theme_learnlingo{{/str}}</label>
+                            <textarea id="ll-login-description" name="loginpaneldescriptiontext" class="form-control"
+                                      rows="3" maxlength="1500"
+                                      placeholder="{{#str}}loginpaneldescription, theme_learnlingo{{/str}}">{{loginpaneldescriptiontext}}</textarea>
+                        </div>
+                        <div>
+                            <label for="ll-login-tagline">{{#str}}
+                                loginpaneltaglinetext, theme_learnlingo{{/str}}</label>
+                            <input id="ll-login-tagline" type="text" name="loginpaneltaglinetext" class="form-control"
+                                   value="{{loginpaneltaglinetext}}" maxlength="1500"
+                                   placeholder="{{#str}}loginpaneltagline, theme_learnlingo{{/str}}">
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="ll-setup-login__fields">
-                <div>
-                    <label for="ll-login-title">{{#str}}loginpaneltitletext, theme_learnlingo{{/str}}</label>
-                    <input id="ll-login-title" type="text" name="loginpaneltitletext" class="form-control"
-                        value="{{loginpaneltitletext}}" maxlength="1500"
-                        placeholder="{{#str}}loginpaneltitle, theme_learnlingo{{/str}}">
-                </div>
-                <div>
-                    <label for="ll-login-description">{{#str}}loginpaneldescriptiontext, theme_learnlingo{{/str}}</label>
-                    <textarea id="ll-login-description" name="loginpaneldescriptiontext" class="form-control"
-                        rows="3" maxlength="1500"
-                        placeholder="{{#str}}loginpaneldescription, theme_learnlingo{{/str}}">{{loginpaneldescriptiontext}}</textarea>
-                </div>
-                <div>
-                    <label for="ll-login-tagline">{{#str}}loginpaneltaglinetext, theme_learnlingo{{/str}}</label>
-                    <input id="ll-login-tagline" type="text" name="loginpaneltaglinetext" class="form-control"
-                        value="{{loginpaneltaglinetext}}" maxlength="1500"
-                        placeholder="{{#str}}loginpaneltagline, theme_learnlingo{{/str}}">
-                </div>
-            </div>
-            <p class="ll-setup-login__preserve">{{#str}}setuploginpreservenote, theme_learnlingo{{/str}}</p>
-        </section>
-        <aside class="ll-setup-student__ai" aria-labelledby="ll-login-ai-heading">
-            <strong id="ll-login-ai-heading">{{#str}}setuploginaiheading, theme_learnlingo{{/str}}</strong>
-            <p>{{#str}}setuploginaidesc, theme_learnlingo{{/str}}</p>
-            <div class="ll-setup-student__ailinks">
-                <a href="{{{mcpurl}}}" target="_blank" rel="noopener noreferrer">Moodle MCP</a>
-                <a href="{{{chatgpturl}}}" target="_blank" rel="noopener noreferrer">ChatGPT</a>
-                <a href="{{{claudeurl}}}" target="_blank" rel="noopener noreferrer">Claude</a>
-                <a href="{{{jsonurl}}}">{{#str}}setuppromptimport, theme_learnlingo{{/str}}</a>
-            </div>
-            <button type="button" id="learnlingo-copy-prompt" class="btn btn-outline-primary">
-                {{#str}}setuppromptcopy, theme_learnlingo{{/str}}
-            </button>
-            <label class="ll-setup-prompt__label" for="learnlingo-brand-prompt">
-                {{#str}}setuppromptlabel, theme_learnlingo{{/str}}
-            </label>
-            <textarea id="learnlingo-brand-prompt" class="form-control ll-setup-prompt__textarea"
-                rows="3" readonly spellcheck="false">{{prompt}}</textarea>
-        </aside>
+                    <p class="ll-setup-login__preserve">{{#str}}setuploginpreservenote, theme_learnlingo{{/str}}</p>
+                </section>
+                <aside class="ll-setup-student__ai" aria-labelledby="ll-login-ai-heading">
+                    <strong id="ll-login-ai-heading">{{#str}}setuploginaiheading, theme_learnlingo{{/str}}</strong>
+                    <p>{{#str}}setuploginaidesc, theme_learnlingo{{/str}}</p>
+                    <div class="ll-setup-student__ailinks">
+                        <a href="{{{mcpurl}}}" target="_blank" rel="noopener noreferrer">Moodle MCP</a>
+                        <a href="{{{chatgpturl}}}" target="_blank" rel="noopener noreferrer">ChatGPT</a>
+                        <a href="{{{claudeurl}}}" target="_blank" rel="noopener noreferrer">Claude</a>
+                        <a href="{{{jsonurl}}}">{{#str}}setuppromptimport, theme_learnlingo{{/str}}</a>
+                    </div>
+                    <button type="button" id="learnlingo-copy-prompt" class="btn btn-outline-primary">
+                        {{#str}}setuppromptcopy, theme_learnlingo{{/str}}
+                    </button>
+                    <label class="ll-setup-prompt__label" for="learnlingo-brand-prompt">
+                        {{#str}}setuppromptlabel, theme_learnlingo{{/str}}
+                    </label>
+                    <textarea id="learnlingo-brand-prompt" class="form-control ll-setup-prompt__textarea"
+                              rows="3" readonly spellcheck="false">{{prompt}}</textarea>
+                </aside>
             {{/steplogin}}
             {{#stepdark}}
-        <section class="ll-setup-section ll-setup-dark" id="ll-setup-dark"
-            aria-labelledby="ll-setup-dark-heading">
-            <div class="ll-setup-section__heading">
-                <span class="ll-setup-number">{{step}}</span>
-                <div>
-                    <h3 id="ll-setup-dark-heading">{{#str}}darkmodeheading, theme_learnlingo{{/str}}</h3>
-                    <p>{{#str}}darkmodeintro, theme_learnlingo{{/str}}</p>
-                </div>
-            </div>
-            <div class="ll-setup-dark__benefits">
-                <p>{{#str}}darkmodebenefitcomfort, theme_learnlingo{{/str}}</p>
-                <p>{{#str}}darkmodebenefitchoice, theme_learnlingo{{/str}}</p>
-                <p>{{#str}}darkmodebenefitcompat, theme_learnlingo{{/str}}</p>
-            </div>
-            <p class="ll-setup-dark__help">{{#str}}darkmodeoptional, theme_learnlingo{{/str}}</p>
-            {{^darkcodeavailable}}
-                <p class="ll-setup-dark__help">{{#str}}darkmodemissingcode, theme_learnlingo{{/str}}
-                    <a href="https://github.com/EduardoKrausME/moodle-local_boost_dark"
-                       target="_blank" rel="noopener noreferrer">local_boost_dark</a>
-                </p>
-            {{/darkcodeavailable}}
-            <button type="submit" form="ll-boost-dark-install" class="btn btn-secondary">
-                {{#str}}darkmodeinstall, theme_learnlingo{{/str}}
-            </button>
-        </section>
+                <section class="ll-setup-section ll-setup-dark" id="ll-setup-dark"
+                         aria-labelledby="ll-setup-dark-heading">
+                    <div class="ll-setup-section__heading">
+                        <span class="ll-setup-number">{{step}}</span>
+                        <div>
+                            <h3 id="ll-setup-dark-heading">{{#str}}darkmodeheading, theme_learnlingo{{/str}}</h3>
+                            <p>{{#str}}darkmodeintro, theme_learnlingo{{/str}}</p>
+                        </div>
+                    </div>
+                    <div class="ll-setup-dark__benefits">
+                        <p>{{#str}}darkmodebenefitcomfort, theme_learnlingo{{/str}}</p>
+                        <p>{{#str}}darkmodebenefitchoice, theme_learnlingo{{/str}}</p>
+                        <p>{{#str}}darkmodebenefitcompat, theme_learnlingo{{/str}}</p>
+                    </div>
+                    <p class="ll-setup-dark__help">{{#str}}darkmodeoptional, theme_learnlingo{{/str}}</p>
+                    {{^darkcodeavailable}}
+                        <p class="ll-setup-dark__help">{{#str}}darkmodemissingcode, theme_learnlingo{{/str}}
+                            <a href="https://github.com/EduardoKrausME/moodle-local_boost_dark"
+                               target="_blank" rel="noopener noreferrer">local_boost_dark</a>
+                        </p>
+                    {{/darkcodeavailable}}
+                    <button type="submit" form="ll-boost-dark-install" class="btn btn-secondary">
+                        {{#str}}darkmodeinstall, theme_learnlingo{{/str}}
+                    </button>
+                </section>
             {{/stepdark}}
 
             <div class="ll-setup-wizard__actions">
@@ -669,7 +723,7 @@
             </div>
         </form>
         {{#stepdark}}
-            {{! The installer is a separate POST form, never nested inside the wizard. }}
+        {{! The installer is a separate POST form, never nested inside the wizard. }}
             <form id="ll-boost-dark-install" method="post" action="{{{darkinstallurl}}}">
                 <input type="hidden" name="cache" value="0">
                 <input type="hidden" name="confirmrelease" value="1">

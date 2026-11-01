@@ -2,7 +2,7 @@
 // Colour tokens are configured in lib.php before this file is loaded.
 $link-color: $primary;
 $link-hover-color: darken($primary, 8%);
-$border-color: #e4e6eb;
+$border-color: #E4E6EB;
 $border-radius: .875rem;
 $border-radius-sm: .625rem;
 $border-radius-lg: 1.25rem;
@@ -17,13 +17,11 @@ $font-family-sans-serif: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont
 $font-weight-semibold: 650;
 $box-shadow: 0 3px 0 rgba(37, 42, 55, .08);
 $box-shadow-sm: 0 2px 0 rgba(37, 42, 55, .07);
-
 $course-content-maxwidth: 1180px !default;
-$navbar-height:           60px   !default;
+$navbar-height: 60px !default;
 $medium-content-maxwidth: 1120px !default;
-$h5p-content-maxwidth:    1180px !default;
-
-$variable-prefix:             bs- !default; // Deprecated in v5.2.0 for the shorter `$prefix`
-$prefix:                      $variable-prefix !default;
-$table-border-width:          var(--#{$prefix}border-width) !default;
-$table-border-color:          var(--#{$prefix}border-color) !default;
+$h5p-content-maxwidth: 1180px !default;
+$variable-prefix: bs- !default; // Deprecated in v5.2.0 for the shorter `$prefix`
+$prefix: $variable-prefix !default;
+$table-border-width: var(--#{$prefix}border-width) !default;
+$table-border-color: var(--#{$prefix}border-color) !default;

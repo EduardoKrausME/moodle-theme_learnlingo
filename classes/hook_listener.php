@@ -12,7 +12,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Run onboarding only after Moodle has finished installing the plugin.
@@ -56,11 +56,11 @@ final class hook_listener {
         global $CFG;
 
         if ((defined('CLI_SCRIPT') && CLI_SCRIPT)
-                || (defined('PHPUNIT_TEST') && PHPUNIT_TEST)
-                || (defined('BEHAT_SITE_RUNNING') && BEHAT_SITE_RUNNING)
-                || ($_SERVER['REQUEST_METHOD'] ?? '') !== 'GET'
-                || !self::is_site_frontpage_request(
-                    (string)($_SERVER['SCRIPT_NAME'] ?? ''), (string)$CFG->wwwroot)) {
+            || (defined('PHPUNIT_TEST') && PHPUNIT_TEST)
+            || (defined('BEHAT_SITE_RUNNING') && BEHAT_SITE_RUNNING)
+            || ($_SERVER['REQUEST_METHOD'] ?? '') !== 'GET'
+            || !self::is_site_frontpage_request(
+                (string)($_SERVER['SCRIPT_NAME'] ?? ''), (string)$CFG->wwwroot)) {
             return;
         }
 
@@ -77,7 +77,7 @@ final class hook_listener {
         }
 
         if (during_initial_install() || !empty($CFG->upgraderunning)
-                || !empty($CFG->maintenance_enabled) || moodle_needs_upgrading()) {
+            || !empty($CFG->maintenance_enabled) || moodle_needs_upgrading()) {
             return;
         }
 

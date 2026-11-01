@@ -22,20 +22,20 @@
         Aqui tem que criar o context em inglês
     }
 }}
-    {{#children}}
-        {{^divider}}
-            {{#url}}
-                <li><a href="{{{url}}}" title="{{{title}}}">{{{text}}}</a></li>
-            {{/url}}
-            {{^url}}
-                <li>{{{text}}}</li>
-            {{/url}}
-        {{/divider}}
-        {{#haschildren}}
-            <li>
-                <ul class="list-unstyled ms-3">
-                    {{> theme_learnlingo/custom_menu_footer }}
-                </ul>
-            </li>
-        {{/haschildren}}
-    {{/children}}
+{{#children}}
+    {{^divider}}
+        {{#url}}
+            <li><a href="{{{url}}}" title="{{{title}}}">{{{text}}}</a></li>
+        {{/url}}
+        {{^url}}
+            <li>{{{text}}}</li>
+        {{/url}}
+    {{/divider}}
+    {{#haschildren}}
+        <li>
+            <ul class="list-unstyled ms-3">
+                {{> theme_learnlingo/custom_menu_footer }}
+            </ul>
+        </li>
+    {{/haschildren}}
+{{/children}}

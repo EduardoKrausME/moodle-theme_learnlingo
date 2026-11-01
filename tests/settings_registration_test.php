@@ -41,11 +41,11 @@ final class settings_registration_test extends advanced_testcase {
         global $CFG;
         $identifiers = [];
         foreach ([
-            'admin/branding_json.php',
-            'admin/branding_ai.php',
-            'templates/branding_json.mustache',
-            'templates/branding_ai.mustache',
-        ] as $path) {
+                     'admin/branding_json.php',
+                     'admin/branding_ai.php',
+                     'templates/branding_json.mustache',
+                     'templates/branding_ai.mustache',
+                 ] as $path) {
             $source = file_get_contents($CFG->dirroot . '/theme/learnlingo/' . $path);
             preg_match_all("/get_string\\(\\s*'([^']+)'\\s*,\\s*'theme_learnlingo'/", $source, $phpmatches);
             preg_match_all('/\{\{#str\}\}\s*([a-z0-9_]+)\s*,\s*theme_learnlingo\s*\{\{\/str\}\}/',

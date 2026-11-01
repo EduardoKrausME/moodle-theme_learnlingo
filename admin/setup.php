@@ -12,7 +12,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Visual first-run configuration for LearnLingo.
@@ -21,6 +21,12 @@
  * @copyright 2026 Eduardo Kraus
  * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+use theme_learnlingo\branding_exchange;
+use theme_learnlingo\dark_mode;
+use theme_learnlingo\setup_images;
+use theme_learnlingo\setup_login_images;
+use theme_learnlingo\setup_steps;
 
 require_once(__DIR__ . '/../../../config.php');
 
@@ -72,12 +78,12 @@ $adminurl = new moodle_url('/' . ($CFG->admin ?? 'admin') . '/index.php');
 // The site can be configured in several visits. A completed step unlocks the
 // next step; returning to earlier steps does not discard subsequent choices.
 $pending = (string)get_config('theme_learnlingo', 'setup_pending') === '1';
-$dashboardenabled = \theme_learnlingo\setup_steps::dashboard_enabled($CFG);
-$mycoursesenabled = \theme_learnlingo\setup_steps::mycourses_enabled($CFG);
-$stepcount = \theme_learnlingo\setup_steps::count($CFG);
-$studentstep = \theme_learnlingo\setup_steps::student_enabled($CFG);
-$loginstep = \theme_learnlingo\setup_steps::login_step($CFG);
-$darkstep = \theme_learnlingo\setup_steps::dark_step($CFG);
+$dashboardenabled = setup_steps::dashboard_enabled($CFG);
+$mycoursesenabled = setup_steps::mycourses_enabled($CFG);
+$stepcount = setup_steps::count($CFG);
+$studentstep = setup_steps::student_enabled($CFG);
+$loginstep = setup_steps::login_step($CFG);
+$darkstep = setup_steps::dark_step($CFG);
 $completed = max(0, min($stepcount, (int)get_config('theme_learnlingo', 'setup_completed_step')));
 // The last step disappears when local_boost_dark is installed. If the
 // administrator had already saved Login, do not leave the welcome sentinel.
@@ -137,8 +143,8 @@ if ($action !== '') {
             // Validate uploads and normalize with GD before applying the palette.
             // A decoding/memory failure must leave the previously selected
             // colours and all existing site images untouched.
-            $uploads = \theme_learnlingo\setup_images::validate($_FILES ?? []);
-            \theme_learnlingo\setup_images::save($uploads);
+            $uploads = setup_images::validate($_FILES ?? []);
+            setup_images::save($uploads);
             if ($palette !== 'preserve') {
                 $fields = ['brandcolor', 'accentcolor', 'canvascolor', 'textcolor', 'footer_background_color'];
                 foreach ($fields as $index => $field) {
@@ -184,7 +190,7 @@ if ($action !== '') {
             // LearnLingo-only presentation toggle. Do not allow both off.
             $newdashboard = (bool)optional_param('enabledashboard', 0, PARAM_BOOL);
             $newmycourses = (bool)optional_param('enablemycourses', 0, PARAM_BOOL);
-            if (!\theme_learnlingo\setup_steps::valid_selection($newdashboard, $newmycourses)) {
+            if (!setup_steps::valid_selection($newdashboard, $newmycourses)) {
                 throw new invalid_parameter_exception(get_string('setupstudentchooseone', 'theme_learnlingo'));
             }
             set_config('enabledashboard', (int)$newdashboard);
@@ -193,7 +199,7 @@ if ($action !== '') {
             // Do not leave the default post-login landing page pointing
             // to a page that was just disabled through this wizard.
             $defaulthomepage = (int)($CFG->defaulthomepage ?? HOMEPAGE_SITE);
-            $validhome = \theme_learnlingo\setup_steps::default_homepage(
+            $validhome = setup_steps::default_homepage(
                 $defaulthomepage, $newdashboard, $newmycourses);
             if ($validhome !== $defaulthomepage) {
                 set_config('defaulthomepage', $validhome);
@@ -218,8 +224,8 @@ if ($action !== '') {
     if ($submitted === $loginstep) {
         // Process login assets before changing the text fields. A decoding
         // failure must not leave half-updated branding in the database.
-        $images = \theme_learnlingo\setup_login_images::validate($_FILES ?? []);
-        \theme_learnlingo\setup_login_images::save($images);
+        $images = setup_login_images::validate($_FILES ?? []);
+        setup_login_images::save($images);
         foreach (['loginpaneltitletext', 'loginpaneldescriptiontext', 'loginpaneltaglinetext'] as $field) {
             set_config($field, optional_param($field, '', PARAM_TEXT), 'theme_learnlingo');
         }
@@ -291,7 +297,7 @@ for ($number = 1; $number <= $stepcount; $number++) {
     $steps[] = [
         'number' => $number,
         'label' => get_string('setupsteplabel' . ($number === $darkstep ? '6' :
-            ($number === $loginstep ? '5' : (string)$number)),
+                ($number === $loginstep ? '5' : (string)$number)),
             'theme_learnlingo'),
         'current' => $step === $number,
         'done' => $number <= $completed && $number !== $step,
@@ -315,7 +321,7 @@ $task = $step === 2
             : get_string('setupaidashboardprompt', 'theme_learnlingo')));
 $prompt = $step >= 2 && $step <= $loginstep && !$done
     ? $task . "\n\n" .
-        \theme_learnlingo\branding_exchange::prompt(\theme_learnlingo\branding_exchange::export())
+    branding_exchange::prompt(branding_exchange::export())
     : '';
 echo $OUTPUT->header();
 echo $OUTPUT->render_from_template('theme_learnlingo/setup', [
@@ -337,8 +343,8 @@ echo $OUTPUT->render_from_template('theme_learnlingo/setup', [
     'stepfour' => $studentstep && $step === 4 && !$done,
     'steplogin' => $step === $loginstep && !$done,
     'stepdark' => $darkstep !== null && $step === $darkstep && !$done,
-    'darkinstallurl' => \theme_learnlingo\dark_mode::install_url()->out(false),
-    'darkcodeavailable' => \theme_learnlingo\dark_mode::code_available(),
+    'darkinstallurl' => dark_mode::install_url()->out(false),
+    'darkcodeavailable' => dark_mode::code_available(),
     'laststep' => $step === $stepcount,
     'done' => $done,
     'saved' => optional_param('saved', 0, PARAM_BOOL),
@@ -369,11 +375,11 @@ echo $OUTPUT->render_from_template('theme_learnlingo/setup', [
     'loginpaneltitletext' => (string)get_config('theme_learnlingo', 'loginpaneltitletext'),
     'loginpaneldescriptiontext' => (string)get_config('theme_learnlingo', 'loginpaneldescriptiontext'),
     'loginpaneltaglinetext' => (string)get_config('theme_learnlingo', 'loginpaneltaglinetext'),
-    'loginlogourl' => \theme_learnlingo\setup_login_images::current_url('loginlogo'),
-    'loginbackgroundurl' => \theme_learnlingo\setup_login_images::current_url('loginbackground'),
+    'loginlogourl' => setup_login_images::current_url('loginlogo'),
+    'loginbackgroundurl' => setup_login_images::current_url('loginbackground'),
     'loginpreviewurl' => (new moodle_url('/login/index.php'))->out(false),
-    'logoimageurl' => \theme_learnlingo\setup_images::current_url('logo'),
-    'faviconimageurl' => \theme_learnlingo\setup_images::current_url('favicon'),
+    'logoimageurl' => setup_images::current_url('logo'),
+    'faviconimageurl' => setup_images::current_url('favicon'),
     'customhtmlmode' => $currentmode === 'html',
     'existinghomepagehtml' => $currentmode === 'html'
         && !in_array(trim((string)get_config('theme_learnlingo', 'homepagehtml')), ['', 'config'], true),

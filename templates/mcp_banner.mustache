@@ -1,3 +1,26 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_learnlingo/mcp_banner
+
+    Example context (json):
+    {
+    }
+}}
 <aside class="mcp-promo" aria-labelledby="theme_learnlingo-mcp-title">
     <div class="mcp-promo__icon" aria-hidden="true">MCP</div>
     <div class="mcp-promo__content">
@@ -14,9 +37,10 @@
     </div>
     <div class="mcp-promo__close">
         <button class="mcp-promo__dismiss" type="submit"
-            formaction="{{mcp_banner_dismiss_url}}" formmethod="post" formnovalidate
-            name="dismiss_mcp_banner" value="1"
-            aria-label="{{#str}}mcp_banner_dismiss,theme_learnlingo{{/str}}"
-            title="{{#str}}mcp_banner_dismiss,theme_learnlingo{{/str}}">&times;</button>
+                formaction="{{mcp_banner_dismiss_url}}" formmethod="post" formnovalidate
+                name="dismiss_mcp_banner" value="1"
+                aria-label="{{#str}}mcp_banner_dismiss,theme_learnlingo{{/str}}"
+                title="{{#str}}mcp_banner_dismiss,theme_learnlingo{{/str}}">&times;
+        </button>
     </div>
 </aside>

@@ -27,6 +27,7 @@ namespace theme_learnlingo\mcp;
 use local_mcp\course\file_url_normalizer;
 use local_mcp\exception\api_exception;
 use theme_learnlingo\branding_exchange;
+use theme_learnlingo\homepage_context;
 
 /**
  * Validate and apply only the home-related theme settings.
@@ -56,7 +57,7 @@ final class home_service {
         }
         $home['state_hash'] = hash('sha256', json_encode($home,
             JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR));
-        $home['mustache'] = \theme_learnlingo\homepage_context::schema();
+        $home['mustache'] = homepage_context::schema();
         return $home;
     }
 
@@ -70,7 +71,7 @@ final class home_service {
     public static function prepare(array $arguments): array {
         $before = self::snapshot();
         if (isset($arguments['expected_hash']) &&
-                !hash_equals($before['state_hash'], (string)$arguments['expected_hash'])) {
+            !hash_equals($before['state_hash'], (string)$arguments['expected_hash'])) {
             throw new api_exception('homepage_changed', 409,
                 'The LearnLingo homepage changed. Read it again before updating.');
         }
@@ -91,7 +92,7 @@ final class home_service {
         // In LearnLingo mode, homepagehtml is added above the native course cards,
         // so an HTML update must not silently change the selected homepage mode.
         if (array_key_exists('html', $arguments) && !array_key_exists('mode', $arguments)
-                && $before['mode'] !== 'learnlingo') {
+            && $before['mode'] !== 'learnlingo') {
             $data['settings']['homepagemode'] = 'html';
             $changes[] = 'homepagemode';
         }
@@ -128,7 +129,7 @@ final class home_service {
         foreach ($prepared['settings'] as $name => $value) {
             set_config($name, is_bool($value) ? (int)$value : $value, 'theme_learnlingo');
         }
-        \theme_learnlingo\homepage_context::purge_public_cache();
+        homepage_context::purge_public_cache();
         theme_reset_all_caches();
     }
 }

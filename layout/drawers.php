@@ -26,6 +26,8 @@ use core\navigation\output\more_menu;
 use core\output\select_menu;
 use core_completion\progress;
 use local_personalxp\service\xp_manager;
+use theme_learnlingo\output\footer_renderer;
+use theme_learnlingo\setup_steps;
 
 defined('MOODLE_INTERNAL') || die;
 
@@ -119,8 +121,8 @@ $showwelcome = !isset($PAGE->theme->settings->showwelcome)
 // by layout and follow the Moodle-wide enable flags, rather than inventing
 // theme-specific page switches.
 $ismycourses = $PAGE->pagelayout === 'mycourses';
-$isenableddashboard = \theme_learnlingo\setup_steps::dashboard_enabled($CFG);
-$isenabledmycourses = \theme_learnlingo\setup_steps::mycourses_enabled($CFG);
+$isenableddashboard = setup_steps::dashboard_enabled($CFG);
+$isenabledmycourses = setup_steps::mycourses_enabled($CFG);
 $dashboardhero = $PAGE->pagetype === 'my-index'
     && isloggedin()
     && !isguestuser()
@@ -136,9 +138,9 @@ $customfrontpage = $PAGE->pagetype === 'site-index'
     && !$PAGE->user_is_editing()
     && ($ishtmlhomepage || $homepagemode === 'learnlingo');
 if (($ishtmlhomepage || ($PAGE->pagetype === 'site-index' && $homepagemode === 'learnlingo'
-        && theme_learnlingo_homepage_html($PAGE->theme) !== ''))
-        && (!isset($PAGE->theme->settings->homepagefullwidth)
-            || !empty($PAGE->theme->settings->homepagefullwidth))) {
+            && theme_learnlingo_homepage_html($PAGE->theme) !== ''))
+    && (!isset($PAGE->theme->settings->homepagefullwidth)
+        || !empty($PAGE->theme->settings->homepagefullwidth))) {
     $extraclasses[] = 'learnlingo-html-home-fullwidth';
 }
 
@@ -215,24 +217,24 @@ if ($coursehero) {
         && has_capability('local/personalxp:view', $coursecontext)
     ) {
         $xpstate = xp_manager::get_course_display_state(
-            (int) $USER->id,
-            (int) $PAGE->course->id
+            (int)$USER->id,
+            (int)$PAGE->course->id
         );
 
         if ($xpstate['enabled']) {
-            $personalxpactivityreward = (int) $xpstate['activitycompletionxp'];
+            $personalxpactivityreward = (int)$xpstate['activitycompletionxp'];
             $personalxp = [
-                'totalxp' => (int) $xpstate['totalxp'],
-                'currentlevel' => (string) $xpstate['currentlevel'],
+                'totalxp' => (int)$xpstate['totalxp'],
+                'currentlevel' => (string)$xpstate['currentlevel'],
                 'nextlevel' => $xpstate['nextlevel'],
                 'hasnextlevel' => $xpstate['nextlevel'] !== null,
-                'levelprogress' => (int) $xpstate['levelprogress'],
-                'xptonext' => (int) $xpstate['xptonext'],
+                'levelprogress' => (int)$xpstate['levelprogress'],
+                'xptonext' => (int)$xpstate['xptonext'],
                 'nextlabel' => $xpstate['nextlevel'] === null
                     ? get_string('highestlevel', 'local_personalxp')
-                    : get_string('nextlevel', 'local_personalxp', (object) [
-                        'xp' => (int) $xpstate['xptonext'],
-                        'level' => (string) $xpstate['nextlevel'],
+                    : get_string('nextlevel', 'local_personalxp', (object)[
+                        'xp' => (int)$xpstate['xptonext'],
+                        'level' => (string)$xpstate['nextlevel'],
                     ]),
                 'url' => (new moodle_url('/local/personalxp/index.php', [
                     'courseid' => $PAGE->course->id,
@@ -244,7 +246,7 @@ if ($coursehero) {
 
 $templatecontext = [
     'brandlogo' => theme_learnlingo_logo_url($PAGE->theme, 'logo'),
-    'hasbrandlogo' => (bool) theme_learnlingo_logo_url($PAGE->theme, 'logo'),
+    'hasbrandlogo' => (bool)theme_learnlingo_logo_url($PAGE->theme, 'logo'),
     'sitename' => format_string($SITE->shortname, true, ['context' => context_course::instance(SITEID), "escape" => false]),
     'coursefullname' => $coursefullname,
     'courseurl' => $courseurl ? $courseurl->out(false) : null,
@@ -295,6 +297,6 @@ $templatecontext = [
     'coursesurl' => $coursesurl->out(false),
 ];
 
-$templatecontext = array_merge($templatecontext, \theme_learnlingo\output\footer_renderer::mustache_data());
+$templatecontext = array_merge($templatecontext, footer_renderer::mustache_data());
 
 echo $OUTPUT->render_from_template('theme_learnlingo/drawers', $templatecontext);

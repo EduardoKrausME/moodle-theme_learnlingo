@@ -22,6 +22,8 @@
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use theme_learnlingo\branding_exchange;
+
 /**
  * Seed the Moodle-wide site logo on a fresh installation.
  *
@@ -37,7 +39,7 @@ function xmldb_theme_learnlingo_install(): void {
     // Save all configurable defaults at installation time so the Moodle
     // upgrade wizard does not prompt for dozens of unchanged theme settings.
     // One source of truth: the same definitions used by JSON/MCP imports.
-    foreach (\theme_learnlingo\branding_exchange::definitions() as $name => [$type, $default]) {
+    foreach (branding_exchange::definitions() as $name => [$type, $default]) {
         if (get_config('theme_learnlingo', $name) !== false) {
             continue;
         }
@@ -118,10 +120,10 @@ function xmldb_theme_learnlingo_install(): void {
     // File settings also have persisted empty defaults when no file is present.
     // The logo and login background above are seeded first; neither is replaced.
     foreach ([
-        'core_admin' => ['logo', 'favicon'],
-        'theme_boost' => ['loginbackgroundimage'],
-        'theme_learnlingo' => ['loginlogo'],
-    ] as $component => $fields) {
+                 'core_admin' => ['logo', 'favicon'],
+                 'theme_boost' => ['loginbackgroundimage'],
+                 'theme_learnlingo' => ['loginlogo'],
+             ] as $component => $fields) {
         foreach ($fields as $field) {
             if (get_config($component, $field) === false) {
                 set_config($field, '', $component);

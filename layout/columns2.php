@@ -24,6 +24,7 @@
 
 use core\navigation\output\more_menu;
 use core\output\select_menu;
+use theme_learnlingo\output\footer_renderer;
 
 defined('MOODLE_INTERNAL') || die;
 
@@ -58,7 +59,7 @@ if ($PAGE->has_secondary_navigation()) {
 $primary = new core\navigation\output\primary($PAGE);
 $renderer = $PAGE->get_renderer('core');
 $primarymenu = $primary->export_for_template($renderer);
-$buildregionmainsettings = !$PAGE->include_region_main_settings_in_header_actions()  && !$PAGE->has_secondary_navigation();
+$buildregionmainsettings = !$PAGE->include_region_main_settings_in_header_actions() && !$PAGE->has_secondary_navigation();
 // If the settings menu will be included in the header then don't add it here.
 $regionmainsettingsmenu = $buildregionmainsettings ? $OUTPUT->region_main_settings_menu() : false;
 
@@ -83,6 +84,6 @@ $templatecontext = [
     'addblockbutton' => $addblockbutton,
 ];
 
-$templatecontext = array_merge($templatecontext, \theme_learnlingo\output\footer_renderer::mustache_data());
+$templatecontext = array_merge($templatecontext, footer_renderer::mustache_data());
 
 echo $OUTPUT->render_from_template('theme_learnlingo/columns2', $templatecontext);

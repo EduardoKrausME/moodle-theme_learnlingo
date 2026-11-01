@@ -17,6 +17,7 @@
  * Sticky footer module.
  *
  * @module     theme_learnlingo/sticky-footer
+ * @package   theme_learnlingo
  * @copyright  2022 Ferran Recio <ferran@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

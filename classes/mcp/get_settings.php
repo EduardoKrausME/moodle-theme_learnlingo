@@ -21,12 +21,14 @@
  * @copyright 2026 Eduardo Kraus
  * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 namespace theme_learnlingo\mcp;
 
 use context;
 use context_system;
 use local_mcp\read\tool_interface;
 use local_mcp\security\authenticated_identity;
+use theme_learnlingo\homepage_context;
 
 /**
  * Return all portable settings and the uploaded raster branding image metadata.
@@ -87,7 +89,7 @@ final class get_settings implements tool_interface {
                 'include_images' => [
                     'type' => 'boolean',
                     'description' => 'Attach PNG/JPEG/WebP branding images of up to 2 MiB; '
-                    . 'ICO favicons are returned as metadata only.',
+                        . 'ICO favicons are returned as metadata only.',
                 ],
             ],
             'additionalProperties' => false,
@@ -123,7 +125,7 @@ final class get_settings implements tool_interface {
     public function execute(array $arguments, authenticated_identity $identity): array {
         $result = settings_service::snapshot(!empty($arguments['include_images']));
         // Send the complete field guide alongside settings, without changing state_hash.
-        $result['homepage_mustache'] = \theme_learnlingo\homepage_context::schema();
+        $result['homepage_mustache'] = homepage_context::schema();
         return $result;
     }
 }

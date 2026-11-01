@@ -21,6 +21,7 @@
  * @copyright 2026 Eduardo Kraus
  * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 namespace theme_learnlingo;
 
 use invalid_parameter_exception;
@@ -96,7 +97,7 @@ final class branding_exchange {
             if ($value === false || $value === null) {
                 $value = $default;
             }
-            $settings[$name] = $type === 'bool' ? (bool) $value : (string) $value;
+            $settings[$name] = $type === 'bool' ? (bool)$value : (string)$value;
         }
         return [
             'schema_version' => self::SCHEMA_VERSION,
@@ -360,16 +361,16 @@ PROMPT;
             throw new invalid_parameter_exception(get_string('jsonerrorinvalid', 'theme_learnlingo'));
         }
         if (!is_array($data) || array_is_list($data) ||
-                !self::same_keys($data, ['schema_version', 'plugin', 'repository', 'settings'])) {
+            !self::same_keys($data, ['schema_version', 'plugin', 'repository', 'settings'])) {
             throw new invalid_parameter_exception(get_string('jsonerrorstructure', 'theme_learnlingo'));
         }
         if ($data['schema_version'] !== 1 || $data['plugin'] !== 'theme_learnlingo' ||
-                $data['repository'] !== 'https://github.com/EduardoKrausME/moodle-theme_learnlingo') {
+            $data['repository'] !== 'https://github.com/EduardoKrausME/moodle-theme_learnlingo') {
             throw new invalid_parameter_exception(get_string('jsonerroridentity', 'theme_learnlingo'));
         }
         $values = $data['settings'];
         if (!is_array($values) || array_is_list($values) ||
-                !self::same_keys($values, array_keys(self::definitions()))) {
+            !self::same_keys($values, array_keys(self::definitions()))) {
             throw new invalid_parameter_exception(get_string('jsonerrorsettings', 'theme_learnlingo'));
         }
 
@@ -400,7 +401,7 @@ PROMPT;
                     self::invalid_field($name);
                 }
                 if ($type === 'courseids' && $value !== '' &&
-                        !preg_match('/^[1-9][0-9]*(,[1-9][0-9]*)*$/D', $value)) {
+                    !preg_match('/^[1-9][0-9]*(,[1-9][0-9]*)*$/D', $value)) {
                     self::invalid_field($name);
                 }
                 if ($type === 'footermode' && !in_array($value, ['moodle', 'html'], true)) {
@@ -411,22 +412,22 @@ PROMPT;
                     self::invalid_field($name);
                 }
                 if (($type === 'html' || $type === 'scss') &&
-                        (str_contains($value, '<?') || str_contains($value, "\0"))) {
+                    (str_contains($value, '<?') || str_contains($value, "\0"))) {
                     self::invalid_field($name);
                 }
                 // No remote CSS imports or executable embeds in generated content.
                 if ($type === 'scss' &&
-                        preg_match('~@import\s+(?:url\s*\(|[\x22\x27]https?://)~i', $value)) {
+                    preg_match('~@import\s+(?:url\s*\(|[\x22\x27]https?://)~i', $value)) {
                     self::invalid_field($name);
                 }
                 // Prevent page-scoped SCSS from generating unscoped Sass rules.
                 if (in_array($name, ['homepagescss', 'footerscss'], true) &&
-                        preg_match('~@(at-root|import|use|forward|extend|keyframes|font-face|charset|namespace|property)\b~i',
-                            $value)) {
+                    preg_match('~@(at-root|import|use|forward|extend|keyframes|font-face|charset|namespace|property)\b~i',
+                        $value)) {
                     self::invalid_field($name);
                 }
                 if ($type === 'html' &&
-                        preg_match('~<\s*(script|iframe|object|embed|form)\b~i', $value)) {
+                    preg_match('~<\s*(script|iframe|object|embed|form)\b~i', $value)) {
                     self::invalid_field($name);
                 }
             }
@@ -449,9 +450,9 @@ PROMPT;
     public static function apply(array $data): void {
         foreach (self::definitions() as $name => [$type, $default]) {
             $value = $data['settings'][$name];
-            set_config($name, $type === 'bool' ? (int) $value : $value, 'theme_learnlingo');
+            set_config($name, $type === 'bool' ? (int)$value : $value, 'theme_learnlingo');
         }
-        \theme_learnlingo\homepage_context::purge_public_cache();
+        homepage_context::purge_public_cache();
         theme_reset_all_caches();
     }
 

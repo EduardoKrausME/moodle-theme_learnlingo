@@ -47,25 +47,25 @@
     }
 }}
 <div
-    id="sticky-footer"
-    class="stickyfooter bg-white border-top"
-    {{$ disable }}
-        {{#disable}} data-disable="true" {{/disable}}
-    {{/ disable }}
-    {{$ extradata }}
-        {{#extras}}
+        id="sticky-footer"
+        class="stickyfooter bg-white border-top"
+{{$ disable }}
+    {{#disable}} data-disable="true" {{/disable}}
+{{/ disable }}
+{{$ extradata }}
+    {{#extras}}
         {{attribute}}="{{value}}"
-        {{/extras}}
-    {{/ extradata }}>
-    {{# supplementary }}
+    {{/extras}}
+{{/ extradata }}>
+{{# supplementary }}
     <div class="sticky-footer-supplementary-wrapper d-flex justify-content-center align-items-center">
         <div class="sticky-footer-supplementary">
             {{> core/action_link}}
         </div>
     </div>
-    {{/ supplementary }}
+{{/ supplementary }}
 
-    {{# stickycontent }}
+{{# stickycontent }}
     <div class="sticky-footer-content-wrapper d-flex justify-content-center align-items-center">
         <div class="sticky-footer-content w-100 {{!
             }} {{$ stickyclasses }}{{!
@@ -75,10 +75,10 @@
             {{{stickycontent}}}
         </div>
     </div>
-    {{/ stickycontent }}
+{{/ stickycontent }}
 </div>
 {{#js}}
-require(['theme_learnlingo/sticky-footer'], function(footer) {
+    require(['theme_learnlingo/sticky-footer'], function(footer) {
     footer.init();
-});
+    });
 {{/js}}

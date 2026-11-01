@@ -12,7 +12,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Optional Dark Mode plugin integration.
@@ -24,10 +24,12 @@
 
 namespace theme_learnlingo;
 
+use advanced_testcase;
+
 /**
  * @covers \theme_learnlingo\dark_mode
  */
-final class dark_mode_test extends \advanced_testcase {
+final class dark_mode_test extends advanced_testcase {
     public function test_plugin_status_respects_version_and_enable_flag(): void {
         $this->resetAfterTest();
         unset_config('version', 'local_boost_dark');

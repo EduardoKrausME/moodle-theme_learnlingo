@@ -108,7 +108,7 @@ final class update_styles extends base_tool {
             . 'by homepagepubliccoursesperpage through learnlingo_update_settings '
             . 'or publiccoursesperpage via learnlingo_update_homepage; do not '
             . 'limit logged-in enrolled courses. MUC-cached anonymous catalogue '
-            . 'never shares student data. 
+            . 'never shares student data. '
             . 'Move CSS from homepagescss to scss and clear homepagescss in ONE confirmed '
             . 'write to avoid duplication. Other fields remain unchanged. '
             . 'Read learnlingo_get_settings first; expected_hash is REQUIRED to '
@@ -132,8 +132,10 @@ final class update_styles extends base_tool {
             ];
             if ($type === 'homepage') {
                 $field['enum'] = ['moodle', 'learnlingo', 'html'];
-            } else if ($type === 'footermode') {
-                $field['enum'] = ['moodle', 'html'];
+            } else {
+                if ($type === 'footermode') {
+                    $field['enum'] = ['moodle', 'html'];
+                }
             }
             $properties[$name] = $field;
         }
@@ -189,7 +191,7 @@ final class update_styles extends base_tool {
      */
     private static function prepare(array $arguments): array {
         if (!isset($arguments['expected_hash']) || !is_string($arguments['expected_hash']) ||
-                !preg_match('/^[a-f0-9]{64}$/D', $arguments['expected_hash'])) {
+            !preg_match('/^[a-f0-9]{64}$/D', $arguments['expected_hash'])) {
             throw new api_exception('expected_hash_required', 400,
                 'Read learnlingo_get_settings and supply its state_hash before editing.');
         }

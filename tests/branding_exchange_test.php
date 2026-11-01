@@ -21,6 +21,7 @@
  * @copyright 2026 Eduardo Kraus
  * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 namespace theme_learnlingo;
 
 use advanced_testcase;
@@ -97,6 +98,7 @@ final class branding_exchange_test extends advanced_testcase {
         $data['settings']['scss'] = '.learnlingo-html-home { padding: 2rem; }';
         $this->assertSame($data, branding_exchange::parse(branding_exchange::json($data)));
     }
+
     /**
      * Footer HTML must pass the same import validator as homepage HTML.
      */
@@ -116,6 +118,7 @@ final class branding_exchange_test extends advanced_testcase {
         $this->expectException(invalid_parameter_exception::class);
         branding_exchange::parse(branding_exchange::json($data));
     }
+
     /**
      * Scoped SCSS must not bypass the nesting root.
      */

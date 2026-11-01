@@ -21,6 +21,7 @@
  * @copyright 2026 Eduardo Kraus
  * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 namespace theme_learnlingo\mcp;
 
 use context;
@@ -76,7 +77,7 @@ final class update_settings extends base_tool {
             . 'limits only the anonymous catalogue (1-12, default 4), '
             . 'and coursepagination.coursecolumns adapts layouts when fewer '
             . 'real courses exist. Do not limit enrolled course lists or invent '
-            . 'missing cards; preserve private data and cache isolation. 
+            . 'missing cards; preserve private data and cache isolation. '
             . 'Preview and explicit confirmation are required. Read '
             . 'learnlingo_get_settings first and pass state_hash as expected_hash. '
             . 'The shared site logo and favicon use core_admin; the separate login '
@@ -194,10 +195,14 @@ final class update_settings extends base_tool {
             ];
             if ($type === 'color') {
                 $property['pattern'] = '^#[A-Fa-f0-9]{6}$';
-            } else if ($type === 'homepage') {
-                $property['enum'] = ['learnlingo', 'moodle', 'html'];
-            } else if ($type === 'footermode') {
-                $property['enum'] = ['moodle', 'html'];
+            } else {
+                if ($type === 'homepage') {
+                    $property['enum'] = ['learnlingo', 'moodle', 'html'];
+                } else {
+                    if ($type === 'footermode') {
+                        $property['enum'] = ['moodle', 'html'];
+                    }
+                }
             }
             $properties[$name] = $property;
         }

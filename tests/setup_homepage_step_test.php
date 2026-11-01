@@ -12,7 +12,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Step two shows safe guidance for an existing HTML homepage.
@@ -24,12 +24,14 @@
 
 namespace theme_learnlingo;
 
+use advanced_testcase;
+
 /**
  * The wizard must not offer replacement layouts for an existing HTML homepage.
  *
  * @coversNothing
  */
-final class setup_homepage_step_test extends \advanced_testcase {
+final class setup_homepage_step_test extends advanced_testcase {
     /**
      * Prepare enough context to render the step two Moodle Mustache template.
      *

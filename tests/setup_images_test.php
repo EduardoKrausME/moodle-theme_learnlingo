@@ -12,7 +12,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Regression checks for site-wide logo and favicon storage.
@@ -24,12 +24,15 @@
 
 namespace theme_learnlingo;
 
+use advanced_testcase;
+use context_system;
+
 /**
  * Regression tests for PHP GD normalization and existing asset preservation.
  *
  * @covers \theme_learnlingo\setup_images
  */
-final class setup_images_test extends \advanced_testcase {
+final class setup_images_test extends advanced_testcase {
     /**
      * Ensure PHP GD can be used for tests requiring image generation.
      *
@@ -71,7 +74,7 @@ final class setup_images_test extends \advanced_testcase {
             $this->assertStringEndsWith('.png', $storedname);
             $this->assertSame('/unchanged.ico', get_config('core_admin', 'favicon'));
 
-            $contextid = \context_system::instance()->id;
+            $contextid = context_system::instance()->id;
             $storedfile = get_file_storage()->get_file(
                 $contextid, 'core_admin', 'logo', 0, '/', ltrim($storedname, '/')
             );
@@ -112,7 +115,7 @@ final class setup_images_test extends \advanced_testcase {
             $storedname = (string)get_config('core_admin', 'favicon');
             $this->assertStringEndsWith('.png', $storedname);
 
-            $contextid = \context_system::instance()->id;
+            $contextid = context_system::instance()->id;
             $storedfile = get_file_storage()->get_file(
                 $contextid, 'core_admin', 'favicon', 0, '/', ltrim($storedname, '/')
             );
@@ -161,7 +164,7 @@ final class setup_images_test extends \advanced_testcase {
         try {
             setup_images::save(['logo' => ['tmp_name' => $source]]);
             $storedname = (string)get_config('core_admin', 'logo');
-            $contextid = \context_system::instance()->id;
+            $contextid = context_system::instance()->id;
             $storedfile = get_file_storage()->get_file(
                 $contextid, 'core_admin', 'logo', 0, '/', ltrim($storedname, '/')
             );
@@ -193,7 +196,7 @@ final class setup_images_test extends \advanced_testcase {
         $this->setAdminUser();
 
         $fs = get_file_storage();
-        $contextid = \context_system::instance()->id;
+        $contextid = context_system::instance()->id;
         foreach (['logo' => 'institution-logo.png', 'favicon' => 'institution-favicon.png'] as $field => $name) {
             $fs->create_file_from_string([
                 'contextid' => $contextid,

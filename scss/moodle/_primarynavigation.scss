@@ -2,12 +2,10 @@
     .drawerheading {
         min-width: 0;
     }
-
     [data-region="site-home-link"] {
         max-width: 100%;
         overflow: hidden;
     }
-
     .logo {
         max-width: 100%;
         max-height: $navbar-height;
@@ -16,43 +14,36 @@
         object-fit: contain;
     }
 }
-
 .primary-navigation .navigation {
     gap: .35rem;
 }
-
 .primary-navigation .nav-link,
 .navbar .moremenu .nav-link {
     min-height: 43px;
     padding: .7rem 1rem;
-    color: #666a74;
+    color: #666A74;
     font-weight: 650;
     border: 0 !important;
     border-radius: 13px;
 }
-
 .primary-navigation .nav-link:hover,
 .navbar .moremenu .nav-link:hover {
     color: $primary;
     background: rgba($primary, .07);
 }
-
 .primary-navigation .nav-link.active,
 .navbar .moremenu .nav-link.active {
     color: $primary;
     background: rgba($primary, .09);
     box-shadow: inset 0 0 0 1px rgba($primary, .03);
 }
-
 .primary-navigation .nav-link::before,
 .navbar .moremenu .nav-link::before {
     display: none !important;
 }
-
 .moremenu {
     opacity: 1 !important;
 }
-
 // Boost mobile navigation, adapted to LearnLingo's own drawer and brand tokens.
 // The mobile primary drawer has its own navigation presentation, independent from Bootstrap list groups.
 // Use the existing drawer controller, so opening/closing behaviour and user preferences stay unchanged.
@@ -61,34 +52,27 @@
     background-color: var(--mds-bg-surface-default, var(--#{$prefix}white));
     border-inline-end: 1px solid var(--mds-border-default, var(--#{$prefix}gray-300));
     box-shadow: 6px 0 24px rgba(0, 0, 0, .12);
-
     @include media-breakpoint-down(md) {
         width: var(--mobile-primary-width);
         max-width: var(--mobile-primary-width);
         left: calc(0px - var(--mobile-primary-width) - 10px);
-
         &.show {
             left: 0;
         }
     }
-
     .drawerheader {
         flex: 0 0 auto;
         border-bottom: 1px solid var(--mds-border-default, var(--#{$prefix}gray-300));
-
         .drawerheadertop {
             padding-inline: .875rem;
         }
-
         .drawerheading {
             min-width: 0;
         }
-
         [data-region="site-home-link"] {
             max-width: 100%;
             overflow: hidden;
         }
-
         .logo {
             width: auto;
             height: auto;
@@ -96,23 +80,19 @@
             max-height: calc(#{$navbar-height} - 1.5rem);
             object-fit: contain;
         }
-
         .drawertoggle {
             margin-inline: .375rem 0;
             border-radius: .625rem;
         }
     }
-
     .drawercontent {
         padding: 1rem .75rem calc(1rem + env(safe-area-inset-bottom));
         overscroll-behavior: contain;
     }
 }
-
 .mobile-primary-navigation {
     color: var(--mds-text-default, var(--#{$prefix}gray-900));
     width: 100%;
-
     &__caption {
         margin: 0 .625rem .625rem;
         color: var(--mds-text-subtle, var(--#{$prefix}gray-600));
@@ -120,18 +100,15 @@
         font-weight: 700;
         letter-spacing: .045em;
     }
-
     &__list,
     &__submenu {
         list-style: none;
         margin: 0;
         padding: 0;
     }
-
     &__item + &__item {
         margin-top: .25rem;
     }
-
     &__link,
     &__trigger,
     &__sublink {
@@ -151,18 +128,15 @@
         text-decoration: none;
         overflow-wrap: anywhere;
         cursor: pointer;
-
         &:hover {
             background-color: var(--mds-bg-surface-subtle, var(--#{$prefix}gray-100));
             color: var(--mds-text-emphasis, var(--#{$prefix}gray-900));
             text-decoration: none;
         }
-
         &:focus-visible {
             outline: 3px solid var(--mds-focus-default, var(--#{$prefix}primary));
             outline-offset: 2px;
         }
-
         &.is-active,
         &[aria-current="page"] {
             border-inline-start-color: var(--#{$prefix}primary);
@@ -171,17 +145,14 @@
             font-weight: 700;
         }
     }
-
     &__link,
     &__trigger {
         padding: .75rem .875rem;
     }
-
     &__label {
         flex: 1 1 auto;
         min-width: 0;
     }
-
     &__chevron {
         display: inline-block;
         flex: 0 0 auto;
@@ -193,30 +164,25 @@
         transform: rotate(45deg);
         transition: transform .2s ease;
     }
-
     &__trigger[aria-expanded="true"] &__chevron {
         transform: rotate(225deg);
     }
-
     &__submenu {
         margin: .375rem 0 .5rem 1rem;
         padding-inline-start: .625rem;
         border-inline-start: 2px solid var(--mds-border-default, var(--#{$prefix}gray-300));
     }
-
     &__sublink {
         min-height: 2.75rem;
         padding: .625rem .75rem;
         font-size: .9375rem;
     }
 }
-
 @media (prefers-reduced-motion: reduce) {
     .mobile-primary-navigation__chevron {
         transition: none;
     }
 }
-
 // On narrow screens, the single Moodle course index lives inside the primary mobile menu.
 // The original course drawer and its opener remain intact for desktop layouts.
 @include media-breakpoint-down(md) {
@@ -225,22 +191,18 @@
         display: none !important; // Override the fixed-drawer display rules on mobile only.
     }
 }
-
 .mobile-primary-navigation {
     &__course {
         margin-top: 1.125rem;
         padding-top: .875rem;
         border-top: 1px solid var(--mds-border-default, var(--#{$prefix}gray-300));
     }
-
     &__course-trigger {
         font-weight: 700;
     }
-
     &__course-panel {
         padding: .375rem 0 .25rem;
     }
-
     &__course-title {
         display: block;
         margin: .25rem .5rem .375rem;
@@ -251,28 +213,23 @@
         font-weight: 600;
         overflow-wrap: anywhere;
         text-decoration: none;
-
         &:hover {
             color: var(--mds-text-emphasis, var(--#{$prefix}gray-900));
             background-color: var(--mds-bg-surface-subtle, var(--#{$prefix}gray-100));
             text-decoration: none;
         }
-
         &:focus-visible {
             outline: 3px solid var(--mds-focus-default, var(--#{$prefix}primary));
             outline-offset: 2px;
         }
     }
-
     &__course-panel [data-region="mobile-courseindex-controls"] {
         #courseindexdrawercontrols {
             margin: 0 0 .375rem !important;
             padding: 0 !important;
-
             hr {
                 display: none;
             }
-
             .courseindex-collapsemenu {
                 min-height: 2.75rem;
                 width: 100%;
@@ -280,11 +237,9 @@
                 text-align: start;
                 border-radius: .625rem;
                 color: var(--mds-text-default, var(--#{$prefix}gray-900));
-
                 &:hover {
                     background-color: var(--mds-bg-surface-subtle, var(--#{$prefix}gray-100));
                 }
-
                 &:focus-visible {
                     outline: 3px solid var(--mds-focus-default, var(--#{$prefix}primary));
                     outline-offset: 2px;
@@ -292,21 +247,17 @@
             }
         }
     }
-
     &__course-panel .courseindex {
         width: 100%;
         min-width: 0;
         color: var(--mds-text-default, var(--#{$prefix}gray-900));
-
         .courseindex-item {
             min-height: 2.5rem;
             border-radius: .625rem;
         }
-
         .courseindex-item:not(.pageitem):hover {
             background-color: var(--mds-bg-surface-subtle, var(--#{$prefix}gray-100));
         }
-
         .courseindex-link:focus-visible,
         .courseindex-chevron:focus-visible {
             outline: 3px solid var(--mds-focus-default, var(--#{$prefix}primary));

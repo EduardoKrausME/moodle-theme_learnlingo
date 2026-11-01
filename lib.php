@@ -22,6 +22,8 @@
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use theme_learnlingo\homepage_context;
+
 /**
  * Returns SCSS inserted before Boost's main SCSS.
  *
@@ -51,7 +53,7 @@ function theme_learnlingo_get_pre_scss(theme_config $theme): string {
     // W3C relative luminance determines whether the footer needs light text.
     $rgb = [hexdec(substr($footerbg, 1, 2)), hexdec(substr($footerbg, 3, 2)),
         hexdec(substr($footerbg, 5, 2))];
-    $linear = array_map(static function($value) {
+    $linear = array_map(static function ($value) {
         $channel = $value / 255;
         return $channel <= 0.04045 ? $channel / 12.92 : pow(($channel + 0.055) / 1.055, 2.4);
     }, $rgb);
@@ -82,7 +84,7 @@ function theme_learnlingo_get_pre_scss(theme_config $theme): string {
  * @return string
  */
 function theme_learnlingo_scope_scss(string $scss, string $scope, array $rootselectors): string {
-    $escaped = array_map(static function(string $selector): string {
+    $escaped = array_map(static function (string $selector): string {
         return preg_quote($selector, '/');
     }, $rootselectors);
     // Match selector boundaries, not similar text inside a class name or property value.
@@ -194,7 +196,7 @@ function theme_learnlingo_brand_text(string $key, string $fallback): string {
  * @return string 'learnlingo', 'moodle' or 'html'.
  */
 function theme_learnlingo_homepage_mode(theme_config $theme): string {
-    $mode = (string) ($theme->settings->homepagemode ?? 'learnlingo');
+    $mode = (string)($theme->settings->homepagemode ?? 'learnlingo');
     return in_array($mode, ['learnlingo', 'moodle', 'html'], true) ? $mode : 'learnlingo';
 }
 
@@ -205,7 +207,7 @@ function theme_learnlingo_homepage_mode(theme_config $theme): string {
  * @return string
  */
 function theme_learnlingo_homepage_html(theme_config $theme): string {
-    $html = (string) ($theme->settings->homepagehtml ?? '');
+    $html = (string)($theme->settings->homepagehtml ?? '');
     // Fresh installations store this exact sentinel to open the visual wizard
     // for administrators. Never expose it as literal homepage content.
     return $html === 'config' ? '' : $html;
@@ -217,6 +219,6 @@ function theme_learnlingo_homepage_html(theme_config $theme): string {
  * @return void
  */
 function theme_learnlingo_homepage_cache_reset(): void {
-    \theme_learnlingo\homepage_context::purge_public_cache();
+    homepage_context::purge_public_cache();
     theme_reset_all_caches();
 }

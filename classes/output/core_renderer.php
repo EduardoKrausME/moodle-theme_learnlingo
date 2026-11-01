@@ -48,7 +48,7 @@ class core_renderer extends boost_core_renderer {
             return moodle_url::make_file_url(
                 "$CFG->wwwroot/pluginfile.php",
                 '/' . context_system::instance()->id . '/theme_learnlingo/loginlogo/' .
-                    theme_get_revision() . $filepath
+                theme_get_revision() . $filepath
             );
         }
 

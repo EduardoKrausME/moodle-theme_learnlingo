@@ -186,9 +186,10 @@
     {{#canloginasguest}}
         <form action="{{loginurl}}" method="post" id="guestlogin" class="mb-4">
             <input type="hidden" name="logintoken" value="{{logintoken}}">
-            <input type="hidden" name="username" value="guest" />
-            <input type="hidden" name="password" value="guest" />
-            <button class="btn btn-outline-secondary login-identityprovider-btn" type="submit" id="loginguestbtn"><i class="fa fa-user me-2" aria-hidden="true"></i>{{#str}}loginasguest{{/str}}</button>
+            <input type="hidden" name="username" value="guest"/>
+            <input type="hidden" name="password" value="guest"/>
+            <button class="btn btn-outline-secondary login-identityprovider-btn" type="submit" id="loginguestbtn"><i
+                    class="fa fa-user me-2" aria-hidden="true"></i>{{#str}}loginasguest{{/str}}</button>
         </form>
     {{/canloginasguest}}
     {{#languagemenu}}
@@ -209,51 +210,51 @@
     {{^error}}
         {{#autofocusform}}
             require(['core_form/events'], function(FormEvent) {
-                function autoFocus() {
-                    const userNameField = document.getElementById('username');
-                    const passwordField = document.getElementById('password');
-                    if (userNameField && userNameField.value.length == 0) {
-                        userNameField.focus();
-                    } else if (passwordField) {
-                        passwordField.focus();
-                    }
-                }
-                autoFocus();
-                window.addEventListener(FormEvent.eventTypes.fieldStructureChanged, autoFocus);
+            function autoFocus() {
+            const userNameField = document.getElementById('username');
+            const passwordField = document.getElementById('password');
+            if (userNameField && userNameField.value.length == 0) {
+            userNameField.focus();
+            } else if (passwordField) {
+            passwordField.focus();
+            }
+            }
+            autoFocus();
+            window.addEventListener(FormEvent.eventTypes.fieldStructureChanged, autoFocus);
             });
         {{/autofocusform}}
     {{/error}}
     require(['core/pending'], function(Pending) {
-        const errorMessageDiv = document.getElementById('loginerrormessage');
-        const infoMessageDiv = document.getElementById('logininfomessage');
-        const errorMessage = errorMessageDiv?.textContent.trim();
-        const infoMessage = infoMessageDiv?.textContent.trim();
-        if (errorMessage || infoMessage) {
-            const pendingJS = new Pending('login-move-focus');
-            const usernameField = document.getElementById('username');
-            setTimeout(function() {
-                if (errorMessage && usernameField) {
-                    usernameField.focus();
-                }
-                if (errorMessage) {
-                    errorMessageDiv.innerHTML += "&nbsp;";
-                }
-                if (infoMessage) {
-                    infoMessageDiv.innerHTML += "&nbsp;";
-                }
-                pendingJS.resolve();
-            }, 500);
-        }
+    const errorMessageDiv = document.getElementById('loginerrormessage');
+    const infoMessageDiv = document.getElementById('logininfomessage');
+    const errorMessage = errorMessageDiv?.textContent.trim();
+    const infoMessage = infoMessageDiv?.textContent.trim();
+    if (errorMessage || infoMessage) {
+    const pendingJS = new Pending('login-move-focus');
+    const usernameField = document.getElementById('username');
+    setTimeout(function() {
+    if (errorMessage && usernameField) {
+    usernameField.focus();
+    }
+    if (errorMessage) {
+    errorMessageDiv.innerHTML += "&nbsp;";
+    }
+    if (infoMessage) {
+    infoMessageDiv.innerHTML += "&nbsp;";
+    }
+    pendingJS.resolve();
+    }, 500);
+    }
     });
     {{#togglepassword}}
         require(['core/togglesensitive'], function(ToggleSensitive) {
-            ToggleSensitive.init("password", {{smallscreensonly}});
+        ToggleSensitive.init("password", {{smallscreensonly}});
         });
     {{/togglepassword}}
     require(['core_form/submit'], function(Submit) {
-        Submit.init("loginbtn");
-        {{#canloginasguest}}
-            Submit.init("loginguestbtn");
-        {{/canloginasguest}}
+    Submit.init("loginbtn");
+    {{#canloginasguest}}
+        Submit.init("loginguestbtn");
+    {{/canloginasguest}}
     });
 {{/js}}

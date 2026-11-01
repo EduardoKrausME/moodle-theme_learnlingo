@@ -123,7 +123,7 @@ $THEME->layouts = [
 ];
 $THEME->rendererfactory = 'theme_overridden_renderer_factory';
 $THEME->usefallback = true;
-$THEME->scss = function($theme) {
+$THEME->scss = function ($theme) {
     return theme_boost_get_main_scss_content($theme);
 };
 $THEME->prescsscallback = 'theme_learnlingo_get_pre_scss';

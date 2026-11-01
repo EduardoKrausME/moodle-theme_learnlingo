@@ -24,6 +24,7 @@
  * @copyright 2026 Eduardo Kraus
  * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 namespace theme_learnlingo;
 
 use DOMDocument;
@@ -45,7 +46,7 @@ final class svg_logo {
     public static function is_valid(string $source): bool {
         $source = trim($source);
         if ($source === '' || strlen($source) > self::MAX_LENGTH ||
-                preg_match('/<!(?!\[CDATA\[)|<\?|\]\]>|\\x00/i', $source)) {
+            preg_match('/<!(?!\[CDATA\[)|<\?|\]\]>|\\x00/i', $source)) {
             return false;
         }
         if (!class_exists('\\DOMDocument')) {
@@ -56,9 +57,9 @@ final class svg_logo {
         try {
             $document = new DOMDocument();
             if (!$document->loadXML($source, LIBXML_NONET) ||
-                    $document->doctype !== null || !$document->documentElement ||
-                    $document->documentElement->localName !== 'svg' ||
-                    $document->documentElement->namespaceURI !== 'http://www.w3.org/2000/svg') {
+                $document->doctype !== null || !$document->documentElement ||
+                $document->documentElement->localName !== 'svg' ||
+                $document->documentElement->namespaceURI !== 'http://www.w3.org/2000/svg') {
                 return false;
             }
             // Reject markup or processing instructions outside the root element.
@@ -92,7 +93,7 @@ final class svg_logo {
             'preserveAspectRatio', 'role', 'aria-label', 'aria-hidden'];
 
         if (!in_array($node->localName, $elements, true) ||
-                $node->namespaceURI !== 'http://www.w3.org/2000/svg') {
+            $node->namespaceURI !== 'http://www.w3.org/2000/svg') {
             return false;
         }
         foreach ($node->attributes as $attribute) {
@@ -106,8 +107,8 @@ final class svg_logo {
                 continue;
             }
             if ($attribute->namespaceURI !== null || strlen($attribute->value) > 6000 ||
-                    preg_match('/[<>\\x00-\\x1f]|url\\s*\\(|javascript:|data:|https?:|@import|\\\\/i',
-                        $attribute->value)) {
+                preg_match('/[<>\\x00-\\x1f]|url\\s*\\(|javascript:|data:|https?:|@import|\\\\/i',
+                    $attribute->value)) {
                 return false;
             }
         }
@@ -116,13 +117,15 @@ final class svg_logo {
                 if (!self::check_node($child)) {
                     return false;
                 }
-            } else if ($child->nodeType === XML_TEXT_NODE) {
-                if (trim($child->nodeValue) !== '' &&
+            } else {
+                if ($child->nodeType === XML_TEXT_NODE) {
+                    if (trim($child->nodeValue) !== '' &&
                         !in_array($node->localName, ['text', 'tspan', 'title', 'desc'], true)) {
+                        return false;
+                    }
+                } else {
                     return false;
                 }
-            } else {
-                return false;
             }
         }
         return true;

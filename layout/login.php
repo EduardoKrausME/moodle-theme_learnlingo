@@ -22,6 +22,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use theme_learnlingo\output\footer_renderer;
+
 defined('MOODLE_INTERNAL') || die;
 
 $bodyattributes = $OUTPUT->body_attributes();
@@ -43,6 +45,6 @@ $templatecontext = [
     'leftinstructions' => $leftinstructions,
 ];
 
-$templatecontext = array_merge($templatecontext, \theme_learnlingo\output\footer_renderer::mustache_data());
+$templatecontext = array_merge($templatecontext, footer_renderer::mustache_data());
 
 echo $OUTPUT->render_from_template('theme_learnlingo/login', $templatecontext);

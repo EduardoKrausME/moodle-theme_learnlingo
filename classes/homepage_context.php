@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Server-side Mustache data for the administrator-authored homepagehtml field only.
@@ -29,6 +29,10 @@ use core_completion\progress;
 use core_course_category;
 use core_course_list_element;
 use moodle_url;
+use Mustache\Engine;
+use Mustache_Autoloader;
+use Mustache_Engine;
+use Throwable;
 
 /**
  * Build a strictly controlled template context, never exposing Moodle globals.
@@ -50,15 +54,15 @@ final class homepage_context {
         }
 
         // Moodle 4.5 ships Mustache_Engine; newer releases use Mustache\Engine.
-        if (!class_exists(\Mustache\Engine::class) && !class_exists(\Mustache_Engine::class)) {
+        if (!class_exists(Engine::class) && !class_exists(Mustache_Engine::class)) {
             global $CFG;
             require_once($CFG->libdir . '/mustache/src/Mustache/Autoloader.php');
-            \Mustache_Autoloader::register();
+            Mustache_Autoloader::register();
         }
-        $engineclass = class_exists(\Mustache\Engine::class) ? \Mustache\Engine::class : \Mustache_Engine::class;
+        $engineclass = class_exists(Engine::class) ? Engine::class : Mustache_Engine::class;
         $engine = new $engineclass([
             // The context is already escaped so triple braces are safe too.
-            'escape' => static function($value): string {
+            'escape' => static function ($value): string {
                 return (string)$value;
             },
             // Compiled Mustache templates are keyed by source and theme revision.
@@ -66,7 +70,7 @@ final class homepage_context {
         ]);
         try {
             return $engine->render($html, self::data());
-        } catch (\Throwable $exception) {
+        } catch (Throwable $exception) {
             debugging('Invalid LearnLingo homepage Mustache: ' . $exception->getMessage(), DEBUG_DEVELOPER);
             // Preserve the legacy HTML instead of breaking the whole homepage.
             return $html;
@@ -163,64 +167,64 @@ final class homepage_context {
             'rendered_by' => 'Server-side PHP Mustache, for the current visitor on each homepage request.',
             'instructions' => [
                 'When asked to design or edit the LearnLingo home, first call '
-                    . 'learnlingo_get_homepage and read its mustache instructions, fields and examples. '
-                    . 'Reuse the actual placeholders instead of hardcoding a particular user, '
-                    . 'course name, image URL, enrollment or progress percentage.',
+                . 'learnlingo_get_homepage and read its mustache instructions, fields and examples. '
+                . 'Reuse the actual placeholders instead of hardcoding a particular user, '
+                . 'course name, image URL, enrollment or progress percentage.',
                 'homepagehtml is rendered above built-in cards in learnlingo mode, replaces '
-                    . 'homepage content in html mode and is unused in moodle mode. '
-                    . 'Preserve the selected mode unless the administrator asks to change it.',
+                . 'homepage content in html mode and is unused in moodle mode. '
+                . 'Preserve the selected mode unless the administrator asks to change it.',
                 'Use {{#isloggedin}}...{{/isloggedin}} for authenticated content and '
-                    . '{{^isloggedin}}...{{/isloggedin}} for guest content. '
-                    . 'The user object is available only to the signed-in visitor.',
+                . '{{^isloggedin}}...{{/isloggedin}} for guest content. '
+                . 'The user object is available only to the signed-in visitor.',
                 'Use {{#courses}}...{{/courses}} for visible catalogue courses, '
-                    . '{{#mycourses}}...{{/mycourses}} for the signed-in visitor own '
-                    . 'enrolled courses, and {{#cohorts}}...{{/cohorts}} for that '
-                    . 'visitor own cohorts. Use the hascourses, hasmycourses, '
-                    . 'hascohorts and hasimage flags for optional sections.',
+                . '{{#mycourses}}...{{/mycourses}} for the signed-in visitor own '
+                . 'enrolled courses, and {{#cohorts}}...{{/cohorts}} for that '
+                . 'visitor own cohorts. Use the hascourses, hasmycourses, '
+                . 'hascohorts and hasimage flags for optional sections.',
                 'Show progress using {{#hasprogress}} and {{progress}} inside '
-                    . '{{#mycourses}}; if hasprogress is false do not claim a 0% '
-                    . 'completion rate. The public courses list does not contain '
-                    . 'personalized completion information.',
+                . '{{#mycourses}}; if hasprogress is false do not claim a 0% '
+                . 'completion rate. The public courses list does not contain '
+                . 'personalized completion information.',
                 'Render course images with {{#hasimage}}<img src="{{imageurl}}" alt="">'
-                    . '{{/hasimage}} and links with {{url}}; let the server provide '
-                    . 'course names, summaries and categories dynamically.',
+                . '{{/hasimage}} and links with {{url}}; let the server provide '
+                . 'course names, summaries and categories dynamically.',
                 'For logged-out visitors only, homepagepubliccourses / MCP publiccourses '
-                    . 'selects visible course IDs in the catalogue. Empty selection '
-                    . 'means all visible accessible courses in Moodle sort order. '
-                    . 'This never makes hidden courses public or enrolls users.',
+                . 'selects visible course IDs in the catalogue. Empty selection '
+                . 'means all visible accessible courses in Moodle sort order. '
+                . 'This never makes hidden courses public or enrolls users.',
                 'Respect homepagepubliccoursesperpage / MCP publiccoursesperpage (1-12, default 4) '
-                    . 'for anonymous visitors ONLY. {{#courses}} renders at most that many '
-                    . 'courses on the current page. It does not limit logged-in users or '
-                    . 'their {{#mycourses}} list. Do NOT hardcode a fixed number of cards '
-                    . 'or truncate the loop manually.',
+                . 'for anonymous visitors ONLY. {{#courses}} renders at most that many '
+                . 'courses on the current page. It does not limit logged-in users or '
+                . 'their {{#mycourses}} list. Do NOT hardcode a fixed number of cards '
+                . 'or truncate the loop manually.',
                 'Use {{coursepagination.coursecolumns}} for responsive grids: it equals '
-                    . 'the ACTUAL number of cards on the current guest page, not the '
-                    . 'requested page size. Example: 4 configured and 3 available gives '
-                    . '3 columns; 3 configured and 4 available gives pages of 3 and 1. '
-                    . 'Never invent or repeat a fourth course to fill an empty slot. '
-                    . 'Use responsive CSS and consider narrower/mobile layouts.',
+                . 'the ACTUAL number of cards on the current guest page, not the '
+                . 'requested page size. Example: 4 configured and 3 available gives '
+                . '3 columns; 3 configured and 4 available gives pages of 3 and 1. '
+                . 'Never invent or repeat a fourth course to fill an empty slot. '
+                . 'Use responsive CSS and consider narrower/mobile layouts.',
                 'Use {{#coursepagination.hascoursepages}} to show navigation, loop '
-                    . '{{#coursepagination.coursepages}} for page links (number, url, '
-                    . 'iscurrent), and optionally use hasnextcoursepage/nextcoursepageurl '
-                    . 'and haspreviouscoursepage/previouscoursepageurl. These values '
-                    . 'only exist for anonymous visitors. The llcoursepage query '
-                    . 'parameter is validated and clamped to available pages.',
+                . '{{#coursepagination.coursepages}} for page links (number, url, '
+                . 'iscurrent), and optionally use hasnextcoursepage/nextcoursepageurl '
+                . 'and haspreviouscoursepage/previouscoursepageurl. These values '
+                . 'only exist for anonymous visitors. The llcoursepage query '
+                . 'parameter is validated and clamped to available pages.',
                 'Mustache interpolates values and conditions; it cannot perform '
-                    . 'database queries, JavaScript, PHP, or Moodle helper calls. '
-                    . 'Do not generate executable scripts, partials or lambdas.',
+                . 'database queries, JavaScript, PHP, or Moodle helper calls. '
+                . 'Do not generate executable scripts, partials or lambdas.',
                 'Keep semantic responsive HTML in homepagehtml and CSS/SCSS in '
-                    . 'homepagescss. Beware homepagescss is applied globally on every '
-                    . 'page, so scope homepage-only rules with explicit selectors.',
+                . 'homepagescss. Beware homepagescss is applied globally on every '
+                . 'page, so scope homepage-only rules with explicit selectors.',
                 'Text and URL values are HTML-escaped in PHP, even inside triple-brace '
-                    . 'tags. Prefer ordinary {{variable}} syntax for readability.',
+                . 'tags. Prefer ordinary {{variable}} syntax for readability.',
                 'Only the guest public catalogue uses a shared MUC cache with a '
-                    . '300-second TTL, invalidated by course/category events and '
-                    . 'homepage setting updates. The final rendered HTML, visitor '
-                    . 'profile, course enrollments and progress are never placed '
-                    . 'in this shared cache; do not introduce shared caching of '
-                    . 'personalized homepage HTML.',
+                . '300-second TTL, invalidated by course/category events and '
+                . 'homepage setting updates. The final rendered HTML, visitor '
+                . 'profile, course enrollments and progress are never placed '
+                . 'in this shared cache; do not introduce shared caching of '
+                . 'personalized homepage HTML.',
                 'Preview writes and request explicit approval before updating '
-                    . 'the homepage. Keep other theme settings and native templates unchanged.',
+                . 'the homepage. Keep other theme settings and native templates unchanged.',
             ],
             'fields' => [
                 'isloggedin, isguest' => 'Booleans. isguest is true for anonymous or guest sessions.',
@@ -251,30 +255,30 @@ final class homepage_context {
             ],
             'examples' => [
                 'Guest versus logged-in welcome: '
-                    . '{{#isloggedin}}<h2>Hello, {{user.firstname}}!</h2>'
-                    . '<a href="{{mycoursesurl}}">My courses</a>{{/isloggedin}}'
-                    . '{{^isloggedin}}<a href="{{loginurl}}">Sign in</a>{{/isloggedin}}',
+                . '{{#isloggedin}}<h2>Hello, {{user.firstname}}!</h2>'
+                . '<a href="{{mycoursesurl}}">My courses</a>{{/isloggedin}}'
+                . '{{^isloggedin}}<a href="{{loginurl}}">Sign in</a>{{/isloggedin}}',
                 'Public course cards: {{#courses}}<article>'
-                    . '{{#hasimage}}<img src="{{imageurl}}" alt="">{{/hasimage}}'
-                    . '<h3><a href="{{url}}">{{fullname}}</a></h3>'
-                    . '<p>{{summary}}</p></article>{{/courses}}',
+                . '{{#hasimage}}<img src="{{imageurl}}" alt="">{{/hasimage}}'
+                . '<h3><a href="{{url}}">{{fullname}}</a></h3>'
+                . '<p>{{summary}}</p></article>{{/courses}}',
                 'Own enrollments and completion: {{#isloggedin}}{{#hasmycourses}}'
-                    . '{{#mycourses}}<a href="{{url}}">{{fullname}}</a>'
-                    . '{{#hasprogress}}<progress value="{{progress}}" max="100">'
-                    . '{{progress}}%</progress>{{/hasprogress}}{{/mycourses}}'
-                    . '{{/hasmycourses}}{{/isloggedin}}',
+                . '{{#mycourses}}<a href="{{url}}">{{fullname}}</a>'
+                . '{{#hasprogress}}<progress value="{{progress}}" max="100">'
+                . '{{progress}}%</progress>{{/hasprogress}}{{/mycourses}}'
+                . '{{/hasmycourses}}{{/isloggedin}}',
                 'Own cohorts: {{#isloggedin}}{{#cohorts}}'
-                    . '<span>{{name}}</span>{{/cohorts}}{{/isloggedin}}',
+                . '<span>{{name}}</span>{{/cohorts}}{{/isloggedin}}',
                 'Guest responsive grid: {{#isguest}}<div class="cards" '
-                    . 'style="--guest-columns: {{coursepagination.coursecolumns}}">'
-                    . '{{#courses}}<article><a href="{{url}}">{{fullname}}</a></article>'
-                    . '{{/courses}}</div>{{/isguest}}. CSS: .cards { display:grid; '
-                    . 'grid-template-columns:repeat(var(--guest-columns), minmax(0,1fr)); } '
-                    . 'Use @media rules for mobile.',
+                . 'style="--guest-columns: {{coursepagination.coursecolumns}}">'
+                . '{{#courses}}<article><a href="{{url}}">{{fullname}}</a></article>'
+                . '{{/courses}}</div>{{/isguest}}. CSS: .cards { display:grid; '
+                . 'grid-template-columns:repeat(var(--guest-columns), minmax(0,1fr)); } '
+                . 'Use @media rules for mobile.',
                 'Guest pagination: {{#coursepagination.hascoursepages}}<nav>'
-                    . '{{#coursepagination.coursepages}}<a href="{{url}}">'
-                    . '{{number}}</a>{{/coursepagination.coursepages}}'
-                    . '</nav>{{/coursepagination.hascoursepages}}',
+                . '{{#coursepagination.coursepages}}<a href="{{url}}">'
+                . '{{number}}</a>{{/coursepagination.coursepages}}'
+                . '</nav>{{/coursepagination.hascoursepages}}',
                 'Empty course list: {{^hascourses}}<p>No courses available.</p>{{/hascourses}}',
             ],
             'security' => 'All context strings are HTML-escaped, including in triple-brace tags. '
@@ -328,7 +332,7 @@ final class homepage_context {
         $next = $page < $pages;
 
         // Use an isolated homepage query parameter, not Moodle course indexes.
-        $pageurl = static function(int $number): string {
+        $pageurl = static function (int $number): string {
             $args = $number > 1 ? ['llcoursepage' => $number] : [];
             return self::safe((new moodle_url('/', $args))->out(false));
         };

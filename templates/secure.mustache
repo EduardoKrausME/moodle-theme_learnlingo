@@ -71,9 +71,9 @@
 
                 </div>
                 {{#hasblocks}}
-                <div data-region="blocks-column">
-                    {{{ sidepreblocks }}}
-                </div>
+                    <div data-region="blocks-column">
+                        {{{ sidepreblocks }}}
+                    </div>
                 {{/hasblocks}}
             </div>
         </div>
@@ -89,8 +89,8 @@
 </body>
 </html>
 {{#js}}
-M.util.js_pending('theme_boost/loader');
-require(['theme_boost/loader'], function() {
+    M.util.js_pending('theme_boost/loader');
+    require(['theme_boost/loader'], function() {
     M.util.js_complete('theme_boost/loader');
-});
+    });
 {{/js}}

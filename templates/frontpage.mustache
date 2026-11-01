@@ -81,14 +81,15 @@
                 {{#featuredcourse.hasprogress}}
                     <div class="learnlingo-resume-progress">
                         <div class="progress" role="progressbar" aria-label="{{featuredcourse.progresslabel}}"
-                                aria-valuenow="{{featuredcourse.progress}}" aria-valuemin="0" aria-valuemax="100">
+                             aria-valuenow="{{featuredcourse.progress}}" aria-valuemin="0" aria-valuemax="100">
                             <div class="progress-bar" style="width: {{featuredcourse.progress}}%"></div>
                         </div>
                         <strong>{{featuredcourse.progresslabel}}</strong>
                     </div>
                 {{/featuredcourse.hasprogress}}
             </div>
-            <a class="learnlingo-resume-action" href="{{{featuredcourse.url}}}" aria-label="{{featuredaction}}: {{featuredcourse.fullname}}">
+            <a class="learnlingo-resume-action" href="{{{featuredcourse.url}}}"
+               aria-label="{{featuredaction}}: {{featuredcourse.fullname}}">
                 <i class="fa fa-play" aria-hidden="true"></i>
             </a>
         </section>
@@ -107,7 +108,8 @@
             <div class="learnlingo-home-course-grid">
                 {{#courses}}
                     <article class="learnlingo-course-card">
-                        <a class="learnlingo-course-card-media {{toneclass}}" href="{{{url}}}" tabindex="-1" aria-hidden="true">
+                        <a class="learnlingo-course-card-media {{toneclass}}" href="{{{url}}}" tabindex="-1"
+                           aria-hidden="true">
                             {{#hasimage}}
                                 <img src="{{{imageurl}}}" alt="" loading="lazy">
                             {{/hasimage}}
@@ -127,7 +129,7 @@
                             {{#hasprogress}}
                                 <div class="learnlingo-course-card-progress">
                                     <div class="progress" role="progressbar" aria-label="{{progresslabel}}"
-                                            aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100">
+                                         aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100">
                                         <div class="progress-bar" style="width: {{progress}}%"></div>
                                     </div>
                                     <span>{{progresslabel}}</span>

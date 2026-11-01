@@ -21,9 +21,11 @@
  * @copyright 2026 Eduardo Kraus
  * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 namespace theme_learnlingo;
 
 use advanced_testcase;
+use context_system;
 use core_component;
 use invalid_parameter_exception;
 use local_mcp\exception\api_exception;
@@ -376,7 +378,7 @@ final class mcp_settings_test extends advanced_testcase {
             get_config('core_admin', 'logo'));
         $this->assertNotEmpty($after['_mcp_content']);
         $this->assertNotFalse(get_file_storage()->get_file(
-            \context_system::instance()->id, 'core_admin', 'logo', 0, '/',
+            context_system::instance()->id, 'core_admin', 'logo', 0, '/',
             $after['images']['logo']['uploaded']['filename']
         ));
         $this->assertSame($before['settings'], $after['settings']);
@@ -493,7 +495,7 @@ final class mcp_settings_test extends advanced_testcase {
         $this->assertStringContainsString('/core_admin/favicon/', $favicon['url']);
         $this->assertSame('/' . $favicon['filename'], get_config('core_admin', 'favicon'));
         $this->assertNotFalse(get_file_storage()->get_file(
-            \context_system::instance()->id, 'core_admin', 'favicon', 0, '/', $favicon['filename']
+            context_system::instance()->id, 'core_admin', 'favicon', 0, '/', $favicon['filename']
         ));
         $this->assertSame($logohash, $withfavicon['images']['logo']['uploaded']['contenthash']);
         $this->assertSame($before['settings'], $withfavicon['settings']);
@@ -541,7 +543,7 @@ final class mcp_settings_test extends advanced_testcase {
         $this->assertStringContainsString('/theme_learnlingo/loginlogo/', $uploaded['url']);
         $this->assertSame('/' . $uploaded['filename'], get_config('theme_learnlingo', 'loginlogo'));
         $this->assertNotFalse(get_file_storage()->get_file(
-            \context_system::instance()->id, 'theme_learnlingo', 'loginlogo', 0, '/', $uploaded['filename']
+            context_system::instance()->id, 'theme_learnlingo', 'loginlogo', 0, '/', $uploaded['filename']
         ));
         $this->assertNotEmpty($after['_mcp_content']);
         $this->assertNotSame($before['state_hash'], $after['state_hash']);

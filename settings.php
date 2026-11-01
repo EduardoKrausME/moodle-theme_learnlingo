@@ -22,6 +22,7 @@
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use theme_learnlingo\dark_mode;
 use theme_learnlingo\mcp_banner;
 
 defined('MOODLE_INTERNAL') || die;
@@ -427,10 +428,10 @@ if ($ADMIN->fulltree) {
         'theme_learnlingo/darkmodeintegration',
         '',
         $OUTPUT->render_from_template('theme_learnlingo/darkmode_settings', [
-            'installed' => \theme_learnlingo\dark_mode::installed(),
-            'enabled' => \theme_learnlingo\dark_mode::enabled(),
-            'codeavailable' => \theme_learnlingo\dark_mode::code_available(),
-            'installurl' => \theme_learnlingo\dark_mode::install_url()->out(false),
+            'installed' => dark_mode::installed(),
+            'enabled' => dark_mode::enabled(),
+            'codeavailable' => dark_mode::code_available(),
+            'installurl' => dark_mode::install_url()->out(false),
             'sesskey' => sesskey(),
         ])
     ));

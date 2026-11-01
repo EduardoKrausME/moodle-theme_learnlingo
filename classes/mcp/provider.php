@@ -97,7 +97,7 @@ final class provider implements read_provider_interface, write_provider_interfac
      * @return void
      */
     private static function log_missing_tool(string $name, string $filename,
-            string $status, string $errorclass = ''): void {
+                                             string $status, string $errorclass = ''): void {
         diagnostics::event('provider_tool_unavailable', [
             'provider' => self::class,
             'tool' => $name,

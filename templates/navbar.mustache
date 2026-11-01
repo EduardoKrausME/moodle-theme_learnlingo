@@ -57,23 +57,26 @@
 }}
 <nav class="navbar fixed-top bg-body navbar-expand" aria-label="{{#str}}sitemenubar, admin{{/str}}">
     <div class="container-fluid">
-        <button class="navbar-toggler aabtn d-block d-md-none px-1 my-1 border-0" data-toggler="drawers" data-action="toggle" data-target="theme_learnlingo-drawers-primary">
+        <button class="navbar-toggler aabtn d-block d-md-none px-1 my-1 border-0" data-toggler="drawers"
+                data-action="toggle" data-target="theme_learnlingo-drawers-primary">
             <span class="navbar-toggler-icon"></span>
             <span class="visually-hidden">{{#str}}sidepanel, core{{/str}}</span>
         </button>
 
-        <a href="{{{ config.homeurl }}}" class="navbar-brand learnlingo-navbar-brand d-flex align-items-center m-0 p-0 aabtn" aria-label="{{sitename}}">
+        <a href="{{{ config.homeurl }}}"
+           class="navbar-brand learnlingo-navbar-brand d-flex align-items-center m-0 p-0 aabtn"
+           aria-label="{{sitename}}">
 
             {{#hasbrandlogo}}
                 <img src="{{{brandlogo}}}" class="logo me-1" alt="{{sitename}}">
             {{/hasbrandlogo}}
             {{^hasbrandlogo}}
-            {{# output.should_display_navbar_logo }}
-                <img src="{{{output.get_compact_logo_url}}}" class="logo me-1" alt="{{sitename}}">
-            {{/ output.should_display_navbar_logo }}
-            {{^ output.should_display_navbar_logo }}
-                <span class="learnlingo-wordmark">{{sitename}}</span>
-            {{/ output.should_display_navbar_logo }}
+                {{# output.should_display_navbar_logo }}
+                    <img src="{{{output.get_compact_logo_url}}}" class="logo me-1" alt="{{sitename}}">
+                {{/ output.should_display_navbar_logo }}
+                {{^ output.should_display_navbar_logo }}
+                    <span class="learnlingo-wordmark">{{sitename}}</span>
+                {{/ output.should_display_navbar_logo }}
             {{/hasbrandlogo}}
         </a>
         {{#primarymoremenu}}
@@ -98,7 +101,7 @@
                 <div class="divider border-start h-75 align-self-center mx-1"></div>
             {{/langmenu}}
             {{# output.navbar_plugin_output }}
-            {{{ . }}}
+                {{{ . }}}
                 <div class="divider border-start h-75 align-self-center mx-1"></div>
             {{/output.navbar_plugin_output}}
             {{#usermenu}}
@@ -114,21 +117,21 @@
 {{> theme_learnlingo/primary-drawer-mobile }}
 
 {{#js}}
-require(['theme_boost/drawers'], function(Drawers) {
+    require(['theme_boost/drawers'], function(Drawers) {
     // Keep the state of drawer controls in sync, including drawers which start open.
     // This uses the existing drawer events and does not need an additional compiled AMD module.
     const syncDrawerControls = drawer => {
-        if (!drawer || !drawer.id) {
-            return;
-        }
-        document.querySelectorAll('[data-toggler="drawers"][data-target]').forEach(button => {
-            if (button.dataset.target !== drawer.id ||
-                    !['toggle', 'opendrawer'].includes(button.dataset.action)) {
-                return;
-            }
-            button.setAttribute('aria-controls', drawer.id);
-            button.setAttribute('aria-expanded', drawer.classList.contains('show') ? 'true' : 'false');
-        });
+    if (!drawer || !drawer.id) {
+    return;
+    }
+    document.querySelectorAll('[data-toggler="drawers"][data-target]').forEach(button => {
+    if (button.dataset.target !== drawer.id ||
+    !['toggle', 'opendrawer'].includes(button.dataset.action)) {
+    return;
+    }
+    button.setAttribute('aria-controls', drawer.id);
+    button.setAttribute('aria-expanded', drawer.classList.contains('show') ? 'true' : 'false');
+    });
     };
 
     document.querySelectorAll('[data-region="fixed-drawer"]').forEach(syncDrawerControls);
@@ -137,21 +140,21 @@ require(['theme_boost/drawers'], function(Drawers) {
 
     // Allow keyboard users to dismiss the drawer without trapping focus inside it.
     document.addEventListener('keydown', event => {
-        if (event.key !== 'Escape' || event.defaultPrevented) {
-            return;
-        }
-        if (!(event.target instanceof Element)) {
-            return;
-        }
-        const drawer = event.target.closest('[data-region="fixed-drawer"].show');
-        if (!drawer || event.target.closest('.dropdown-menu.show, [role="listbox"], [role="dialog"], input, select, textarea')) {
-            return;
-        }
-        const instance = Drawers.getDrawerInstanceForNode(drawer);
-        if (instance) {
-            event.preventDefault();
-            instance.closeDrawer();
-        }
+    if (event.key !== 'Escape' || event.defaultPrevented) {
+    return;
+    }
+    if (!(event.target instanceof Element)) {
+    return;
+    }
+    const drawer = event.target.closest('[data-region="fixed-drawer"].show');
+    if (!drawer || event.target.closest('.dropdown-menu.show, [role="listbox"], [role="dialog"], input, select, textarea')) {
+    return;
+    }
+    const instance = Drawers.getDrawerInstanceForNode(drawer);
+    if (instance) {
+    event.preventDefault();
+    instance.closeDrawer();
+    }
     });
-});
+    });
 {{/js}}

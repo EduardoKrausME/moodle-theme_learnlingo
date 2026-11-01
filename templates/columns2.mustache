@@ -61,17 +61,17 @@
 
     <div id="page" class="container-fluid d-print-block">
         {{{ output.full_header }}}
-            {{#secondarymoremenu}}
-                <div class="secondary-navigation">
-                    {{> core/moremenu}}
-                </div>
-            {{/secondarymoremenu}}
+        {{#secondarymoremenu}}
+            <div class="secondary-navigation">
+                {{> core/moremenu}}
+            </div>
+        {{/secondarymoremenu}}
         <div id="page-content" class="row pb-3 d-print-block">
             <div id="region-main-box" class="col-12">
                 {{#hasregionmainsettingsmenu}}
-                <div id="region-main-settings-menu" class="d-print-none {{#hasblocks}}has-blocks{{/hasblocks}}">
-                    <div> {{{ regionmainsettingsmenu }}} </div>
-                </div>
+                    <div id="region-main-settings-menu" class="d-print-none {{#hasblocks}}has-blocks{{/hasblocks}}">
+                        <div> {{{ regionmainsettingsmenu }}} </div>
+                    </div>
                 {{/hasregionmainsettingsmenu}}
                 <div id="region-main" {{#hasblocks}}class="has-blocks mb-3"{{/hasblocks}}>
 
@@ -95,10 +95,10 @@
 
                 </div>
                 {{#hasblocks}}
-                <div data-region="blocks-column" class="d-print-none">
-                    {{{ addblockbutton }}}
-                    {{{ sidepreblocks }}}
-                </div>
+                    <div data-region="blocks-column" class="d-print-none">
+                        {{{ addblockbutton }}}
+                        {{{ sidepreblocks }}}
+                    </div>
                 {{/hasblocks}}
             </div>
         </div>
@@ -110,9 +110,9 @@
 </body>
 </html>
 {{#js}}
-M.util.js_pending('theme_boost/loader');
-require(['theme_boost/loader', 'theme_boost/drawer'], function(Loader, Drawer) {
+    M.util.js_pending('theme_boost/loader');
+    require(['theme_boost/loader', 'theme_boost/drawer'], function(Loader, Drawer) {
     Drawer.init();
     M.util.js_complete('theme_boost/loader');
-});
+    });
 {{/js}}

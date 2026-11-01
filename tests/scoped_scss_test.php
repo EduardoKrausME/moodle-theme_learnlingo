@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - https://moodle.org/
+// This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -12,8 +12,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
-
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Homepage SCSS isolation checks.
@@ -95,8 +94,8 @@ final class scoped_scss_test extends advanced_testcase {
         set_config('homepagemode', 'html', 'theme_learnlingo');
         set_config('homepagescss',
             ':root{--home-ink:#123456}body#page-site-index .hero{color:var(--home-ink)}'
-                . 'nav.navbar{background:#101f38}#page-footer{color:#fff}'
-                . '@media(max-width:600px){nav.navbar{padding:0}}', 'theme_learnlingo');
+            . 'nav.navbar{background:#101f38}#page-footer{color:#fff}'
+            . '@media(max-width:600px){nav.navbar{padding:0}}', 'theme_learnlingo');
         theme_reset_all_caches();
 
         $scss = theme_learnlingo_get_extra_scss(theme_config::load('learnlingo'));
@@ -120,7 +119,7 @@ final class scoped_scss_test extends advanced_testcase {
         set_config('footermode', 'html', 'theme_learnlingo');
         set_config('footerscss',
             '#page-footer{background:#101f38}#page-footer .o90-footer{color:#fff}'
-                . '@media(max-width:600px){#page-footer .o90-footer{padding:1rem}}',
+            . '@media(max-width:600px){#page-footer .o90-footer{padding:1rem}}',
             'theme_learnlingo');
         theme_reset_all_caches();
 
@@ -128,7 +127,7 @@ final class scoped_scss_test extends advanced_testcase {
 
         $this->assertStringContainsString(
             "#page-footer.learnlingo-site-footer.learnlingo-footer-html-mode {\n&{background:#101f38}"
-                . '& .o90-footer{color:#fff}', $scss
+            . '& .o90-footer{color:#fff}', $scss
         );
         $this->assertStringContainsString(
             '@media(max-width:600px){& .o90-footer{padding:1rem}}', $scss

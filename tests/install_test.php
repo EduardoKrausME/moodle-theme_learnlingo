@@ -12,7 +12,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Verify initial LearnLingo settings.
@@ -24,12 +24,15 @@
 
 namespace theme_learnlingo;
 
+use advanced_testcase;
+use function xmldb_theme_learnlingo_install;
+
 /**
  * Installation must persist defaults without changing configured values.
  *
  * @coversNothing
  */
-final class install_test extends \advanced_testcase {
+final class install_test extends advanced_testcase {
     /**
      * Verify every portable setting has a stored value after installation.
      */
@@ -47,7 +50,7 @@ final class install_test extends \advanced_testcase {
         set_config('brandcolor', '#123456', 'theme_learnlingo');
         set_config('favicon', 'custom.ico', 'core_admin');
 
-        \xmldb_theme_learnlingo_install();
+        xmldb_theme_learnlingo_install();
 
         foreach ($definitions as $name => [$type, $default]) {
             $expected = $name === 'brandcolor' ? '#123456'

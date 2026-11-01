@@ -44,16 +44,16 @@
                 {{$drawerheadercontent}}{{/drawerheadercontent}}
             </div>
             <button
-                class="btn btn-icon icon-size-3 drawertoggle"
-                data-toggler="drawers"
-                data-action="closedrawer"
-                data-target="{{$id}}{{/id}}"
-                data-bs-toggle="tooltip"
-                data-bs-placement="{{$tooltipplacement}}right{{/tooltipplacement}}"
-                title="{{$closebuttontext}}{{#str}}closedrawer, core{{/str}}{{/closebuttontext}}"
-                aria-label="{{$closebuttontext}}{{#str}}closedrawer, core{{/str}}{{/closebuttontext}}">
+                    class="btn btn-icon icon-size-3 drawertoggle"
+                    data-toggler="drawers"
+                    data-action="closedrawer"
+                    data-target="{{$id}}{{/id}}"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="{{$tooltipplacement}}right{{/tooltipplacement}}"
+                    title="{{$closebuttontext}}{{#str}}closedrawer, core{{/str}}{{/closebuttontext}}"
+                    aria-label="{{$closebuttontext}}{{#str}}closedrawer, core{{/str}}{{/closebuttontext}}">
                 {{$closebuttonicon}}
-                    {{! This is the default icon used if the parent doesn't override it }}
+                {{! This is the default icon used if the parent doesn't override it }}
                     {{#pix}} e/cancel, core {{/pix}}
                 {{/closebuttonicon}}
             </button>
@@ -64,8 +64,8 @@
     </div>
 </div>
 {{#js}}
-M.util.js_pending('theme_boost/drawers:load');
-require(['theme_boost/drawers'], function() {
+    M.util.js_pending('theme_boost/drawers:load');
+    require(['theme_boost/drawers'], function() {
     M.util.js_complete('theme_boost/drawers:load');
-});
+    });
 {{/js}}
