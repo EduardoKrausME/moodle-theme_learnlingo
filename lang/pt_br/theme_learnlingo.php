@@ -389,3 +389,13 @@ $string['showwelcome'] = 'Exibir boas-vindas';
 $string['showwelcome_desc'] = 'Exibe a saudação personalizada na home LearnLingo e nas páginas habilitadas de Painel e Meus cursos. Não ativa essas páginas no Moodle.';
 $string['textcolor'] = 'Cor do texto';
 $string['textcolor_desc'] = 'Cor principal dos textos e títulos.';
+
+// Seletor moderno de cores nas configurações administrativas.
+$string['colourcustom'] = 'Escolher uma cor personalizada';
+$string['colourhexvalue'] = 'Valor da cor';
+$string['colourhexhelp'] = 'Informe uma cor HEX (por exemplo, #2563EB) ou use o seletor de cores.';
+$string['colourinvalid'] = 'Informe um valor de cor válido.';
+$string['colourpalette'] = 'Cores sugeridas';
+$string['colourpreset'] = 'Usar a cor';
+$string['colourpreview'] = 'Prévia da cor';
+$string['colourreset'] = 'Restaurar padrão';
