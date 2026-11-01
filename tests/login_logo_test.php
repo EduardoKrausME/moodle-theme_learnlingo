@@ -78,4 +78,21 @@ final class login_logo_test extends advanced_testcase {
 
         $this->assertEquals($base->get_logo_url(), $renderer->get_logo_url());
     }
+
+    /**
+     * The login form is the single source of branding for the login page.
+     *
+     * The layout must not render a second logo before the core login form.
+     */
+    public function test_login_layout_does_not_duplicate_the_form_logo(): void {
+        global $CFG;
+
+        $layout = file_get_contents($CFG->dirroot . '/theme/learnlingo/templates/core/login_layout.mustache');
+        $form = file_get_contents($CFG->dirroot . '/theme/learnlingo/templates/core/loginform.mustache');
+
+        $this->assertStringNotContainsString('learnlingo-mobile-login-brand', $layout);
+        $this->assertStringNotContainsString('<img', $layout);
+        $this->assertSame(1, substr_count($form, 'id="loginlogo"'));
+        $this->assertStringContainsString('src="{{{logourl}}}"', $form);
+    }
 }
