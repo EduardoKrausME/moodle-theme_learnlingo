@@ -81,4 +81,3 @@ final class course_renderer_test extends advanced_testcase {
         $this->assertStringNotContainsString('/overviewfiles/0/', $url);
     }
 }
-
