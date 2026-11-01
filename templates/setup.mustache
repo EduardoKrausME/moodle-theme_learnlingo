@@ -1,0 +1,194 @@
+{{!
+    @template theme_learnlingo/setup
+    Visual installation and theme customisation wizard.
+}}
+<div class="ll-setup">
+    <header class="ll-setup-hero">
+        <div class="ll-setup-hero__copy">
+            <span class="ll-setup-kicker">{{#str}}setupkicker, theme_learnlingo{{/str}}</span>
+            <h2>{{#str}}setupheadline, theme_learnlingo{{/str}}</h2>
+            <p>{{#str}}setupintro, theme_learnlingo{{/str}}</p>
+            <div class="ll-setup-hero__chips" aria-label="{{#str}}setupfeatures, theme_learnlingo{{/str}}">
+                <span>{{#str}}setupchipcolours, theme_learnlingo{{/str}}</span>
+                <span>{{#str}}setupchiplayout, theme_learnlingo{{/str}}</span>
+                <span>{{#str}}setupchipmcp, theme_learnlingo{{/str}}</span>
+            </div>
+        </div>
+        <div class="ll-setup-demo" aria-hidden="true">
+            <div class="ll-setup-demo__bar"><i></i><i></i><i></i><span>LearnLingo</span></div>
+            <div class="ll-setup-demo__body">
+                <div class="ll-setup-demo__nav"></div>
+                <div class="ll-setup-demo__panel">
+                    <div class="ll-setup-demo__eyebrow"></div>
+                    <div class="ll-setup-demo__title"></div>
+                    <div class="ll-setup-demo__line"></div>
+                    <div class="ll-setup-demo__button"></div>
+                    <div class="ll-setup-demo__tiles"><i></i><i></i><i></i></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    {{#saved}}
+        <div class="alert alert-success ll-setup-notice" role="status">
+            {{#str}}setupsaved, theme_learnlingo{{/str}}
+            <a href="{{homeurl}}">{{#str}}setupviewsite, theme_learnlingo{{/str}}</a>
+        </div>
+    {{/saved}}
+
+    <form method="post" action="{{actionurl}}" class="ll-setup-form">
+        <input type="hidden" name="sesskey" value="{{sesskey}}">
+        <section class="ll-setup-section" id="ll-setup-colours" aria-labelledby="ll-colours-heading">
+            <div class="ll-setup-section__heading">
+                <span class="ll-setup-number">01</span>
+                <div><h3 id="ll-colours-heading">{{#str}}setupcolours, theme_learnlingo{{/str}}</h3>
+                    <p>{{#str}}setupcoloursdesc, theme_learnlingo{{/str}}</p></div>
+            </div>
+            <div class="ll-setup-palette-grid">
+                {{#palettes}}
+                    <div class="ll-setup-palette">
+                        <input class="ll-setup-input" type="radio" name="palette" id="ll-palette-{{value}}"
+                            value="{{value}}" {{#selected}}checked{{/selected}}>
+                        <label for="ll-palette-{{value}}" class="ll-setup-palette__card">
+                            <span class="ll-setup-palette__preview ll-setup-palette__preview--{{value}}" aria-hidden="true">
+                                <span class="ll-setup-palette__swatch ll-setup-palette__swatch--primary"></span>
+                                <span class="ll-setup-palette__swatch ll-setup-palette__swatch--accent"></span>
+                                <span class="ll-setup-palette__swatch ll-setup-palette__swatch--canvas"></span>
+                                <span class="ll-setup-palette__swatch ll-setup-palette__swatch--ink"></span>
+                            </span>
+                            <strong>{{label}}</strong>
+                            <small>{{description}}</small>
+                            <span class="ll-setup-selection" aria-hidden="true">✓</span>
+                        </label>
+                    </div>
+                {{/palettes}}
+            </div>
+        </section>
+
+        <section class="ll-setup-section" id="ll-setup-layout" aria-labelledby="ll-layout-heading">
+            <div class="ll-setup-section__heading">
+                <span class="ll-setup-number">02</span>
+                <div><h3 id="ll-layout-heading">{{#str}}setupformats, theme_learnlingo{{/str}}</h3>
+                    <p>{{#str}}setupformatsdesc, theme_learnlingo{{/str}}</p></div>
+            </div>
+            <div class="ll-setup-format-grid">
+                {{#layouts}}
+                    <div class="ll-setup-format">
+                        <input class="ll-setup-input" type="radio" name="homepagemode"
+                            id="ll-layout-{{value}}" value="{{value}}" {{#selected}}checked{{/selected}}>
+                        <label for="ll-layout-{{value}}" class="ll-setup-format__card">
+                            <span class="ll-setup-format__mini ll-setup-format__mini--{{value}}" aria-hidden="true">
+                                <i></i><i></i><i></i><i></i>
+                            </span>
+                            <strong>{{label}}</strong>
+                            <small>{{description}}</small>
+                            <span class="ll-setup-selection" aria-hidden="true">✓</span>
+                        </label>
+                    </div>
+                {{/layouts}}
+            </div>
+            <p class="ll-setup-hint">{{#str}}setuphtmlhint, theme_learnlingo{{/str}}</p>
+            <div class="ll-setup-subsection">
+                <h4>{{#str}}setupfooterheading, theme_learnlingo{{/str}}</h4>
+                <div class="ll-setup-choice-list">
+                    {{#footers}}
+                        <label class="ll-setup-choice">
+                            <input type="radio" name="footermode" value="{{value}}" {{#selected}}checked{{/selected}}>
+                            <span><strong>{{label}}</strong><small>{{description}}</small></span>
+                        </label>
+                    {{/footers}}
+                </div>
+            </div>
+        </section>
+
+        <section class="ll-setup-section" id="ll-setup-components" aria-labelledby="ll-components-heading">
+            <div class="ll-setup-section__heading">
+                <span class="ll-setup-number">03</span>
+                <div><h3 id="ll-components-heading">{{#str}}setupcomponents, theme_learnlingo{{/str}}</h3>
+                    <p>{{#str}}setupcomponentsdesc, theme_learnlingo{{/str}}</p></div>
+            </div>
+            <div class="ll-setup-switches">
+                <label class="ll-setup-switch">
+                    <span><strong>{{#str}}homepagefullwidth, theme_learnlingo{{/str}}</strong>
+                        <small>{{#str}}homepagefullwidth_desc, theme_learnlingo{{/str}}</small></span>
+                    <input type="checkbox" name="homepagefullwidth" value="1" {{#fullwidth}}checked{{/fullwidth}}>
+                </label>
+                <label class="ll-setup-switch">
+                    <span><strong>{{#str}}showdashboardhero, theme_learnlingo{{/str}}</strong>
+                        <small>{{#str}}showdashboardhero_desc, theme_learnlingo{{/str}}</small></span>
+                    <input type="checkbox" name="showdashboardhero" value="1" {{#dashboardhero}}checked{{/dashboardhero}}>
+                </label>
+                <label class="ll-setup-switch">
+                    <span><strong>{{#str}}showcoursehero, theme_learnlingo{{/str}}</strong>
+                        <small>{{#str}}showcoursehero_desc, theme_learnlingo{{/str}}</small></span>
+                    <input type="checkbox" name="showcoursehero" value="1" {{#coursehero}}checked{{/coursehero}}>
+                </label>
+            </div>
+        </section>
+
+        <div class="ll-setup-actions">
+            <div><strong>{{#str}}setupready, theme_learnlingo{{/str}}</strong>
+                <p>{{#str}}setuppreservenote, theme_learnlingo{{/str}}</p></div>
+            <div class="ll-setup-actions__buttons">
+                <button type="submit" name="action" value="skip" class="btn btn-outline-secondary">
+                    {{#str}}setupskip, theme_learnlingo{{/str}}
+                </button>
+                <button type="submit" name="action" value="save" class="btn btn-primary">
+                    {{#str}}setupapply, theme_learnlingo{{/str}}
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <section class="ll-setup-mcp" id="ll-setup-mcp" aria-labelledby="ll-mcp-heading">
+        <div class="ll-setup-mcp__header">
+            <span class="ll-setup-kicker">{{#str}}setupmcpbadge, theme_learnlingo{{/str}}</span>
+            <h3 id="ll-mcp-heading">{{#str}}setupmcpheading, theme_learnlingo{{/str}}</h3>
+            <p>{{#str}}setupmcpintro, theme_learnlingo{{/str}}</p>
+        </div>
+        <div class="ll-setup-mcp__grid">
+            <article>
+                <span class="ll-setup-mcp__icon" aria-hidden="true">01</span>
+                <h4>{{#str}}setupmcpstepone, theme_learnlingo{{/str}}</h4>
+                <p>{{#str}}setupmcpsteponedesc, theme_learnlingo{{/str}}</p>
+            </article>
+            <article>
+                <span class="ll-setup-mcp__icon" aria-hidden="true">02</span>
+                <h4>{{#str}}setupmcpsteptwo, theme_learnlingo{{/str}}</h4>
+                <p>{{#str}}setupmcpsteptwodesc, theme_learnlingo{{/str}}</p>
+            </article>
+            <article>
+                <span class="ll-setup-mcp__icon" aria-hidden="true">03</span>
+                <h4>{{#str}}setupmcpstepthree, theme_learnlingo{{/str}}</h4>
+                <p>{{#str}}setupmcpstepthreedesc, theme_learnlingo{{/str}}</p>
+            </article>
+        </div>
+        <div class="ll-setup-mcp__tools">
+            <div>
+                <strong>{{#str}}setupmcpread, theme_learnlingo{{/str}}</strong>
+                <code>learnlingo_get_settings</code>
+                <code>learnlingo_get_homepage</code>
+            </div>
+            <div>
+                <strong>{{#str}}setupmcpwrite, theme_learnlingo{{/str}}</strong>
+                <code>learnlingo_update_settings</code>
+                <code>learnlingo_update_homepage</code>
+                <code>learnlingo_update_styles</code>
+                <code>learnlingo_update_footer</code>
+            </div>
+        </div>
+        <div class="ll-setup-mcp__bottom">
+            <p>
+                {{#mcpinstalled}}{{#str}}setupmcpinstalled, theme_learnlingo{{/str}}{{/mcpinstalled}}
+                {{^mcpinstalled}}{{#str}}setupmcpnotinstalled, theme_learnlingo{{/str}}{{/mcpinstalled}}
+            </p>
+            <a href="{{mcpurl}}" class="btn btn-outline-light" target="_blank" rel="noopener noreferrer">
+                {{#str}}setupmcpdocs, theme_learnlingo{{/str}}
+            </a>
+        </div>
+    </section>
+    <footer class="ll-setup-bottom">
+        <p>{{#str}}setupadvanceddesc, theme_learnlingo{{/str}}</p>
+        <a href="{{advancedurl}}">{{#str}}setupadvanced, theme_learnlingo{{/str}}</a>
+    </footer>
+</div>
