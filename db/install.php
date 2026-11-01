@@ -128,5 +128,4 @@ function xmldb_theme_learnlingo_install(): void {
             }
         }
     }
-
 }
