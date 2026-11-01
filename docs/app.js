@@ -65,7 +65,7 @@ document.querySelectorAll('[data-prompt]').forEach(button=>button.addEventListen
 let toastTimer;
 function toast(message){const el=document.querySelector('#toast'); el.textContent=message;localize(el);el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),4200);}
 document.querySelector('#copy-prompt').addEventListener('click',async()=>{
-  const text=translate(prompts[currentPrompt].text)+' '+translate('Use a conexão MCP autorizada para ler o estado atual do LearnLingo antes de propor mudanças. Preserve as configurações não relacionadas ao pedido e apresente a prévia para minha confirmação antes de gravar.');
+  const text=translate(prompts[currentPrompt].text)+' '+translate('Use a conexão autorizada entre o ChatGPT ou Claude e meu Moodle para consultar as configurações atuais do LearnLingo antes de propor mudanças. Preserve as configurações não relacionadas ao pedido e apresente a prévia para minha confirmação antes de gravar.');
   try{
     if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text);}
     else{const input=document.createElement('textarea');input.value=text;input.style.position='fixed';input.style.opacity='0';document.body.append(input);input.select();const copied=document.execCommand('copy');input.remove();if(!copied)throw new Error('Clipboard unavailable');}
