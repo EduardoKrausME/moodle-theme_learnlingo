@@ -149,9 +149,38 @@
         <section class="ll-setup-section" id="ll-setup-layout" aria-labelledby="ll-layout-heading">
             <div class="ll-setup-section__heading">
                 <span class="ll-setup-number">02</span>
-                <div><h3 id="ll-layout-heading">{{#str}}setupformats, theme_learnlingo{{/str}}</h3>
-                    <p>{{#str}}setupformatsdesc, theme_learnlingo{{/str}}</p></div>
+                {{#customhtmlmode}}
+                    <div>
+                        <h3 id="ll-layout-heading">{{#str}}setuphtmlalreadytitle, theme_learnlingo{{/str}}</h3>
+                        <p>{{#str}}setuphtmlalreadyintro, theme_learnlingo{{/str}}</p>
+                    </div>
+                {{/customhtmlmode}}
+                {{^customhtmlmode}}
+                    <div>
+                        <h3 id="ll-layout-heading">{{#str}}setupformats, theme_learnlingo{{/str}}</h3>
+                        <p>{{#str}}setupformatsdesc, theme_learnlingo{{/str}}</p>
+                    </div>
+                {{/customhtmlmode}}
             </div>
+            {{#customhtmlmode}}
+                <div class="ll-setup-html-status" role="status">
+                    <span class="ll-setup-html-status__icon" aria-hidden="true">✓</span>
+                    <div>
+                        {{#existinghomepagehtml}}
+                            <strong>{{#str}}setuphtmlalreadyconfigured, theme_learnlingo{{/str}}</strong>
+                            <p>{{#str}}setuphtmlalreadypreserve, theme_learnlingo{{/str}}</p>
+                        {{/existinghomepagehtml}}
+                        {{^existinghomepagehtml}}
+                            <strong>{{#str}}setuphtmlalreadynocontent, theme_learnlingo{{/str}}</strong>
+                            <p>{{#str}}setuphtmlalreadyempty, theme_learnlingo{{/str}}</p>
+                        {{/existinghomepagehtml}}
+                        <a class="btn btn-outline-primary" href="{{{htmlsettingsurl}}}">
+                            {{#str}}setuphtmleditsettings, theme_learnlingo{{/str}}
+                        </a>
+                    </div>
+                </div>
+            {{/customhtmlmode}}
+            {{^customhtmlmode}}
             <div class="ll-setup-format-grid ll-setup-home-grid">
                 {{#layouts}}
                     <div class="ll-setup-format">
@@ -212,18 +241,22 @@
                     </div>
                 {{/layouts}}
             </div>
-            {{#customhtmlmode}}
-                <p class="ll-setup-hint">{{#str}}setupcustomhtmlpreserve, theme_learnlingo{{/str}}</p>
-            {{/customhtmlmode}}
             <p class="ll-setup-hint">{{#str}}setuphtmladvancedhint, theme_learnlingo{{/str}}</p>
+            {{/customhtmlmode}}
         </section>
 
     <aside class="ll-setup-ai-hint" aria-labelledby="ll-setup-ai-title">
         <div class="ll-setup-ai-hint__head">
             <span class="ll-setup-ai-hint__logo" aria-hidden="true">✦</span>
             <div>
-                <h4 id="ll-setup-ai-title">{{#str}}setupaihintheading, theme_learnlingo{{/str}}</h4>
-                <p>{{#str}}setupaihintdesc, theme_learnlingo{{/str}}</p>
+                {{#customhtmlmode}}
+                    <h4 id="ll-setup-ai-title">{{#str}}setuphtmlaititle, theme_learnlingo{{/str}}</h4>
+                    <p>{{#str}}setuphtmlaidesc, theme_learnlingo{{/str}}</p>
+                {{/customhtmlmode}}
+                {{^customhtmlmode}}
+                    <h4 id="ll-setup-ai-title">{{#str}}setupaihintheading, theme_learnlingo{{/str}}</h4>
+                    <p>{{#str}}setupaihintdesc, theme_learnlingo{{/str}}</p>
+                {{/customhtmlmode}}
             </div>
         </div>
         <div class="ll-setup-ai-hint__paths">
