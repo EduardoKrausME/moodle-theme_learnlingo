@@ -197,6 +197,19 @@ Homepage:
 - settings.homepagehtml: HTML shown above course cards in "learnlingo"
   mode; becomes the homepage's main content in "html" mode. It is not
   displayed in "moodle" mode. Write markup/content only, without scripts.
+  For live course cards, put data-learnlingo-loop="publiccourses"
+  (or "courses", "popular", "cohorts") on an ordinary HTML container.
+  The theme repeats its child HTML for each API item, substituting fields
+  such as {{fullname}}, {{url}}, {{imageurl}}, {{progress}} and {{views}}.
+  Example: <div data-learnlingo-loop="publiccourses" data-learnlingo-limit="4">
+    <article><a href="{{url}}">{{fullname}}</a></article>
+  </div>
+  For personal text use <span data-learnlingo-text="user.firstname"></span>.
+  Use data-learnlingo-if="loggedin" or "!loggedin" for conditional blocks,
+  and data-learnlingo-progress="progress" for a course progress bar.
+  AMD frontend.js automatically calls the session-aware home_api.php.
+  Never include a script, manually fetch the API or nest loop containers.
+  Only the logged-in user's own profile, cohorts and progress are available.
 - settings.homepagescss: a standalone, full SCSS stylesheet, compiled
   globally on EVERY page and in ALL homepage modes. Despite its name,
   it is NOT automatically restricted to the homepage: it can style
