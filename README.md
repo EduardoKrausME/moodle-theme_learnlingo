@@ -50,11 +50,25 @@ A atualização geral recebe somente os campos desejados em `settings` e, opcion
 
 ## First-run visual setup
 
-New installs store theme settings defaults with `set_config()` and keep any
-previously uploaded site assets. Moodle's `core\hook\after_config` hook
-offers the first-run visual assistant to the site administrator after Moodle
-finishes installing or upgrading. The wizard never activates LearnLingo without
-an explicit confirmation if another site theme is still active.
+New installations persist the theme settings with `set_config()` and
+initialize **`theme_learnlingo/homepagehtml = config`** as a reserved
+onboarding marker. The regular Moodle installation and admin notification
+pages are left alone: **there is no redirect from `admin/index.php`**.
+
+When a logged-in site administrator visits the actual site frontpage
+(`/index.php`, including Moodle installations under a subdirectory), the
+`core\hook\after_config` listener checks for the exact stored sentinel
+and opens the wizard. If LearnLingo is not the current site theme, it asks
+before switching; merely installing the plugin does not activate it.
+Guests and ordinary learners see the regular frontpage. During the initial
+setup, the homepage renderer never renders the literal word `config`.
+
+Finishing the final step or explicitly selecting **Not now** clears the
+sentinel to an empty string (only if it is still exactly `config`), and
+disarms the one-time prompt. Genuine custom HTML is never cleared by
+these actions. Existing installations with their own homepage HTML are
+unaffected by an update; the sentinel is only seeded for new installs.
+The wizard can always be reopened manually from the theme settings.
 
 The assistant consists of **three independently saved steps**:
 
