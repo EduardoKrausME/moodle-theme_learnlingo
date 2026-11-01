@@ -70,7 +70,7 @@ these actions. Existing installations with their own homepage HTML are
 unaffected by an update; the sentinel is only seeded for new installs.
 The wizard can always be reopened manually from the theme settings.
 
-The assistant consists of **three independently saved steps**:
+The assistant consists of **four or five independently saved steps**:
 
 1. **Colours, logo and favicon**: choose one of six palettes or preserve the
    institution's current colours. Optionally upload a PNG, JPEG or WebP logo
@@ -110,15 +110,35 @@ The assistant consists of **three independently saved steps**:
    provides an independent `showwelcome` switch, the Dashboard hero toggle
    and welcome text customisation, including optional MCP/ChatGPT/Claude.
 
-The fourth step is omitted when **both** Moodle personal landing pages
-are disabled. Existing content, blocks and course enrolments are never
-deleted by disabling a navigation page. A Moodle administrator can reopen
-the disabled page later from Site administration > Appearance > Navigation.
+The student page step (number 4) is omitted when **both** Moodle personal
+landing pages are disabled. Existing content, blocks and course enrolments
+are never deleted by disabling a navigation page. A Moodle administrator
+can reopen a disabled page from Site administration > Appearance > Navigation.
+
+5. **Login screen** (always the **last** step, number **4** if the optional
+   student step was omitted): preview the split-screen LearnLingo login,
+   edit the welcome-panel heading, description and tagline, and optionally
+   upload a separate login logo or a login background. Login artwork uses
+   the same PHP GD normalization strategy as the site branding: the logo
+   fits within **1200 × 400 px** with preserved PNG/WebP transparency;
+   the login background fits within **1920 × 1080 px** without cropping,
+   re-encoded as optimized JPEG. Files are saved to the existing Moodle
+   **theme_learnlingo/loginlogo** and **theme_boost/loginbackgroundimage**
+   areas. The global site logo and regular Moodle login/authentication
+   settings remain unchanged. The preview is illustrative; check the real
+   login screen in a private browser window to verify third-party identity
+   providers, password recovery and mobile layout. An optional ChatGPT/Claude
+   prompt or authorized MCP workflow can suggest institutional login copy.
+
+When the optional student step is disabled, the Login screen is displayed
+as **step 4 of 4**; otherwise it is **step 5 of 5**. Finishing the login step
+clears the one-time marker, and any existing login assets remain intact when
+their upload inputs are left empty.
 
 
 Each step saves only the settings relevant to that step and automatically
 opens the next. Returning to an earlier step doesn't reset subsequent settings.
-Finishing the final enabled step (third or fourth) clears the one-time onboarding marker. The setup page
+Finishing the login step (fourth or fifth) clears the one-time onboarding marker. The setup page
 remains available afterwards from the theme's advanced settings.
 
 The copy/paste prompts reuse `branding_exchange::export()` and the existing
