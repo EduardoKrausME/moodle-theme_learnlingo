@@ -125,6 +125,14 @@ final class update_settings extends base_tool {
                 . 'Can style the home, navbar, menus and footer. NOT automatically '
                 . 'scoped to home: use explicit homepage selectors for home-only rules. '
                 . 'Do not use bare & at stylesheet root or remote imports.',
+            'homepagepubliccoursesperpage' => 'Number 1-12 as a string, default 4, '
+                . 'of public course cards per page for visitors NOT logged in only. '
+                . '{{#courses}} contains at most that many elements, while '
+                . '{{coursepagination.coursecolumns}} is the actual number of '
+                . 'cards on the current page (e.g. 3 when 4 were requested '
+                . 'but only 3 exist). Use coursepagination.coursepages, '
+                . 'haspreviouscoursepage, hasnextcoursepage and URLs for navigation. '
+                . 'Never limit logged-in mycourses or progress.',
             'homepagepubliccourses' => 'Comma-separated visible course IDs '
                 . 'for {{#courses}} shown to visitors who are not logged in. '
                 . 'Empty string means all public, accessible courses in Moodle sort order. '
