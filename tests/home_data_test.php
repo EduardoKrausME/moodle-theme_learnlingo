@@ -99,6 +99,8 @@ final class home_data_test extends advanced_testcase {
             'email' => 'bob@example.invalid',
         ]);
         $this->getDataGenerator()->enrol_user($alice->id, $course->id);
+        global $CFG;
+        require_once($CFG->dirroot . '/cohort/lib.php');
         $cohort = $this->getDataGenerator()->create_cohort(['name' => 'Alice cohort']);
         cohort_add_member($cohort->id, $alice->id);
 
