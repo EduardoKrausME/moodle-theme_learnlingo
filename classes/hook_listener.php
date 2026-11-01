@@ -31,10 +31,10 @@ final class hook_listener {
     /**
      * Open the visual setup only for the first normal administration request.
      *
-     * @param \\core\\hook\\after_config $hook Hook dispatched during bootstrap.
+     * @param \core\hook\\after_config $hook Hook dispatched during bootstrap.
      * @return void
      */
-    public static function after_config(\\core\\hook\\after_config $hook): void {
+    public static function after_config(\core\hook\\after_config $hook): void {
         global $CFG;
 
         if ((defined('CLI_SCRIPT') && CLI_SCRIPT)
@@ -67,6 +67,6 @@ final class hook_listener {
                 || !isloggedin() || isguestuser() || !is_siteadmin()) {
             return;
         }
-        redirect(new \\moodle_url('/theme/learnlingo/admin/setup.php'));
+        redirect(new \moodle_url('/theme/learnlingo/admin/setup.php'));
     }
 }
