@@ -250,7 +250,13 @@ if ($action !== '') {
     redirect(new moodle_url($url, ['step' => $submitted + 1, 'saved' => 1]));
 }
 
-$PAGE->requires->css(new moodle_url('/theme/learnlingo/styles/setup.css'));
+// This is a standalone static CSS file, not a Moodle theme CSS build. Give
+// its URL a revision so browsers/CDNs do not keep an earlier stepper layout
+// even after the administrator purges Moodle caches.
+$setupcss = dirname(__DIR__) . '/styles/setup.css';
+$PAGE->requires->css(new moodle_url('/theme/learnlingo/styles/setup.css', [
+    'v' => (int)filemtime($setupcss),
+]));
 
 if (!$themeactive) {
     echo $OUTPUT->header();
