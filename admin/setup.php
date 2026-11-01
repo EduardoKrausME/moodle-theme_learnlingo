@@ -176,9 +176,8 @@ if ($action !== '') {
 
     // The third step is final only when neither Moodle page is enabled.
     if ($submitted === $stepcount) {
-        // Once the final step is saved, remove the sentinel; otherwise
-            // visiting the home would keep offering the assistant forever.
-            // Preserve genuine HTML supplied by a user or an MCP/JSON import.
+        // Once the final step is saved, remove the sentinel, otherwise the
+        // homepage would keep offering the wizard. Preserve real custom HTML.
         if ((string)get_config('theme_learnlingo', 'homepagehtml') === 'config') {
             set_config('homepagehtml', '', 'theme_learnlingo');
         }
@@ -269,6 +268,8 @@ echo $OUTPUT->render_from_template('theme_learnlingo/setup', [
     'sesskey' => sesskey(),
     'step' => $step,
     'steps' => $steps,
+    'stepdisplay' => get_string('setupwizardstepof', 'theme_learnlingo',
+        (object)['current' => $step, 'total' => $stepcount]),
     'progress' => (int)round($step * 100 / $stepcount),
     'stepcount' => $stepcount,
     'foursteps' => $stepcount === 4,
