@@ -174,10 +174,10 @@ if ($action !== '') {
             // Do not leave the default post-login landing page pointing
             // to a page that was just disabled through this wizard.
             $defaulthomepage = (int)($CFG->defaulthomepage ?? HOMEPAGE_SITE);
-            if (!$newdashboard && $defaulthomepage === HOMEPAGE_MY) {
-                set_config('defaulthomepage', HOMEPAGE_MYCOURSES);
-            } else if (!$newmycourses && $defaulthomepage === HOMEPAGE_MYCOURSES) {
-                set_config('defaulthomepage', HOMEPAGE_MY);
+            $validhome = \theme_learnlingo\setup_steps::default_homepage(
+                $defaulthomepage, $newdashboard, $newmycourses);
+            if ($validhome !== $defaulthomepage) {
+                set_config('defaulthomepage', $validhome);
             }
 
             set_config('showwelcome', optional_param('showwelcome', 0, PARAM_BOOL), 'theme_learnlingo');
