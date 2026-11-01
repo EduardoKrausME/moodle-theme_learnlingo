@@ -88,6 +88,9 @@ final class mcp_homepage_test extends advanced_testcase {
         $reader = new get_homepage();
         $writer = new update_homepage();
         $before = $reader->execute([], $identity);
+        $this->assertArrayHasKey('mustache', $before);
+        $this->assertSame('homepagehtml', $before['mustache']['field']);
+        $this->assertArrayHasKey('mycourses', $before['mustache']['fields']);
         $html = '<section class="welcome"><h1>New Moodle home</h1></section>';
         $arguments = [
             'html' => $html,
@@ -99,6 +102,7 @@ final class mcp_homepage_test extends advanced_testcase {
         $this->assertSame('moodle/site:config', $writer->get_required_capability());
         $schema = $writer->get_input_schema();
         $this->assertArrayHasKey('homepagescss', $schema['properties']);
+        $this->assertArrayHasKey('publiccourses', $schema['properties']);
         $this->assertStringContainsString('every page',
             $schema['properties']['homepagescss']['description']);
         $this->assertStringContainsString('footer',
@@ -116,6 +120,7 @@ final class mcp_homepage_test extends advanced_testcase {
         $after = $reader->execute([], $identity);
         $this->assertSame('learnlingo', $after['mode']);
         $this->assertSame($html, $after['html']);
+        $this->assertSame('', $after['publiccourses']);
         $this->assertSame('.welcome { padding: 1rem; }', $after['homepagescss']);
         $this->assertSame(strlen('.welcome { padding: 1rem; }'), $result['homepagescss_bytes']);
         $this->assertTrue($after['fullwidth']);
