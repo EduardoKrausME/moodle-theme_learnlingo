@@ -113,15 +113,17 @@ if ($action !== '') {
             if ($palette !== 'preserve' && !array_key_exists($palette, $palettes)) {
                 throw new invalid_parameter_exception('Invalid LearnLingo colour palette');
             }
-            // Reject invalid files before changing either the palette or site images.
+            // Validate uploads and normalize with GD before applying the palette.
+            // A decoding/memory failure must leave the previously selected
+            // colours and all existing site images untouched.
             $uploads = \theme_learnlingo\setup_images::validate($_FILES ?? []);
+            \theme_learnlingo\setup_images::save($uploads);
             if ($palette !== 'preserve') {
                 $fields = ['brandcolor', 'accentcolor', 'canvascolor', 'textcolor', 'footer_background_color'];
                 foreach ($fields as $index => $field) {
                     set_config($field, $palettes[$palette][$index], 'theme_learnlingo');
                 }
             }
-            \theme_learnlingo\setup_images::save($uploads);
             set_config('setup_palette', $palette, 'theme_learnlingo');
             theme_reset_all_caches();
             break;
