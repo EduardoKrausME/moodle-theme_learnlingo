@@ -71,6 +71,7 @@ final class branding_exchange {
             'footer_html_4' => ['html', ''],
             'footer_show_copywriter' => ['bool', true],
             'showdashboardhero' => ['bool', true],
+            'showwelcome' => ['bool', true],
             'showcoursehero' => ['bool', true],
             'courseheroeyebrow' => ['text', get_string('courseheroeyebrowdefault', 'theme_learnlingo')],
             'showcourseherosummary' => ['bool', true],
