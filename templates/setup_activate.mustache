@@ -12,6 +12,11 @@
                 <span>{{#str}}setupactivationcurrent, theme_learnlingo{{/str}}</span>
                 <strong>{{currenttheme}}</strong>
             </div>
+            {{#activationfailed}}
+                <div class="alert alert-warning" role="alert">
+                    {{#str}}setupactivationfailed, theme_learnlingo{{/str}}
+                </div>
+            {{/activationfailed}}
             <p class="ll-setup-activation__note">{{#str}}setupactivationnote, theme_learnlingo{{/str}}</p>
             <form action="{{actionurl}}" method="post" class="ll-setup-activation__actions">
                 <input type="hidden" name="sesskey" value="{{sesskey}}">
