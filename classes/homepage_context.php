@@ -31,7 +31,6 @@ use core_course_list_element;
 use moodle_url;
 use Mustache\Engine;
 use Mustache_Autoloader;
-use Mustache_Engine;
 use Throwable;
 
 /**
@@ -53,13 +52,13 @@ final class homepage_context {
             return $html;
         }
 
-        // Moodle 4.5 ships Mustache_Engine; newer releases use Mustache\Engine.
-        if (!class_exists(Engine::class) && !class_exists(Mustache_Engine::class)) {
+        // Moodle 4.5 ships Mustache\Engine; newer releases use Mustache\Engine.
+        if (!class_exists(Engine::class) && !class_exists(Engine::class)) {
             global $CFG;
             require_once($CFG->libdir . '/mustache/src/Mustache/Autoloader.php');
             Mustache_Autoloader::register();
         }
-        $engineclass = class_exists(Engine::class) ? Engine::class : Mustache_Engine::class;
+        $engineclass = class_exists(Engine::class) ? Engine::class : Engine::class;
         $engine = new $engineclass([
             // The context is already escaped so triple braces are safe too.
             'escape' => static function ($value): string {
