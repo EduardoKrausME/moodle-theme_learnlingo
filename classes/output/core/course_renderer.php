@@ -67,7 +67,7 @@ class course_renderer extends core_course_renderer {
                 // An empty HTML configuration must not result in an empty site homepage.
                 return parent::frontpage();
             }
-            return "<div class=\"learnlingo-html-home\">{$html}</div>";
+            return '<div class="learnlingo-html-home">' . \theme_learnlingo\homepage_context::render($html) . '</div>';
         }
 
         [$courses, $isenrolledlist] = $this->getfrontpagecourses();
@@ -138,7 +138,8 @@ class course_renderer extends core_course_renderer {
         $extrahtml = theme_learnlingo_homepage_html($this->page->theme);
         if (trim($extrahtml) !== '') {
             // Preserve the LearnLingo course cards beneath the optional custom content.
-            $homepage = '<div class="learnlingo-home-intro">' . $extrahtml . '</div>' . $homepage;
+            $homepage = '<div class="learnlingo-home-intro">' . \theme_learnlingo\homepage_context::render($extrahtml)
+                . '</div>' . $homepage;
         }
         return $homepage;
     }
