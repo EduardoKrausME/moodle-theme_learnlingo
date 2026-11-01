@@ -27,9 +27,16 @@ namespace theme_learnlingo;
 use advanced_testcase;
 
 /**
+ * Class dark_mode_test
+ *
  * @covers \theme_learnlingo\dark_mode
  */
 final class dark_mode_test extends advanced_testcase {
+    /**
+     * test_plugin_status_respects_version_and_enable_flag
+     *
+     * @return void
+     */
     public function test_plugin_status_respects_version_and_enable_flag(): void {
         $this->resetAfterTest();
         unset_config('version', 'local_boost_dark');
@@ -48,6 +55,11 @@ final class dark_mode_test extends advanced_testcase {
         $this->assertSame('[data-bs-theme="dark"]', $status['css_selector']);
     }
 
+    /**
+     * test_installation_form_is_a_separate_post_request
+     *
+     * @return void
+     */
     public function test_installation_form_is_a_separate_post_request(): void {
         global $CFG;
         $setup = file_get_contents($CFG->dirroot . '/theme/learnlingo/templates/setup.mustache');

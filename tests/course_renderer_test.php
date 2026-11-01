@@ -60,7 +60,7 @@ final class course_renderer_test extends advanced_testcase {
             'filename' => 'cover.png',
         ], base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4z8DwHwAFgAI/ScL/nwAAAABJRU5ErkJggg=='));
 
-        $renderer = new class($PAGE, 'html') extends course_renderer {
+        $renderer = new class ($PAGE, 'html') extends course_renderer {
             /**
              * Expose the protected image URL helper for this integration test.
              *

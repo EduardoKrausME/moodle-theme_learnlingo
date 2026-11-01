@@ -31,6 +31,8 @@ use core\event\base;
  */
 final class observer {
     /**
+     * public_courses_changed
+     *
      * @param base $event Triggering event.
      * @return void
      */

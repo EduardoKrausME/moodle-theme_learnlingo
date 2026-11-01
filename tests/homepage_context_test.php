@@ -28,6 +28,8 @@ use advanced_testcase;
 use core_cache\cache;
 
 /**
+ * Class homepage_context_test
+ *
  * @covers \theme_learnlingo\homepage_context
  */
 final class homepage_context_test extends advanced_testcase {
