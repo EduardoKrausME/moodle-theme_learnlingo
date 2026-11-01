@@ -93,13 +93,32 @@ The assistant consists of **three independently saved steps**:
    settings, and an existing HTML layout isn't silently discarded.
    The screen includes the optional Moodle MCP and a copy/paste JSON prompt
    for ChatGPT or Claude, focused on personalizing the homepage.
-3. **Footer and components**: choose the native or custom HTML footer, and
-   configure the visual switches. The same MCP and ChatGPT/Claude workflows
-   are offered for footer customization; there is no redundant fourth AI step.
+3. **Footer and components**: choose the native or custom HTML footer,
+   configure course hero/full-width presentation, and use MCP, ChatGPT or
+   Claude for optional footer customization.
+4. **Dashboard and My courses** (only when either Moodle page is currently
+   enabled): show both alternatives side by side, each with a selectable
+   checkbox and an explanation of its purpose. The administrator may enable
+   Dashboard, My courses, or both. A visible warning explains that keeping
+   both may duplicate the enrolled course list, because Dashboard can contain
+   Course overview and My courses provides that list directly. We recommend
+   choosing one unless the Dashboard's calendar, timeline and additional
+   blocks are needed. At least one must remain enabled. This writes Moodle's
+   real global `enabledashboard` and `enablemycourses` settings; if the
+   site's default login page is disabled, `defaulthomepage` switches to the
+   remaining enabled page, without changing other default modes. The step also
+   provides an independent `showwelcome` switch, the Dashboard hero toggle
+   and welcome text customisation, including optional MCP/ChatGPT/Claude.
+
+The fourth step is omitted when **both** Moodle personal landing pages
+are disabled. Existing content, blocks and course enrolments are never
+deleted by disabling a navigation page. A Moodle administrator can reopen
+the disabled page later from Site administration > Appearance > Navigation.
+
 
 Each step saves only the settings relevant to that step and automatically
 opens the next. Returning to an earlier step doesn't reset subsequent settings.
-Finishing the third step clears the one-time onboarding marker. The setup page
+Finishing the final enabled step (third or fourth) clears the one-time onboarding marker. The setup page
 remains available afterwards from the theme's advanced settings.
 
 The copy/paste prompts reuse `branding_exchange::export()` and the existing
