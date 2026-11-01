@@ -180,3 +180,9 @@
 @media(max-width:600px){.speech{padding-right:25px}}
 @media(min-width:701px) and (max-width:850px){.hero-copy>p{max-width:calc(100% - 18px)}}
 @media(max-width:600px){html[lang=en] .brand-copy h2{font-size:38px}}
+
+/* LearnLingo download sources in the installation dialog. */
+.install-source-links{display:flex;align-items:flex-start;gap:8px 16px;flex-wrap:wrap;margin-top:10px}
+.install-source-links a{font-size:12px;font-weight:900;color:#468524;text-decoration:underline;text-underline-offset:3px;line-height:1.6}
+.install-source-links a:hover{color:#356b18}
+:root[data-appearance=dark] .install-source-links a{color:#b2e88c}
