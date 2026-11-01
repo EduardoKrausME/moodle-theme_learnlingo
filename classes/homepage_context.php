@@ -83,6 +83,16 @@ final class homepage_context {
 
         $loggedin = isloggedin() && !isguestuser();
         $publiccourses = self::public_courses($loggedin);
+        // Only anonymous visitors use the configured course limit and pagination.
+        $guestpagination = !$loggedin ? self::paginate_guest_courses(
+            $publiccourses,
+            optional_param('llcoursepage', 1, PARAM_INT),
+            self::guest_courses_per_page()
+        ) : null;
+        if ($guestpagination !== null) {
+            $publiccourses = $guestpagination['courses'];
+            unset($guestpagination['courses']);
+        }
         $mycourses = [];
         $cohorts = [];
         $user = false;
@@ -130,6 +140,8 @@ final class homepage_context {
             'courses' => $publiccourses,
             'hascourses' => !empty($publiccourses),
             'coursecount' => count($publiccourses),
+            // Pagination metadata exists only in the visitor context, not student/course lists.
+            'coursepagination' => $guestpagination ?: false,
             'mycourses' => $mycourses,
             'hasmycourses' => !empty($mycourses),
             'mycoursecount' => count($mycourses),
@@ -247,6 +259,70 @@ final class homepage_context {
         $raw = (string)(get_config('theme_learnlingo', 'homepagepubliccourses') ?: '');
         $ids = array_map('intval', array_filter(explode(',', $raw), 'strlen'));
         return array_values(array_unique(array_filter($ids, static fn(int $id): bool => $id > SITEID)));
+    }
+
+    /**
+     * Configured guest page size, with a safe default for older installations.
+     *
+     * @return int Page size between 1 and 12.
+     */
+    public static function guest_courses_per_page(): int {
+        $configured = (int)get_config('theme_learnlingo', 'homepagepubliccoursesperpage');
+        return $configured >= 1 && $configured <= 12 ? $configured : 4;
+    }
+
+    /**
+     * Paginate only the anonymous catalogue, after the visibility/selection filters.
+     *
+     * Keep the complete catalogue in MUC; never cache the rendered HTML or a
+     * specific page, as every page is just a slice of the same public data.
+     *
+     * @param array $courses Visible public courses in Moodle sort order.
+     * @param int $requestedpage Page from the homepage URL.
+     * @param int $perpage Administrator-configured number of cards.
+     * @return array Page metadata and the current page's courses.
+     */
+    public static function paginate_guest_courses(array $courses, int $requestedpage, int $perpage): array {
+        $perpage = max(1, min(12, $perpage));
+        $total = count($courses);
+        $pages = max(1, (int)ceil($total / $perpage));
+        $page = max(1, min($pages, $requestedpage));
+        $items = array_slice($courses, ($page - 1) * $perpage, $perpage);
+        $previous = $page > 1;
+        $next = $page < $pages;
+
+        // Use an isolated homepage query parameter, not Moodle course indexes.
+        $pageurl = static function(int $number): string {
+            $args = $number > 1 ? ['llcoursepage' => $number] : [];
+            return self::safe((new moodle_url('/', $args))->out(false));
+        };
+        $links = [];
+        if ($pages > 1) {
+            for ($number = 1; $number <= $pages; $number++) {
+                $links[] = [
+                    'number' => $number,
+                    'url' => $pageurl($number),
+                    'iscurrent' => $number === $page,
+                ];
+            }
+        }
+
+        return [
+            'courses' => $items,
+            'coursecount' => count($items),
+            'coursetotal' => $total,
+            'coursesperpage' => $perpage,
+            // A 4-column design with only 3 real courses can use 3 columns.
+            'coursecolumns' => min($perpage, count($items)),
+            'coursepage' => $page,
+            'coursepagecount' => $pages,
+            'hascoursepages' => $pages > 1,
+            'coursepages' => $links,
+            'haspreviouscoursepage' => $previous,
+            'hasnextcoursepage' => $next,
+            'previouscoursepageurl' => $previous ? $pageurl($page - 1) : '',
+            'nextcoursepageurl' => $next ? $pageurl($page + 1) : '',
+        ];
     }
 
     /**
