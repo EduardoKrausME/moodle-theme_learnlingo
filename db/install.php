@@ -114,4 +114,19 @@ function xmldb_theme_learnlingo_install(): void {
             set_config("loginbackgroundimage", $file->get_filepath() . $file->get_filename(), "theme_boost");
         }
     }
+
+    // File settings also have persisted empty defaults when no file is present.
+    // The logo and login background above are seeded first; neither is replaced.
+    foreach ([
+        'core_admin' => ['logo', 'favicon'],
+        'theme_boost' => ['loginbackgroundimage'],
+        'theme_learnlingo' => ['loginlogo'],
+    ] as $component => $fields) {
+        foreach ($fields as $field) {
+            if (get_config($component, $field) === false) {
+                set_config($field, '', $component);
+            }
+        }
+    }
+
 }
