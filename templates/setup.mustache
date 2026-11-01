@@ -330,35 +330,57 @@
                     <p>{{#str}}setupstudentintro, theme_learnlingo{{/str}}</p>
                 </div>
             </div>
-            <div class="ll-setup-student__grid">
-                {{#dashboardenabled}}
-                    <div class="ll-setup-student__page">
-                        <div class="ll-setup-student__preview ll-setup-student__preview--dashboard" aria-hidden="true">
-                            <div class="ll-setup-student__bar"><i></i><i></i><i></i></div>
-                            <div class="ll-setup-student__hero"><strong>{{#str}}setupstudentpreviewwelcome, theme_learnlingo{{/str}}</strong><span></span><span></span></div>
-                            <div class="ll-setup-student__tiles"><span></span><span></span><span></span></div>
-                        </div>
+            <p class="ll-setup-student__choicehint">{{#str}}setupstudentchooseintro, theme_learnlingo{{/str}}</p>
+            <div class="ll-setup-student__grid ll-setup-student__grid--selectable">
+                <div class="ll-setup-student__page ll-setup-student__page--choice">
+                    <input type="checkbox" id="ll-choose-dashboard" name="enabledashboard"
+                        value="1" {{#dashboardenabled}}checked{{/dashboardenabled}}>
+                    <label for="ll-choose-dashboard" class="ll-setup-student__choice">
+                        <span class="ll-setup-student__check" aria-hidden="true">✓</span>
+                        <span class="ll-setup-student__preview ll-setup-student__preview--dashboard" aria-hidden="true">
+                            <span class="ll-setup-student__bar"><i></i><i></i><i></i></span>
+                            <span class="ll-setup-student__hero">
+                                <strong>{{#str}}setupstudentpreviewwelcome, theme_learnlingo{{/str}}</strong><span></span><span></span>
+                            </span>
+                            <span class="ll-setup-student__tiles"><span></span><span></span><span></span></span>
+                        </span>
                         <strong>{{#str}}setupstudentdashboard, theme_learnlingo{{/str}}</strong>
                         <small>{{#str}}setupstudentdashboarddesc, theme_learnlingo{{/str}}</small>
-                        <a href="{{dashboardurl}}" target="_blank" rel="noopener noreferrer">
-                            {{#str}}setupstudentviewdashboard, theme_learnlingo{{/str}}
-                        </a>
-                    </div>
-                {{/dashboardenabled}}
-                {{#mycoursesenabled}}
-                    <div class="ll-setup-student__page">
-                        <div class="ll-setup-student__preview ll-setup-student__preview--courses" aria-hidden="true">
-                            <div class="ll-setup-student__bar"><i></i><i></i><i></i></div>
-                            <div class="ll-setup-student__hero"><strong>{{#str}}setupstudentpreviewwelcome, theme_learnlingo{{/str}}</strong><span></span><span></span></div>
-                            <div class="ll-setup-student__tiles"><span></span><span></span><span></span></div>
-                        </div>
+                        <span class="ll-setup-student__selectlabel">
+                            {{#str}}setupstudentselect, theme_learnlingo{{/str}}
+                        </span>
+                    </label>
+                    <a href="{{dashboardurl}}" target="_blank" rel="noopener noreferrer">
+                        {{#str}}setupstudentviewdashboard, theme_learnlingo{{/str}}
+                    </a>
+                </div>
+                <div class="ll-setup-student__page ll-setup-student__page--choice">
+                    <input type="checkbox" id="ll-choose-mycourses" name="enablemycourses"
+                        value="1" {{#mycoursesenabled}}checked{{/mycoursesenabled}}>
+                    <label for="ll-choose-mycourses" class="ll-setup-student__choice">
+                        <span class="ll-setup-student__check" aria-hidden="true">✓</span>
+                        <span class="ll-setup-student__preview ll-setup-student__preview--courses" aria-hidden="true">
+                            <span class="ll-setup-student__bar"><i></i><i></i><i></i></span>
+                            <span class="ll-setup-student__hero">
+                                <strong>{{#str}}setupstudentpreviewwelcome, theme_learnlingo{{/str}}</strong><span></span><span></span>
+                            </span>
+                            <span class="ll-setup-student__tiles"><span></span><span></span><span></span></span>
+                        </span>
                         <strong>{{#str}}setupstudentmycourses, theme_learnlingo{{/str}}</strong>
                         <small>{{#str}}setupstudentmycoursesdesc, theme_learnlingo{{/str}}</small>
-                        <a href="{{mycoursesurl}}" target="_blank" rel="noopener noreferrer">
-                            {{#str}}setupstudentviewmycourses, theme_learnlingo{{/str}}
-                        </a>
-                    </div>
-                {{/mycoursesenabled}}
+                        <span class="ll-setup-student__selectlabel">
+                            {{#str}}setupstudentselect, theme_learnlingo{{/str}}
+                        </span>
+                    </label>
+                    <a href="{{mycoursesurl}}" target="_blank" rel="noopener noreferrer">
+                        {{#str}}setupstudentviewmycourses, theme_learnlingo{{/str}}
+                    </a>
+                </div>
+            </div>
+            <div class="ll-setup-student__warning" role="note">
+                <strong>{{#str}}setupstudentduplicateheading, theme_learnlingo{{/str}}</strong>
+                <p>{{#str}}setupstudentduplicatedesc, theme_learnlingo{{/str}}</p>
+                <p class="ll-setup-student__atleastone">{{#str}}setupstudentchooseone, theme_learnlingo{{/str}}</p>
             </div>
             <p class="ll-setup-student__navigation">
                 {{#str}}setupstudentcoreflags, theme_learnlingo{{/str}}
@@ -381,13 +403,11 @@
                         <small>{{#str}}showwelcome_desc, theme_learnlingo{{/str}}</small></span>
                     <input type="checkbox" name="showwelcome" value="1" {{#showwelcome}}checked{{/showwelcome}}>
                 </label>
-                {{#dashboardenabled}}
-                    <label class="ll-setup-switch">
-                        <span><strong>{{#str}}showdashboardhero, theme_learnlingo{{/str}}</strong>
-                            <small>{{#str}}setupstudentdashboardherohelp, theme_learnlingo{{/str}}</small></span>
-                        <input type="checkbox" name="showdashboardhero" value="1" {{#dashboardhero}}checked{{/dashboardhero}}>
-                    </label>
-                {{/dashboardenabled}}
+                <label class="ll-setup-switch">
+                    <span><strong>{{#str}}showdashboardhero, theme_learnlingo{{/str}}</strong>
+                        <small>{{#str}}setupstudentdashboardherohelp, theme_learnlingo{{/str}}</small></span>
+                    <input type="checkbox" name="showdashboardhero" value="1" {{#dashboardhero}}checked{{/dashboardhero}}>
+                </label>
             </div>
             <div class="ll-setup-student__texts">
                 <div>
