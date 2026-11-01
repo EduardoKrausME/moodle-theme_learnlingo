@@ -22,116 +22,122 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-import Pending from 'core/pending';
-import {registerManager, init as defaultInit} from 'core/sticky-footer';
+define('theme_learnlingo/sticky-footer', ['core/pending', 'core/sticky-footer'], function(pendingModule, stickyFooter) {
+    'use strict';
 
-const SELECTORS = {
-    STICKYFOOTER: '.stickyfooter',
-    PAGE: '#page',
-};
+    const Pending = pendingModule.default || pendingModule;
+    const {registerManager, init: defaultInit} = stickyFooter;
 
-const CLASSES = {
-    HASSTICKYFOOTER: 'hasstickyfooter',
-};
+    const SELECTORS = {
+        STICKYFOOTER: '.stickyfooter',
+        PAGE: '#page',
+    };
 
-let initialized = false;
+    const CLASSES = {
+        HASSTICKYFOOTER: 'hasstickyfooter',
+    };
 
-let previousScrollPosition = 0;
+    let initialized = false;
 
-let enabled = false;
+    let previousScrollPosition = 0;
 
-/**
- * Scroll handler.
- * @package
- */
-const scrollSpy = () => {
-    if (!enabled) {
-        return;
-    }
-    // Ignore scroll if page size is not small.
-    if (document.body.clientWidth >= 768) {
-        return;
-    }
-    // Detect if scroll is going down.
-    let scrollPosition = window.scrollY;
-    if (scrollPosition > previousScrollPosition) {
-        hideStickyFooter();
-    } else {
+    let enabled = false;
+
+    /**
+     * Scroll handler.
+     * @package
+     */
+    const scrollSpy = () => {
+        if (!enabled) {
+            return;
+        }
+        // Ignore scroll if page size is not small.
+        if (document.body.clientWidth >= 768) {
+            return;
+        }
+        // Detect if scroll is going down.
+        let scrollPosition = window.scrollY;
+        if (scrollPosition > previousScrollPosition) {
+            hideStickyFooter();
+        } else {
+            showStickyFooter();
+        }
+        previousScrollPosition = scrollPosition;
+    };
+
+    /**
+     * Return if the sticky footer must be enabled by default or not.
+     * @returns {Boolean} true if the sticky footer is enabled automatic.
+     */
+    const isDisabledByDefault = () => {
+        const footer = document.querySelector(SELECTORS.STICKYFOOTER);
+        if (!footer) {
+            return false;
+        }
+        return !!footer.dataset.disable;
+    };
+
+    /**
+     * Show the sticky footer in the page.
+     */
+    const showStickyFooter = () => {
+        // We need some seconds to make sure the CSS animation is ready.
+        const pendingPromise = new Pending('theme_learnlingo/sticky-footer:enabling');
+        const footer = document.querySelector(SELECTORS.STICKYFOOTER);
+        const page = document.querySelector(SELECTORS.PAGE);
+        if (footer && page) {
+            document.body.classList.add(CLASSES.HASSTICKYFOOTER);
+            page.classList.add(CLASSES.HASSTICKYFOOTER);
+        }
+        setTimeout(() => pendingPromise.resolve(), 1000);
+    };
+
+    /**
+     * Hide the sticky footer in the page.
+     */
+    const hideStickyFooter = () => {
+        document.body.classList.remove(CLASSES.HASSTICKYFOOTER);
+        const page = document.querySelector(SELECTORS.PAGE);
+        page?.classList.remove(CLASSES.HASSTICKYFOOTER);
+    };
+
+    /**
+     * Enable sticky footer in the page.
+     */
+    const enableStickyFooter = () => {
+        enabled = true;
         showStickyFooter();
-    }
-    previousScrollPosition = scrollPosition;
-};
+    };
 
-/**
- * Return if the sticky footer must be enabled by default or not.
- * @returns {Boolean} true if the sticky footer is enabled automatic.
- */
-const isDisabledByDefault = () => {
-    const footer = document.querySelector(SELECTORS.STICKYFOOTER);
-    if (!footer) {
-        return false;
-    }
-    return !!footer.dataset.disable;
-};
+    /**
+     * Disable sticky footer in the page.
+     */
+    const disableStickyFooter = () => {
+        enabled = false;
+        hideStickyFooter();
+    };
 
-/**
- * Show the sticky footer in the page.
- */
-const showStickyFooter = () => {
-    // We need some seconds to make sure the CSS animation is ready.
-    const pendingPromise = new Pending('theme_learnlingo/sticky-footer:enabling');
-    const footer = document.querySelector(SELECTORS.STICKYFOOTER);
-    const page = document.querySelector(SELECTORS.PAGE);
-    if (footer && page) {
-        document.body.classList.add(CLASSES.HASSTICKYFOOTER);
-        page.classList.add(CLASSES.HASSTICKYFOOTER);
-    }
-    setTimeout(() => pendingPromise.resolve(), 1000);
-};
+    /**
+     * Initialize the module.
+     */
+    const init = () => {
+        // Prevent sticky footer in behat.
+        if (initialized || document.body.classList.contains('behat-site')) {
+            defaultInit();
+            return;
+        }
+        initialized = true;
+        if (!isDisabledByDefault()) {
+            enableStickyFooter();
+        }
 
-/**
- * Hide the sticky footer in the page.
- */
-const hideStickyFooter = () => {
-    document.body.classList.remove(CLASSES.HASSTICKYFOOTER);
-    const page = document.querySelector(SELECTORS.PAGE);
-    page?.classList.remove(CLASSES.HASSTICKYFOOTER);
-};
+        document.addEventListener("scroll", scrollSpy);
 
-/**
- * Enable sticky footer in the page.
- */
-export const enableStickyFooter = () => {
-    enabled = true;
-    showStickyFooter();
-};
+        registerManager({
+            enableStickyFooter,
+            disableStickyFooter,
+        });
+    };
 
-/**
- * Disable sticky footer in the page.
- */
-export const disableStickyFooter = () => {
-    enabled = false;
-    hideStickyFooter();
-};
-
-/**
- * Initialize the module.
- */
-export const init = () => {
-    // Prevent sticky footer in behat.
-    if (initialized || document.body.classList.contains('behat-site')) {
-        defaultInit();
-        return;
-    }
-    initialized = true;
-    if (!isDisabledByDefault()) {
-        enableStickyFooter();
-    }
-
-    document.addEventListener("scroll", scrollSpy);
-
-    registerManager({
-        enableStickyFooter,
-        disableStickyFooter,
-    });
-};
+    return {enableStickyFooter, disableStickyFooter, init};
+});
