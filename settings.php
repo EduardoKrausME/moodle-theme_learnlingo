@@ -278,6 +278,15 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback("theme_reset_all_caches");
     $page->add($setting);
 
+    $setting = new admin_setting_configcheckbox(
+        "theme_learnlingo/showwelcome",
+        get_string("showwelcome", "theme_learnlingo"),
+        get_string("showwelcome_desc", "theme_learnlingo"),
+        1
+    );
+    $setting->set_updatedcallback("theme_reset_all_caches");
+    $page->add($setting);
+
     $settings->add($page);
 
     $page = new admin_settingpage(
