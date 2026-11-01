@@ -278,7 +278,7 @@ final class homepage_context {
      * @return string HTML-escaped text.
      */
     private static function safe($value): string {
-        return s((string)$value);
+        return s(html_entity_decode((string)$value, ENT_QUOTES | ENT_HTML5, 'UTF-8'));
     }
 
     /**
