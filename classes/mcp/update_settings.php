@@ -72,7 +72,11 @@ final class update_settings extends base_tool {
             . '{{#cohorts}} for own groups and {{user.firstname}} only '
             . 'inside {{#isloggedin}}. Use {{#hasprogress}} around progress. '
             . 'homepagepubliccourses limits courses shown to guests, '
-            . 'empty means all public courses; preserve private data and cache isolation. '
+            . 'empty means all public courses; homepagepubliccoursesperpage '
+            . 'limits only the anonymous catalogue (1-12, default 4), '
+            . 'and coursepagination.coursecolumns adapts layouts when fewer '
+            . 'real courses exist. Do not limit enrolled course lists or invent '
+            . 'missing cards; preserve private data and cache isolation. 
             . 'Preview and explicit confirmation are required. Read '
             . 'learnlingo_get_settings first and pass state_hash as expected_hash. '
             . 'The shared site logo and favicon use core_admin; the separate login '
