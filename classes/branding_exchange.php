@@ -212,6 +212,15 @@ Homepage:
   {{#courses}} loop in homepagehtml for logged-out visitors. An empty
   string means all visible, accessible courses in Moodle sort order.
   Never reveal hidden courses or change course access permissions.
+- settings.homepagepubliccoursesperpage: string containing the number 1-12,
+  default "4". Limits ONLY the logged-out public {{#courses}} loop, not
+  logged-in users or {{#mycourses}}. The PHP context contains
+  {{coursepagination.coursesperpage}}, {{coursepagination.coursecolumns}}
+  (actual number of cards on the guest page), {{coursepagination.coursepage}},
+  and {{#coursepagination.coursepages}} page navigation. If a grid expects
+  four cards but only three visible courses exist, display three cards and
+  adapt the responsive columns using coursecolumns. Never invent or repeat
+  courses to fill blank slots. With 3 per page and 4 courses, use pagination.
 - homepagehtml supports PHP-rendered Mustache sections and loops: use
   {{#isloggedin}}, {{user.firstname}}, {{#mycourses}}, {{#courses}},
   {{#cohorts}}, {{progress}} and {{imageurl}} inside a course loop.
