@@ -21,31 +21,37 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-/**
- * Toggle settings for the selected homepage mode, without clearing values.
- */
-export const init = () => {
-    const select = document.getElementById('id_s_theme_learnlingo_homepagemode');
-    if (!select) {
-        return;
-    }
-    const setVisible = (name, visible) => {
-        const input = document.getElementById('id_s_theme_learnlingo_' + name);
-        const wrapper = document.getElementById('admin-' + name) ||
-            input?.closest('.form-item, .fitem, .form-group');
-        if (wrapper) {
-            wrapper.classList.toggle('d-none', !visible);
-            wrapper.setAttribute('aria-hidden', visible ? 'false' : 'true');
+define('theme_learnlingo/homepage_settings', [], function() {
+    'use strict';
+
+    /**
+     * Toggle settings for the selected homepage mode, without clearing values.
+     */
+    const init = () => {
+        const select = document.getElementById('id_s_theme_learnlingo_homepagemode');
+        if (!select) {
+            return;
         }
+        const setVisible = (name, visible) => {
+            const input = document.getElementById('id_s_theme_learnlingo_' + name);
+            const wrapper = document.getElementById('admin-' + name) ||
+                input?.closest('.form-item, .fitem, .form-group');
+            if (wrapper) {
+                wrapper.classList.toggle('d-none', !visible);
+                wrapper.setAttribute('aria-hidden', visible ? 'false' : 'true');
+            }
+        };
+        const refresh = () => {
+            const isLearnlingo = select.value === 'learnlingo';
+            const isHtml = select.value === 'html';
+            setVisible('homepagehtml', isLearnlingo || isHtml);
+            // The stylesheet also controls shared navbar and footer elements on other pages.
+            setVisible('homepagescss', true);
+            setVisible('homepagefullwidth', isLearnlingo || isHtml);
+        };
+        select.addEventListener('change', refresh);
+        refresh();
     };
-    const refresh = () => {
-        const isLearnlingo = select.value === 'learnlingo';
-        const isHtml = select.value === 'html';
-        setVisible('homepagehtml', isLearnlingo || isHtml);
-        // The stylesheet also controls shared navbar and footer elements on other pages.
-        setVisible('homepagescss', true);
-        setVisible('homepagefullwidth', isLearnlingo || isHtml);
-    };
-    select.addEventListener('change', refresh);
-    refresh();
-};
+
+    return {init};
+});

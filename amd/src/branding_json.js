@@ -21,28 +21,34 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-/**
- * Copy the exported branding prompt to the clipboard without inline JavaScript.
- */
-export const init = () => {
-    const button = document.getElementById('learnlingo-copy-prompt');
-    const textarea = document.getElementById('learnlingo-brand-prompt');
-    if (!button || !textarea) {
-        return;
-    }
+define('theme_learnlingo/branding_json', [], function() {
+    'use strict';
 
-    button.addEventListener('click', async () => {
-        try {
-            if (navigator.clipboard && window.isSecureContext) {
-                await navigator.clipboard.writeText(textarea.value);
-                return;
-            }
-        } catch (error) {
-            // Fall back to the original selection-based copy behavior.
+    /**
+     * Copy the exported branding prompt to the clipboard without inline JavaScript.
+     */
+    const init = () => {
+        const button = document.getElementById('learnlingo-copy-prompt');
+        const textarea = document.getElementById('learnlingo-brand-prompt');
+        if (!button || !textarea) {
+            return;
         }
 
-        textarea.focus();
-        textarea.select();
-        document.execCommand('copy');
-    });
-};
+        button.addEventListener('click', async () => {
+            try {
+                if (navigator.clipboard && window.isSecureContext) {
+                    await navigator.clipboard.writeText(textarea.value);
+                    return;
+                }
+            } catch (error) {
+                // Fall back to the original selection-based copy behavior.
+            }
+
+            textarea.focus();
+            textarea.select();
+            document.execCommand('copy');
+        });
+    };
+
+    return {init};
+});
