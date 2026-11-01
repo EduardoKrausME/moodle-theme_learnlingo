@@ -70,7 +70,7 @@ final class setup_images_test extends \advanced_testcase {
             $this->assertSame('/unchanged.ico', get_config('core_admin', 'favicon'));
 
             $contextid = \context_system::instance()->id;
-            $hash = sha1("/{$contextid}/core_admin/logo/0/{$storedname}");
+            $hash = sha1("/{$contextid}/core_admin/logo/0/" . ltrim($storedname, '/'));
             $storedfile = get_file_storage()->get_file_by_hash($hash);
             $this->assertNotFalse($storedfile);
             $details = getimagesizefromstring($storedfile->get_content());
@@ -110,7 +110,7 @@ final class setup_images_test extends \advanced_testcase {
             $this->assertStringEndsWith('.png', $storedname);
 
             $contextid = \context_system::instance()->id;
-            $hash = sha1("/{$contextid}/core_admin/favicon/0/{$storedname}");
+            $hash = sha1("/{$contextid}/core_admin/favicon/0/" . ltrim($storedname, '/'));
             $storedfile = get_file_storage()->get_file_by_hash($hash);
             $this->assertNotFalse($storedfile);
 
