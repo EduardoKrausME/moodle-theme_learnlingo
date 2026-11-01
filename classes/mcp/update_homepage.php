@@ -75,6 +75,11 @@ final class update_homepage extends base_tool {
             . '{{progress}} only in own enrolled courses. No JS/PHP, partials or '
             . 'SQL in homepagehtml. publiccourses is a comma-separated list '
             . 'of visible course IDs; empty means all public courses in sort order. '
+            . 'publiccoursesperpage is a string from 1 to 12 (default 4), '
+            . 'limiting ONLY guests; use coursepagination.coursecolumns '
+            . 'for the actual number of courses and coursepagination.coursepages '
+            . 'for navigation. Do not limit authenticated mycourses or invent '
+            . 'missing courses to fill a fixed-width grid. 
             . 'Guest catalogue is MUC-cached for 300s with event invalidation; '
             . 'user data, enrollments, progress and final HTML are never shared-cached. '
             . 'For footermode, footerhtml and footer-scoped footerscss use '
