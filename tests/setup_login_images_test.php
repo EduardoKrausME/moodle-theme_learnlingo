@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Verify independent login artwork and GD resizing during setup.
@@ -25,6 +25,8 @@
 namespace theme_learnlingo;
 
 /**
+ * Verify login artwork remains separate from the global site identity.
+ *
  * @covers \theme_learnlingo\setup_login_images
  */
 final class setup_login_images_test extends \advanced_testcase {
