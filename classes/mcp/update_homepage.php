@@ -63,6 +63,25 @@ final class update_homepage extends base_tool {
             . 'in html mode. homepagescss is compiled on every page in all modes; '
             . 'it can style the homepage, navbar, menus and shared footer. '
             . 'Use explicit homepage selectors for homepage-only rules. '
+            . 'MUSTACHE INSTRUCTIONS FOR CHATGPT/CLAUDE: only homepagehtml '
+            . 'is processed server-side by PHP; native templates and footer are not. '
+            . 'Call learnlingo_get_homepage first, follow the returned '
+            . 'mustache.instructions/fields/examples, and use placeholders '
+            . 'rather than hardcoded course/user data. {{#isloggedin}} shows '
+            . 'private content, {{^isloggedin}} shows the visitor variant, '
+            . '{{#courses}} loops public courses, {{#mycourses}} loops the '
+            . 'current student enrolled courses and {{#cohorts}} loops own cohorts. '
+            . 'Use {{#hasimage}} for {{imageurl}} and {{#hasprogress}} for '
+            . '{{progress}} only in own enrolled courses. No JS/PHP, partials or '
+            . 'SQL in homepagehtml. publiccourses is a comma-separated list '
+            . 'of visible course IDs; empty means all public courses in sort order. '
+            . 'publiccoursesperpage is a string from 1 to 12 (default 4), '
+            . 'limiting ONLY guests; use coursepagination.coursecolumns '
+            . 'for the actual number of courses and coursepagination.coursepages '
+            . 'for navigation. Do not limit authenticated mycourses or invent '
+            . 'missing courses to fill a fixed-width grid. 
+            . 'Guest catalogue is MUC-cached for 300s with event invalidation; '
+            . 'user data, enrollments, progress and final HTML are never shared-cached. '
             . 'For footermode, footerhtml and footer-scoped footerscss use '
             . 'learnlingo_update_settings. Validates changes, previews them and '
             . 'requires explicit confirmation. Read learnlingo_get_homepage first.';
@@ -92,7 +111,31 @@ final class update_homepage extends base_tool {
                     . 'main homepage content in html mode, hidden in moodle mode. '
                     . 'If mode is omitted, updating HTML preserves learnlingo mode '
                     . 'or activates html mode when the previous mode is different. '
-                    . 'Use HTML markup without scripts.'],
+                    . 'Use server-side PHP Mustache for dynamic content: '
+                    . '{{#isloggedin}}...{{/isloggedin}}, '
+                    . '{{^isloggedin}}...{{/isloggedin}}, {{user.firstname}}, '
+                    . '{{#courses}}...{{/courses}}, '
+                    . '{{#mycourses}}...{{/mycourses}}, '
+                    . '{{#cohorts}}...{{/cohorts}}. Course fields include '
+                    . '{{fullname}}, {{url}}, {{imageurl}}, {{hasimage}}, '
+                    . '{{hasprogress}} and {{progress}}. Only mycourses has '
+                    . 'personal progress; guard it with {{#hasprogress}}. '
+                    . 'Guest content must not rely on user or mycourses. '
+                    . 'Call learnlingo_get_homepage to read mustache.instructions '
+                    . 'and full field reference. Do not hardcode visitor names, '
+                    . 'enrollments or percentages, and do not add scripts.'],
+            'publiccoursesperpage' => ['type' => 'string', 'pattern' => '^(?:[1-9]|1[0-2])$',
+                'description' => '1 to 12 course cards per page in {{#courses}} ONLY '
+                    . 'for logged-out visitors, default 4. The guest-only '
+                    . 'coursepagination object provides coursecolumns (actual cards, '
+                    . 'not the requested count), coursepage, coursepages, '
+                    . 'haspreviouscoursepage, hasnextcoursepage, '
+                    . 'previouscoursepageurl and nextcoursepageurl. '
+                    . 'Authenticated user mycourses and progress are not limited.'],
+            'publiccourses' => ['type' => 'string',
+                'description' => 'Comma-separated IDs, for example 12,14,18, to show in '
+                    . '{{#courses}} for logged-out visitors. Empty string selects all '
+                    . 'publicly visible courses in Moodle sort order. No enrolment changes.'],
             'fullwidth' => ['type' => 'boolean',
                 'description' => 'homepagefullwidth: use full available width '
                     . 'for learnlingo and html homepage modes; irrelevant in moodle mode.'],
@@ -144,6 +187,10 @@ final class update_homepage extends base_tool {
             'mode_after' => $prepared['after']['mode'],
             'fullwidth_before' => $prepared['before']['fullwidth'],
             'fullwidth_after' => $prepared['after']['fullwidth'],
+            'publiccourses_before' => $prepared['before']['publiccourses'],
+            'publiccourses_after' => $prepared['after']['publiccourses'],
+            'publiccoursesperpage_before' => $prepared['before']['publiccoursesperpage'],
+            'publiccoursesperpage_after' => $prepared['after']['publiccoursesperpage'],
             'html_bytes_before' => strlen($prepared['before']['html']),
             'html_bytes_after' => strlen($prepared['after']['html']),
             'homepagescss_bytes_before' => strlen($prepared['before']['homepagescss']),
@@ -170,6 +217,8 @@ final class update_homepage extends base_tool {
             'success' => true,
             'mode' => $current['mode'],
             'fullwidth' => $current['fullwidth'],
+            'publiccourses' => $current['publiccourses'],
+            'publiccoursesperpage' => $current['publiccoursesperpage'],
             'html_bytes' => strlen($current['html']),
             'homepagescss_bytes' => strlen($current['homepagescss']),
             'scss_bytes' => strlen($current['scss']),

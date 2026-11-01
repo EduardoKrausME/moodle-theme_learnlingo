@@ -44,7 +44,12 @@ final class update_styles extends base_tool {
         'homepagemode' => 'Homepage layout: moodle for native Moodle, learnlingo for the theme home, '
             . 'html for a custom home. Independent of footermode.',
         'homepagehtml' => 'HTML above course cards in learnlingo mode or the whole home content in '
-            . 'html mode. Hidden in moodle mode. No scripts or additional html/body wrappers.',
+            . 'html mode. Hidden in moodle mode. ONLY this HTML field supports PHP-rendered '
+            . 'Mustache: {{#isloggedin}}, {{user.firstname}}, {{#courses}} for public courses, '
+            . '{{#mycourses}} for own enrolled courses with {{#hasprogress}} and {{progress}}, '
+            . '{{#cohorts}} for own cohorts. Read the homepage_mustache field from '
+            . 'learnlingo_get_settings first for all variables, examples and cache/privacy rules. '
+            . 'Never hardcode student data or insert scripts, PHP or extra html/body wrappers.',
         'homepagescss' => 'Full SCSS loaded globally on every page, regardless of homepagemode. '
             . 'This includes menus, navbar and footer; use specific homepage selectors for '
             . 'home-only rules. Can be cleared with an empty string after migrating CSS '
@@ -93,6 +98,16 @@ final class update_styles extends base_tool {
             . 'homepagemode, footerhtml, footerscss, footermode, scsspre and scss. '
             . 'homepagescss is compiled globally on every page; footerscss applies '
             . 'only inside the custom HTML footer when footermode=html; scss is global. '
+            . 'Only homepagehtml is rendered as PHP Mustache; use the '
+            . 'homepage_mustache instructions returned by learnlingo_get_settings '
+            . 'to build guest/public course loops and logged-in student progress. '
+            . 'For guest course grids only, use coursepagination.coursecolumns '
+            . 'to adapt to real item counts and coursepagination.coursepages '
+            . 'to show page navigation. The guest page size (1-12) is configured '
+            . 'by homepagepubliccoursesperpage through learnlingo_update_settings '
+            . 'or publiccoursesperpage via learnlingo_update_homepage; do not '
+            . 'limit logged-in enrolled courses. MUC-cached anonymous catalogue '
+            . 'never shares student data. 
             . 'Move CSS from homepagescss to scss and clear homepagescss in ONE confirmed '
             . 'write to avoid duplication. Other fields remain unchanged. '
             . 'Read learnlingo_get_settings first; expected_hash is REQUIRED to '

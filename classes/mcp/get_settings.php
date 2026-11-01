@@ -61,8 +61,16 @@ final class get_settings implements tool_interface {
             . 'scss (global after Boost), independent footermode, footerhtml '
             . 'and footerscss (only inside the HTML footer), traditional footer '
             . 'columns, login/dashboard/course options, shared site logo, login-only logo and favicon. '
-            . 'Returns file metadata and state_hash for learnlingo_update_settings; '
-            . 'include_images also returns small uploaded branding images.';
+            . 'Only homepagehtml supports PHP server-side Mustache: '
+            . '{{#isloggedin}}, {{user.firstname}}, {{#courses}}, '
+            . '{{#mycourses}}, {{#cohorts}} and course progress. The result '
+            . 'homepage_mustache includes AI instructions, all variables, '
+            . 'examples, public course selection, anonymous-only page size '
+            . '(homepagepubliccoursesperpage), responsive columns, pagination, '
+            . 'privacy and caching rules; 
+            . 'follow it when generating the homepage. Returns file metadata '
+            . 'and state_hash for learnlingo_update_settings; include_images '
+            . 'also returns small uploaded branding images.';
     }
 
     /**
@@ -111,6 +119,9 @@ final class get_settings implements tool_interface {
      * @return array Result.
      */
     public function execute(array $arguments, authenticated_identity $identity): array {
-        return settings_service::snapshot(!empty($arguments['include_images']));
+        $result = settings_service::snapshot(!empty($arguments['include_images']));
+        // Send the complete field guide alongside settings, without changing state_hash.
+        $result['homepage_mustache'] = \theme_learnlingo\homepage_context::schema();
+        return $result;
     }
 }

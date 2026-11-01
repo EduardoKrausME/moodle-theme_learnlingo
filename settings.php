@@ -26,7 +26,7 @@ use theme_learnlingo\mcp_banner;
 
 defined('MOODLE_INTERNAL') || die;
 
-global $PAGE, $OUTPUT, $ADMIN, $CFG;
+global $PAGE, $OUTPUT, $ADMIN, $CFG, $DB;
 
 // The admin tree must expose the settings page even when fulltree is false.
 $settings->hidden = false;
@@ -158,6 +158,39 @@ if ($ADMIN->fulltree) {
         1
     );
     $setting->set_updatedcallback("theme_reset_all_caches");
+    $page->add($setting);
+
+    // No selection means all public, visible courses in Moodle's course sort order.
+    $publiccourseoptions = [];
+    foreach ($DB->get_records('course', ['visible' => 1], 'sortorder ASC', 'id,fullname') as $publiccourse) {
+        if ((int)$publiccourse->id === SITEID) {
+            continue;
+        }
+        $publiccourseoptions[$publiccourse->id] = format_string($publiccourse->fullname);
+    }
+    $setting = new admin_setting_configmulticheckbox(
+        "theme_learnlingo/homepagepubliccourses",
+        get_string("homepagepubliccourses", "theme_learnlingo"),
+        get_string("homepagepubliccourses_desc", "theme_learnlingo"),
+        "",
+        $publiccourseoptions
+    );
+    $setting->set_updatedcallback("theme_learnlingo_homepage_cache_reset");
+    $page->add($setting);
+
+    // Limit ONLY the guest-facing {{#courses}} list; student lists are never paginated.
+    $perpageoptions = [];
+    foreach (range(1, 12) as $count) {
+        $perpageoptions[$count] = (string)$count;
+    }
+    $setting = new admin_setting_configselect(
+        "theme_learnlingo/homepagepubliccoursesperpage",
+        get_string("homepagepubliccoursesperpage", "theme_learnlingo"),
+        get_string("homepagepubliccoursesperpage_desc", "theme_learnlingo"),
+        "4",
+        $perpageoptions
+    );
+    $setting->set_updatedcallback("theme_learnlingo_homepage_cache_reset");
     $page->add($setting);
 
     $PAGE->requires->js_call_amd("theme_learnlingo/homepage_settings", "init");
