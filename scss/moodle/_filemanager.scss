@@ -1,0 +1,283 @@
+// Visual-only overrides for Moodle's YUI file manager. Leave behaviour to core.
+.filemanager {
+    .fp-restrictions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: .3rem .8rem;
+        margin-bottom: .65rem !important;
+        color: var(--learnlingo-muted);
+        font-size: .825rem;
+        line-height: 1.5;
+
+        > span:first-child {
+            color: var(--learnlingo-ink);
+            font-weight: 600;
+        }
+
+        .help-icon {
+            display: inline-flex;
+            align-items: center;
+            vertical-align: middle;
+        }
+    }
+
+    .fp-navbar {
+        background: var(--learnlingo-surface);
+        border: 1px solid var(--learnlingo-border);
+        border-radius: 1rem 1rem 0 0;
+        box-shadow: none;
+    }
+
+    .filemanager-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: .6rem 1rem;
+        padding: .75rem .9rem;
+    }
+
+    .fp-toolbar {
+        display: inline-flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: .4rem;
+
+        > div {
+            margin: 0;
+        }
+    }
+
+    .fp-viewbar {
+        display: inline-flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: .25rem;
+        margin-left: auto;
+    }
+
+    .fp-toolbar .btn,
+    .fp-viewbar .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 2.5rem;
+        min-height: 2.5rem;
+        padding: .45rem;
+        border: 1px solid var(--learnlingo-border);
+        border-radius: .625rem !important;
+        background: #FFF;
+        color: var(--learnlingo-ink);
+        box-shadow: none;
+        transform: none;
+
+        .icon,
+        .fa {
+            margin: 0;
+            font-size: 1rem;
+        }
+    }
+
+    .fp-toolbar .btn:hover,
+    .fp-viewbar .btn:hover {
+        background: rgba($primary, .06);
+        border-color: rgba($primary, .4);
+        color: $primary;
+        transform: none;
+    }
+
+    .fp-viewbar .btn.checked,
+    .fp-viewbar .btn.active,
+    .fp-viewbar .btn[aria-pressed="true"] {
+        color: $primary;
+        background: rgba($primary, .1);
+        border-color: rgba($primary, .35);
+        box-shadow: inset 0 0 0 1px rgba($primary, .1);
+    }
+
+    .fp-toolbar .btn:disabled,
+    .fp-toolbar .btn.disabled,
+    .fp-viewbar .btn:disabled,
+    .fp-viewbar .btn.disabled {
+        opacity: .5;
+        box-shadow: none;
+    }
+
+    .fp-toolbar .btn:focus-visible,
+    .fp-viewbar .btn:focus-visible,
+    .fp-path-folder-name:focus-visible,
+    .fp-iconview .fp-file a:focus-visible {
+        outline: 2px solid $primary;
+        outline-offset: 2px;
+    }
+
+    .fp-pathbar {
+        padding: .55rem .9rem;
+        border-top: 1px solid var(--learnlingo-border);
+        background: rgba($primary, .025);
+        font-size: .825rem;
+
+        .fp-path-folder-name {
+            color: $primary;
+            font-weight: 650;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .filemanager-container {
+        min-height: 170px;
+        border: 1px solid var(--learnlingo-border);
+        border-top: 0;
+        border-radius: 0 0 1rem 1rem;
+        background: #FFF;
+        box-shadow: 0 9px 22px rgba(37, 42, 55, .055);
+    }
+
+    // The icon view has cards; Moodle's details and tree views retain their layout.
+    .fp-iconview {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: .75rem;
+        padding: .9rem;
+
+        .fp-file {
+            position: relative;
+            float: none;
+            flex: 0 1 146px;
+            width: 146px;
+            min-width: 0;
+            margin: 0;
+            padding: .7rem .55rem .55rem;
+            border: 1px solid var(--learnlingo-border);
+            border-radius: .875rem;
+            background: var(--learnlingo-surface);
+            transition: border-color .15s ease, background-color .15s ease, box-shadow .15s ease;
+
+            &:hover,
+            &:focus-within {
+                border-color: rgba($primary, .4);
+                background: rgba($primary, .025);
+                box-shadow: 0 5px 14px rgba(37, 42, 55, .07);
+            }
+
+            &.selected,
+            &.fp-selected {
+                border-color: $primary;
+                background: rgba($primary, .06);
+            }
+
+            > a:first-child {
+                border-radius: .6rem;
+            }
+        }
+
+        .fp-thumbnail {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto .5rem;
+            border: 1px solid var(--learnlingo-border);
+            border-radius: .65rem;
+            background: rgba($primary, .035);
+
+            img {
+                max-width: 100%;
+                max-height: 100%;
+                width: auto;
+                height: auto;
+                object-fit: contain;
+                border-radius: .35rem;
+            }
+        }
+
+        .fp-filename-field {
+            max-width: 100%;
+            margin-top: .15rem;
+            text-align: center;
+        }
+
+        .fp-filename {
+            max-width: 100%;
+            margin: 0 auto;
+            color: var(--learnlingo-ink);
+            font-size: .8rem;
+            font-weight: 650;
+            line-height: 1.4;
+        }
+
+        .fp-contextmenu {
+            position: absolute;
+            top: .35rem;
+            right: .35rem;
+            z-index: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.85rem;
+            height: 1.85rem;
+            margin: 0;
+            padding: 0;
+            border-radius: 50%;
+            background: #FFF;
+            color: var(--learnlingo-ink);
+            box-shadow: 0 2px 8px rgba(37, 42, 55, .08);
+
+            .icon,
+            .fa {
+                margin: 0;
+            }
+
+            &:hover {
+                color: $primary;
+                background: rgba($primary, .09);
+            }
+        }
+    }
+
+    // Do not change display or availability: the core controls drag-and-drop.
+    .dndupload-target {
+        border: 2px dashed rgba($primary, .55);
+        border-radius: .9rem;
+        background: rgba($primary, .075);
+        color: $primary;
+    }
+
+    .fm-empty-container .dndupload-message {
+        color: var(--learnlingo-muted);
+        font-size: .9rem;
+    }
+
+    .filemanager-loading,
+    .filemanager-updating,
+    .fp-img-downloading,
+    .dndupload-uploadinprogress {
+        color: $primary;
+    }
+
+    @media (max-width: 575.98px) {
+        .filemanager-toolbar {
+            gap: .6rem;
+            padding: .65rem;
+        }
+
+        .fp-viewbar {
+            margin-left: 0;
+        }
+
+        .fp-iconview {
+            gap: .5rem;
+            padding: .6rem;
+
+            .fp-file {
+                flex-basis: 136px;
+                width: 136px;
+            }
+        }
+    }
+}
