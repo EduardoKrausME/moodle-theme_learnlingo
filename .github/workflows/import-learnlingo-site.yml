@@ -43,6 +43,7 @@ jobs:
           fi
           mkdir -p docs
           rsync -a --delete "$mirror_dir/" docs/
+          python3 .github/scripts/strip-cf-injection.py
           touch docs/.nojekyll
           printf "Mirrored files:\n"
           find docs -type f -printf '%P (%s bytes)\n' | sort
