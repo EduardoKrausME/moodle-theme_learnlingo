@@ -67,26 +67,41 @@ foreach ($palettes as $key => $colours) {
 $currentmode = (string)(get_config('theme_learnlingo', 'homepagemode') ?: 'learnlingo');
 $currentfooter = (string)(get_config('theme_learnlingo', 'footermode') ?: 'moodle');
 
-if (optional_param('action', '', PARAM_ALPHA) !== '') {
-    require_sesskey();
+// Installing a theme is not the same as selecting it as the site's theme.
+// Do not silently change the active site theme when LearnLingo was installed.
+$themeactive = ($CFG->theme ?? '') === 'learnlingo';
+$adminurl = new moodle_url('/' . ($CFG->admin ?? 'admin') . '/index.php');
+
+$action = optional_param('action', '', PARAM_ALPHA);
+if ($action !== '') {
     if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
         throw new moodle_exception('invalidrequest', 'error');
     }
+    require_sesskey();
 
-    $action = required_param('action', PARAM_ALPHA);
     if ($action === 'skip') {
         set_config('setup_pending', 0, 'theme_learnlingo');
-        redirect(new moodle_url('/admin/index.php'));
+        redirect($adminurl);
     }
-    if ($action !== 'save') {
+    if ($action === 'activate') {
+        // Only the explicit activation button can change the site's theme.
+        if (!$themeactive) {
+            set_config('theme', 'learnlingo');
+            theme_reset_all_caches();
+        }
+        redirect($url);
+    }
+    if ($action !== 'save' || !$themeactive) {
         throw new moodle_exception('invalidrequest', 'error');
     }
 
     $palette = required_param('palette', PARAM_ALPHANUMEXT);
-    $mode = required_param('homepagemode', PARAM_ALPHA);
+    // A site using the custom HTML homepage may keep that mode unchanged.
+    // The wizard offers exactly two illustrated choices without deleting HTML.
+    $mode = optional_param('homepagemode', '', PARAM_ALPHA);
     $footermode = required_param('footermode', PARAM_ALPHA);
     if (($palette !== 'preserve' && !array_key_exists($palette, $palettes))
-            || !in_array($mode, ['learnlingo', 'moodle', 'html'], true)
+            || !in_array($mode, ['', 'learnlingo', 'moodle'], true)
             || !in_array($footermode, ['moodle', 'html'], true)) {
         throw new invalid_parameter_exception('Unknown LearnLingo colour palette or layout');
     }
@@ -97,8 +112,11 @@ if (optional_param('action', '', PARAM_ALPHA) !== '') {
             set_config($field, $palettes[$palette][$index], 'theme_learnlingo');
         }
     }
-    // Do not touch HTML, SCSS, uploaded images, texts or any unselected field.
-    set_config('homepagemode', $mode, 'theme_learnlingo');
+    // Keep existing HTML homepage mode when neither illustrated option was selected.
+    if ($mode !== '') {
+        set_config('homepagemode', $mode, 'theme_learnlingo');
+    }
+    // Do not touch HTML, SCSS, uploaded images, texts or other unselected fields.
     set_config('footermode', $footermode, 'theme_learnlingo');
     foreach (['homepagefullwidth', 'showdashboardhero', 'showcoursehero'] as $field) {
         set_config($field, optional_param($field, 0, PARAM_BOOL), 'theme_learnlingo');
@@ -108,13 +126,29 @@ if (optional_param('action', '', PARAM_ALPHA) !== '') {
     redirect(new moodle_url($url, ['saved' => 1]));
 }
 
+$PAGE->requires->css(new moodle_url('/theme/learnlingo/styles/setup.css'));
+
+if (!$themeactive) {
+    // This page is intentionally the first step when a different theme is active.
+    echo $OUTPUT->header();
+    echo $OUTPUT->render_from_template('theme_learnlingo/setup_activate', [
+        'actionurl' => $url->out(false),
+        'sesskey' => sesskey(),
+        'currenttheme' => format_string($CFG->theme ?? 'boost'),
+    ]);
+    echo $OUTPUT->footer();
+    return;
+}
+
 $layouts = [];
-foreach (['learnlingo', 'moodle', 'html'] as $mode) {
+foreach (['learnlingo', 'moodle'] as $mode) {
     $layouts[] = [
         'value' => $mode,
         'label' => get_string('setuplayout' . $mode, 'theme_learnlingo'),
         'description' => get_string('setuplayoutdesc' . $mode, 'theme_learnlingo'),
         'selected' => $currentmode === $mode,
+        'islearnlingo' => $mode === 'learnlingo',
+        'ismoodle' => $mode === 'moodle',
     ];
 }
 $footers = [];
@@ -127,7 +161,7 @@ foreach (['moodle', 'html'] as $mode) {
     ];
 }
 
-$PAGE->requires->css(new moodle_url('/theme/learnlingo/styles/setup.css'));
+$PAGE->requires->js_call_amd('theme_learnlingo/branding_json', 'init');
 
 echo $OUTPUT->header();
 echo $OUTPUT->render_from_template('theme_learnlingo/setup', [
@@ -142,6 +176,11 @@ echo $OUTPUT->render_from_template('theme_learnlingo/setup', [
     'coursehero' => (bool)(get_config('theme_learnlingo', 'showcoursehero') ?? true),
     'mcpinstalled' => get_config('local_mcp', 'version') !== false,
     'mcpurl' => 'https://github.com/EduardoKrausME/moodle-local_mcp',
+    'chatgpturl' => 'https://chatgpt.com/',
+    'jsonurl' => (new moodle_url('/theme/learnlingo/admin/branding_json.php'))->out(false),
+    'prompt' => \\theme_learnlingo\\branding_exchange::prompt(
+        \\theme_learnlingo\\branding_exchange::export()),
+    'customhtmlmode' => $currentmode === 'html',
     'advancedurl' => (new moodle_url('/admin/settings.php',
         ['section' => 'theme_learnlingo_branding']))->out(false),
     'homeurl' => (new moodle_url('/'))->out(false),
