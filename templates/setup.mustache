@@ -1,6 +1,6 @@
 {{!
     @template theme_learnlingo/setup
-    Four or five independently saved setup steps, with an optional student step.
+    Four to six independently saved steps; Dark Mode installation is optional.
 }}
 <div class="ll-setup ll-setup-wizard">
     <header class="ll-setup-wizard__top">
@@ -20,7 +20,7 @@
             aria-label="{{#str}}setupwizardprogresslabel, theme_learnlingo{{/str}}">
             <span style="width: {{progress}}%;"></span>
         </div>
-        <ol class="ll-setup-wizard__steps {{#foursteps}}ll-setup-wizard__steps--four{{/foursteps}} {{#fivesteps}}ll-setup-wizard__steps--five{{/fivesteps}}">
+        <ol class="ll-setup-wizard__steps {{#foursteps}}ll-setup-wizard__steps--four{{/foursteps}} {{#fivesteps}}ll-setup-wizard__steps--five{{/fivesteps}} {{#sixsteps}}ll-setup-wizard__steps--six{{/sixsteps}}">
             {{#steps}}
                 <li class="{{#current}}is-current{{/current}} {{#done}}is-complete{{/done}} {{^available}}is-locked{{/available}}">
                     {{#available}}
@@ -623,6 +623,33 @@
                 rows="3" readonly spellcheck="false">{{prompt}}</textarea>
         </aside>
             {{/steplogin}}
+            {{#stepdark}}
+        <section class="ll-setup-section ll-setup-dark" id="ll-setup-dark"
+            aria-labelledby="ll-setup-dark-heading">
+            <div class="ll-setup-section__heading">
+                <span class="ll-setup-number">{{step}}</span>
+                <div>
+                    <h3 id="ll-setup-dark-heading">{{#str}}darkmodeheading, theme_learnlingo{{/str}}</h3>
+                    <p>{{#str}}darkmodeintro, theme_learnlingo{{/str}}</p>
+                </div>
+            </div>
+            <div class="ll-setup-dark__benefits">
+                <p>{{#str}}darkmodebenefitcomfort, theme_learnlingo{{/str}}</p>
+                <p>{{#str}}darkmodebenefitchoice, theme_learnlingo{{/str}}</p>
+                <p>{{#str}}darkmodebenefitcompat, theme_learnlingo{{/str}}</p>
+            </div>
+            <p class="ll-setup-dark__help">{{#str}}darkmodeoptional, theme_learnlingo{{/str}}</p>
+            {{^darkcodeavailable}}
+                <p class="ll-setup-dark__help">{{#str}}darkmodemissingcode, theme_learnlingo{{/str}}
+                    <a href="https://github.com/EduardoKrausME/moodle-local_boost_dark"
+                       target="_blank" rel="noopener noreferrer">local_boost_dark</a>
+                </p>
+            {{/darkcodeavailable}}
+            <button type="submit" form="ll-boost-dark-install" class="btn btn-secondary">
+                {{#str}}darkmodeinstall, theme_learnlingo{{/str}}
+            </button>
+        </section>
+            {{/stepdark}}
 
             <div class="ll-setup-wizard__actions">
                 <div class="ll-setup-wizard__actions-left">
@@ -641,5 +668,15 @@
                 </button>
             </div>
         </form>
+        {{#stepdark}}
+            {{! The installer is a separate POST form, never nested inside the wizard. }}
+            <form id="ll-boost-dark-install" method="post" action="{{{darkinstallurl}}}">
+                <input type="hidden" name="cache" value="0">
+                <input type="hidden" name="confirmrelease" value="1">
+                <input type="hidden" name="confirmplugincheck" value="0">
+                <input type="hidden" name="installdep" value="local_boost_dark">
+                <input type="hidden" name="sesskey" value="{{sesskey}}">
+            </form>
+        {{/stepdark}}
     {{/done}}
 </div>

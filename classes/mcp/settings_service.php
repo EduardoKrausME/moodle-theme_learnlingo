@@ -98,6 +98,9 @@ final class settings_service {
             $images[$area] = ['uploaded' => $metadata];
         }
         $data['images'] = $images;
+        // Inform MCP clients about the site-wide preference without treating
+        // an optional plugin's state as an editable LearnLingo JSON field.
+        $data['dark_mode'] = \theme_learnlingo\dark_mode::status();
         $data['state_hash'] = hash('sha256', json_encode(
             [$data['settings'], $hashimages],
             JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR

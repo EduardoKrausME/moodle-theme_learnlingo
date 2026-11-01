@@ -67,10 +67,12 @@ final class get_settings implements tool_interface {
             . 'homepage_mustache includes AI instructions, all variables, '
             . 'examples, public course selection, anonymous-only page size '
             . '(homepagepubliccoursesperpage), responsive columns, pagination, '
-            . 'privacy and caching rules; 
+            . 'privacy and caching rules; '
             . 'follow it when generating the homepage. Returns file metadata '
             . 'and state_hash for learnlingo_update_settings; include_images '
-            . 'also returns small uploaded branding images.';
+            . 'also returns small uploaded branding images. '
+            . 'Also returns dark_mode status for optional local_boost_dark: '
+            . 'custom CSS and HTML must support both [data-bs-theme="dark"] and light mode.';
     }
 
     /**

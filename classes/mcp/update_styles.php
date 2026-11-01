@@ -67,7 +67,8 @@ final class update_styles extends base_tool {
         'scsspre' => 'Global SCSS inserted before Boost/Bootstrap for Sass variables '
             . 'and compile-time settings.',
         'scss' => 'Global SCSS inserted after Boost/Bootstrap and applied to every page '
-            . 'in all homepage and footer modes.',
+            . 'in all homepage and footer modes. For local_boost_dark compatibility, '
+            . 'include [data-bs-theme="dark"] overrides and check text contrast.',
     ];
 
     /**

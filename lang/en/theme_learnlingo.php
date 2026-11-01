@@ -375,3 +375,17 @@ $string['showwelcome'] = 'Show welcome greeting';
 $string['showwelcome_desc'] = 'Display the personalised greeting on the LearnLingo homepage and enabled Dashboard / My courses pages. Does not enable these Moodle pages.';
 $string['textcolor'] = 'Text colour';
 $string['textcolor_desc'] = 'Main text and heading colour.';
+
+$string['darkmodetab'] = 'Dark Mode';
+$string['darkmodeheading'] = 'Offer a comfortable Dark Mode';
+$string['darkmodeintro'] = 'LearnLingo supports the optional local_boost_dark plugin, allowing students and teachers to choose a lighter or darker interface without changing the institutional identity.';
+$string['darkmodebenefitcomfort'] = 'Comfortable reading in dim environments with dark surfaces and readable text.';
+$string['darkmodebenefitchoice'] = 'Each user can choose light or dark appearance independently.';
+$string['darkmodebenefitcompat'] = 'LearnLingo cards, course pages, Dashboard and setup adapt automatically to the dark attribute.';
+$string['darkmodeoptional'] = 'Optional integration. You may complete setup without installing this plugin; installation and activation remain under Moodle administrator control.';
+$string['darkmodemissingcode'] = 'If the plugin files are not yet on this server, deploy the plugin first or consult its repository:';
+$string['darkmodeinstall'] = 'Install Dark Mode';
+$string['darkmodeinstalled'] = 'The local_boost_dark plugin is installed.';
+$string['darkmodeenabled'] = 'Dark Mode is enabled; each user\'s preference controls the appearance.';
+$string['darkmodedisabled'] = 'The plugin is installed but currently disabled. Enable it in the local_boost_dark administration settings.';
+$string['setupsteplabel6'] = 'Dark Mode';

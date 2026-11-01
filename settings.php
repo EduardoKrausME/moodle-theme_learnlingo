@@ -418,6 +418,24 @@ if ($ADMIN->fulltree) {
 
     $settings->add($page);
 
+    // Integrate the optional Dark Mode plugin without making it a dependency.
+    $page = new admin_settingpage(
+        "theme_learnlingo_darkmode",
+        get_string('darkmodetab', 'theme_learnlingo')
+    );
+    $page->add(new admin_setting_heading(
+        'theme_learnlingo/darkmodeintegration',
+        '',
+        $OUTPUT->render_from_template('theme_learnlingo/darkmode_settings', [
+            'installed' => \theme_learnlingo\dark_mode::installed(),
+            'enabled' => \theme_learnlingo\dark_mode::enabled(),
+            'codeavailable' => \theme_learnlingo\dark_mode::code_available(),
+            'installurl' => \theme_learnlingo\dark_mode::install_url()->out(false),
+            'sesskey' => sesskey(),
+        ])
+    ));
+    $settings->add($page);
+
     $page = new admin_settingpage(
         "theme_learnlingo_advanced",
         get_string("scsssettings", "theme_learnlingo")
