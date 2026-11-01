@@ -87,6 +87,9 @@ for tag, value, source in all_links:
 for fragment in ("conteudo", "experiencia", "sua-marca", "mcp", "comecar"):
     if fragment not in ids:
         errors.append(f"Main section id missing: {fragment}")
+if "__CF$cv$params" in html or "/cdn-cgi/challenge-platform/" in html:
+    errors.append("Cloudflare injected challenge code must not be included in the GitHub Pages copy")
+
 for selector in ('id="theme-toggle"', 'data-language="pt"', 'data-language="en"',
                  'data-screen="home"', 'data-screen="course"', 'data-screen="login"'):
     if selector not in html:
