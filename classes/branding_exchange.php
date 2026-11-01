@@ -57,6 +57,7 @@ final class branding_exchange {
             'homepagehtml' => ['html', ''],
             'homepagescss' => ['scss', ''],
             'homepagefullwidth' => ['bool', true],
+            'homepagepubliccourses' => ['courseids', ''],
             'footermode' => ['footermode', 'moodle'],
             'footerhtml' => ['html', ''],
             'footerscss' => ['scss', ''],
@@ -206,6 +207,16 @@ Homepage:
   navigation or footer changes. Do NOT nest its entire stylesheet in
   a frontpage selector, and do NOT use bare "&" as its root.
   Example selectors: .learnlingo-html-home .hero, .navbar, #page-footer.
+- settings.homepagepubliccourses: comma-separated course IDs for the public
+  {{#courses}} loop in homepagehtml for logged-out visitors. An empty
+  string means all visible, accessible courses in Moodle sort order.
+  Never reveal hidden courses or change course access permissions.
+- homepagehtml supports PHP-rendered Mustache sections and loops: use
+  {{#isloggedin}}, {{user.firstname}}, {{#mycourses}}, {{#courses}},
+  {{#cohorts}}, {{progress}} and {{imageurl}} inside a course loop.
+  The values represent the current visitor only; do not hardcode names,
+  course IDs, enrolments or progress in generated HTML. The complete
+  variable reference is in learnlingo_get_homepage.mustache.
 - settings.homepagefullwidth: boolean controlling whether the LearnLingo
   or custom HTML homepage uses the full available width. Not relevant
   to the native "moodle" homepage.
@@ -343,7 +354,8 @@ PROMPT;
                     self::invalid_field($name);
                 }
                 $limits = ['color' => 7, 'text' => 1500, 'homepage' => 20,
-                    'footermode' => 6, 'html' => 150000, 'scss' => 80000];
+                    'footermode' => 6, 'html' => 150000, 'scss' => 80000,
+                    'courseids' => 8000];
                 if (strlen($value) > $limits[$type]) {
                     self::invalid_field($name);
                 }
@@ -351,6 +363,10 @@ PROMPT;
                     self::invalid_field($name);
                 }
                 if ($type === 'homepage' && !in_array($value, ['learnlingo', 'moodle', 'html'], true)) {
+                    self::invalid_field($name);
+                }
+                if ($type === 'courseids' && $value !== '' &&
+                        !preg_match('/^[1-9][0-9]*(,[1-9][0-9]*)*$/D', $value)) {
                     self::invalid_field($name);
                 }
                 if ($type === 'footermode' && !in_array($value, ['moodle', 'html'], true)) {
@@ -401,6 +417,7 @@ PROMPT;
             $value = $data['settings'][$name];
             set_config($name, $type === 'bool' ? (int) $value : $value, 'theme_learnlingo');
         }
+        \theme_learnlingo\homepage_context::purge_public_cache();
         theme_reset_all_caches();
     }
 
