@@ -50,14 +50,27 @@ final class homepage_context {
         }
 
         // Moodle 4.5 ships Mustache_Engine; newer releases use Mustache\Engine.
+        if (!class_exists(\Mustache\Engine::class) && !class_exists(\Mustache_Engine::class)) {
+            global $CFG;
+            require_once($CFG->libdir . '/mustache/src/Mustache/Autoloader.php');
+            \Mustache_Autoloader::register();
+        }
         $engineclass = class_exists(\Mustache\Engine::class) ? \Mustache\Engine::class : \Mustache_Engine::class;
         $engine = new $engineclass([
             // The context is already escaped so triple braces are safe too.
             'escape' => static function($value): string {
                 return (string)$value;
             },
+            // Compiled Mustache templates are keyed by source and theme revision.
+            'cache' => make_localcache_directory('mustache/learnlingo-home/' . theme_get_revision()),
         ]);
-        return $engine->render($html, self::data());
+        try {
+            return $engine->render($html, self::data());
+        } catch (\Throwable $exception) {
+            debugging('Invalid LearnLingo homepage Mustache: ' . $exception->getMessage(), DEBUG_DEVELOPER);
+            // Preserve the legacy HTML instead of breaking the whole homepage.
+            return $html;
+        }
     }
 
     /**
