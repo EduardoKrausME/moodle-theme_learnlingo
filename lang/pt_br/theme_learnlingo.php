@@ -191,3 +191,6 @@ $string['homepagescss'] = 'SCSS da página inicial';
 $string['homepagescss_desc'] = 'Estilos aplicados em todo o site, independentemente do modo da home, inclusive para personalizar a navbar e o rodapé. Use seletores CSS/SCSS completos, como :root, body, nav ou #page-footer; nenhum seletor da home é adicionado automaticamente.';
 $string['footerscss'] = 'SCSS do rodapé';
 $string['footerscss_desc'] = 'Estilos exclusivos do rodapé no modo HTML. Aceita seletores CSS como #page-footer (ajustados automaticamente ao rodapé HTML), além de SCSS aninhado e seletores relativos.';
+
+$string['publiccourses'] = 'Cursos exibidos para visitantes';
+$string['publiccourses_desc'] = 'Escolha os cursos visíveis que aparecerão para visitantes na home LearnLingo. Deixe vazio para mostrar todos os cursos acessíveis na ordem definida no Moodle. A seleção também é aplicada ao catálogo público da API; os modos HTML personalizado e Moodle nativo não são alterados automaticamente.';
