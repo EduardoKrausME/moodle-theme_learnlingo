@@ -39,6 +39,7 @@ final class home_service {
         'homepagescss' => 'homepagescss',
         'fullwidth' => 'homepagefullwidth',
         'publiccourses' => 'homepagepubliccourses',
+        'publiccoursesperpage' => 'homepagepubliccoursesperpage',
         'scss' => 'scss', // Legacy global SCSS: keep compatible with existing clients.
     ];
 
