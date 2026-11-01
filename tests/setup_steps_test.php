@@ -35,20 +35,27 @@ final class setup_steps_test extends \advanced_testcase {
      */
     public function test_optional_step_follows_moodle_navigation(): void {
         $cfg = (object)['enabledashboard' => 0, 'enablemycourses' => 0];
-        $this->assertSame(3, setup_steps::count($cfg));
-        $this->assertSame(3, setup_steps::next($cfg, 3));
+        // Both personal pages disabled: three base steps plus Login at 4.
+        $this->assertFalse(setup_steps::student_enabled($cfg));
+        $this->assertSame(4, setup_steps::count($cfg));
+        $this->assertSame(4, setup_steps::login_step($cfg));
+        $this->assertSame(4, setup_steps::next($cfg, 3));
 
         $cfg->enabledashboard = 1;
-        $this->assertSame(4, setup_steps::count($cfg));
+        $this->assertTrue(setup_steps::student_enabled($cfg));
+        $this->assertSame(5, setup_steps::count($cfg));
+        $this->assertSame(5, setup_steps::login_step($cfg));
         $this->assertSame(4, setup_steps::next($cfg, 3));
+        $this->assertSame(5, setup_steps::next($cfg, 4));
 
         $cfg->enabledashboard = 0;
         $cfg->enablemycourses = 1;
-        $this->assertSame(4, setup_steps::count($cfg));
+        $this->assertTrue(setup_steps::student_enabled($cfg));
+        $this->assertSame(5, setup_steps::count($cfg));
 
         $cfg->enabledashboard = 1;
-        $this->assertSame(4, setup_steps::count($cfg));
-        $this->assertSame(4, setup_steps::next($cfg, 4));
+        $this->assertSame(5, setup_steps::count($cfg));
+        $this->assertSame(5, setup_steps::next($cfg, 5));
 
         $cfg = new \stdClass();
         $this->assertTrue(setup_steps::dashboard_enabled($cfg));
