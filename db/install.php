@@ -34,6 +34,21 @@
 function xmldb_theme_learnlingo_install(): void {
     global $CFG;
 
+    // Save all configurable defaults at installation time so the Moodle
+    // upgrade wizard does not prompt for dozens of unchanged theme settings.
+    // One source of truth: the same definitions used by JSON/MCP imports.
+    foreach (\theme_learnlingo\branding_exchange::definitions() as $name => [$type, $default]) {
+        if (get_config('theme_learnlingo', $name) !== false) {
+            continue;
+        }
+        set_config($name, $type === 'bool' ? (int)$default : $default, 'theme_learnlingo');
+    }
+
+    // Only a fresh installation should open the onboarding wizard.
+    if (get_config('theme_learnlingo', 'setup_pending') === false) {
+        set_config('setup_pending', 1, 'theme_learnlingo');
+    }
+
     $source = "{$CFG->dirroot}/theme/learnlingo/pix/default-logo.png";
     if (file_exists($source)) {
         $context = context_system::instance();
@@ -97,6 +112,20 @@ function xmldb_theme_learnlingo_install(): void {
             }
 
             set_config("loginbackgroundimage", $file->get_filepath() . $file->get_filename(), "theme_boost");
+        }
+    }
+
+    // File settings also have persisted empty defaults when no file is present.
+    // The logo and login background above are seeded first; neither is replaced.
+    foreach ([
+        'core_admin' => ['logo', 'favicon'],
+        'theme_boost' => ['loginbackgroundimage'],
+        'theme_learnlingo' => ['loginlogo'],
+    ] as $component => $fields) {
+        foreach ($fields as $field) {
+            if (get_config($component, $field) === false) {
+                set_config($field, '', $component);
+            }
         }
     }
 }

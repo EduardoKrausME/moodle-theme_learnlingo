@@ -1,0 +1,44 @@
+{{!
+    @template theme_learnlingo/setup_activate
+    Confirmation required before changing the site's active theme.
+}}
+<div class="ll-setup ll-setup-activation">
+    <div class="ll-setup-activation__panel">
+        <div class="ll-setup-activation__content">
+            <span class="ll-setup-kicker">{{#str}}setupactivationbadge, theme_learnlingo{{/str}}</span>
+            <h2>{{#str}}setupactivationheading, theme_learnlingo{{/str}}</h2>
+            <p>{{#str}}setupactivationintro, theme_learnlingo{{/str}}</p>
+            <div class="ll-setup-activation__current">
+                <span>{{#str}}setupactivationcurrent, theme_learnlingo{{/str}}</span>
+                <strong>{{currenttheme}}</strong>
+            </div>
+            {{#activationfailed}}
+                <div class="alert alert-warning" role="alert">
+                    {{#str}}setupactivationfailed, theme_learnlingo{{/str}}
+                </div>
+            {{/activationfailed}}
+            <p class="ll-setup-activation__note">{{#str}}setupactivationnote, theme_learnlingo{{/str}}</p>
+            <form action="{{actionurl}}" method="post" class="ll-setup-activation__actions">
+                <input type="hidden" name="sesskey" value="{{sesskey}}">
+                <button type="submit" class="btn btn-primary" name="action" value="activate">
+                    {{#str}}setupactivationyes, theme_learnlingo{{/str}}
+                </button>
+                <button type="submit" class="btn btn-outline-secondary" name="action" value="skip">
+                    {{#str}}setupactivationno, theme_learnlingo{{/str}}
+                </button>
+            </form>
+        </div>
+        <div class="ll-setup-activation__illustration" aria-hidden="true">
+            <div class="ll-setup-activation__browser">
+                <div class="ll-setup-activation__browserbar"><i></i><i></i><i></i><strong>LearnLingo</strong></div>
+                <div class="ll-setup-activation__preview">
+                    <div class="ll-setup-activation__side"></div>
+                    <div class="ll-setup-activation__main">
+                        <span></span><b></b><i></i>
+                        <div><em></em><em></em><em></em></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

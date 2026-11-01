@@ -71,9 +71,10 @@ class course_renderer extends core_course_renderer {
         }
 
         [$courses, $isenrolledlist] = $this->getfrontpagecourses();
+        // Welcome content is independent of the Dashboard hero layout setting.
         $showwelcome = isloggedin() && !isguestuser()
-            && (!isset($this->page->theme->settings->showdashboardhero)
-                || !empty($this->page->theme->settings->showdashboardhero));
+            && (!isset($this->page->theme->settings->showwelcome)
+                || !empty($this->page->theme->settings->showwelcome));
         $coursecards = [];
         $tone = 1;
 

@@ -40,20 +40,28 @@ use theme_learnlingo\mcp\update_footer;
  * @covers \theme_learnlingo\mcp\update_footer
  */
 final class mcp_footer_test extends advanced_testcase {
-    /** Skip when optional integration is not installed. */
+    /**
+     * Skip when optional integration is not installed.
+     */
     private function require_mcp(): void {
         if (!core_component::get_component_directory('local_mcp')) {
             $this->markTestSkipped('This integration requires local_mcp.');
         }
     }
 
-    /** @return authenticated_identity Administrator for MCP tool tests. */
+    /**
+     * Administrator for MCP tool tests.
+     *
+     * @return authenticated_identity
+     */
     private function identity(): authenticated_identity {
         $this->setAdminUser();
         return new authenticated_identity((int)get_admin()->id, 'test', ['mcp:read', 'mcp:write']);
     }
 
-    /** Every one of the thirteen footer fields is represented in the schema. */
+    /**
+     * Every one of the thirteen footer fields is represented in the schema.
+     */
     public function test_footer_schema_exposes_all_thirteen_fields(): void {
         $this->require_mcp();
         $provider = new provider();
@@ -83,7 +91,9 @@ final class mcp_footer_test extends advanced_testcase {
         $this->assertSame([], array_values(array_filter($issues, static fn($issue): bool => !$issue['repaired'])));
     }
 
-    /** A patch can update the entire footer and preserve unrelated settings. */
+    /**
+     * A patch can update the entire footer and preserve unrelated settings.
+     */
     public function test_footer_write_roundtrip_preserves_unrelated_settings(): void {
         $this->require_mcp();
         $this->resetAfterTest();
@@ -122,7 +132,9 @@ final class mcp_footer_test extends advanced_testcase {
         $this->assertSame($before['settings']['scss'], $after['settings']['scss']);
     }
 
-    /** Switching footer mode must retain the old columns and custom HTML. */
+    /**
+     * Switching footer mode must retain the old columns and custom HTML.
+     */
     public function test_footer_mode_switch_preserves_inactive_values(): void {
         $this->require_mcp();
         $this->resetAfterTest();
@@ -143,7 +155,9 @@ final class mcp_footer_test extends advanced_testcase {
         $this->assertSame('Existing', $after['settings']['footer_title_1']);
     }
 
-    /** The writer requires a fresh hash and rejects unrelated settings. */
+    /**
+     * The writer requires a fresh hash and rejects unrelated settings.
+     */
     public function test_footer_write_rejects_missing_or_stale_hash_and_other_keys(): void {
         $this->require_mcp();
         $this->resetAfterTest();
@@ -168,7 +182,9 @@ final class mcp_footer_test extends advanced_testcase {
             'expected_hash' => $before['state_hash']], $identity);
     }
 
-    /** Invalid colors and scripts must be rejected by the common importer. */
+    /**
+     * Invalid colors and scripts must be rejected by the common importer.
+     */
     public function test_footer_write_rejects_unsafe_html(): void {
         $this->require_mcp();
         $this->resetAfterTest();
@@ -181,7 +197,9 @@ final class mcp_footer_test extends advanced_testcase {
         ], $identity);
     }
 
-    /** Invalid colors must be rejected before writing. */
+    /**
+     * Invalid colors must be rejected before writing.
+     */
     public function test_footer_write_rejects_invalid_color(): void {
         $this->require_mcp();
         $this->resetAfterTest();

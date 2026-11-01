@@ -205,5 +205,8 @@ function theme_learnlingo_homepage_mode(theme_config $theme): string {
  * @return string
  */
 function theme_learnlingo_homepage_html(theme_config $theme): string {
-    return $theme->settings->homepagehtml ?? '';
+    $html = (string) ($theme->settings->homepagehtml ?? '');
+    // Fresh installations store this exact sentinel to open the visual wizard
+    // for administrators. Never expose it as literal homepage content.
+    return $html === 'config' ? '' : $html;
 }

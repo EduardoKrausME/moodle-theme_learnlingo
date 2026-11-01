@@ -54,11 +54,22 @@ if ($ADMIN->fulltree) {
         ));
     }
 
+    // Accessible after installation as well as during first-run onboarding.
+    $page->add(new admin_setting_heading(
+        'theme_learnlingo/visualsetuplink',
+        '',
+        $OUTPUT->render_from_template('theme_learnlingo/branding_admin_link', [
+            'description' => get_string('setupsettingsdesc', 'theme_learnlingo'),
+            'url' => (new moodle_url('/theme/learnlingo/admin/setup.php'))->out(false),
+            'label' => get_string('setupsettingslink', 'theme_learnlingo'),
+        ])
+    ));
+
     $colors = [
         "brandcolor" => "#58cc02",
         "accentcolor" => "#8be24a",
         "canvascolor" => "#f7faf5",
-        "textcolor" => "#263238"
+        "textcolor" => "#263238",
     ];
     foreach ($colors as $name => $default) {
         $setting = new admin_setting_configcolourpicker(
@@ -120,7 +131,7 @@ if ($ADMIN->fulltree) {
         "theme_learnlingo/homepagehtml",
         get_string("homepagehtml", "theme_learnlingo"),
         get_string("homepagehtml_desc", "theme_learnlingo"),
-        "",
+        "config",
         PARAM_RAW,
         "90",
         "18"
@@ -262,6 +273,15 @@ if ($ADMIN->fulltree) {
         "theme_learnlingo/showdashboardhero",
         get_string("showdashboardhero", "theme_learnlingo"),
         get_string("showdashboardhero_desc", "theme_learnlingo"),
+        1
+    );
+    $setting->set_updatedcallback("theme_reset_all_caches");
+    $page->add($setting);
+
+    $setting = new admin_setting_configcheckbox(
+        "theme_learnlingo/showwelcome",
+        get_string("showwelcome", "theme_learnlingo"),
+        get_string("showwelcome_desc", "theme_learnlingo"),
         1
     );
     $setting->set_updatedcallback("theme_reset_all_caches");

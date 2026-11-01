@@ -37,7 +37,9 @@ use theme_learnlingo\branding_exchange;
  * Reuses settings_service to keep validation and concurrency behavior in one place.
  */
 final class update_styles extends base_tool {
-    /** Explicit names exposed in the MCP schema, in display order. */
+    /**
+     * Explicit names exposed in the MCP schema, in display order.
+     */
     private const FIELDS = [
         'homepagemode' => 'Homepage layout: moodle for native Moodle, learnlingo for the theme home, '
             . 'html for a custom home. Independent of footermode.',
@@ -63,17 +65,29 @@ final class update_styles extends base_tool {
             . 'in all homepage and footer modes.',
     ];
 
-    /** @return string Tool identifier. */
+    /**
+     * Tool identifier.
+     *
+     * @return string
+     */
     public function get_name(): string {
         return 'learnlingo_update_styles';
     }
 
-    /** @return string Tool title. */
+    /**
+     * Tool title.
+     *
+     * @return string
+     */
     public function get_title(): string {
         return 'Update LearnLingo HTML and SCSS';
     }
 
-    /** @return string Description available to MCP clients. */
+    /**
+     * Description available to MCP clients.
+     *
+     * @return string
+     */
     public function get_description(): string {
         return 'Atomically update any subset of LearnLingo homepagehtml, homepagescss, '
             . 'homepagemode, footerhtml, footerscss, footermode, scsspre and scss. '
@@ -86,7 +100,11 @@ final class update_styles extends base_tool {
             . 'explicit confirmation before applying.';
     }
 
-    /** @return array JSON schema. */
+    /**
+     * JSON schema.
+     *
+     * @return array
+     */
     public function get_input_schema(): array {
         $definitions = branding_exchange::definitions();
         $properties = [];
@@ -119,12 +137,18 @@ final class update_styles extends base_tool {
         ]);
     }
 
-    /** @return string Required administrator capability. */
+    /**
+     * Required administrator capability.
+     *
+     * @return string
+     */
     public function get_required_capability(): string {
         return 'moodle/site:config';
     }
 
     /**
+     * Resolve the tool security context.
+     *
      * @param array $arguments Tool input.
      * @return context Security context.
      */
@@ -132,7 +156,11 @@ final class update_styles extends base_tool {
         return context_system::instance();
     }
 
-    /** @return bool Supports confirmation previews. */
+    /**
+     * Supports confirmation previews.
+     *
+     * @return bool
+     */
     public function supports_dry_run(): bool {
         return true;
     }

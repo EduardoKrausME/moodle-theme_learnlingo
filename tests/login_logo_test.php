@@ -8,11 +8,19 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+
+/**
+ * Login-only logo rendering checks.
+ *
+ * @package theme_learnlingo
+ * @copyright 2026 Eduardo Kraus
+ * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
 namespace theme_learnlingo;
 
@@ -24,6 +32,9 @@ use theme_learnlingo\output\core_renderer;
 /**
  * Regression tests for the login-only logo.
  *
+ * @package theme_learnlingo
+ * @copyright 2026 Eduardo Kraus
+ * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @covers \theme_learnlingo\output\core_renderer
  */
 final class login_logo_test extends advanced_testcase {
@@ -67,6 +78,7 @@ final class login_logo_test extends advanced_testcase {
 
         $this->assertEquals($base->get_logo_url(), $renderer->get_logo_url());
     }
+
     /**
      * The login form is the single source of branding for the login page.
      *
@@ -83,5 +95,4 @@ final class login_logo_test extends advanced_testcase {
         $this->assertSame(1, substr_count($form, 'id="loginlogo"'));
         $this->assertStringContainsString('src="{{{logourl}}}"', $form);
     }
-
 }

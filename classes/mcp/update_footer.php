@@ -38,7 +38,9 @@ use theme_learnlingo\branding_exchange;
  * transaction handling, while local_mcp handles explicit write confirmation.
  */
 final class update_footer extends base_tool {
-    /** User-facing descriptions of every footer setting. */
+    /**
+     * User-facing descriptions of every footer setting.
+     */
     private const FIELDS = [
         'footermode' => 'moodle: show the traditional footer with up to four columns '
             . 'and optional credits; html: show footerhtml. Independent of homepagemode. '
@@ -73,17 +75,29 @@ final class update_footer extends base_tool {
             . 'line when footermode=moodle. Not rendered in html mode.',
     ];
 
-    /** @return string MCP tool name. */
+    /**
+     * MCP tool name.
+     *
+     * @return string
+     */
     public function get_name(): string {
         return 'learnlingo_update_footer';
     }
 
-    /** @return string Human-readable title. */
+    /**
+     * Human-readable title.
+     *
+     * @return string
+     */
     public function get_title(): string {
         return 'Update LearnLingo footer';
     }
 
-    /** @return string Tool instructions for MCP clients. */
+    /**
+     * Tool instructions for MCP clients.
+     *
+     * @return string
+     */
     public function get_description(): string {
         return 'Update any subset of the thirteen LearnLingo footer settings: '
             . 'footermode, footerhtml, footerscss, footer_background_color, '
@@ -97,7 +111,11 @@ final class update_footer extends base_tool {
             . 'before writing. All thirteen fields use the existing validator.';
     }
 
-    /** @return array MCP input schema. */
+    /**
+     * MCP input schema.
+     *
+     * @return array
+     */
     public function get_input_schema(): array {
         $definitions = branding_exchange::definitions();
         $properties = [];
@@ -130,12 +148,18 @@ final class update_footer extends base_tool {
         ]);
     }
 
-    /** @return string Moodle capability needed to update the theme. */
+    /**
+     * Moodle capability needed to update the theme.
+     *
+     * @return string
+     */
     public function get_required_capability(): string {
         return 'moodle/site:config';
     }
 
     /**
+     * Resolve the tool security context.
+     *
      * @param array $arguments Tool input.
      * @return context Context for permission checks.
      */
@@ -143,7 +167,11 @@ final class update_footer extends base_tool {
         return context_system::instance();
     }
 
-    /** @return bool Whether the write supports a preview. */
+    /**
+     * Whether the write supports a preview.
+     *
+     * @return bool
+     */
     public function supports_dry_run(): bool {
         return true;
     }
