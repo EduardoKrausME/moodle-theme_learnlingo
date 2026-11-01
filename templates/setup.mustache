@@ -25,12 +25,12 @@
                 <li class="{{#current}}is-current{{/current}} {{#done}}is-complete{{/done}} {{^available}}is-locked{{/available}}">
                     {{#available}}
                         <a href="{{{url}}}" {{#current}}aria-current="step"{{/current}}>
-                            <span class="ll-setup-wizard__step-number">{{number}}</span><span>{{label}}</span>
+                            <span class="ll-setup-wizard__step-number">{{number}}</span><span class="ll-setup-wizard__step-label">{{label}}</span>
                         </a>
                     {{/available}}
                     {{^available}}
                         <span class="ll-setup-wizard__step-link">
-                            <span class="ll-setup-wizard__step-number">{{number}}</span><span>{{label}}</span>
+                            <span class="ll-setup-wizard__step-number">{{number}}</span><span class="ll-setup-wizard__step-label">{{label}}</span>
                         </span>
                     {{/available}}
                 </li>
