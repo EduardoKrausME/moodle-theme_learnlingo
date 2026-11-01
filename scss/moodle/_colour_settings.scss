@@ -153,7 +153,7 @@
         font-size: 1rem;
         font-weight: 800;
     }
-    &__swatch[aria-pressed="true"] &__swatch-check {
+    &__swatch[aria-pressed="true"] .ll-colour-picker__swatch-check {
         visibility: visible;
     }
     button:focus-visible,
