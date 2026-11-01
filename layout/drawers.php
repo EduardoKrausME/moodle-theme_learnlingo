@@ -113,11 +113,20 @@ $courseurl = !empty($PAGE->course) ? new moodle_url('/course/view.php', ['id' =>
 
 $showdashboardhero = !isset($PAGE->theme->settings->showdashboardhero)
     || !empty($PAGE->theme->settings->showdashboardhero);
+$showwelcome = !isset($PAGE->theme->settings->showwelcome)
+    || !empty($PAGE->theme->settings->showwelcome);
+// Moodle uses 'my-index' for both Dashboard and My courses. Distinguish them
+// by layout and follow the Moodle-wide enable flags, rather than inventing
+// theme-specific page switches.
+$ismycourses = $PAGE->pagelayout === 'mycourses';
+$isenableddashboard = \theme_learnlingo\setup_steps::dashboard_enabled($CFG);
+$isenabledmycourses = \theme_learnlingo\setup_steps::mycourses_enabled($CFG);
 $dashboardhero = $PAGE->pagetype === 'my-index'
     && isloggedin()
     && !isguestuser()
     && !$PAGE->user_is_editing()
-    && $showdashboardhero;
+    && $showwelcome
+    && ($ismycourses ? $isenabledmycourses : ($isenableddashboard && $showdashboardhero));
 $homepagemode = theme_learnlingo_homepage_mode($PAGE->theme);
 $ishtmlhomepage = $PAGE->pagetype === 'site-index'
     && !$PAGE->user_is_editing()
