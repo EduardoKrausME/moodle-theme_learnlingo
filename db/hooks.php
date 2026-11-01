@@ -15,7 +15,7 @@
 // along with Moodle. If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Register first-run redirect on modern Moodle's after_config hook.
+ * Offer first-run setup from the site homepage via Moodle's after_config hook.
  *
  * @package theme_learnlingo
  * @copyright 2026 Eduardo Kraus
@@ -26,7 +26,7 @@ defined('MOODLE_INTERNAL') || die;
 
 $callbacks = [
     [
-        'hook' => \core\hook\\after_config::class,
+        'hook' => \core\hook\after_config::class,
         'callback' => [\theme_learnlingo\hook_listener::class, 'after_config'],
     ],
 ];
