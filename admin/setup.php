@@ -75,6 +75,8 @@ $pending = (string)get_config('theme_learnlingo', 'setup_pending') === '1';
 $dashboardenabled = \theme_learnlingo\setup_steps::dashboard_enabled($CFG);
 $mycoursesenabled = \theme_learnlingo\setup_steps::mycourses_enabled($CFG);
 $stepcount = \theme_learnlingo\setup_steps::count($CFG);
+$studentstep = \theme_learnlingo\setup_steps::student_enabled($CFG);
+$loginstep = \theme_learnlingo\setup_steps::login_step($CFG);
 $completed = max(0, min($stepcount, (int)get_config('theme_learnlingo', 'setup_completed_step')));
 $allowed = $pending ? min($stepcount, $completed + 1) : $stepcount;
 $step = max(1, min($stepcount, optional_param('step', 1, PARAM_INT)));
@@ -161,6 +163,11 @@ if ($action !== '') {
             break;
 
         case 4:
+            if (!$studentstep) {
+                // With Dashboard and My courses both disabled, login is step 4.
+                // Fall through to case 5, which processes the same form.
+                break;
+            }
             // These are the actual Moodle-wide navigation settings, not a
             // LearnLingo-only presentation toggle. Do not allow both off.
             $newdashboard = (bool)optional_param('enabledashboard', 0, PARAM_BOOL);
@@ -189,9 +196,25 @@ if ($action !== '') {
             }
             theme_reset_all_caches();
             break;
+
+        case 5:
+            // Step 5 is the login page when the optional student step exists.
+            // The same handler is also used for login on step 4.
+            break;
     }
 
-    // The third step is final only when neither Moodle page is enabled.
+    if ($submitted === $loginstep) {
+        // Process login assets before changing the text fields. A decoding
+        // failure must not leave half-updated branding in the database.
+        $images = \theme_learnlingo\setup_login_images::validate($_FILES ?? []);
+        \theme_learnlingo\setup_login_images::save($images);
+        foreach (['loginpaneltitletext', 'loginpaneldescriptiontext', 'loginpaneltaglinetext'] as $field) {
+            set_config($field, optional_param($field, '', PARAM_TEXT), 'theme_learnlingo');
+        }
+        theme_reset_all_caches();
+    }
+
+    // The last enabled step must clear the one-time homepage sentinel.
     if ($submitted === $stepcount) {
         // Once the final step is saved, remove the sentinel, otherwise the
         // homepage would keep offering the wizard. Preserve real custom HTML.
@@ -255,7 +278,8 @@ $steps = [];
 for ($number = 1; $number <= $stepcount; $number++) {
     $steps[] = [
         'number' => $number,
-        'label' => get_string('setupsteplabel' . $number, 'theme_learnlingo'),
+        'label' => get_string('setupsteplabel' . ($number === $loginstep ? '5' : (string)$number),
+            'theme_learnlingo'),
         'current' => $step === $number,
         'done' => $number <= $completed && $number !== $step,
         'available' => $number <= $allowed,
@@ -263,7 +287,7 @@ for ($number = 1; $number <= $stepcount; $number++) {
     ];
 }
 
-if (in_array($step, [2, 3, 4], true)) {
+if (in_array($step, [2, 3, 4, 5], true)) {
     $PAGE->requires->js_call_amd('theme_learnlingo/branding_json', 'init');
 }
 
@@ -274,8 +298,9 @@ $done = $step === $stepcount && optional_param('done', 0, PARAM_BOOL);
 $task = $step === 2
     ? get_string('setupaihomeprompt', 'theme_learnlingo')
     : ($step === 3 ? get_string('setupaifooterprompt', 'theme_learnlingo')
-        : get_string('setupaidashboardprompt', 'theme_learnlingo'));
-$prompt = in_array($step, [2, 3, 4], true) && !$done
+        : ($step === $loginstep ? get_string('setupailoginprompt', 'theme_learnlingo')
+            : get_string('setupaidashboardprompt', 'theme_learnlingo')));
+$prompt = in_array($step, [2, 3, 4, 5], true) && !$done
     ? $task . "\n\n" .
         \theme_learnlingo\branding_exchange::prompt(\theme_learnlingo\branding_exchange::export())
     : '';
@@ -290,11 +315,13 @@ echo $OUTPUT->render_from_template('theme_learnlingo/setup', [
     'progress' => (int)round($step * 100 / $stepcount),
     'stepcount' => $stepcount,
     'foursteps' => $stepcount === 4,
+    'fivesteps' => $stepcount === 5,
     'threeonly' => $stepcount === 3,
     'stepone' => $step === 1 && !$done,
     'steptwo' => $step === 2 && !$done,
     'stepthree' => $step === 3 && !$done,
-    'stepfour' => $step === 4 && !$done,
+    'stepfour' => $studentstep && $step === 4 && !$done,
+    'steplogin' => $step === $loginstep && !$done,
     'laststep' => $step === $stepcount,
     'done' => $done,
     'saved' => optional_param('saved', 0, PARAM_BOOL),
@@ -322,6 +349,12 @@ echo $OUTPUT->render_from_template('theme_learnlingo/setup', [
     'claudeurl' => 'https://claude.ai/',
     'jsonurl' => (new moodle_url('/theme/learnlingo/admin/branding_json.php'))->out(false),
     'prompt' => $prompt,
+    'loginpaneltitletext' => (string)get_config('theme_learnlingo', 'loginpaneltitletext'),
+    'loginpaneldescriptiontext' => (string)get_config('theme_learnlingo', 'loginpaneldescriptiontext'),
+    'loginpaneltaglinetext' => (string)get_config('theme_learnlingo', 'loginpaneltaglinetext'),
+    'loginlogourl' => \theme_learnlingo\setup_login_images::current_url('loginlogo'),
+    'loginbackgroundurl' => \theme_learnlingo\setup_login_images::current_url('loginbackground'),
+    'loginpreviewurl' => (new moodle_url('/login/index.php'))->out(false),
     'logoimageurl' => \theme_learnlingo\setup_images::current_url('logo'),
     'faviconimageurl' => \theme_learnlingo\setup_images::current_url('favicon'),
     'customhtmlmode' => $currentmode === 'html',
