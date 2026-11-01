@@ -191,3 +191,6 @@ $string['homepagescss'] = 'Homepage SCSS';
 $string['homepagescss_desc'] = 'Styles included site-wide, regardless of homepage mode, so they can also style the shared navigation bar and footer. Use full CSS/SCSS selectors such as :root, body, nav or #page-footer; no homepage selector is added automatically.';
 $string['footerscss'] = 'Footer SCSS';
 $string['footerscss_desc'] = 'Styles used only when the footer is in HTML mode. Supports full CSS selectors such as #page-footer (automatically scoped to the HTML footer), as well as nested SCSS and relative selectors.';
+
+$string['publiccourses'] = 'Courses shown to visitors';
+$string['publiccourses_desc'] = 'Choose the visible courses to display to visitors on the LearnLingo homepage. Leave empty to show all accessible courses in Moodle course order. The choice also applies to the homepage JSON API public catalogue; the custom HTML and native Moodle layouts are not automatically changed.';
