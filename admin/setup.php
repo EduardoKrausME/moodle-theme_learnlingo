@@ -135,6 +135,7 @@ if (!$themeactive) {
         'actionurl' => $url->out(false),
         'sesskey' => sesskey(),
         'currenttheme' => format_string($CFG->theme ?? 'boost'),
+        'activationfailed' => optional_param('activated', 0, PARAM_BOOL),
     ]);
     echo $OUTPUT->footer();
     return;
