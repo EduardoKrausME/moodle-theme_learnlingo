@@ -154,7 +154,6 @@ if ($action !== '') {
             foreach (['homepagefullwidth', 'showdashboardhero', 'showcoursehero'] as $field) {
                 set_config($field, optional_param($field, 0, PARAM_BOOL), 'theme_learnlingo');
             }
-            theme_reset_all_caches();
             // Once the final step is saved, remove the sentinel; otherwise
             // visiting the home would keep offering the assistant forever.
             // Preserve genuine HTML supplied by a user or an MCP/JSON import.
@@ -162,6 +161,7 @@ if ($action !== '') {
                 set_config('homepagehtml', '', 'theme_learnlingo');
             }
             set_config('setup_pending', 0, 'theme_learnlingo');
+            theme_reset_all_caches();
             break;
     }
 
