@@ -1,0 +1,233 @@
+// LearnLingo visual components in the optional local_boost_dark mode.
+// The plugin sets data-bs-theme="dark" on <html> for each user's preference.
+// These styles do not activate without that attribute and never force a mode.
+[data-bs-theme="dark"] {
+    --learnlingo-ink: #e7edf4;
+    --learnlingo-muted: #b5c3d0;
+    --learnlingo-surface: #222c39;
+    --learnlingo-canvas: #151d27;
+    --learnlingo-border: #405064;
+    --learnlingo-shadow: 0 4px 0 rgba(0, 0, 0, .18);
+    --learnlingo-shadow-hover: 0 12px 26px rgba(0, 0, 0, .3);
+
+    body,
+    #page-wrapper,
+    #page,
+    #page.drawers,
+    #page.drawers .main-inner {
+        color: var(--learnlingo-ink);
+        background-color: var(--learnlingo-canvas);
+    }
+
+    .navbar.fixed-top {
+        color: var(--learnlingo-ink);
+        background: rgba(30, 40, 52, .98) !important;
+        border-bottom-color: var(--learnlingo-border);
+    }
+
+    .learnlingo-wordmark,
+    .navbar-brand.learnlingo-navbar-brand,
+    .activityname a,
+    .instancename {
+        color: var(--learnlingo-ink);
+    }
+
+    // Dashboard hero retains the institutional brand gradient. Its CTA needs
+    // the separate high-contrast light surface rather than inheriting dark ink.
+    .learnlingo-dashboard-cta {
+        color: #15371c;
+        background-color: #f8fff4;
+    }
+    .learnlingo-dashboard-cta:hover,
+    .learnlingo-dashboard-cta:focus-visible {
+        color: #102e16;
+        background-color: #e4f8dc;
+    }
+    .learnlingo-hero-illustration {
+        background-color: #f8fff4;
+        color: #245c24;
+    }
+
+    .learnlingo-goal-card,
+    .learnlingo-goal-ring-inner,
+    .learnlingo-resume-card,
+    .learnlingo-course-card,
+    .learnlingo-home-resume-card,
+    .learnlingo-home-course-card,
+    .learnlingo-home-empty,
+    .learnlingo-stat-card,
+    .learnlingo-progress-card,
+    .learnlingo-course-hero,
+    .course-section,
+    .activity-navigation,
+    .drawer,
+    .drawer-toggles .drawer-toggler .btn,
+    .block,
+    .card,
+    .table,
+    .dropdown-menu,
+    .modal-content {
+        background: var(--learnlingo-surface);
+        color: var(--learnlingo-ink);
+        border-color: var(--learnlingo-border);
+    }
+
+    .learnlingo-goal-kicker,
+    .learnlingo-resume-label,
+    .learnlingo-course-card-kicker,
+    .learnlingo-home-course-card-kicker,
+    .learnlingo-goal-ring-inner small,
+    .learnlingo-course-card-progress span,
+    .learnlingo-resume-category,
+    .learnlingo-goal-copy {
+        color: var(--learnlingo-muted);
+    }
+
+    .learnlingo-goal-ring {
+        background: conic-gradient(var(--learnlingo-primary) 0 82%, #46556b 82% 100%);
+    }
+
+    .learnlingo-course-card-media > span {
+        color: #192431;
+        background: #f4f7fb;
+    }
+
+    .learnlingo-resume-action,
+    .learnlingo-home-resume-action,
+    .learnlingo-course-card-action {
+        &:focus-visible {
+            outline: 3px solid #a4d8ff;
+            outline-offset: 3px;
+        }
+    }
+
+    .table thead th,
+    .table > :not(caption) > * > * {
+        color: var(--learnlingo-ink);
+        background-color: var(--learnlingo-surface);
+        border-color: var(--learnlingo-border);
+    }
+    .table thead th {
+        background: #2a3748;
+    }
+    .table td,
+    .table th,
+    .nav-tabs,
+    .modal-header,
+    .modal-footer,
+    .drawerheader {
+        border-color: var(--learnlingo-border);
+    }
+
+    .nav-tabs .nav-link.active,
+    .dropdown-item:hover,
+    .dropdown-item:focus,
+    .courseindex .courseindex-item.pageitem {
+        color: #a4e88b;
+        background: #294437;
+    }
+    .dropdown-item,
+    .nav-tabs .nav-link,
+    .page-link,
+    .page-item.disabled .page-link {
+        color: var(--learnlingo-ink);
+        background: var(--learnlingo-surface);
+        border-color: var(--learnlingo-border);
+    }
+
+    .btn-outline-secondary,
+    .form-control,
+    .form-select,
+    textarea,
+    input[type="text"] {
+        border-color: var(--learnlingo-border);
+    }
+
+    .learnlingo-course-xp {
+        color: var(--learnlingo-ink);
+        background: #304838;
+    }
+
+    // Setup uses a separately loaded stylesheet; the root-qualified selector
+    // below also wins over its hard-coded light backgrounds.
+    .ll-setup {
+        --ll-border: #425266;
+        --ll-ink: #e7edf4;
+        --ll-muted: #b5c3d0;
+        --ll-bg: #1c2632;
+    }
+    .ll-setup-wizard__progress,
+    .ll-setup-section,
+    .ll-setup-palette__card,
+    .ll-setup-format__card,
+    .ll-setup-choice,
+    .ll-setup-switch,
+    .ll-setup-student__ai,
+    .ll-setup-ai-hint,
+    .ll-setup-student__card,
+    .ll-setup-dark__benefits,
+    .ll-setup-assets__preview,
+    .ll-setup-login__settings,
+    .ll-setup-wizard__finished {
+        color: var(--ll-ink);
+        background: #222d3b;
+        border-color: var(--ll-border);
+        box-shadow: none;
+    }
+    .ll-setup-wizard__top,
+    .ll-setup-wizard__form {
+        color: var(--ll-ink);
+    }
+    .ll-setup-wizard__steps a,
+    .ll-setup-wizard__steps .ll-setup-wizard__step-link {
+        color: var(--ll-ink);
+    }
+    .ll-setup-wizard__step-number,
+    .ll-setup-number {
+        color: #c4f5b5;
+        background: #304c39;
+    }
+    .ll-setup-wizard__steps .is-current a,
+    .ll-setup-wizard__steps .is-complete a {
+        color: #d5f8c6;
+    }
+    .ll-setup-wizard__meter,
+    .ll-setup-wizard__steps::before {
+        background: #405064;
+    }
+    .ll-setup-palette__card small,
+    .ll-setup-format__card small,
+    .ll-setup-section__heading p,
+    .ll-setup-student__ai > p,
+    .ll-setup-hint,
+    .ll-setup-assets__note,
+    .ll-setup-login__preserve,
+    .ll-setup-login__previewnote,
+    .ll-setup-dark__help {
+        color: var(--ll-muted);
+    }
+    .ll-setup-hint,
+    .ll-setup-student__warning,
+    .ll-setup-login__right,
+    .ll-setup-login__mockfield {
+        color: var(--ll-ink);
+        background: #293748;
+        border-color: var(--ll-border);
+    }
+    .ll-setup-login__right strong {
+        color: var(--ll-ink);
+    }
+    .ll-setup-login__mockfield {
+        color: #b8c7d5;
+    }
+    .ll-setup-input:checked + label {
+        border-color: #99d8a9;
+        box-shadow: 0 0 0 3px rgba(153, 216, 169, .2);
+    }
+    .ll-setup-input:focus-visible + label,
+    .ll-setup-wizard__steps a:focus-visible,
+    .ll-setup-dark button:focus-visible {
+        outline: 3px solid #9fceff;
+        outline-offset: 3px;
+    }
+}

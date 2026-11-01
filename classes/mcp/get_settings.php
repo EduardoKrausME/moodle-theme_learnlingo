@@ -62,7 +62,9 @@ final class get_settings implements tool_interface {
             . 'and footerscss (only inside the HTML footer), traditional footer '
             . 'columns, login/dashboard/course options, shared site logo, login-only logo and favicon. '
             . 'Returns file metadata and state_hash for learnlingo_update_settings; '
-            . 'include_images also returns small uploaded branding images.';
+            . 'include_images also returns small uploaded branding images. '
+            . 'Also returns dark_mode status for optional local_boost_dark: '
+            . 'custom CSS and HTML must support both [data-bs-theme="dark"] and light mode.';
     }
 
     /**

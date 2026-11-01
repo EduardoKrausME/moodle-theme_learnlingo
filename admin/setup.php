@@ -77,7 +77,18 @@ $mycoursesenabled = \theme_learnlingo\setup_steps::mycourses_enabled($CFG);
 $stepcount = \theme_learnlingo\setup_steps::count($CFG);
 $studentstep = \theme_learnlingo\setup_steps::student_enabled($CFG);
 $loginstep = \theme_learnlingo\setup_steps::login_step($CFG);
+$darkstep = \theme_learnlingo\setup_steps::dark_step($CFG);
 $completed = max(0, min($stepcount, (int)get_config('theme_learnlingo', 'setup_completed_step')));
+// The last step disappears when local_boost_dark is installed. If the
+// administrator had already saved Login, do not leave the welcome sentinel.
+if ($pending && $darkstep === null && $completed >= $stepcount) {
+    if ((string)get_config('theme_learnlingo', 'homepagehtml') === 'config') {
+        set_config('homepagehtml', '', 'theme_learnlingo');
+    }
+    set_config('setup_pending', 0, 'theme_learnlingo');
+    theme_reset_all_caches();
+    $pending = false;
+}
 $allowed = $pending ? min($stepcount, $completed + 1) : $stepcount;
 $step = max(1, min($stepcount, optional_param('step', 1, PARAM_INT)));
 if ($step > $allowed) {
@@ -278,7 +289,8 @@ $steps = [];
 for ($number = 1; $number <= $stepcount; $number++) {
     $steps[] = [
         'number' => $number,
-        'label' => get_string('setupsteplabel' . ($number === $loginstep ? '5' : (string)$number),
+        'label' => get_string('setupsteplabel' . ($number === $darkstep ? '6' :
+            ($number === $loginstep ? '5' : (string)$number)),
             'theme_learnlingo'),
         'current' => $step === $number,
         'done' => $number <= $completed && $number !== $step,
@@ -287,7 +299,7 @@ for ($number = 1; $number <= $stepcount; $number++) {
     ];
 }
 
-if (in_array($step, [2, 3, 4, 5], true)) {
+if ($step >= 2 && $step <= $loginstep) {
     $PAGE->requires->js_call_amd('theme_learnlingo/branding_json', 'init');
 }
 
@@ -300,7 +312,7 @@ $task = $step === 2
     : ($step === 3 ? get_string('setupaifooterprompt', 'theme_learnlingo')
         : ($step === $loginstep ? get_string('setupailoginprompt', 'theme_learnlingo')
             : get_string('setupaidashboardprompt', 'theme_learnlingo')));
-$prompt = in_array($step, [2, 3, 4, 5], true) && !$done
+$prompt = $step >= 2 && $step <= $loginstep && !$done
     ? $task . "\n\n" .
         \theme_learnlingo\branding_exchange::prompt(\theme_learnlingo\branding_exchange::export())
     : '';
@@ -316,12 +328,16 @@ echo $OUTPUT->render_from_template('theme_learnlingo/setup', [
     'stepcount' => $stepcount,
     'foursteps' => $stepcount === 4,
     'fivesteps' => $stepcount === 5,
+    'sixsteps' => $stepcount === 6,
     'threeonly' => $stepcount === 3,
     'stepone' => $step === 1 && !$done,
     'steptwo' => $step === 2 && !$done,
     'stepthree' => $step === 3 && !$done,
     'stepfour' => $studentstep && $step === 4 && !$done,
     'steplogin' => $step === $loginstep && !$done,
+    'stepdark' => $darkstep !== null && $step === $darkstep && !$done,
+    'darkinstallurl' => \theme_learnlingo\dark_mode::install_url()->out(false),
+    'darkcodeavailable' => \theme_learnlingo\dark_mode::code_available(),
     'laststep' => $step === $stepcount,
     'done' => $done,
     'saved' => optional_param('saved', 0, PARAM_BOOL),

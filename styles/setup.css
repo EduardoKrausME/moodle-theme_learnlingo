@@ -371,3 +371,14 @@
 .ll-setup-assets__preview--upload .ll-setup-assets__favicon {width:auto;height:auto;max-width:64px;max-height:64px}
 .ll-setup-assets__preview-current {position:absolute;left:50%;bottom:.45rem;transform:translateX(-50%);font-size:.76rem;line-height:1.4;font-weight:750;color:#315b43;background:#ecf8f0;border-radius:5px;padding:.15rem .5rem;white-space:nowrap}
 .ll-setup-assets__upload>input[type="file"] {display:block;width:100%;max-width:100%;background:#fff;height:auto}
+
+
+/* Optional final step: the installer submits its own external form. */
+.ll-setup-dark__benefits {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin:1.25rem 0;background:#f7fafc;border:1px solid var(--ll-border);border-radius:14px;padding:1.15rem}
+.ll-setup-dark__benefits p {margin:0;line-height:1.6}
+.ll-setup-dark__help {color:var(--ll-muted);font-size:.9rem;margin:1rem 0}
+.ll-setup-wizard__steps--six {grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:767.98px) {
+    .ll-setup-dark__benefits {grid-template-columns:1fr}
+    .ll-setup-wizard__steps--six {grid-template-columns:1fr}
+}

@@ -133,6 +133,19 @@ customize a LearnLingo installation.
 Plugin: theme_learnlingo
 Repository: https://github.com/EduardoKrausME/moodle-theme_learnlingo
 
+DARK MODE (OPTIONAL PLUGIN)
+The optional local_boost_dark plugin is currently: {DARK_MODE_STATUS}.
+It sets data-bs-theme="dark" on the HTML element when a user chooses dark
+appearance and the plugin is enabled. Do not claim Dark Mode is active if it
+is not installed or enabled, and never add a made-up JSON setting for it.
+Always check generated HTML, SCSS, text colours, borders, buttons and images
+in BOTH light and dark appearances. Use [data-bs-theme="dark"] selectors
+for specific dark overrides; do not blindly use the light canvas colour
+as the dark background. Keep text legible, keyboard focus visible, and
+contrast accessible. Do not overwrite or remove the user's saved SCSS.
+When the optional plugin is absent, explain how to install local_boost_dark;
+never attempt to install plugins or change Moodle-wide preferences via JSON.
+
 REQUIRED RESPONSE LANGUAGE
 The Moodle user's configured language ($USER->lang) is: {USER_LANGUAGE}
 Respond EXCLUSIVELY in this language throughout the entire conversation,
@@ -298,6 +311,10 @@ into the second text area on the LearnLingo page, then click Import settings.
 ORIGINAL CONFIGURATION:
 PROMPT;
         $instructions = str_replace('{USER_LANGUAGE}', $userlang, $instructions);
+        $darkstatus = dark_mode::installed()
+            ? (dark_mode::enabled() ? 'installed and enabled' : 'installed but disabled')
+            : 'not installed';
+        $instructions = str_replace('{DARK_MODE_STATUS}', $darkstatus, $instructions);
         $fence = str_repeat(chr(96), 3);
         return $instructions . "\n" . $fence . 'json' . "\n"
             . self::json($data) . "\n" . $fence;

@@ -57,7 +57,7 @@ final class setup_steps {
      */
     public static function count(object $cfg): int {
         // Three base steps, an optional student step, and an always-on login step.
-        return self::student_enabled($cfg) ? 5 : 4;
+        return self::login_step($cfg) + (dark_mode::installed() ? 0 : 1);
     }
 
     /**
@@ -77,7 +77,17 @@ final class setup_steps {
      * @return int
      */
     public static function login_step(object $cfg): int {
-        return self::count($cfg);
+        return self::student_enabled($cfg) ? 5 : 4;
+    }
+
+    /**
+     * Offer the optional plugin after the login step only if it is absent.
+     *
+     * @param object $cfg Moodle configuration.
+     * @return int|null
+     */
+    public static function dark_step(object $cfg): ?int {
+        return dark_mode::installed() ? null : self::login_step($cfg) + 1;
     }
 
     /**
