@@ -72,9 +72,9 @@ $adminurl = new moodle_url('/' . ($CFG->admin ?? 'admin') . '/index.php');
 // The site can be configured in several visits. A completed step unlocks the
 // next step; returning to earlier steps does not discard subsequent choices.
 $pending = (string)get_config('theme_learnlingo', 'setup_pending') === '1';
-$completed = max(0, min(4, (int)get_config('theme_learnlingo', 'setup_completed_step')));
-$allowed = $pending ? min(4, $completed + 1) : 4;
-$step = max(1, min(4, optional_param('step', 1, PARAM_INT)));
+$completed = max(0, min(3, (int)get_config('theme_learnlingo', 'setup_completed_step')));
+$allowed = $pending ? min(3, $completed + 1) : 3;
+$step = max(1, min(3, optional_param('step', 1, PARAM_INT)));
 if ($step > $allowed) {
     redirect(new moodle_url($url, ['step' => $allowed]));
 }
@@ -103,7 +103,7 @@ if ($action !== '') {
     }
 
     $submitted = required_param('step', PARAM_INT);
-    if ($submitted < 1 || $submitted > 4 || $submitted > $allowed) {
+    if ($submitted < 1 || $submitted > 3 || $submitted > $allowed) {
         throw new invalid_parameter_exception('Invalid or locked LearnLingo setup step');
     }
 
@@ -113,12 +113,15 @@ if ($action !== '') {
             if ($palette !== 'preserve' && !array_key_exists($palette, $palettes)) {
                 throw new invalid_parameter_exception('Invalid LearnLingo colour palette');
             }
+            // Reject invalid files before changing either the palette or site images.
+            $uploads = \theme_learnlingo\setup_images::validate($_FILES ?? []);
             if ($palette !== 'preserve') {
                 $fields = ['brandcolor', 'accentcolor', 'canvascolor', 'textcolor', 'footer_background_color'];
                 foreach ($fields as $index => $field) {
                     set_config($field, $palettes[$palette][$index], 'theme_learnlingo');
                 }
             }
+            \theme_learnlingo\setup_images::save($uploads);
             set_config('setup_palette', $palette, 'theme_learnlingo');
             theme_reset_all_caches();
             break;
@@ -145,18 +148,14 @@ if ($action !== '') {
                 set_config($field, optional_param($field, 0, PARAM_BOOL), 'theme_learnlingo');
             }
             theme_reset_all_caches();
-            break;
-
-        case 4:
-            // Connecting MCP or importing ChatGPT's JSON remains optional.
-            // Finishing this informational step never authorizes AI writes.
+            // ChatGPT, Claude and Moodle MCP are optional within Home and Footer.
             set_config('setup_pending', 0, 'theme_learnlingo');
             break;
     }
 
     set_config('setup_completed_step', max($completed, $submitted), 'theme_learnlingo');
-    if ($submitted === 4) {
-        redirect(new moodle_url($url, ['step' => 4, 'done' => 1]));
+    if ($submitted === 3) {
+        redirect(new moodle_url($url, ['step' => 3, 'done' => 1]));
     }
     redirect(new moodle_url($url, ['step' => $submitted + 1, 'saved' => 1]));
 }
@@ -204,7 +203,7 @@ foreach (['moodle', 'html'] as $mode) {
 }
 
 $steps = [];
-for ($number = 1; $number <= 4; $number++) {
+for ($number = 1; $number <= 3; $number++) {
     $steps[] = [
         'number' => $number,
         'label' => get_string('setupsteplabel' . $number, 'theme_learnlingo'),
@@ -215,23 +214,32 @@ for ($number = 1; $number <= 4; $number++) {
     ];
 }
 
-if ($step === 4) {
+if (in_array($step, [2, 3], true)) {
     $PAGE->requires->js_call_amd('theme_learnlingo/branding_json', 'init');
 }
 
-$done = $step === 4 && optional_param('done', 0, PARAM_BOOL);
+$done = $step === 3 && optional_param('done', 0, PARAM_BOOL);
+
+// The copy/paste prompt is scoped to this step, but retains the validated
+// complete JSON schema and all existing values for lossless re-import.
+$task = $step === 2
+    ? get_string('setupaihomeprompt', 'theme_learnlingo')
+    : get_string('setupaifooterprompt', 'theme_learnlingo');
+$prompt = in_array($step, [2, 3], true) && !$done
+    ? $task . "\n\n" .
+        \theme_learnlingo\branding_exchange::prompt(\theme_learnlingo\branding_exchange::export())
+    : '';
 echo $OUTPUT->header();
 echo $OUTPUT->render_from_template('theme_learnlingo/setup', [
     'actionurl' => $url->out(false),
     'sesskey' => sesskey(),
     'step' => $step,
     'steps' => $steps,
-    'progress' => $step * 25,
+    'progress' => (int)round($step * 100 / 3),
     'stepone' => $step === 1 && !$done,
     'steptwo' => $step === 2 && !$done,
     'stepthree' => $step === 3 && !$done,
-    'stepfour' => $step === 4 && !$done,
-    'laststep' => $step === 4,
+    'laststep' => $step === 3,
     'done' => $done,
     'saved' => optional_param('saved', 0, PARAM_BOOL),
     'previousurl' => $step > 1 ? (new moodle_url($url, ['step' => $step - 1]))->out(false) : '',
@@ -245,10 +253,11 @@ echo $OUTPUT->render_from_template('theme_learnlingo/setup', [
     'mcpinstalled' => get_config('local_mcp', 'version') !== false,
     'mcpurl' => 'https://github.com/EduardoKrausME/moodle-local_mcp',
     'chatgpturl' => 'https://chatgpt.com/',
+    'claudeurl' => 'https://claude.ai/',
     'jsonurl' => (new moodle_url('/theme/learnlingo/admin/branding_json.php'))->out(false),
-    'prompt' => $step === 4 && !$done
-        ? \theme_learnlingo\branding_exchange::prompt(\theme_learnlingo\branding_exchange::export())
-        : '',
+    'prompt' => $prompt,
+    'logoimageurl' => \theme_learnlingo\setup_images::current_url('logo'),
+    'faviconimageurl' => \theme_learnlingo\setup_images::current_url('favicon'),
     'customhtmlmode' => $currentmode === 'html',
     'advancedurl' => (new moodle_url('/admin/settings.php',
         ['section' => 'theme_learnlingo_branding']))->out(false),
