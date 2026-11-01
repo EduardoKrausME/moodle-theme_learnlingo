@@ -56,7 +56,28 @@ final class setup_steps {
      * @return int
      */
     public static function count(object $cfg): int {
-        return (self::dashboard_enabled($cfg) || self::mycourses_enabled($cfg)) ? 4 : 3;
+        // Three base steps, an optional student step, and an always-on login step.
+        return self::student_enabled($cfg) ? 5 : 4;
+    }
+
+    /**
+     * Whether to show the optional Dashboard / My courses step.
+     *
+     * @param object $cfg Moodle configuration.
+     * @return bool
+     */
+    public static function student_enabled(object $cfg): bool {
+        return self::dashboard_enabled($cfg) || self::mycourses_enabled($cfg);
+    }
+
+    /**
+     * The login step is always last, even if the student step is hidden.
+     *
+     * @param object $cfg Moodle configuration.
+     * @return int
+     */
+    public static function login_step(object $cfg): int {
+        return self::count($cfg);
     }
 
     /**
