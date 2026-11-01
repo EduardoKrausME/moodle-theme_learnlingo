@@ -24,49 +24,63 @@
 
 namespace theme_learnlingo;
 
+use core\hook\after_config;
+use moodle_url;
+
 /**
- * First-run navigation hook.
+ * Offer configuration from the site homepage while its HTML has the sentinel.
  */
 final class hook_listener {
     /**
-     * Open the visual setup only for the first normal administration request.
+     * Identify only the site's actual /index.php, not /admin/index.php or
+     * /course/index.php. A Moodle installation may live in a subdirectory.
      *
-     * @param \core\hook\\after_config $hook Hook dispatched during bootstrap.
+     * @param string $script PHP SCRIPT_NAME.
+     * @param string $wwwroot Moodle site's configured URL.
+     * @return bool
+     */
+    public static function is_site_frontpage_request(string $script, string $wwwroot): bool {
+        $root = rtrim((string)parse_url($wwwroot, PHP_URL_PATH), '/');
+        $script = str_replace('\\', '/', $script);
+        return $script !== '' && $script === $root . '/index.php';
+    }
+
+    /**
+     * Offer the wizard only to authenticated administrators visiting the home.
+     * Never redirect during an installation/upgrade or from admin/index.php.
+     *
+     * @param after_config $hook Bootstrap hook.
      * @return void
      */
-    public static function after_config(\core\hook\\after_config $hook): void {
+    public static function after_config(after_config $hook): void {
         global $CFG;
 
         if ((defined('CLI_SCRIPT') && CLI_SCRIPT)
                 || (defined('PHPUNIT_TEST') && PHPUNIT_TEST)
                 || (defined('BEHAT_SITE_RUNNING') && BEHAT_SITE_RUNNING)
-                || ($_SERVER['REQUEST_METHOD'] ?? '') !== 'GET') {
+                || ($_SERVER['REQUEST_METHOD'] ?? '') !== 'GET'
+                || !self::is_site_frontpage_request(
+                    (string)($_SERVER['SCRIPT_NAME'] ?? ''), (string)$CFG->wwwroot)) {
             return;
         }
 
-        // The hook runs on every request. Avoid querying the DB on other pages.
-        $script = str_replace('\\', '/', $_SERVER['SCRIPT_NAME'] ?? '');
-        $adminpath = '/' . ($CFG->admin ?? 'admin') . '/index.php';
-        if (!str_ends_with($script, $adminpath)) {
+        // Guests and regular learners always see the real site homepage.
+        // Check the user before querying theme configuration.
+        if (!isloggedin() || isguestuser() || !is_siteadmin()) {
             return;
         }
 
-        // Never interrupt the initial install, upgrade, maintenance or confirmations.
-        foreach (['confirmplugincheck', 'confirmupgrade', 'sessionstarted',
-                'cache', 'agreelicense'] as $parameter) {
-            if (isset($_GET[$parameter])) {
-                return;
-            }
+        // A literal "config" is the explicit request to start onboarding.
+        // Finished sites and custom HTML pages never trigger this redirect.
+        if ((string)get_config('theme_learnlingo', 'homepagehtml') !== 'config') {
+            return;
         }
+
         if (during_initial_install() || !empty($CFG->upgraderunning)
                 || !empty($CFG->maintenance_enabled) || moodle_needs_upgrading()) {
             return;
         }
 
-        if ((string)get_config('theme_learnlingo', 'setup_pending') !== '1'
-                || !isloggedin() || isguestuser() || !is_siteadmin()) {
-            return;
-        }
-        redirect(new \moodle_url('/theme/learnlingo/admin/setup.php'));
+        redirect(new moodle_url('/theme/learnlingo/admin/setup.php'));
     }
 }
