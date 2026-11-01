@@ -72,9 +72,12 @@ $adminurl = new moodle_url('/' . ($CFG->admin ?? 'admin') . '/index.php');
 // The site can be configured in several visits. A completed step unlocks the
 // next step; returning to earlier steps does not discard subsequent choices.
 $pending = (string)get_config('theme_learnlingo', 'setup_pending') === '1';
-$completed = max(0, min(3, (int)get_config('theme_learnlingo', 'setup_completed_step')));
-$allowed = $pending ? min(3, $completed + 1) : 3;
-$step = max(1, min(3, optional_param('step', 1, PARAM_INT)));
+$dashboardenabled = \theme_learnlingo\setup_steps::dashboard_enabled($CFG);
+$mycoursesenabled = \theme_learnlingo\setup_steps::mycourses_enabled($CFG);
+$stepcount = \theme_learnlingo\setup_steps::count($CFG);
+$completed = max(0, min($stepcount, (int)get_config('theme_learnlingo', 'setup_completed_step')));
+$allowed = $pending ? min($stepcount, $completed + 1) : $stepcount;
+$step = max(1, min($stepcount, optional_param('step', 1, PARAM_INT)));
 if ($step > $allowed) {
     redirect(new moodle_url($url, ['step' => $allowed]));
 }
@@ -108,7 +111,7 @@ if ($action !== '') {
     }
 
     $submitted = required_param('step', PARAM_INT);
-    if ($submitted < 1 || $submitted > 3 || $submitted > $allowed) {
+    if ($submitted < 1 || $submitted > $stepcount || $submitted > $allowed) {
         throw new invalid_parameter_exception('Invalid or locked LearnLingo setup step');
     }
 
@@ -151,23 +154,41 @@ if ($action !== '') {
                 throw new invalid_parameter_exception('Invalid LearnLingo footer mode');
             }
             set_config('footermode', $footer, 'theme_learnlingo');
-            foreach (['homepagefullwidth', 'showdashboardhero', 'showcoursehero'] as $field) {
+            foreach (['homepagefullwidth', 'showcoursehero'] as $field) {
                 set_config($field, optional_param($field, 0, PARAM_BOOL), 'theme_learnlingo');
             }
-            // Once the final step is saved, remove the sentinel; otherwise
-            // visiting the home would keep offering the assistant forever.
-            // Preserve genuine HTML supplied by a user or an MCP/JSON import.
-            if ((string)get_config('theme_learnlingo', 'homepagehtml') === 'config') {
-                set_config('homepagehtml', '', 'theme_learnlingo');
+            theme_reset_all_caches();
+            break;
+
+        case 4:
+            // This step is available only if Moodle enables Dashboard or My courses.
+            set_config('showwelcome', optional_param('showwelcome', 0, PARAM_BOOL), 'theme_learnlingo');
+            if ($dashboardenabled) {
+                set_config('showdashboardhero',
+                    optional_param('showdashboardhero', 0, PARAM_BOOL), 'theme_learnlingo');
             }
-            set_config('setup_pending', 0, 'theme_learnlingo');
+            foreach (['dashboardeyebrowtext', 'dashboarddescriptiontext'] as $field) {
+                set_config($field, optional_param($field, '', PARAM_TEXT), 'theme_learnlingo');
+            }
             theme_reset_all_caches();
             break;
     }
 
+    // The third step is final only when neither Moodle page is enabled.
+    if ($submitted === $stepcount) {
+        // Once the final step is saved, remove the sentinel; otherwise
+            // visiting the home would keep offering the assistant forever.
+            // Preserve genuine HTML supplied by a user or an MCP/JSON import.
+        if ((string)get_config('theme_learnlingo', 'homepagehtml') === 'config') {
+            set_config('homepagehtml', '', 'theme_learnlingo');
+        }
+        set_config('setup_pending', 0, 'theme_learnlingo');
+        theme_reset_all_caches();
+    }
+
     set_config('setup_completed_step', max($completed, $submitted), 'theme_learnlingo');
-    if ($submitted === 3) {
-        redirect(new moodle_url($url, ['step' => 3, 'done' => 1]));
+    if ($submitted === $stepcount) {
+        redirect(new moodle_url($url, ['step' => $stepcount, 'done' => 1]));
     }
     redirect(new moodle_url($url, ['step' => $submitted + 1, 'saved' => 1]));
 }
@@ -215,7 +236,7 @@ foreach (['moodle', 'html'] as $mode) {
 }
 
 $steps = [];
-for ($number = 1; $number <= 3; $number++) {
+for ($number = 1; $number <= $stepcount; $number++) {
     $steps[] = [
         'number' => $number,
         'label' => get_string('setupsteplabel' . $number, 'theme_learnlingo'),
@@ -226,18 +247,19 @@ for ($number = 1; $number <= 3; $number++) {
     ];
 }
 
-if (in_array($step, [2, 3], true)) {
+if (in_array($step, [2, 3, 4], true)) {
     $PAGE->requires->js_call_amd('theme_learnlingo/branding_json', 'init');
 }
 
-$done = $step === 3 && optional_param('done', 0, PARAM_BOOL);
+$done = $step === $stepcount && optional_param('done', 0, PARAM_BOOL);
 
 // The copy/paste prompt is scoped to this step, but retains the validated
 // complete JSON schema and all existing values for lossless re-import.
 $task = $step === 2
     ? get_string('setupaihomeprompt', 'theme_learnlingo')
-    : get_string('setupaifooterprompt', 'theme_learnlingo');
-$prompt = in_array($step, [2, 3], true) && !$done
+    : ($step === 3 ? get_string('setupaifooterprompt', 'theme_learnlingo')
+        : get_string('setupaidashboardprompt', 'theme_learnlingo'));
+$prompt = in_array($step, [2, 3, 4], true) && !$done
     ? $task . "\n\n" .
         \theme_learnlingo\branding_exchange::prompt(\theme_learnlingo\branding_exchange::export())
     : '';
@@ -247,11 +269,15 @@ echo $OUTPUT->render_from_template('theme_learnlingo/setup', [
     'sesskey' => sesskey(),
     'step' => $step,
     'steps' => $steps,
-    'progress' => (int)round($step * 100 / 3),
+    'progress' => (int)round($step * 100 / $stepcount),
+    'stepcount' => $stepcount,
+    'foursteps' => $stepcount === 4,
+    'threeonly' => $stepcount === 3,
     'stepone' => $step === 1 && !$done,
     'steptwo' => $step === 2 && !$done,
     'stepthree' => $step === 3 && !$done,
-    'laststep' => $step === 3,
+    'stepfour' => $step === 4 && !$done,
+    'laststep' => $step === $stepcount,
     'done' => $done,
     'saved' => optional_param('saved', 0, PARAM_BOOL),
     'previousurl' => $step > 1 ? (new moodle_url($url, ['step' => $step - 1]))->out(false) : '',
@@ -261,6 +287,16 @@ echo $OUTPUT->render_from_template('theme_learnlingo/setup', [
     'footers' => $footers,
     'fullwidth' => (bool)get_config('theme_learnlingo', 'homepagefullwidth'),
     'dashboardhero' => (bool)get_config('theme_learnlingo', 'showdashboardhero'),
+    'showwelcome' => (bool)(get_config('theme_learnlingo', 'showwelcome') !== false
+        ? get_config('theme_learnlingo', 'showwelcome') : true),
+    'dashboardenabled' => $dashboardenabled,
+    'mycoursesenabled' => $mycoursesenabled,
+    'dashboardeyebrowtext' => (string)get_config('theme_learnlingo', 'dashboardeyebrowtext'),
+    'dashboarddescriptiontext' => (string)get_config('theme_learnlingo', 'dashboarddescriptiontext'),
+    'dashboardurl' => (new moodle_url('/my/'))->out(false),
+    'mycoursesurl' => (new moodle_url('/my/courses.php'))->out(false),
+    'moodlenavigationurl' => (new moodle_url('/' . ($CFG->admin ?? 'admin') . '/settings.php',
+        ['section' => 'navigation']))->out(false),
     'coursehero' => (bool)get_config('theme_learnlingo', 'showcoursehero'),
     'mcpinstalled' => get_config('local_mcp', 'version') !== false,
     'mcpurl' => 'https://github.com/EduardoKrausME/moodle-local_mcp',
