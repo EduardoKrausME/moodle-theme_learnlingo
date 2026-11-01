@@ -37,7 +37,6 @@ $templatecontext = [
     'logintitle' => theme_learnlingo_brand_text('loginpaneltitletext', 'loginpaneltitle'),
     'logindescription' => theme_learnlingo_brand_text('loginpaneldescriptiontext', 'loginpaneldescription'),
     'logintagline' => theme_learnlingo_brand_text('loginpaneltaglinetext', 'loginpaneltagline'),
-    'loginlogo' => theme_learnlingo_logo_url($PAGE->theme, 'logo'),
     'sitename' => format_string($SITE->shortname, true, ['context' => context_course::instance(SITEID), "escape" => false]),
     'output' => $OUTPUT,
     'bodyattributes' => $bodyattributes,

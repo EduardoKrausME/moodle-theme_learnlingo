@@ -38,6 +38,8 @@ final class home_service {
         'html' => 'homepagehtml',
         'homepagescss' => 'homepagescss',
         'fullwidth' => 'homepagefullwidth',
+        'publiccourses' => 'homepagepubliccourses',
+        'publiccoursesperpage' => 'homepagepubliccoursesperpage',
         'scss' => 'scss', // Legacy global SCSS: keep compatible with existing clients.
     ];
 
@@ -54,6 +56,7 @@ final class home_service {
         }
         $home['state_hash'] = hash('sha256', json_encode($home,
             JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR));
+        $home['mustache'] = \theme_learnlingo\homepage_context::schema();
         return $home;
     }
 
@@ -125,6 +128,7 @@ final class home_service {
         foreach ($prepared['settings'] as $name => $value) {
             set_config($name, is_bool($value) ? (int)$value : $value, 'theme_learnlingo');
         }
+        \theme_learnlingo\homepage_context::purge_public_cache();
         theme_reset_all_caches();
     }
 }

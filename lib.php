@@ -210,3 +210,13 @@ function theme_learnlingo_homepage_html(theme_config $theme): string {
     // for administrators. Never expose it as literal homepage content.
     return $html === 'config' ? '' : $html;
 }
+
+/**
+ * Invalidate the guest catalogue after home settings change in the admin UI.
+ *
+ * @return void
+ */
+function theme_learnlingo_homepage_cache_reset(): void {
+    \theme_learnlingo\homepage_context::purge_public_cache();
+    theme_reset_all_caches();
+}

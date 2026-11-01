@@ -372,6 +372,143 @@
 .ll-setup-assets__preview-current {position:absolute;left:50%;bottom:.45rem;transform:translateX(-50%);font-size:.76rem;line-height:1.4;font-weight:750;color:#315b43;background:#ecf8f0;border-radius:5px;padding:.15rem .5rem;white-space:nowrap}
 .ll-setup-assets__upload>input[type="file"] {display:block;width:100%;max-width:100%;background:#fff;height:auto}
 
+/* Step 2: existing HTML homepage is shown as a status, not a layout chooser. */
+.ll-setup-html-status {display:flex;gap:1rem;align-items:flex-start;padding:1.4rem;border:1px solid #d9e5de;background:#f7fbf8;border-radius:13px}
+.ll-setup-html-status__icon {display:grid;place-items:center;flex:none;width:34px;height:34px;background:#e2f3e7;color:#21794b;border-radius:50%;font-weight:850}
+.ll-setup-html-status strong {display:block;font-size:1.07rem;color:#244c38;margin-bottom:.5rem;line-height:1.4}
+.ll-setup-html-status p {color:#526779;font-size:.92rem;line-height:1.65;margin:0 0 1rem}
+.ll-setup-html-status .btn {border-radius:9px;font-weight:700}
+@media(max-width:600px){.ll-setup-html-status{flex-direction:column}.ll-setup-html-status .btn{width:100%}}
+
+/*
+ * Small screens: show the wizard progress as a single horizontal stepper,
+ * like a timeline. Earlier breakpoints stack the list; these rules deliberately
+ * override those grids for every supported number of steps (4 or 5).
+ */
+@media (max-width: 820px) {
+    .ll-setup-wizard__progress {
+        padding: 1rem .65rem .55rem;
+    }
+
+    .ll-setup-wizard__steps,
+    .ll-setup-wizard__steps--four,
+    .ll-setup-wizard__steps--five {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: stretch;
+        justify-content: flex-start;
+        grid-template-columns: none;
+        gap: 0;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x proximity;
+        scroll-padding-inline: .5rem;
+        overscroll-behavior-x: contain;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        padding: .55rem 0 .85rem;
+        margin: .8rem 0 0;
+    }
+
+    .ll-setup-wizard__steps > li {
+        position: relative;
+        flex: 0 0 clamp(82px, 20vw, 112px);
+        min-width: 0;
+        text-align: center;
+        scroll-snap-align: center;
+    }
+
+    .ll-setup-wizard__steps > li:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        top: 35px;
+        left: calc(50% + 31px);
+        width: calc(100% - 62px);
+        border-top: 3px dashed #d8dfd1;
+        pointer-events: none;
+    }
+
+    .ll-setup-wizard__steps a,
+    .ll-setup-wizard__step-link {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        min-height: 112px;
+        padding: .25rem .15rem .35rem;
+        gap: .7rem;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        color: #6c7868;
+        font-size: .77rem;
+        line-height: 1.35;
+        font-weight: 800;
+        text-decoration: none;
+    }
+
+    .ll-setup-wizard__steps a:hover,
+    .ll-setup-wizard__steps .is-current a {
+        background: transparent;
+        border: 0;
+        color: #4a8b1d;
+        text-decoration: none;
+    }
+
+    .ll-setup-wizard__step-number {
+        display: grid;
+        place-items: center;
+        flex: 0 0 56px;
+        width: 56px;
+        height: 56px;
+        margin: 0;
+        border: 5px solid #dce3d5;
+        border-radius: 50%;
+        background: #fbfcf8;
+        box-shadow: 0 4px 0 #e4e9dc;
+        color: #929e89;
+        font-size: 1.65rem;
+        line-height: 1;
+        font-weight: 800;
+        z-index: 1;
+    }
+
+    .ll-setup-wizard__steps .is-complete .ll-setup-wizard__step-number {
+        background: #fbfcf8;
+        color: #929e89;
+        border-color: #dce3d5;
+    }
+
+    .ll-setup-wizard__steps .is-current .ll-setup-wizard__step-number {
+        background: #7ed321;
+        color: #fff;
+        border-color: #e3f2da;
+        box-shadow: inset 0 -5px 0 #55aa1d, 0 0 0 4px #f0f8eb;
+    }
+
+    .ll-setup-wizard__step-label {
+        display: block;
+        width: 100%;
+        max-width: 12ch;
+        margin: 0;
+        overflow-wrap: normal;
+        text-wrap: balance;
+        color: #6f796c;
+    }
+
+    .ll-setup-wizard__steps .is-current .ll-setup-wizard__step-label {
+        color: #4a8b1d;
+    }
+
+    .ll-setup-wizard__steps a:focus-visible {
+        outline: 2px solid #247a4f;
+        outline-offset: -2px;
+        border-radius: 7px;
+    }
+}
+
 
 /* Optional final step: the installer submits its own external form. */
 .ll-setup-dark__benefits {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin:1.25rem 0;background:#f7fafc;border:1px solid var(--ll-border);border-radius:14px;padding:1.15rem}

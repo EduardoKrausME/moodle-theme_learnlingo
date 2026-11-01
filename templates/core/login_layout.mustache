@@ -40,12 +40,8 @@
     </aside>
     <div id="region-main" class="login-layout-right col-12 col-lg-6">
         <div id="region-main-box" class="login-layout-right-content">
-            <div class="login-container {{#loginlogo}}learnlingo-has-loginlogo{{/loginlogo}}">
-                {{#loginlogo}}
-                    <div class="learnlingo-mobile-login-brand d-lg-none text-center mb-4">
-                        <img src="{{{loginlogo}}}" class="learnlingo-login-logo" alt="{{sitename}}">
-                    </div>
-                {{/loginlogo}}
+            <div class="login-container">
+                {{! Login form already renders its logo via core/loginform. Do not show it twice on mobile. }}
                 {{{ output.main_content }}}
             </div>
         </div>

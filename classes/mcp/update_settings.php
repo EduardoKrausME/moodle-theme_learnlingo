@@ -64,6 +64,19 @@ final class update_settings extends base_tool {
             . 'traditional footer columns/credits and login/dashboard/course '
             . 'options. Homepage and footer modes are independent. Only specified '
             . 'settings change; hidden/inactive fields retain their values. '
+            . 'Only homepagehtml accepts PHP-rendered Mustache. Read the '
+            . 'homepage_mustache instructions from learnlingo_get_settings '
+            . 'or mustache instructions from learnlingo_get_homepage before '
+            . 'writing it. Use {{#courses}} for public catalogue courses, '
+            . '{{#mycourses}} for own enrollments and completion, '
+            . '{{#cohorts}} for own groups and {{user.firstname}} only '
+            . 'inside {{#isloggedin}}. Use {{#hasprogress}} around progress. '
+            . 'homepagepubliccourses limits courses shown to guests, '
+            . 'empty means all public courses; homepagepubliccoursesperpage '
+            . 'limits only the anonymous catalogue (1-12, default 4), '
+            . 'and coursepagination.coursecolumns adapts layouts when fewer '
+            . 'real courses exist. Do not limit enrolled course lists or invent '
+            . 'missing cards; preserve private data and cache isolation. 
             . 'Preview and explicit confirmation are required. Read '
             . 'learnlingo_get_settings first and pass state_hash as expected_hash. '
             . 'The shared site logo and favicon use core_admin; the separate login '
@@ -103,11 +116,31 @@ final class update_settings extends base_tool {
                 . 'html: custom HTML homepage. Independent of footermode.',
             'homepagehtml' => 'HTML above course cards in learnlingo mode, '
                 . 'main homepage content in html mode, hidden in moodle mode. '
-                . 'Use HTML markup without scripts.',
+                . 'Only this field is rendered as PHP Mustache. Use '
+                . '{{#isloggedin}} and {{^isloggedin}} for guest/student variants, '
+                . '{{user.firstname}} for own name, {{#courses}} for visible '
+                . 'catalogue, {{#mycourses}} for own enrollments and progress, '
+                . '{{#cohorts}} for own cohorts. Loop items supply fullname, '
+                . 'url, hasimage, imageurl, hasprogress and progress. '
+                . 'Read homepage_mustache from learnlingo_get_settings for '
+                . 'complete fields, examples, caching and security instructions. '
+                . 'Never hardcode names/progress or insert scripts.',
             'homepagescss' => 'Global SCSS loaded on EVERY page in ALL homepage modes. '
                 . 'Can style the home, navbar, menus and footer. NOT automatically '
                 . 'scoped to home: use explicit homepage selectors for home-only rules. '
                 . 'Do not use bare & at stylesheet root or remote imports.',
+            'homepagepubliccoursesperpage' => 'Number 1-12 as a string, default 4, '
+                . 'of public course cards per page for visitors NOT logged in only. '
+                . '{{#courses}} contains at most that many elements, while '
+                . '{{coursepagination.coursecolumns}} is the actual number of '
+                . 'cards on the current page (e.g. 3 when 4 were requested '
+                . 'but only 3 exist). Use coursepagination.coursepages, '
+                . 'haspreviouscoursepage, hasnextcoursepage and URLs for navigation. '
+                . 'Never limit logged-in mycourses or progress.',
+            'homepagepubliccourses' => 'Comma-separated visible course IDs '
+                . 'for {{#courses}} shown to visitors who are not logged in. '
+                . 'Empty string means all public, accessible courses in Moodle sort order. '
+                . 'This does not enroll users or expose hidden courses.',
             'homepagefullwidth' => 'Use full available homepage width in learnlingo '
                 . 'or html mode; does not control the native moodle homepage.',
             'footermode' => 'moodle: traditional four-column footer with optional '
