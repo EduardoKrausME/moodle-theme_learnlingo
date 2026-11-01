@@ -184,10 +184,27 @@ final class homepage_context {
                 'Render course images with {{#hasimage}}<img src="{{imageurl}}" alt="">'
                     . '{{/hasimage}} and links with {{url}}; let the server provide '
                     . 'course names, summaries and categories dynamically.',
-                'For logged-out visitors, homepagepubliccourses / MCP publiccourses '
+                'For logged-out visitors only, homepagepubliccourses / MCP publiccourses '
                     . 'selects visible course IDs in the catalogue. Empty selection '
                     . 'means all visible accessible courses in Moodle sort order. '
                     . 'This never makes hidden courses public or enrolls users.',
+                'Respect homepagepubliccoursesperpage / MCP publiccoursesperpage (1-12, default 4) '
+                    . 'for anonymous visitors ONLY. {{#courses}} renders at most that many '
+                    . 'courses on the current page. It does not limit logged-in users or '
+                    . 'their {{#mycourses}} list. Do NOT hardcode a fixed number of cards '
+                    . 'or truncate the loop manually.',
+                'Use {{coursepagination.coursecolumns}} for responsive grids: it equals '
+                    . 'the ACTUAL number of cards on the current guest page, not the '
+                    . 'requested page size. Example: 4 configured and 3 available gives '
+                    . '3 columns; 3 configured and 4 available gives pages of 3 and 1. '
+                    . 'Never invent or repeat a fourth course to fill an empty slot. '
+                    . 'Use responsive CSS and consider narrower/mobile layouts.',
+                'Use {{#coursepagination.hascoursepages}} to show navigation, loop '
+                    . '{{#coursepagination.coursepages}} for page links (number, url, '
+                    . 'iscurrent), and optionally use hasnextcoursepage/nextcoursepageurl '
+                    . 'and haspreviouscoursepage/previouscoursepageurl. These values '
+                    . 'only exist for anonymous visitors. The llcoursepage query '
+                    . 'parameter is validated and clamped to available pages.',
                 'Mustache interpolates values and conditions; it cannot perform '
                     . 'database queries, JavaScript, PHP, or Moodle helper calls. '
                     . 'Do not generate executable scripts, partials or lambdas.',
@@ -216,7 +233,16 @@ final class homepage_context {
                 'cohorts' => 'Only the current signed-in visitor own cohorts: id, name, idnumber. '
                     . 'Empty for anonymous/guest users.',
                 'hascourses, hasmycourses, hascohorts' => 'Boolean flags for optional sections.',
-                'coursecount, mycoursecount' => 'Current counts of courses and enrolled courses.',
+                'coursecount, mycoursecount' => 'coursecount is the number of currently displayed '
+                    . 'course items (one guest page); mycoursecount is the signed-in user own enrollment count.',
+                'coursepagination' => 'Guest-only object; false when logged in. coursesperpage '
+                    . '(1-12), coursecount (actual page items), coursetotal (all visible '
+                    . 'and selected courses), coursecolumns (actual page columns, '
+                    . 'not slots), coursepage (current), coursepagecount (number of pages), '
+                    . 'hascoursepages, coursepages (array of number, url and iscurrent), '
+                    . 'haspreviouscoursepage, hasnextcoursepage, previouscoursepageurl '
+                    . 'and nextcoursepageurl. When 4 are configured but 3 exist, '
+                    . 'coursecolumns=3 and no placeholder course is invented.',
                 'loginurl, dashboardurl, mycoursesurl, coursesurl' => 'Moodle navigation URLs.',
                 'course item' => 'id, fullname, shortname, summary, categoryname, url, '
                     . 'imageurl, hasimage, startdate, enddate, progress, '
@@ -239,6 +265,16 @@ final class homepage_context {
                     . '{{/hasmycourses}}{{/isloggedin}}',
                 'Own cohorts: {{#isloggedin}}{{#cohorts}}'
                     . '<span>{{name}}</span>{{/cohorts}}{{/isloggedin}}',
+                'Guest responsive grid: {{#isguest}}<div class="cards" '
+                    . 'style="--guest-columns: {{coursepagination.coursecolumns}}">'
+                    . '{{#courses}}<article><a href="{{url}}">{{fullname}}</a></article>'
+                    . '{{/courses}}</div>{{/isguest}}. CSS: .cards { display:grid; '
+                    . 'grid-template-columns:repeat(var(--guest-columns), minmax(0,1fr)); } '
+                    . 'Use @media rules for mobile.',
+                'Guest pagination: {{#coursepagination.hascoursepages}}<nav>'
+                    . '{{#coursepagination.coursepages}}<a href="{{url}}">'
+                    . '{{number}}</a>{{/coursepagination.coursepages}}'
+                    . '</nav>{{/coursepagination.hascoursepages}}',
                 'Empty course list: {{^hascourses}}<p>No courses available.</p>{{/hascourses}}',
             ],
             'security' => 'All context strings are HTML-escaped, including in triple-brace tags. '
