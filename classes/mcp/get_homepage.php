@@ -64,6 +64,17 @@ final class get_homepage implements tool_interface {
             . 'mode, including shared navigation and footer elements; it is NOT '
             . 'homepage-scoped. scss is also global. Footer mode, footerhtml and '
             . 'footerscss are read separately with learnlingo_get_settings. '
+            . 'Custom HTML supports automatic bindings without scripts: '
+            . '<div data-learnlingo-loop="publiccourses" data-learnlingo-limit="4">'
+            . '<a href="{{url}}">{{fullname}}</a></div>. '
+            . 'Other loops: courses (enrolments and progress), popular '
+            . '(30-day course views) and cohorts (current user only). '
+            . 'Use <span data-learnlingo-text="user.firstname"></span> for '
+            . 'personal fields; data-learnlingo-if="loggedin" or "!loggedin" '
+            . 'for conditional sections. frontend.js reads the current session '
+            . 'from /theme/learnlingo/home_api.php; no external JS or manually '
+            . 'written API calls are needed. Read frontend_bindings in the '
+            . 'tool response for complete field syntax and examples. '
             . 'Returns state_hash for concurrency-safe learnlingo_update_homepage.';
     }
 
@@ -107,6 +118,33 @@ final class get_homepage implements tool_interface {
      * @return array Result.
      */
     public function execute(array $arguments, authenticated_identity $identity): array {
-        return home_service::snapshot();
+        $snapshot = home_service::snapshot();
+        // Documentation does not participate in the optimistic locking hash.
+        $snapshot['frontend_bindings'] = [
+            'api' => '/theme/learnlingo/home_api.php',
+            'loggedin' => 'Boolean in every API response',
+            'sections' => [
+                'user' => 'Current user: firstname, lastname, fullname, email, customfields',
+                'courses' => 'Enrolled courses with progress (0-100 or null); public fallback',
+                'publiccourses' => 'Courses selected in Home settings, or all visible courses',
+                'popular' => 'Visible courses ranked by views in the last 30 days',
+                'cohorts' => 'Cohorts belonging to the current user, [] for visitors',
+            ],
+            'loop_attribute' => 'data-learnlingo-loop="courses|publiccourses|popular|cohorts"',
+            'paging_attributes' => 'data-learnlingo-limit="4" data-learnlingo-offset="0"',
+            'loop_fields' => '{{fullname}}, {{url}}, {{imageurl}}, {{progress}}, {{views}}, {{name}}',
+            'user_fields' => 'data-learnlingo-text="user.firstname" or "user.customfields.shortname"',
+            'conditionals' => 'data-learnlingo-if="loggedin", "!loggedin", "hasprogress", "imageurl"',
+            'progress_bar' => 'data-learnlingo-progress="progress" sets width and aria-valuenow',
+            'example_html' => '<section data-learnlingo-if="loggedin"><h2>Welcome '
+                . '<span data-learnlingo-text="user.firstname"></span></h2></section>'
+                . '<div data-learnlingo-loop="publiccourses" data-learnlingo-limit="4">'
+                . '<article><img src="{{imageurl}}" alt="">'
+                . '<a href="{{url}}">{{fullname}}</a></article></div>',
+            'notes' => 'Ordinary HTML and data-learnlingo-* attributes; no inline scripts '
+                . 'or nested loops. Dynamic values are text, links are safe HTTP(S) URLs. '
+                . 'Only the authenticated user receives profile, cohort and progress data.',
+        ];
+        return $snapshot;
     }
 }
