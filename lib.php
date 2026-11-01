@@ -246,7 +246,7 @@ function theme_learnlingo_after_config(): void {
         return;
     }
 
-    if (get_config('theme_learnlingo', 'setup_pending') !== '1'
+    if ((string)get_config('theme_learnlingo', 'setup_pending') !== '1'
             || !isloggedin() || isguestuser() || !is_siteadmin()) {
         return;
     }
