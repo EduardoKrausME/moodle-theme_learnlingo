@@ -41,6 +41,7 @@ final class install_test extends \advanced_testcase {
         foreach (array_keys($definitions) as $name) {
             unset_config($name, 'theme_learnlingo');
         }
+        unset_config('setup_pending', 'theme_learnlingo');
         set_config('brandcolor', '#123456', 'theme_learnlingo');
         set_config('favicon', 'custom.ico', 'core_admin');
 
