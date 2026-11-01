@@ -1,43 +1,66 @@
 {{!
     @template theme_learnlingo/setup
-    Visual installation and theme customisation wizard.
+    Four-step installation wizard: each choice is persisted before navigation.
 }}
-<div class="ll-setup">
-    <header class="ll-setup-hero">
-        <div class="ll-setup-hero__copy">
+<div class="ll-setup ll-setup-wizard">
+    <header class="ll-setup-wizard__top">
+        <div>
             <span class="ll-setup-kicker">{{#str}}setupkicker, theme_learnlingo{{/str}}</span>
-            <h2>{{#str}}setupheadline, theme_learnlingo{{/str}}</h2>
-            <p>{{#str}}setupintro, theme_learnlingo{{/str}}</p>
-            <div class="ll-setup-hero__chips" aria-label="{{#str}}setupfeatures, theme_learnlingo{{/str}}">
-                <span>{{#str}}setupchipcolours, theme_learnlingo{{/str}}</span>
-                <span>{{#str}}setupchiplayout, theme_learnlingo{{/str}}</span>
-                <span>{{#str}}setupchipmcp, theme_learnlingo{{/str}}</span>
-            </div>
+            <h2>{{#str}}setupwizardtitle, theme_learnlingo{{/str}}</h2>
+            <p>{{#str}}setupwizardintro, theme_learnlingo{{/str}}</p>
         </div>
-        <div class="ll-setup-demo" aria-hidden="true">
-            <div class="ll-setup-demo__bar"><i></i><i></i><i></i><span>LearnLingo</span></div>
-            <div class="ll-setup-demo__body">
-                <div class="ll-setup-demo__nav"></div>
-                <div class="ll-setup-demo__panel">
-                    <div class="ll-setup-demo__eyebrow"></div>
-                    <div class="ll-setup-demo__title"></div>
-                    <div class="ll-setup-demo__line"></div>
-                    <div class="ll-setup-demo__button"></div>
-                    <div class="ll-setup-demo__tiles"><i></i><i></i><i></i></div>
-                </div>
-            </div>
-        </div>
+        <span class="ll-setup-wizard__brand">LearnLingo</span>
     </header>
+    <nav class="ll-setup-wizard__progress" aria-label="{{#str}}setupwizardprogresslabel, theme_learnlingo{{/str}}">
+        <div class="ll-setup-wizard__progress-text">
+            <strong>{{#str}}setupwizardstepof, theme_learnlingo, {{step}}{{/str}}</strong>
+            <span>{{progress}}%</span>
+        </div>
+        <div class="ll-setup-wizard__meter" role="progressbar" aria-valuenow="{{step}}" aria-valuemin="1" aria-valuemax="4"
+            aria-label="{{#str}}setupwizardprogresslabel, theme_learnlingo{{/str}}">
+            <span style="width: {{progress}}%;"></span>
+        </div>
+        <ol class="ll-setup-wizard__steps">
+            {{#steps}}
+                <li class="{{#current}}is-current{{/current}} {{#done}}is-complete{{/done}} {{^available}}is-locked{{/available}}">
+                    {{#available}}
+                        <a href="{{url}}" {{#current}}aria-current="step"{{/current}}>
+                            <span class="ll-setup-wizard__step-number">{{number}}</span><span>{{label}}</span>
+                        </a>
+                    {{/available}}
+                    {{^available}}
+                        <span class="ll-setup-wizard__step-link">
+                            <span class="ll-setup-wizard__step-number">{{number}}</span><span>{{label}}</span>
+                        </span>
+                    {{/available}}
+                </li>
+            {{/steps}}
+        </ol>
+    </nav>
 
     {{#saved}}
         <div class="alert alert-success ll-setup-notice" role="status">
-            {{#str}}setupsaved, theme_learnlingo{{/str}}
-            <a href="{{homeurl}}">{{#str}}setupviewsite, theme_learnlingo{{/str}}</a>
+            {{#str}}setupstepsaved, theme_learnlingo{{/str}}
         </div>
     {{/saved}}
 
-    <form method="post" action="{{actionurl}}" class="ll-setup-form">
-        <input type="hidden" name="sesskey" value="{{sesskey}}">
+    {{#done}}
+        <div class="ll-setup-wizard__finished" role="status">
+            <span class="ll-setup-wizard__finishicon" aria-hidden="true">✓</span>
+            <h3>{{#str}}setupwizardfinished, theme_learnlingo{{/str}}</h3>
+            <p>{{#str}}setupwizardfinisheddesc, theme_learnlingo{{/str}}</p>
+            <div class="ll-setup-wizard__finishactions">
+                <a class="btn btn-primary" href="{{homeurl}}">{{#str}}setupviewsite, theme_learnlingo{{/str}}</a>
+                <a class="btn btn-outline-secondary" href="{{advancedurl}}">{{#str}}setupadvanced, theme_learnlingo{{/str}}</a>
+            </div>
+        </div>
+    {{/done}}
+
+    {{^done}}
+        <form method="post" action="{{actionurl}}" class="ll-setup-form ll-setup-wizard__form">
+            <input type="hidden" name="sesskey" value="{{sesskey}}">
+            <input type="hidden" name="step" value="{{step}}">
+            {{#stepone}}
         <section class="ll-setup-section" id="ll-setup-colours" aria-labelledby="ll-colours-heading">
             <div class="ll-setup-section__heading">
                 <span class="ll-setup-number">01</span>
@@ -65,6 +88,8 @@
             </div>
         </section>
 
+            {{/stepone}}
+            {{#steptwo}}
         <section class="ll-setup-section" id="ll-setup-layout" aria-labelledby="ll-layout-heading">
             <div class="ll-setup-section__heading">
                 <span class="ll-setup-number">02</span>
@@ -135,7 +160,51 @@
                 <p class="ll-setup-hint">{{#str}}setupcustomhtmlpreserve, theme_learnlingo{{/str}}</p>
             {{/customhtmlmode}}
             <p class="ll-setup-hint">{{#str}}setuphtmladvancedhint, theme_learnlingo{{/str}}</p>
-            <div class="ll-setup-subsection">
+        </section>
+
+    <aside class="ll-setup-ai-hint" aria-labelledby="ll-setup-ai-title">
+        <div class="ll-setup-ai-hint__head">
+            <span class="ll-setup-ai-hint__logo" aria-hidden="true">✦</span>
+            <div>
+                <h4 id="ll-setup-ai-title">{{#str}}setupaihintheading, theme_learnlingo{{/str}}</h4>
+                <p>{{#str}}setupaihintdesc, theme_learnlingo{{/str}}</p>
+            </div>
+        </div>
+        <div class="ll-setup-ai-hint__paths">
+            <div>
+                <strong>{{#str}}setupaihintmcp, theme_learnlingo{{/str}}</strong>
+                <p>{{#str}}setupaihintmcpdesc, theme_learnlingo{{/str}}</p>
+                <a href="{{mcpurl}}" target="_blank" rel="noopener noreferrer">{{#str}}setupmcpdocs, theme_learnlingo{{/str}}</a>
+            </div>
+            <div>
+                <strong>{{#str}}setupaihintpaste, theme_learnlingo{{/str}}</strong>
+                <p>{{#str}}setupaihintpastedesc, theme_learnlingo{{/str}}</p>
+                <button type="button" id="learnlingo-copy-prompt" class="btn btn-outline-primary">
+                    {{#str}}setuppromptcopy, theme_learnlingo{{/str}}
+                </button>
+                <div class="ll-setup-ai-hint__links">
+                    <a href="{{chatgpturl}}" target="_blank" rel="noopener noreferrer">ChatGPT</a>
+                    <a href="{{claudeurl}}" target="_blank" rel="noopener noreferrer">Claude</a>
+                    <a href="{{jsonurl}}">{{#str}}setuppromptimport, theme_learnlingo{{/str}}</a>
+                </div>
+                <label for="learnlingo-brand-prompt" class="ll-setup-prompt__label">
+                    {{#str}}setuppromptlabel, theme_learnlingo{{/str}}
+                </label>
+                <textarea id="learnlingo-brand-prompt" class="form-control ll-setup-prompt__textarea"
+                    rows="3" readonly spellcheck="false">{{prompt}}</textarea>
+                <p class="ll-setup-ai-hint__privacy">{{#str}}setupaihintprivacy, theme_learnlingo{{/str}}</p>
+            </div>
+        </div>
+    </aside>
+            {{/steptwo}}
+            {{#stepthree}}
+        <section class="ll-setup-section" id="ll-setup-footer" aria-labelledby="ll-footer-heading">
+            <div class="ll-setup-section__heading">
+                <span class="ll-setup-number">03</span>
+                <div><h3 id="ll-footer-heading">{{#str}}setupfootersteptitle, theme_learnlingo{{/str}}</h3>
+                <p>{{#str}}setupfooterstepdesc, theme_learnlingo{{/str}}</p></div>
+            </div>
+            <div class="ll-setup-subsection ll-setup-subsection--footer">
                 <h4>{{#str}}setupfooterheading, theme_learnlingo{{/str}}</h4>
                 <div class="ll-setup-choice-list">
                     {{#footers}}
@@ -173,21 +242,48 @@
             </div>
         </section>
 
-        <div class="ll-setup-actions">
-            <div><strong>{{#str}}setupready, theme_learnlingo{{/str}}</strong>
-                <p>{{#str}}setuppreservenote, theme_learnlingo{{/str}}</p></div>
-            <div class="ll-setup-actions__buttons">
-                <button type="submit" name="action" value="skip" class="btn btn-outline-secondary">
-                    {{#str}}setupskip, theme_learnlingo{{/str}}
-                </button>
-                <button type="submit" name="action" value="save" class="btn btn-primary">
-                    {{#str}}setupapply, theme_learnlingo{{/str}}
-                </button>
+
+    <aside class="ll-setup-ai-hint" aria-labelledby="ll-setup-ai-title">
+        <div class="ll-setup-ai-hint__head">
+            <span class="ll-setup-ai-hint__logo" aria-hidden="true">✦</span>
+            <div>
+                <h4 id="ll-setup-ai-title">{{#str}}setupaihintheading, theme_learnlingo{{/str}}</h4>
+                <p>{{#str}}setupaihintdesc, theme_learnlingo{{/str}}</p>
             </div>
         </div>
-    </form>
-
-    <section class="ll-setup-mcp" id="ll-setup-mcp" aria-labelledby="ll-mcp-heading">
+        <div class="ll-setup-ai-hint__paths">
+            <div>
+                <strong>{{#str}}setupaihintmcp, theme_learnlingo{{/str}}</strong>
+                <p>{{#str}}setupaihintmcpdesc, theme_learnlingo{{/str}}</p>
+                <a href="{{mcpurl}}" target="_blank" rel="noopener noreferrer">{{#str}}setupmcpdocs, theme_learnlingo{{/str}}</a>
+            </div>
+            <div>
+                <strong>{{#str}}setupaihintpaste, theme_learnlingo{{/str}}</strong>
+                <p>{{#str}}setupaihintpastedesc, theme_learnlingo{{/str}}</p>
+                <button type="button" id="learnlingo-copy-prompt" class="btn btn-outline-primary">
+                    {{#str}}setuppromptcopy, theme_learnlingo{{/str}}
+                </button>
+                <div class="ll-setup-ai-hint__links">
+                    <a href="{{chatgpturl}}" target="_blank" rel="noopener noreferrer">ChatGPT</a>
+                    <a href="{{claudeurl}}" target="_blank" rel="noopener noreferrer">Claude</a>
+                    <a href="{{jsonurl}}">{{#str}}setuppromptimport, theme_learnlingo{{/str}}</a>
+                </div>
+                <label for="learnlingo-brand-prompt" class="ll-setup-prompt__label">
+                    {{#str}}setuppromptlabel, theme_learnlingo{{/str}}
+                </label>
+                <textarea id="learnlingo-brand-prompt" class="form-control ll-setup-prompt__textarea"
+                    rows="3" readonly spellcheck="false">{{prompt}}</textarea>
+                <p class="ll-setup-ai-hint__privacy">{{#str}}setupaihintprivacy, theme_learnlingo{{/str}}</p>
+            </div>
+        </div>
+    </aside>
+            {{/stepthree}}
+            {{#stepfour}}
+                <div class="ll-setup-wizard__finalintro">
+                    <h3>{{#str}}setupaifinaltitle, theme_learnlingo{{/str}}</h3>
+                    <p>{{#str}}setupaifinaldesc, theme_learnlingo{{/str}}</p>
+                </div>
+    <section class="ll-setup-mcp ll-setup-mcp--wizard" id="ll-setup-mcp" aria-labelledby="ll-mcp-heading">
         <div class="ll-setup-mcp__header">
             <span class="ll-setup-kicker">{{#str}}setupmcpbadge, theme_learnlingo{{/str}}</span>
             <h3 id="ll-mcp-heading">{{#str}}setupmcpheading, theme_learnlingo{{/str}}</h3>
@@ -234,6 +330,7 @@
             </a>
         </div>
     </section>
+
     <section class="ll-setup-prompt" id="ll-setup-prompt" aria-labelledby="ll-prompt-heading">
         <div class="ll-setup-prompt__heading">
             <span class="ll-setup-number">04</span>
@@ -257,6 +354,9 @@
             <button type="button" id="learnlingo-copy-prompt" class="btn btn-primary">
                 {{#str}}setuppromptcopy, theme_learnlingo{{/str}}
             </button>
+            <a href="{{claudeurl}}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-secondary">
+                {{#str}}setuppromptopenclaude, theme_learnlingo{{/str}}
+            </a>
             <a href="{{chatgpturl}}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-secondary">
                 {{#str}}setuppromptopenchat, theme_learnlingo{{/str}}
             </a>
@@ -266,8 +366,24 @@
         </div>
         <p class="ll-setup-prompt__note">{{#str}}setuppromptnote, theme_learnlingo{{/str}}</p>
     </section>
-    <footer class="ll-setup-bottom">
-        <p>{{#str}}setupadvanceddesc, theme_learnlingo{{/str}}</p>
-        <a href="{{advancedurl}}">{{#str}}setupadvanced, theme_learnlingo{{/str}}</a>
-    </footer>
+
+            {{/stepfour}}
+            <div class="ll-setup-wizard__actions">
+                <div class="ll-setup-wizard__actions-left">
+                    {{#hasprevious}}
+                        <a href="{{previousurl}}" class="btn btn-outline-secondary">
+                            {{#str}}setupwizardback, theme_learnlingo{{/str}}
+                        </a>
+                    {{/hasprevious}}
+                    <button type="submit" name="action" value="skip" class="btn btn-link">
+                        {{#str}}setupskip, theme_learnlingo{{/str}}
+                    </button>
+                </div>
+                <button type="submit" name="action" value="next" class="btn btn-primary ll-setup-wizard__next">
+                    {{#laststep}}{{#str}}setupwizardfinish, theme_learnlingo{{/str}}{{/laststep}}
+                    {{^laststep}}{{#str}}setupwizardapplynext, theme_learnlingo{{/str}}{{/laststep}}
+                </button>
+            </div>
+        </form>
+    {{/done}}
 </div>
