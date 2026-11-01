@@ -207,3 +207,49 @@ function theme_learnlingo_homepage_mode(theme_config $theme): string {
 function theme_learnlingo_homepage_html(theme_config $theme): string {
     return $theme->settings->homepagehtml ?? '';
 }
+
+
+/**
+ * Open LearnLingo's visual setup after a new plugin installation finishes.
+ *
+ * This callback is intentionally limited to a plain GET of admin/index.php,
+ * when the site is fully installed, not upgrading, and the current user is
+ * an authenticated site administrator. It does not alter core admin files.
+ *
+ * @return void
+ */
+function theme_learnlingo_after_config(): void {
+    global $CFG;
+
+    if ((defined('CLI_SCRIPT') && CLI_SCRIPT)
+            || (defined('PHPUNIT_TEST') && PHPUNIT_TEST)
+            || (defined('BEHAT_SITE_RUNNING') && BEHAT_SITE_RUNNING)
+            || ($_SERVER['REQUEST_METHOD'] ?? '') !== 'GET') {
+        return;
+    }
+
+    // Avoid database queries on every request. The callback runs site-wide.
+    $script = str_replace('\\', '/', $_SERVER['SCRIPT_NAME'] ?? '');
+    $adminpath = '/' . ($CFG->admin ?? 'admin') . '/index.php';
+    if (!str_ends_with($script, $adminpath)) {
+        return;
+    }
+
+    // Never interrupt the Moodle install/upgrade/confirmation workflow.
+    foreach (['confirmplugincheck', 'confirmupgrade', 'sessionstarted', 'cache', 'agreelicense'] as $parameter) {
+        if (isset($_GET[$parameter])) {
+            return;
+        }
+    }
+    if (during_initial_install() || !empty($CFG->upgraderunning)
+            || !empty($CFG->maintenance_enabled) || moodle_needs_upgrading()) {
+        return;
+    }
+
+    if (get_config('theme_learnlingo', 'setup_pending') !== '1'
+            || !isloggedin() || isguestuser() || !is_siteadmin()) {
+        return;
+    }
+
+    redirect(new moodle_url('/theme/learnlingo/admin/setup.php'));
+}
