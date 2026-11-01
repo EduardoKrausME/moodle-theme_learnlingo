@@ -63,6 +63,12 @@ final class update_homepage extends base_tool {
             . 'in html mode. homepagescss is compiled on every page in all modes; '
             . 'it can style the homepage, navbar, menus and shared footer. '
             . 'Use explicit homepage selectors for homepage-only rules. '
+            . 'The homepagehtml field alone is processed using server-side PHP '
+            . 'Mustache and can loop {{#courses}}, {{#mycourses}} and {{#cohorts}}, '
+            . 'and access {{user.firstname}}, {{isloggedin}} and course progress. '
+            . 'Use learnlingo_get_homepage for the complete context reference. '
+            . 'publiccourses selects visible course IDs for visitors, and an empty '
+            . 'selection includes all public courses in Moodle sort order. '
             . 'For footermode, footerhtml and footer-scoped footerscss use '
             . 'learnlingo_update_settings. Validates changes, previews them and '
             . 'requires explicit confirmation. Read learnlingo_get_homepage first.';
@@ -92,7 +98,12 @@ final class update_homepage extends base_tool {
                     . 'main homepage content in html mode, hidden in moodle mode. '
                     . 'If mode is omitted, updating HTML preserves learnlingo mode '
                     . 'or activates html mode when the previous mode is different. '
-                    . 'Use HTML markup without scripts.'],
+                    . 'Use HTML markup with server-side Mustache loops/variables '
+                    . 'documented by learnlingo_get_homepage, without scripts.'],
+            'publiccourses' => ['type' => 'string',
+                'description' => 'Comma-separated IDs, for example 12,14,18, to show in '
+                    . '{{#courses}} for logged-out visitors. Empty string selects all '
+                    . 'publicly visible courses in Moodle sort order. No enrolment changes.'],
             'fullwidth' => ['type' => 'boolean',
                 'description' => 'homepagefullwidth: use full available width '
                     . 'for learnlingo and html homepage modes; irrelevant in moodle mode.'],
@@ -144,6 +155,8 @@ final class update_homepage extends base_tool {
             'mode_after' => $prepared['after']['mode'],
             'fullwidth_before' => $prepared['before']['fullwidth'],
             'fullwidth_after' => $prepared['after']['fullwidth'],
+            'publiccourses_before' => $prepared['before']['publiccourses'],
+            'publiccourses_after' => $prepared['after']['publiccourses'],
             'html_bytes_before' => strlen($prepared['before']['html']),
             'html_bytes_after' => strlen($prepared['after']['html']),
             'homepagescss_bytes_before' => strlen($prepared['before']['homepagescss']),
@@ -170,6 +183,7 @@ final class update_homepage extends base_tool {
             'success' => true,
             'mode' => $current['mode'],
             'fullwidth' => $current['fullwidth'],
+            'publiccourses' => $current['publiccourses'],
             'html_bytes' => strlen($current['html']),
             'homepagescss_bytes' => strlen($current['homepagescss']),
             'scss_bytes' => strlen($current['scss']),
