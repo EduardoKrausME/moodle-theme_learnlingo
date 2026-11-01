@@ -131,7 +131,7 @@ if ($ADMIN->fulltree) {
         "theme_learnlingo/homepagehtml",
         get_string("homepagehtml", "theme_learnlingo"),
         get_string("homepagehtml_desc", "theme_learnlingo"),
-        "",
+        "config",
         PARAM_RAW,
         "90",
         "18"
