@@ -284,6 +284,6 @@ $string['setuppromptlabel'] = 'Complete prompt with current configuration';
 $string['setuppromptcopy'] = 'Copy prompt for ChatGPT';
 $string['setuppromptopenchat'] = 'Open ChatGPT';
 $string['setuppromptimport'] = 'Import generated JSON';
-$string['setuppromptnote'] = 'ChatGPT cannot change your Moodle through this method. Only importing validated JSON applies changes. Logos and other files are uploaded separately.';
+$string['setuppromptnote'] = 'The prompt includes your site\'s existing text, HTML and configuration; review it before sharing with ChatGPT. This method cannot change Moodle directly: only importing validated JSON applies changes. Logos and other files are uploaded separately.';
 
 $string['setupactivationfailed'] = 'The site theme is still not LearnLingo. A setting in config.php may be overriding the database selection. Review the Moodle theme configuration before trying again.';
