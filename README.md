@@ -59,13 +59,21 @@ an explicit confirmation if another site theme is still active.
 The assistant consists of **three independently saved steps**:
 
 1. **Colours, logo and favicon**: choose one of six palettes or preserve the
-   institution's current colours. Optionally upload a PNG/JPEG site logo
-   (maximum 3 MiB), and a PNG/JPEG/ICO favicon (maximum 1 MiB). Uploads are
-   validated server-side before the palette or file settings are changed.
-   Assets are stored in the system context's **core_admin/logo** and
-   **core_admin/favicon** Moodle File API areas, matching the existing theme
-   settings; no parallel theme-specific logo/favicons are created.
-   Existing uploads are preserved when no replacement is selected.
+   institution's current colours. Optionally upload a PNG, JPEG or WebP logo
+   or a PNG, JPEG, WebP or ICO favicon. With **PHP GD**, raster logos are
+   resampled to fit within **1200 × 400 px** (no cropping, no upscaling),
+   retaining transparency for PNG/WebP; raster favicons are centered on a
+   transparent **256 × 256 PNG** canvas. Multi-resolution ICO files are
+   validated and retained unchanged because GD cannot decode native ICO.
+   There are no artificial 3 MiB/1 MiB image limits in the wizard: the
+   server's PHP upload limits still apply, along with pixel-count and memory
+   checks to avoid decompression-bomb exhaustion. A missing GD extension
+   produces an explicit validation error for raster uploads.
+   Image processing finishes before saving colours, and all intermediate
+   temporary files are removed. Assets are saved in the system context's
+   **core_admin/logo** and **core_admin/favicon** File API areas, matching
+   the existing site logo settings; no theme-specific copies are created.
+   Existing images are kept unless a new file is submitted.
 2. **Homepage**: visually compare the LearnLingo homepage and Moodle's
    native homepage. A custom HTML homepage can still be selected in advanced
    settings, and an existing HTML layout isn't silently discarded.
