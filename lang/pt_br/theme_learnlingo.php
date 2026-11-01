@@ -44,6 +44,7 @@ $string['aipreview'] = 'Revisar valores sugeridos';
 $string['brandcolor'] = 'Cor principal';
 $string['brandcolor_desc'] = 'Cor principal usada em botões, links e destaques.';
 $string['brandingsettings'] = 'Identidade visual e cores';
+$string['cachedef_publiccourses'] = 'Cursos públicos na página inicial';
 $string['canvascolor'] = 'Cor de fundo';
 $string['canvascolor_desc'] = 'Cor principal do fundo das páginas.';
 $string['choosereadme'] = 'LearnLingo é um tema filho do Boost voltado à aprendizagem lúdica e gamificada.';
