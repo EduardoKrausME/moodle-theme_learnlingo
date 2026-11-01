@@ -262,7 +262,7 @@ window.LearnLingoEnglish = {
   'Que bom': 'So good',
   'ter você aqui.': 'to have you here.',
   'Seu próximo passo começa agora.': 'Your next step starts now.',
-  'Acesse sua conta': 'Sign in to your account'
+  'Acesse sua conta': 'Sign in to your account',
   'Código aberto · Baseado no Boost ·': 'Open source · Built on Boost ·',
   'Criado com ❤️ por Eduardo Kraus': 'Made with ❤️ by Eduardo Kraus',
   'Escolha onde prefere baixar a versão publicada:': 'Choose where to download the latest release:',
