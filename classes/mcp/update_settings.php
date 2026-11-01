@@ -103,7 +103,13 @@ final class update_settings extends base_tool {
                 . 'html: custom HTML homepage. Independent of footermode.',
             'homepagehtml' => 'HTML above course cards in learnlingo mode, '
                 . 'main homepage content in html mode, hidden in moodle mode. '
-                . 'Use HTML markup without scripts.',
+                . 'Use HTML markup without scripts. Use '
+                . 'data-learnlingo-loop="courses|publiccourses|popular|cohorts" '
+                . 'on an HTML container, {{fullname}}, {{url}}, {{progress}} '
+                . 'inside it, data-learnlingo-text="user.firstname" for '
+                . 'personalization and data-learnlingo-if="loggedin" or '
+                . '"!loggedin" for conditional blocks. frontend.js fetches '
+                . 'home_api.php automatically.',
             'homepagescss' => 'Global SCSS loaded on EVERY page in ALL homepage modes. '
                 . 'Can style the home, navbar, menus and footer. NOT automatically '
                 . 'scoped to home: use explicit homepage selectors for home-only rules. '
