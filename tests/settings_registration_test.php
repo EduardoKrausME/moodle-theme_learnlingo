@@ -58,7 +58,7 @@ final class settings_registration_test extends advanced_testcase {
 
         foreach (['en', 'pt_br'] as $language) {
             $string = [];
-            require $CFG->dirroot . '/theme/learnlingo/lang/' . $language . '/theme_learnlingo.php';
+            require($CFG->dirroot . '/theme/learnlingo/lang/' . $language . '/theme_learnlingo.php');
             foreach ($identifiers as $identifier) {
                 $this->assertArrayHasKey($identifier, $string,
                     "Missing {$language} translation for {$identifier}");
