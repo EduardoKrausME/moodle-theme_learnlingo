@@ -63,12 +63,7 @@ final class home_data {
      * @return array
      */
     public static function public_courses(): array {
-        $courses = core_course_category::top()->get_courses([
-            'recursive' => true,
-            'summary' => false,
-            'coursecontacts' => false,
-            'customfields' => false,
-        ]);
+        $courses = self::public_courses_unfiltered();
 
         $selected = self::selected_public_course_ids();
         if ($selected) {
@@ -122,12 +117,41 @@ final class home_data {
      * @return array
      */
     private static function public_courses_unfiltered(): array {
-        return array_values(core_course_category::top()->get_courses([
+        global $DB;
+
+        // An admin's catalogue may include hidden courses. A public shortlist
+        // must never reveal them, even if edited while logged in as an admin.
+        $hiddenpaths = [];
+        foreach ($DB->get_records('course_categories', ['visible' => 0], '', 'id, path') as $category) {
+            $hiddenpaths[] = rtrim($category->path, '/') . '/';
+        }
+        $result = [];
+        foreach (core_course_category::top()->get_courses([
             'recursive' => true,
             'summary' => false,
             'coursecontacts' => false,
             'customfields' => false,
-        ]));
+        ]) as $course) {
+            if (empty($course->visible)) {
+                continue;
+            }
+            $category = core_course_category::get($course->category, IGNORE_MISSING);
+            if (!$category) {
+                continue;
+            }
+            $path = rtrim($category->path, '/') . '/';
+            $hidden = false;
+            foreach ($hiddenpaths as $hiddenpath) {
+                if (str_starts_with($path, $hiddenpath)) {
+                    $hidden = true;
+                    break;
+                }
+            }
+            if (!$hidden) {
+                $result[] = $course;
+            }
+        }
+        return $result;
     }
 
     /**
@@ -156,9 +180,20 @@ final class home_data {
      * @return array|null
      */
     public static function user(): ?array {
-        global $USER;
+        global $CFG, $USER;
         if (!self::logged_in()) {
             return null;
+        }
+
+        // User-defined profile fields belong to this same session's user.
+        // Do not load arbitrary user IDs or share these values through MUC.
+        require_once($CFG->dirroot . '/user/profile/lib.php');
+        $profile = profile_user_record($USER->id);
+        $customfields = [];
+        foreach ($profile as $shortname => $value) {
+            if (is_scalar($value) || $value === null) {
+                $customfields[$shortname] = (string)($value ?? '');
+            }
         }
         return [
             'id' => (int)$USER->id,
@@ -170,6 +205,7 @@ final class home_data {
             'country' => (string)($USER->country ?? ''),
             'institution' => (string)($USER->institution ?? ''),
             'department' => (string)($USER->department ?? ''),
+            'customfields' => $customfields,
         ];
     }
 
@@ -323,7 +359,19 @@ final class home_data {
                 continue;
             }
             // Inaccessible categories must not leak names through this aggregate.
-            if (!core_course_category::get($course->category, IGNORE_MISSING)) {
+            $category = core_course_category::get($course->category, IGNORE_MISSING);
+            if (!$category || !$category->visible) {
+                continue;
+            }
+            $hiddenparent = false;
+            foreach ($category->get_parents() as $parentid) {
+                $parent = core_course_category::get($parentid, IGNORE_MISSING);
+                if (!$parent || !$parent->visible) {
+                    $hiddenparent = true;
+                    break;
+                }
+            }
+            if ($hiddenparent) {
                 continue;
             }
             $item = self::course_data($course);
