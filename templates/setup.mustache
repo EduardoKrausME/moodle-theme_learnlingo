@@ -24,7 +24,7 @@
             {{#steps}}
                 <li class="{{#current}}is-current{{/current}} {{#done}}is-complete{{/done}} {{^available}}is-locked{{/available}}">
                     {{#available}}
-                        <a href="{{url}}" {{#current}}aria-current="step"{{/current}}>
+                        <a href="{{{url}}}" {{#current}}aria-current="step"{{/current}}>
                             <span class="ll-setup-wizard__step-number">{{number}}</span><span>{{label}}</span>
                         </a>
                     {{/available}}
@@ -50,8 +50,8 @@
             <h3>{{#str}}setupwizardfinished, theme_learnlingo{{/str}}</h3>
             <p>{{#str}}setupwizardfinisheddesc, theme_learnlingo{{/str}}</p>
             <div class="ll-setup-wizard__finishactions">
-                <a class="btn btn-primary" href="{{homeurl}}">{{#str}}setupviewsite, theme_learnlingo{{/str}}</a>
-                <a class="btn btn-outline-secondary" href="{{advancedurl}}">{{#str}}setupadvanced, theme_learnlingo{{/str}}</a>
+                <a class="btn btn-primary" href="{{{homeurl}}}">{{#str}}setupviewsite, theme_learnlingo{{/str}}</a>
+                <a class="btn btn-outline-secondary" href="{{{advancedurl}}}">{{#str}}setupadvanced, theme_learnlingo{{/str}}</a>
             </div>
         </div>
     {{/done}}
@@ -97,7 +97,7 @@
                 <div class="ll-setup-assets__item">
                     <div class="ll-setup-assets__preview" aria-hidden="true">
                         {{#logoimageurl}}
-                            <img src="{{logoimageurl}}" alt="" class="ll-setup-assets__logo">
+                            <img src="{{{logoimageurl}}}" alt="" class="ll-setup-assets__logo">
                         {{/logoimageurl}}
                         {{^logoimageurl}}
                             <span class="ll-setup-assets__placeholder">LearnLingo</span>
@@ -116,7 +116,7 @@
                 <div class="ll-setup-assets__item">
                     <div class="ll-setup-assets__preview ll-setup-assets__preview--favicon" aria-hidden="true">
                         {{#faviconimageurl}}
-                            <img src="{{faviconimageurl}}" alt="" class="ll-setup-assets__favicon">
+                            <img src="{{{faviconimageurl}}}" alt="" class="ll-setup-assets__favicon">
                         {{/faviconimageurl}}
                         {{^faviconimageurl}}
                             <span class="ll-setup-assets__favicon-placeholder">L</span>
@@ -222,7 +222,7 @@
             <div>
                 <strong>{{#str}}setupaihintmcp, theme_learnlingo{{/str}}</strong>
                 <p>{{#str}}setupaihintmcpdesc, theme_learnlingo{{/str}}</p>
-                <a href="{{mcpurl}}" target="_blank" rel="noopener noreferrer">{{#str}}setupmcpdocs, theme_learnlingo{{/str}}</a>
+                <a href="{{{mcpurl}}}" target="_blank" rel="noopener noreferrer">{{#str}}setupmcpdocs, theme_learnlingo{{/str}}</a>
             </div>
             <div>
                 <strong>{{#str}}setupaihintpaste, theme_learnlingo{{/str}}</strong>
@@ -231,9 +231,9 @@
                     {{#str}}setuppromptcopy, theme_learnlingo{{/str}}
                 </button>
                 <div class="ll-setup-ai-hint__links">
-                    <a href="{{chatgpturl}}" target="_blank" rel="noopener noreferrer">ChatGPT</a>
-                    <a href="{{claudeurl}}" target="_blank" rel="noopener noreferrer">Claude</a>
-                    <a href="{{jsonurl}}">{{#str}}setuppromptimport, theme_learnlingo{{/str}}</a>
+                    <a href="{{{chatgpturl}}}" target="_blank" rel="noopener noreferrer">ChatGPT</a>
+                    <a href="{{{claudeurl}}}" target="_blank" rel="noopener noreferrer">Claude</a>
+                    <a href="{{{jsonurl}}}">{{#str}}setuppromptimport, theme_learnlingo{{/str}}</a>
                 </div>
                 <label for="learnlingo-brand-prompt" class="ll-setup-prompt__label">
                     {{#str}}setuppromptlabel, theme_learnlingo{{/str}}
@@ -298,7 +298,7 @@
             <div>
                 <strong>{{#str}}setupaihintmcp, theme_learnlingo{{/str}}</strong>
                 <p>{{#str}}setupaihintmcpdesc, theme_learnlingo{{/str}}</p>
-                <a href="{{mcpurl}}" target="_blank" rel="noopener noreferrer">{{#str}}setupmcpdocs, theme_learnlingo{{/str}}</a>
+                <a href="{{{mcpurl}}}" target="_blank" rel="noopener noreferrer">{{#str}}setupmcpdocs, theme_learnlingo{{/str}}</a>
             </div>
             <div>
                 <strong>{{#str}}setupaihintpaste, theme_learnlingo{{/str}}</strong>
@@ -307,9 +307,9 @@
                     {{#str}}setuppromptcopy, theme_learnlingo{{/str}}
                 </button>
                 <div class="ll-setup-ai-hint__links">
-                    <a href="{{chatgpturl}}" target="_blank" rel="noopener noreferrer">ChatGPT</a>
-                    <a href="{{claudeurl}}" target="_blank" rel="noopener noreferrer">Claude</a>
-                    <a href="{{jsonurl}}">{{#str}}setuppromptimport, theme_learnlingo{{/str}}</a>
+                    <a href="{{{chatgpturl}}}" target="_blank" rel="noopener noreferrer">ChatGPT</a>
+                    <a href="{{{claudeurl}}}" target="_blank" rel="noopener noreferrer">Claude</a>
+                    <a href="{{{jsonurl}}}">{{#str}}setuppromptimport, theme_learnlingo{{/str}}</a>
                 </div>
                 <label for="learnlingo-brand-prompt" class="ll-setup-prompt__label">
                     {{#str}}setuppromptlabel, theme_learnlingo{{/str}}
@@ -350,7 +350,7 @@
                             {{#str}}setupstudentselect, theme_learnlingo{{/str}}
                         </span>
                     </label>
-                    <a href="{{dashboardurl}}" target="_blank" rel="noopener noreferrer">
+                    <a href="{{{dashboardurl}}}" target="_blank" rel="noopener noreferrer">
                         {{#str}}setupstudentviewdashboard, theme_learnlingo{{/str}}
                     </a>
                 </div>
@@ -372,7 +372,7 @@
                             {{#str}}setupstudentselect, theme_learnlingo{{/str}}
                         </span>
                     </label>
-                    <a href="{{mycoursesurl}}" target="_blank" rel="noopener noreferrer">
+                    <a href="{{{mycoursesurl}}}" target="_blank" rel="noopener noreferrer">
                         {{#str}}setupstudentviewmycourses, theme_learnlingo{{/str}}
                     </a>
                 </div>
@@ -384,7 +384,7 @@
             </div>
             <p class="ll-setup-student__navigation">
                 {{#str}}setupstudentcoreflags, theme_learnlingo{{/str}}
-                <a href="{{moodlenavigationurl}}" target="_blank" rel="noopener noreferrer">
+                <a href="{{{moodlenavigationurl}}}" target="_blank" rel="noopener noreferrer">
                     {{#str}}setupstudentnavigation, theme_learnlingo{{/str}}
                 </a>
             </p>
@@ -428,10 +428,10 @@
             <strong>{{#str}}setupstudentaiheading, theme_learnlingo{{/str}}</strong>
             <p>{{#str}}setupstudentaidesc, theme_learnlingo{{/str}}</p>
             <div class="ll-setup-student__ailinks">
-                <a href="{{mcpurl}}" target="_blank" rel="noopener noreferrer">Moodle MCP</a>
-                <a href="{{chatgpturl}}" target="_blank" rel="noopener noreferrer">ChatGPT</a>
-                <a href="{{claudeurl}}" target="_blank" rel="noopener noreferrer">Claude</a>
-                <a href="{{jsonurl}}">{{#str}}setuppromptimport, theme_learnlingo{{/str}}</a>
+                <a href="{{{mcpurl}}}" target="_blank" rel="noopener noreferrer">Moodle MCP</a>
+                <a href="{{{chatgpturl}}}" target="_blank" rel="noopener noreferrer">ChatGPT</a>
+                <a href="{{{claudeurl}}}" target="_blank" rel="noopener noreferrer">Claude</a>
+                <a href="{{{jsonurl}}}">{{#str}}setuppromptimport, theme_learnlingo{{/str}}</a>
             </div>
             <button type="button" id="learnlingo-copy-prompt" class="btn btn-outline-primary">
                 {{#str}}setuppromptcopy, theme_learnlingo{{/str}}
@@ -455,7 +455,7 @@
             <div class="ll-setup-login__preview" role="img" aria-label="{{#str}}setuploginpreviewlabel, theme_learnlingo{{/str}}">
                 <div class="ll-setup-login__left">
                     {{#loginbackgroundurl}}
-                        <img src="{{loginbackgroundurl}}" alt="" class="ll-setup-login__cover">
+                        <img src="{{{loginbackgroundurl}}}" alt="" class="ll-setup-login__cover">
                     {{/loginbackgroundurl}}
                     <div class="ll-setup-login__leftcontent">
                         <span class="ll-setup-login__eyebrow">{{#str}}dashboardeyebrow, theme_learnlingo{{/str}}</span>
@@ -475,11 +475,11 @@
                 </div>
                 <div class="ll-setup-login__right">
                     {{#loginlogourl}}
-                        <img src="{{loginlogourl}}" alt="" class="ll-setup-login__brand">
+                        <img src="{{{loginlogourl}}}" alt="" class="ll-setup-login__brand">
                     {{/loginlogourl}}
                     {{^loginlogourl}}
                         {{#logoimageurl}}
-                            <img src="{{logoimageurl}}" alt="" class="ll-setup-login__brand">
+                            <img src="{{{logoimageurl}}}" alt="" class="ll-setup-login__brand">
                         {{/logoimageurl}}
                         {{^logoimageurl}}
                             <span class="ll-setup-login__defaultbrand">LearnLingo</span>
@@ -493,7 +493,7 @@
             </div>
             <p class="ll-setup-login__previewnote">
                 {{#str}}setuploginpreviewnote, theme_learnlingo{{/str}}
-                <a href="{{loginpreviewurl}}" target="_blank" rel="noopener noreferrer">
+                <a href="{{{loginpreviewurl}}}" target="_blank" rel="noopener noreferrer">
                     {{#str}}setuploginview, theme_learnlingo{{/str}}
                 </a>
             </p>
@@ -511,7 +511,7 @@
                 <div class="ll-setup-assets__item">
                     <div class="ll-setup-assets__preview ll-setup-assets__preview--loginlogo" aria-hidden="true">
                         {{#loginlogourl}}
-                            <img src="{{loginlogourl}}" alt="" class="ll-setup-assets__logo">
+                            <img src="{{{loginlogourl}}}" alt="" class="ll-setup-assets__logo">
                         {{/loginlogourl}}
                         {{^loginlogourl}}
                             <span class="ll-setup-assets__placeholder">LearnLingo</span>
@@ -527,7 +527,7 @@
                 <div class="ll-setup-assets__item">
                     <div class="ll-setup-assets__preview ll-setup-assets__preview--loginbackground" aria-hidden="true">
                         {{#loginbackgroundurl}}
-                            <img src="{{loginbackgroundurl}}" alt="" class="ll-setup-assets__background">
+                            <img src="{{{loginbackgroundurl}}}" alt="" class="ll-setup-assets__background">
                         {{/loginbackgroundurl}}
                         {{^loginbackgroundurl}}
                             <span class="ll-setup-assets__placeholder">{{#str}}setuploginbackgroundplaceholder, theme_learnlingo{{/str}}</span>
@@ -567,10 +567,10 @@
             <strong id="ll-login-ai-heading">{{#str}}setuploginaiheading, theme_learnlingo{{/str}}</strong>
             <p>{{#str}}setuploginaidesc, theme_learnlingo{{/str}}</p>
             <div class="ll-setup-student__ailinks">
-                <a href="{{mcpurl}}" target="_blank" rel="noopener noreferrer">Moodle MCP</a>
-                <a href="{{chatgpturl}}" target="_blank" rel="noopener noreferrer">ChatGPT</a>
-                <a href="{{claudeurl}}" target="_blank" rel="noopener noreferrer">Claude</a>
-                <a href="{{jsonurl}}">{{#str}}setuppromptimport, theme_learnlingo{{/str}}</a>
+                <a href="{{{mcpurl}}}" target="_blank" rel="noopener noreferrer">Moodle MCP</a>
+                <a href="{{{chatgpturl}}}" target="_blank" rel="noopener noreferrer">ChatGPT</a>
+                <a href="{{{claudeurl}}}" target="_blank" rel="noopener noreferrer">Claude</a>
+                <a href="{{{jsonurl}}}">{{#str}}setuppromptimport, theme_learnlingo{{/str}}</a>
             </div>
             <button type="button" id="learnlingo-copy-prompt" class="btn btn-outline-primary">
                 {{#str}}setuppromptcopy, theme_learnlingo{{/str}}
@@ -586,7 +586,7 @@
             <div class="ll-setup-wizard__actions">
                 <div class="ll-setup-wizard__actions-left">
                     {{#hasprevious}}
-                        <a href="{{previousurl}}" class="btn btn-outline-secondary">
+                        <a href="{{{previousurl}}}" class="btn btn-outline-secondary">
                             {{#str}}setupwizardback, theme_learnlingo{{/str}}
                         </a>
                     {{/hasprevious}}
