@@ -157,6 +157,21 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback("theme_reset_all_caches");
     $page->add($setting);
 
+    // Limit ONLY the guest-facing {{#courses}} list; student lists are never paginated.
+    $perpageoptions = [];
+    foreach (range(1, 12) as $count) {
+        $perpageoptions[$count] = (string)$count;
+    }
+    $setting = new admin_setting_configselect(
+        "theme_learnlingo/homepagepubliccoursesperpage",
+        get_string("homepagepubliccoursesperpage", "theme_learnlingo"),
+        get_string("homepagepubliccoursesperpage_desc", "theme_learnlingo"),
+        "4",
+        $perpageoptions
+    );
+    $setting->set_updatedcallback("theme_learnlingo_homepage_cache_reset");
+    $page->add($setting);
+
     $setting = new admin_setting_configcheckbox(
         "theme_learnlingo/homepagefullwidth",
         get_string("homepagefullwidth", "theme_learnlingo"),
@@ -180,21 +195,6 @@ if ($ADMIN->fulltree) {
         get_string("homepagepubliccourses_desc", "theme_learnlingo"),
         "",
         $publiccourseoptions
-    );
-    $setting->set_updatedcallback("theme_learnlingo_homepage_cache_reset");
-    $page->add($setting);
-
-    // Limit ONLY the guest-facing {{#courses}} list; student lists are never paginated.
-    $perpageoptions = [];
-    foreach (range(1, 12) as $count) {
-        $perpageoptions[$count] = (string)$count;
-    }
-    $setting = new admin_setting_configselect(
-        "theme_learnlingo/homepagepubliccoursesperpage",
-        get_string("homepagepubliccoursesperpage", "theme_learnlingo"),
-        get_string("homepagepubliccoursesperpage_desc", "theme_learnlingo"),
-        "4",
-        $perpageoptions
     );
     $setting->set_updatedcallback("theme_learnlingo_homepage_cache_reset");
     $page->add($setting);
