@@ -92,8 +92,10 @@ define([], function() {
         const canvas = root.querySelector('[data-file-canvas]');
         const name = root.querySelector('[data-file-name]');
         const state = root.querySelector('[data-file-state]');
-        const current = state.textContent.trim();
-        const emptylabel = root.querySelector('[data-file-name]').textContent.trim();
+        const currentlabel = root.dataset.currentLabel;
+        const emptylabel = root.dataset.emptyLabel;
+        const newlabel = root.dataset.newLabel;
+        const noimagelabel = root.dataset.noImageLabel;
         const existingFilename = image.getAttribute('alt') || '';
         const template = root.dataset.draftPattern;
         let filename = existingFilename;
@@ -127,9 +129,9 @@ define([], function() {
                 name.textContent = file;
                 // Saved image vs new draft image.
                 if (file !== existingFilename || temporary) {
-                    state.textContent = root.dataset.newLabel || current;
+                    state.textContent = newlabel;
                 } else {
-                    state.textContent = current;
+                    state.textContent = currentlabel;
                 }
             } else {
                 releaseObjectUrl();
@@ -138,8 +140,8 @@ define([], function() {
                 image.removeAttribute('src');
                 empty.hidden = false;
                 canvas.dataset.background = 'neutral';
-                name.textContent = emptylabel;
-                state.textContent = root.dataset.emptyLabel || current;
+                name.textContent = noimagelabel;
+                state.textContent = emptylabel;
             }
         };
 
