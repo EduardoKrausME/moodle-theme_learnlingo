@@ -215,6 +215,27 @@ final class homepage_context {
                 'Keep semantic responsive HTML in homepagehtml and CSS/SCSS in '
                 . 'homepagescss. Beware homepagescss is applied globally on every '
                 . 'page, so scope homepage-only rules with explicit selectors.',
+                'MANDATORY DARK MODE SUPPORT: every custom Mustache homepage must '
+                . 'look correct in both light and dark appearances. The optional '
+                . 'local_boost_dark plugin sets data-bs-theme="dark" on <html>. '
+                . 'Use [data-bs-theme="dark"] .your-home selectors in homepagescss '
+                . 'for dark backgrounds, surfaces, text, borders, cards, links, '
+                . 'buttons and focus states. Match selector specificity to your '
+                . 'light rules, and preserve readable contrast in both modes. '
+                . 'Scope home styles to a unique homepage root so they do not '
+                . 'change other Moodle pages.',
+                'Prefer var(--learnlingo-home-canvas), var(--learnlingo-home-surface), '
+                . 'var(--learnlingo-home-ink), var(--learnlingo-home-muted) and '
+                . 'var(--learnlingo-home-border) in custom homepage CSS. These '
+                . 'variables inherit the theme palette and update automatically '
+                . 'when the HTML data-bs-theme attribute changes. Hard-coded '
+                . 'light backgrounds in custom sections must have explicit dark '
+                . 'overrides; the theme cannot infer arbitrary branded colors.',
+                'Dark appearance is client-side, not a Mustache data field: do '
+                . 'NOT invent {{isdark}}, do not render separate cached dark '
+                . 'HTML and do not require JavaScript or a page reload to switch '
+                . 'appearance. Do not force the user dark-mode preference or '
+                . 'assume the optional plugin is installed or enabled.',
                 'Text and URL values are HTML-escaped in PHP, even inside triple-brace '
                 . 'tags. Prefer ordinary {{variable}} syntax for readability.',
                 'Only the guest public catalogue uses a shared MUC cache with a '
@@ -280,6 +301,16 @@ final class homepage_context {
                 . '{{number}}</a>{{/coursepagination.coursepages}}'
                 . '</nav>{{/coursepagination.hascoursepages}}',
                 'Empty course list: {{^hascourses}}<p>No courses available.</p>{{/hascourses}}',
+                'Dark-aware custom home: homepagehtml uses <section class="example-home">'
+                . '{{#courses}}<article class="example-card"><a href="{{url}}">'
+                . '{{fullname}}</a></article>{{/courses}}</section>. '
+                . 'homepagescss uses .example-home {background:var(--learnlingo-home-canvas);'
+                . 'color:var(--learnlingo-home-ink)} '
+                . '.example-home .example-card {background:var(--learnlingo-home-surface);'
+                . 'border:1px solid var(--learnlingo-home-border)} '
+                . '[data-bs-theme="dark"] .example-home {--example-accent:#F5BD8D} '
+                . 'for additional branded dark overrides, including link and '
+                . 'button colors. Do not put these CSS rules inside homepagehtml.',
             ],
             'security' => 'All context strings are HTML-escaped, including in triple-brace tags. '
                 . 'No data about other users is exposed; user, mycourses and cohorts are '

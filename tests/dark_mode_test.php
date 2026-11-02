@@ -56,6 +56,41 @@ final class dark_mode_test extends advanced_testcase {
     }
 
     /**
+     * Custom Mustache homes follow the active HTML dark attribute without a new page render.
+     *
+     * @return void
+     */
+    public function test_custom_mustache_home_inherits_light_and_dark_colours(): void {
+        global $CFG;
+
+        $light = file_get_contents($CFG->dirroot . '/theme/learnlingo/scss/_poss.scss');
+        $dark = file_get_contents($CFG->dirroot . '/theme/learnlingo/scss/moodle/_dark.scss');
+        foreach ([
+            '--learnlingo-home-canvas',
+            '--learnlingo-home-surface',
+            '--learnlingo-home-ink',
+            '--learnlingo-home-muted',
+            '--learnlingo-home-border',
+        ] as $token) {
+            $this->assertStringContainsString($token, $light);
+        }
+        $this->assertStringContainsString('.learnlingo-html-home,', $light);
+        $this->assertStringContainsString('.learnlingo-home-intro {', $light);
+        $this->assertStringContainsString('color-scheme: light;', $light);
+        $this->assertStringContainsString('[data-bs-theme="dark"]', $dark);
+        $this->assertStringContainsString('.learnlingo-html-home,', $dark);
+        $this->assertStringContainsString('color-scheme: dark;', $dark);
+
+        $schema = homepage_context::schema();
+        $instructions = implode(' ', $schema['instructions']);
+        $this->assertStringContainsString('[data-bs-theme="dark"]', $instructions);
+        $this->assertStringContainsString('homepagescss', $instructions);
+        $this->assertStringContainsString('do not require JavaScript', $instructions);
+        $this->assertArrayNotHasKey('isdark', $schema['fields']);
+        $this->assertStringContainsString('[data-bs-theme="dark"]', implode(' ', $schema['examples']));
+    }
+
+    /**
      * test_installation_form_is_a_separate_post_request
      *
      * @return void

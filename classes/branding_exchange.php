@@ -142,7 +142,13 @@ It sets data-bs-theme="dark" on the HTML element when a user chooses dark
 appearance and the plugin is enabled. Do not claim Dark Mode is active if it
 is not installed or enabled, and never add a made-up JSON setting for it.
 Always check generated HTML, SCSS, text colours, borders, buttons and images
-in BOTH light and dark appearances. Use [data-bs-theme="dark"] selectors
+in BOTH light and dark appearances. For any custom Mustache homepage, keep
+one HTML template and use homepage-specific SCSS variables and explicit
+[data-bs-theme="dark"] .your-home selectors. The theme supplies the
+--learnlingo-home-canvas, --learnlingo-home-surface, --learnlingo-home-ink,
+--learnlingo-home-muted and --learnlingo-home-border CSS tokens. Do not invent
+{{isdark}} or store a server-side appearance flag; the mode can change without
+reloading the page. Use [data-bs-theme="dark"] selectors
 for specific dark overrides; do not blindly use the light canvas colour
 as the dark background. Keep text legible, keyboard focus visible, and
 contrast accessible. Do not overwrite or remove the user's saved SCSS.

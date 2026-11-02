@@ -9,6 +9,11 @@
     --learnlingo-border: #405064;
     --learnlingo-shadow: 0 4px 0 rgba(0, 0, 0, .18);
     --learnlingo-shadow-hover: 0 12px 26px rgba(0, 0, 0, .3);
+    // Custom HTML home uses the live light/dark CSS variables defined in _poss.scss.
+    .learnlingo-html-home,
+    .learnlingo-home-intro {
+        color-scheme: dark;
+    }
     body,
     #page-wrapper,
     #page,

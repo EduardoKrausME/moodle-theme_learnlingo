@@ -369,6 +369,21 @@ h6,
     width: 100%;
     margin-top: auto;
 }
+// Custom Mustache homepage surfaces inherit the current Moodle color scheme.
+// Institutions can use these tokens for their own homepagehtml/homepagescss;
+// they stay compatible with a live light/dark switch without PHP variables.
+.learnlingo-html-home,
+.learnlingo-home-intro {
+    --learnlingo-home-canvas: var(--learnlingo-canvas);
+    --learnlingo-home-surface: var(--learnlingo-surface);
+    --learnlingo-home-ink: var(--learnlingo-ink);
+    --learnlingo-home-muted: var(--learnlingo-muted);
+    --learnlingo-home-border: var(--learnlingo-border);
+    color: var(--learnlingo-home-ink);
+    background-color: var(--learnlingo-home-canvas);
+    color-scheme: light;
+}
+
 // Course renderer front page.
 .learnlingo-home {
     width: 100%;

@@ -103,6 +103,7 @@ final class mcp_homepage_test extends advanced_testcase {
         $this->assertStringContainsString('{{#hasprogress}}', $instructions);
         $this->assertStringContainsString('MUC', $instructions);
         $this->assertStringContainsString('instead of hardcoding', $instructions);
+        $this->assertStringContainsString('[data-bs-theme="dark"]', $instructions);
         $html = '<section class="welcome"><h1>New Moodle home</h1></section>';
         $arguments = [
             'html' => $html,
@@ -122,6 +123,10 @@ final class mcp_homepage_test extends advanced_testcase {
         $this->assertStringContainsString('Mustache', $reader->get_description());
         $this->assertStringContainsString('mustache.instructions', $reader->get_description());
         $this->assertStringContainsString('mustache.instructions', $writer->get_description());
+        $this->assertStringContainsString('[data-bs-theme="dark"]', $writer->get_description());
+        $this->assertStringContainsString('[data-bs-theme="dark"]', $reader->get_description());
+        $this->assertStringContainsString('[data-bs-theme="dark"]',
+            $schema['properties']['homepagescss']['description']);
         $this->assertStringContainsString('every page',
             $schema['properties']['homepagescss']['description']);
         $this->assertStringContainsString('footer',
