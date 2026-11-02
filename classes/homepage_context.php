@@ -29,7 +29,6 @@ use core_completion\progress;
 use core_course_category;
 use core_course_list_element;
 use moodle_url;
-use Mustache_Autoloader;
 use Throwable;
 
 /**
@@ -51,21 +50,25 @@ final class homepage_context {
             return $html;
         }
 
-        // Moodle provides the legacy global Mustache_Engine class, not Mustache\Engine.
+        // Moodle 5.x uses Mustache\\Engine; older releases use Mustache_Engine.
+        // Reuse the Moodle-registered autoloader, as in local_kopere_bi.
         if (!class_exists(\Mustache_Engine::class)) {
-            global $CFG;
-            require_once($CFG->libdir . '/mustache/src/Mustache/Autoloader.php');
-            Mustache_Autoloader::register();
+            if (!class_exists(\Mustache\Engine::class)) {
+                debugging('LearnLingo homepage Mustache engine is not available.', DEBUG_DEVELOPER);
+                return $html;
+            }
+            class_alias(\Mustache\Engine::class, 'Mustache_Engine');
         }
-        $engine = new \Mustache_Engine([
-            // The context is already escaped so triple braces are safe too.
-            'escape' => static function ($value): string {
-                return (string)$value;
-            },
-            // Compiled Mustache templates are keyed by source and theme revision.
-            'cache' => make_localcache_directory('mustache/learnlingo-home/' . theme_get_revision()),
-        ]);
+
         try {
+            $engine = new \Mustache_Engine([
+                // The context is already escaped so triple braces are safe too.
+                'escape' => static function ($value): string {
+                    return (string)$value;
+                },
+                // Compiled Mustache templates are keyed by source and theme revision.
+                'cache' => make_localcache_directory('mustache/learnlingo-home/' . theme_get_revision()),
+            ]);
             return $engine->render($html, self::data());
         } catch (Throwable $exception) {
             debugging('Invalid LearnLingo homepage Mustache: ' . $exception->getMessage(), DEBUG_DEVELOPER);
