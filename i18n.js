@@ -5,6 +5,7 @@
   const textSources = new WeakMap();
   const attributeSources = new WeakMap();
   let language = window.LearnLingoPreferences.language;
+  const localePage = window.location.pathname.match(/\/(pt_br|en)\/(?:index\.html)?$/i);
 
   function translate(source) {
     if (language !== 'en') return source;
@@ -57,12 +58,31 @@
 
   function setLanguage(next, persist = true) {
     if (!['pt', 'en'].includes(next)) return;
+    // On the translated landing pages, language selection changes URLs instead
+    // of changing the translated HTML in place.
+    if (localePage && next !== (localePage[1].toLowerCase() === 'en' ? 'en' : 'pt')) {
+      if (persist) save('learnlingo-language', next);
+      const target = new URL('../' + (next === 'en' ? 'en' : 'pt_br') + '/', window.location.href);
+      window.location.assign(target.pathname + window.location.search + window.location.hash);
+      return;
+    }
     language = next;
     document.documentElement.lang = language === 'en' ? 'en' : 'pt-BR';
     document.querySelector('meta[property="og:locale"]').content = language === 'en' ? 'en_US' : 'pt_BR';
     document.querySelectorAll('[data-language]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.language === language)));
     localize();
-    if (persist) save('learnlingo-language', language);
+    // Keep guide navigation pointing to the selected language's landing page.
+    document.querySelectorAll('[data-home-link]').forEach(link => {
+      link.href = (language === 'en' ? 'en' : 'pt_br') + '/index.html' + link.dataset.homeLink;
+    });
+    if (persist) {
+      save('learnlingo-language', language);
+      if (!localePage && window.location.pathname.endsWith('/copiar-colar.html')) {
+        const url = new URL(window.location.href);
+        url.searchParams.set('lang', language);
+        window.history.replaceState(null, '', url.pathname + url.search + url.hash);
+      }
+    }
   }
 
   let explicitTheme = window.LearnLingoPreferences.theme;
