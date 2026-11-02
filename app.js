@@ -141,19 +141,3 @@ document.addEventListener('keydown', event => {
 document.addEventListener('click', event => {
   if (!mobileNav.hidden && !event.target.closest('.header')) closeMenu();
 });
-
-const installDialog = $('#install-dialog');
-$('#open-install').addEventListener('click', () => {
-  installDialog.showModal();
-  document.body.style.overflow = 'hidden';
-});
-$('.dialog-close').addEventListener('click', () => installDialog.close());
-installDialog.addEventListener('close', () => { document.body.style.overflow = ''; });
-installDialog.addEventListener('click', event => {
-  if (event.target === installDialog) {
-    const r = installDialog.getBoundingClientRect();
-    if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) {
-      installDialog.close();
-    }
-  }
-});

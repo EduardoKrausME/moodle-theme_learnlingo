@@ -189,3 +189,7 @@
 
 .language-switch a{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
 .language-switch a:hover{text-decoration:none}
+
+/* Four readable navigation destinations across localized pages. */
+@media(min-width:851px){.desktop-nav{gap:18px;font-size:13px}.nav{gap:16px}.desktop-nav a{white-space:nowrap}}
+@media(min-width:851px) and (max-width:1100px){.header-cta{display:none}.desktop-nav{gap:15px;font-size:12px}}

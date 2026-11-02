@@ -1,0 +1,44 @@
+
+.docs-page{background:var(--bg,#fff)}
+.docs-page .doc-hero{padding:78px 0;background:linear-gradient(120deg,#f3f9ed,#fbf7ff);border-bottom:1px solid #e4eadc}
+.docs-page .doc-hero-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);align-items:center;gap:60px}
+.docs-page .doc-kicker{color:#538a31;font-weight:900;letter-spacing:1.5px;font-size:12px}
+.docs-page h1{font-size:clamp(39px,4.6vw,66px);line-height:1.09;letter-spacing:-2.5px;margin:18px 0}
+.docs-page h1 em{font-style:normal;color:#5d962d}
+.docs-page .doc-lead{font-size:18px;line-height:1.75;max-width:780px}
+.docs-page .doc-actions{display:flex;gap:23px;align-items:center;flex-wrap:wrap;margin-top:31px}
+.docs-page .doc-text-link{font-size:14px;font-weight:900;color:#4b9228;text-decoration:underline;text-underline-offset:4px}
+.docs-page .doc-visual{background:white;border:1px solid #e0e9d6;border-radius:25px;padding:27px;box-shadow:0 18px 65px #31472714}
+.docs-page .doc-visual h2{font-size:19px;color:#3d5a31;margin:0 0 20px}
+.docs-page .doc-flow-line{display:flex;align-items:center;gap:13px;padding:14px;background:#f5faef;border-radius:12px;font-size:13px;font-weight:800;margin-top:12px;color:#344c29}
+.docs-page .doc-number{display:grid;place-items:center;background:#dff2cb;color:#467d25;font-size:13px;font-weight:900;border-radius:10px;min-width:37px;height:37px;flex-shrink:0}
+.docs-page .doc-section{padding:70px 0}
+.docs-page .doc-section:nth-of-type(2n+1){background:#fafcf8}
+.docs-page .doc-section-heading{max-width:820px;margin-bottom:35px}
+.docs-page .doc-section h2{font-size:clamp(30px,3.3vw,45px);letter-spacing:-1.2px;line-height:1.2;margin-bottom:16px}
+.docs-page .doc-section h3{font-size:19px;font-weight:900;letter-spacing:-.3px;margin:0 0 12px}
+.docs-page .doc-section p{font-size:15px;line-height:1.85}
+.docs-page .doc-steps{display:grid;gap:17px;max-width:1020px}
+.docs-page .doc-step{display:flex;gap:21px;padding:24px 28px;background:white;border:1px solid #e2e9d9;border-radius:18px}
+.docs-page .doc-step p{margin:0}
+.docs-page .doc-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:21px}
+.docs-page .doc-card{background:#fff;border:1px solid #e2e9d9;padding:28px;border-radius:18px}
+.docs-page .doc-card p{margin-bottom:0}
+.docs-page .doc-faq{display:grid;gap:12px;max-width:950px}
+.docs-page .doc-faq details{background:white;border:1px solid #e2e9d9;padding:19px 23px;border-radius:15px}
+.docs-page .doc-faq summary{font-size:15px;font-weight:900;cursor:pointer}
+.docs-page .doc-faq p{margin:14px 0 0}
+.docs-page .doc-example{white-space:pre-wrap;background:#eff7e8;border-left:4px solid #81cb40;padding:25px;border-radius:0 15px 15px 0;line-height:1.85;font-weight:700;max-width:1030px}
+.docs-page .doc-notice{padding:19px 25px;border-radius:14px;background:#f6f1fc;line-height:1.8;font-size:14px;margin-top:24px;max-width:1030px}
+.docs-page a:not(.button):hover{color:#4a8a25}
+:root[data-appearance=dark] .docs-page{background:#1a291d}
+:root[data-appearance=dark] .docs-page .doc-hero{background:linear-gradient(125deg,#263c29,#302941);border-color:#445c3e}
+:root[data-appearance=dark] .docs-page .doc-section:nth-of-type(2n+1){background:#1c2d1f}
+:root[data-appearance=dark] .docs-page .doc-card,:root[data-appearance=dark] .docs-page .doc-step,:root[data-appearance=dark] .docs-page .doc-visual,:root[data-appearance=dark] .docs-page .doc-faq details{background:#263b2a;border-color:#466041}
+:root[data-appearance=dark] .docs-page .doc-flow-line,:root[data-appearance=dark] .docs-page .doc-example{background:#304831;color:#e6f3d8}
+:root[data-appearance=dark] .docs-page .doc-notice{background:#322c41;color:#e6dcf2}
+:root[data-appearance=dark] .docs-page h1 em{color:#aee177}
+:root[data-appearance=dark] .docs-page .doc-visual h2{color:#e5f1de}
+.docs-page .doc-section[id]{scroll-margin-top:110px}
+@media(max-width:850px){.docs-page .doc-hero-grid{grid-template-columns:1fr;gap:30px}.docs-page .doc-hero{padding:45px 0}.docs-page .doc-visual{max-width:580px}.docs-page .doc-section{padding:45px 0}}
+@media(max-width:640px){.docs-page .doc-cards{grid-template-columns:1fr}.docs-page .doc-step{padding:19px;gap:13px}.docs-page h1{letter-spacing:-1.5px}.docs-page .doc-visual{padding:20px}}
