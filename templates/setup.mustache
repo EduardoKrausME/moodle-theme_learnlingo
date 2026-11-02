@@ -514,7 +514,8 @@
                     <strong>{{#str}}setupstudentaiheading, theme_learnlingo{{/str}}</strong>
                     <p>{{#str}}setupstudentaidesc, theme_learnlingo{{/str}}</p>
                     <div class="ll-setup-student__ailinks">
-                        <a href="{{{mcpurl}}}" target="_blank" rel="noopener noreferrer">{{#str}}setupmcpconnectionlink, theme_learnlingo{{/str}}</a>
+                        <a href="{{{mcpurl}}}" target="_blank" rel="noopener noreferrer">{{#str}}
+                            setupmcpconnectionlink, theme_learnlingo{{/str}}</a>
                         <a href="{{{chatgpturl}}}" target="_blank" rel="noopener noreferrer">ChatGPT</a>
                         <a href="{{{claudeurl}}}" target="_blank" rel="noopener noreferrer">Claude</a>
                         <a href="{{{jsonurl}}}">{{#str}}setuppromptimport, theme_learnlingo{{/str}}</a>
@@ -662,7 +663,8 @@
                     <strong id="ll-login-ai-heading">{{#str}}setuploginaiheading, theme_learnlingo{{/str}}</strong>
                     <p>{{#str}}setuploginaidesc, theme_learnlingo{{/str}}</p>
                     <div class="ll-setup-student__ailinks">
-                        <a href="{{{mcpurl}}}" target="_blank" rel="noopener noreferrer">{{#str}}setupmcpconnectionlink, theme_learnlingo{{/str}}</a>
+                        <a href="{{{mcpurl}}}" target="_blank" rel="noopener noreferrer">{{#str}}
+                            setupmcpconnectionlink, theme_learnlingo{{/str}}</a>
                         <a href="{{{chatgpturl}}}" target="_blank" rel="noopener noreferrer">ChatGPT</a>
                         <a href="{{{claudeurl}}}" target="_blank" rel="noopener noreferrer">Claude</a>
                         <a href="{{{jsonurl}}}">{{#str}}setuppromptimport, theme_learnlingo{{/str}}</a>
@@ -693,12 +695,6 @@
                         <p>{{#str}}darkmodebenefitcompat, theme_learnlingo{{/str}}</p>
                     </div>
                     <p class="ll-setup-dark__help">{{#str}}darkmodeoptional, theme_learnlingo{{/str}}</p>
-                    {{^darkcodeavailable}}
-                        <p class="ll-setup-dark__help">{{#str}}darkmodemissingcode, theme_learnlingo{{/str}}
-                            <a href="https://github.com/EduardoKrausME/moodle-local_boost_dark"
-                               target="_blank" rel="noopener noreferrer">local_boost_dark</a>
-                        </p>
-                    {{/darkcodeavailable}}
                     <button type="submit" form="ll-boost-dark-install" class="btn btn-secondary">
                         {{#str}}darkmodeinstall, theme_learnlingo{{/str}}
                     </button>

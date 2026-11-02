@@ -68,14 +68,14 @@ $string['coursesettings'] = 'Páginas dos cursos';
 $string['coursexpincourse'] = 'XP no curso';
 $string['coursexplevel'] = 'Nível atual';
 $string['coursexpreward'] = '+{$a} XP';
-$string['darkmodebenefitchoice'] = 'Cada usuário escolhe a aparência clara ou escura de forma independente.';
-$string['darkmodebenefitcomfort'] = 'Leitura mais confortável em ambientes pouco iluminados, com superfícies escuras e textos legíveis.';
-$string['darkmodebenefitcompat'] = 'Cartões, páginas de cursos, Painel e assistente de configuração do LearnLingo se adaptam ao modo escuro.';
 $string['darkmodeheading'] = 'Ofereça uma experiência com Dark Mode';
-$string['darkmodeinstall'] = 'Instalar Dark Mode';
-$string['darkmodeintro'] = 'O LearnLingo é compatível com o plugin opcional local_boost_dark, permitindo que alunos e professores escolham entre aparência clara e escura sem perder a identidade visual da instituição.';
-$string['darkmodemissingcode'] = 'Se o plugin ainda não estiver no servidor, envie seus arquivos ou consulte o repositório:';
-$string['darkmodeoptional'] = 'Integração opcional. Você pode concluir a configuração sem instalar o plugin; a instalação e a ativação permanecem sob controle do administrador do Moodle.';
+$string['darkmodeintro'] = '
+<p>O LearnLingo é compatível com o plugin opcional local_boost_dark, permitindo que alunos e professores escolham entre aparência clara e escura sem perder a identidade visual da instituição.</p>
+<p>Leitura mais confortável em ambientes pouco iluminados, com superfícies escuras e textos legíveis.</p>
+<p>Cada usuário escolhe a aparência clara ou escura de forma independente.</p>
+<p>Cartões, páginas de cursos, Painel e assistente de configuração do LearnLingo se adaptam ao modo escuro.</p>
+<p><a href="{$a}" class="btn btn-primary">Instalar Dark Mode</a></p>
+<p class="small">Integração opcional. Você pode concluir a configuração sem instalar o plugin; a instalação e a ativação permanecem sob controle do administrador do Moodle.</p>';
 $string['darkmodetab'] = 'Dark Mode';
 $string['dashboardcta'] = 'Continuar aprendendo';
 $string['dashboarddescription'] = 'Avance um pouco a cada dia, acompanhe seu progresso e conquiste novos desafios de aprendizagem.';

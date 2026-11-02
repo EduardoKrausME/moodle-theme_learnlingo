@@ -20,31 +20,11 @@
     lives in an inert HTML template and AMD relocates it outside that form.
 }}
 <div class="ll-darkmode-settings">
-    <p>{{#str}}darkmodeintro, theme_learnlingo{{/str}}</p>
-    <p>{{#str}}darkmodebenefitcomfort, theme_learnlingo{{/str}}</p>
-    <p>{{#str}}darkmodebenefitchoice, theme_learnlingo{{/str}}</p>
-    <p>{{#str}}darkmodebenefitcompat, theme_learnlingo{{/str}}</p>
-    {{^codeavailable}}
-        <p class="alert alert-info">{{#str}}darkmodemissingcode, theme_learnlingo{{/str}}
-            <a href="https://github.com/EduardoKrausME/moodle-local_boost_dark"
-               target="_blank" rel="noopener noreferrer">local_boost_dark</a>
-        </p>
-    {{/codeavailable}}
     {{! Kept inert while rendered inside Moodle's surrounding settings form. }}
-    <template id="ll-boost-dark-form-template">
-        <form id="ll-boost-dark-install-settings" method="post" action="{{{installurl}}}">
-            <input type="hidden" name="cache" value="0">
-            <input type="hidden" name="confirmrelease" value="1">
-            <input type="hidden" name="confirmplugincheck" value="0">
-            <input type="hidden" name="installdep" value="local_boost_dark">
-            <input type="hidden" name="sesskey" value="{{sesskey}}">
-        </form>
-    </template>
-    <button type="submit" form="ll-boost-dark-install-settings" class="btn btn-secondary">
-        {{#str}}darkmodeinstall, theme_learnlingo{{/str}}
-    </button>
-    <noscript>
-        <p><a href="{{{installurl}}}">{{#str}}darkmodeinstall, theme_learnlingo{{/str}}</a></p>
-    </noscript>
-    <p class="small">{{#str}}darkmodeoptional, theme_learnlingo{{/str}}</p>
+    <div id="ll-boost-dark-form-template" class="card">
+        <div class="card-header">{{#str}}darkmodeheading, theme_learnlingo{{/str}}</div>
+        <div class="card-body">
+            {{#str}}darkmodeintro, theme_learnlingo, {{{installurl}}}{{/str}}
+        </div>
+    </div>
 </div>
