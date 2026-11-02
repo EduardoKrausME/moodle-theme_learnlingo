@@ -31,7 +31,7 @@
     <div class="ll-storedfile__preview" data-file-preview>
         <div class="ll-storedfile__canvas" data-file-canvas data-background="neutral">
             <img class="ll-storedfile__image" data-file-image
-                src="{{previewurl}}" alt="{{filename}}" {{^haspreview}}hidden{{/haspreview}}>
+                {{#haspreview}}src="{{previewurl}}"{{/haspreview}} alt="{{filename}}" {{^haspreview}}hidden{{/haspreview}}>
             <span class="ll-storedfile__empty" data-file-empty {{#haspreview}}hidden{{/haspreview}}
                 aria-hidden="true"><i class="fa fa-image"></i></span>
         </div>
