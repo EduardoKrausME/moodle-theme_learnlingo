@@ -425,6 +425,8 @@ if ($ADMIN->fulltree) {
 
     // Integrate the optional Dark Mode plugin without making it a dependency.
     if (!dark_mode::installed()) {
+        // Attach the install POST to a standalone form, not to #adminsettings.
+        $PAGE->requires->js_call_amd('theme_learnlingo/darkmode_settings', 'init');
         $page = new admin_settingpage(
             "theme_learnlingo_darkmode",
             get_string('darkmodetab', 'theme_learnlingo')

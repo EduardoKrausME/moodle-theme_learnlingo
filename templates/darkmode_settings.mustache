@@ -16,8 +16,8 @@
 }}
 {{!
     @template theme_learnlingo/darkmode_settings
-    Rendered inside Moodle's existing admin settings POST form. Use a submit
-    button with formaction rather than nesting a form.
+    Rendered inside Moodle's adminsettings form. The real installer form
+    lives in an inert HTML template and AMD relocates it outside that form.
 }}
 <div class="ll-darkmode-settings">
     <p>{{#str}}darkmodeintro, theme_learnlingo{{/str}}</p>
@@ -30,13 +30,21 @@
                target="_blank" rel="noopener noreferrer">local_boost_dark</a>
         </p>
     {{/codeavailable}}
-    <input type="hidden" name="cache" value="0">
-    <input type="hidden" name="confirmrelease" value="1">
-    <input type="hidden" name="confirmplugincheck" value="0">
-    <input type="hidden" name="installdep" value="local_boost_dark">
-    <input type="hidden" name="sesskey" value="{{sesskey}}">
-    <button type="submit" formaction="{{{installurl}}}" formmethod="post" class="btn btn-secondary">
+    {{! Kept inert while rendered inside Moodle's surrounding settings form. }}
+    <template id="ll-boost-dark-form-template">
+        <form id="ll-boost-dark-install-settings" method="post" action="{{{installurl}}}">
+            <input type="hidden" name="cache" value="0">
+            <input type="hidden" name="confirmrelease" value="1">
+            <input type="hidden" name="confirmplugincheck" value="0">
+            <input type="hidden" name="installdep" value="local_boost_dark">
+            <input type="hidden" name="sesskey" value="{{sesskey}}">
+        </form>
+    </template>
+    <button type="submit" form="ll-boost-dark-install-settings" class="btn btn-secondary">
         {{#str}}darkmodeinstall, theme_learnlingo{{/str}}
     </button>
+    <noscript>
+        <p><a href="{{{installurl}}}">{{#str}}darkmodeinstall, theme_learnlingo{{/str}}</a></p>
+    </noscript>
     <p class="small">{{#str}}darkmodeoptional, theme_learnlingo{{/str}}</p>
 </div>

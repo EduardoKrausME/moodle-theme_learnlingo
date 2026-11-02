@@ -105,7 +105,15 @@ final class dark_mode_test extends advanced_testcase {
         $this->assertStringContainsString('method="post" action="{{{darkinstallurl}}}"', $setup);
         $this->assertStringContainsString('name="installdep" value="local_boost_dark"', $setup);
         $this->assertStringContainsString('name="sesskey" value="{{sesskey}}"', $setup);
-        $this->assertStringContainsString('formaction="{{{installurl}}}" formmethod="post"', $settings);
+        $this->assertStringContainsString('<template id="ll-boost-dark-form-template">', $settings);
+        $this->assertStringContainsString(
+            '<form id="ll-boost-dark-install-settings" method="post" action="{{{installurl}}}">', $settings);
+        $this->assertStringContainsString('form="ll-boost-dark-install-settings"', $settings);
+        $this->assertStringContainsString('name="installdep" value="local_boost_dark"', $settings);
+        $this->assertStringContainsString('name="sesskey" value="{{sesskey}}"', $settings);
+        $this->assertStringNotContainsString('formaction="{{{installurl}}}"', $settings);
+        $script = file_get_contents($CFG->dirroot . '/theme/learnlingo/amd/src/darkmode_settings.js');
+        $this->assertStringContainsString('document.body.appendChild(form)', $script);
         $this->assertStringContainsString('@import "moodle/dark";', $scss);
     }
 }
