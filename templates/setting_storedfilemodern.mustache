@@ -23,7 +23,11 @@
         "filemanagerhtml": "<div class=\"filemanager\"></div>"
     }
 }}
-<div class="ll-storedfile" data-ll-storedfile data-draft-pattern="{{draftpattern}}">
+<div class="ll-storedfile" data-ll-storedfile data-draft-pattern="{{draftpattern}}"
+    data-current-label="{{#str}}filemoderncurrent, theme_learnlingo{{/str}}"
+    data-empty-label="{{#str}}filemodernempty, theme_learnlingo{{/str}}"
+    data-new-label="{{#str}}filemodernnew, theme_learnlingo{{/str}}"
+    data-no-image-label="{{#str}}filemodernnoimage, theme_learnlingo{{/str}}">
     <div class="ll-storedfile__preview" data-file-preview>
         <div class="ll-storedfile__canvas" data-file-canvas data-background="neutral">
             <img class="ll-storedfile__image" data-file-image
