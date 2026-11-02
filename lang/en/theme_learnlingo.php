@@ -222,7 +222,7 @@ $string['setupaihintmcpdesc'] = 'Connect Moodle to ChatGPT or Claude to inspect 
 $string['setupaihintpaste'] = 'No installation needed: copy and paste into ChatGPT or Claude';
 $string['setupaihintpastedesc'] = 'Copy the prompt containing your current settings, paste it into ChatGPT or Claude, customize your homepage, and import the generated JSON to apply the changes.';
 $string['setupaihintprivacy'] = 'Review institutional information before sharing the prompt. Changes require a JSON import or explicit confirmation through MCP.';
-$string['setupaihomeprompt'] = 'Focus this conversation on customizing the LearnLingo HOMEPAGE. Ask whether I prefer the LearnLingo homepage, Moodle native homepage or a custom HTML homepage. Preserve all other settings unless I request changes.';
+$string['setupaihomeprompt'] = 'Focus this conversation on customizing the LearnLingo HOMEPAGE. Ask whether I prefer the LearnLingo homepage, Moodle native homepage or a custom HTML homepage. Custom homes must use Mustache for dynamic data and SCSS for both light and dark appearances, with [data-bs-theme="dark"] overrides for readable backgrounds, text, cards and buttons. Preserve all other settings unless I request changes.';
 $string['setupailoginprompt'] = 'Focus exclusively on the LearnLingo LOGIN SCREEN. Propose clear institutional text for loginpaneltitletext, loginpaneldescriptiontext and loginpaneltaglinetext, following the institution\'s language. Preserve all other settings and do not modify authentication or security. Explain that logo and background uploads must happen in Moodle settings or through authorized MCP tools.';
 $string['setupapply'] = 'Apply my choices';
 $string['setupassetexisting'] = 'Current site image';
