@@ -85,9 +85,10 @@ if ($ADMIN->fulltree) {
 
     // Initialise the modern colour editor on both the branding and footer tabs.
     $PAGE->requires->js_call_amd("theme_learnlingo/colour_settings", "init");
+    $PAGE->requires->js_call_amd("theme_learnlingo/storedfile_settings", "init");
 
     // Use the Moodle-wide site logo, shared with core's Appearance > Logos page.
-    $setting = new admin_setting_configstoredfile(
+    $setting = new \theme_learnlingo\admin_setting_configstoredfilemodern(
         "core_admin/logo",
         get_string("logo", "theme_learnlingo"),
         get_string("logo_desc", "theme_learnlingo"),
@@ -99,7 +100,7 @@ if ($ADMIN->fulltree) {
     $page->add($setting);
 
     // Favicon file setting.
-    $setting = new admin_setting_configstoredfile(
+    $setting = new \theme_learnlingo\admin_setting_configstoredfilemodern(
         "core_admin/favicon",
         get_string("favicon", "theme_learnlingo"),
         get_string("favicon_desc", "theme_learnlingo"),
@@ -388,12 +389,12 @@ if ($ADMIN->fulltree) {
     $name = "theme_boost/loginbackgroundimage";
     $title = get_string("loginbackgroundimage", "theme_boost");
     $description = get_string("loginbackgroundimage_desc", "theme_boost");
-    $setting = new admin_setting_configstoredfile($name, $title, $description, "loginbackgroundimage");
+    $setting = new \theme_learnlingo\admin_setting_configstoredfilemodern($name, $title, $description, "loginbackgroundimage");
     $setting->set_updatedcallback("theme_reset_all_caches");
     $page->add($setting);
 
     // Optional logo for the login form, independent of the Moodle-wide site logo.
-    $setting = new admin_setting_configstoredfile(
+    $setting = new \theme_learnlingo\admin_setting_configstoredfilemodern(
         "theme_learnlingo/loginlogo",
         get_string("loginlogo", "theme_learnlingo"),
         get_string("loginlogo_desc", "theme_learnlingo"),
