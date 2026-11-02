@@ -73,7 +73,7 @@ if ($ADMIN->fulltree) {
         "textcolor" => "#263238",
     ];
     foreach ($colors as $name => $default) {
-        $setting = new admin_setting_configcolourpicker(
+        $setting = new \theme_learnlingo\admin_setting_configcolourmodern(
             "theme_learnlingo/{$name}",
             get_string($name, "theme_learnlingo"),
             get_string("{$name}_desc", "theme_learnlingo"),
@@ -82,6 +82,9 @@ if ($ADMIN->fulltree) {
         $setting->set_updatedcallback("theme_reset_all_caches");
         $page->add($setting);
     }
+
+    // Initialise the modern colour editor on both the branding and footer tabs.
+    $PAGE->requires->js_call_amd("theme_learnlingo/colour_settings", "init");
 
     // Use the Moodle-wide site logo, shared with core's Appearance > Logos page.
     $setting = new admin_setting_configstoredfile(
@@ -239,7 +242,7 @@ if ($ADMIN->fulltree) {
 
     $PAGE->requires->js_call_amd("theme_learnlingo/footer_settings", "init");
 
-    $setting = new admin_setting_configcolourpicker(
+    $setting = new \theme_learnlingo\admin_setting_configcolourmodern(
         "theme_learnlingo/footer_background_color",
         get_string("footer_background_color", "theme_learnlingo"),
         get_string("footer_background_color_desc", "theme_learnlingo"),

@@ -1,0 +1,66 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+}}
+{{!
+    @template theme_learnlingo/setting_colourmodern
+
+    Modern colour picker for a Moodle admin_setting_configcolourmodern.
+    All dynamic attributes are Mustache-escaped. The CSS custom property
+    contains only a PHP-validated hexadecimal colour.
+
+    Example context (json):
+    {
+        "id": "id_s_theme_learnlingo_brandcolor",
+        "name": "s_theme_learnlingo_brandcolor",
+        "value": "#58cc02",
+        "hex": "#58CC02",
+        "defaulthex": "#58CC02",
+        "readonly": false,
+        "presetlabel": "Use colour",
+        "presets": [{"colour": "#58CC02"}, {"colour": "#2563EB"}]
+    }
+}}
+<div class="ll-colour-picker" data-ll-colour-picker data-default="{{defaulthex}}">
+    <div class="ll-colour-picker__editor">
+        <div class="ll-colour-picker__preview" data-colour-preview style="--ll-picker-colour: {{hex}};">
+            <span class="ll-colour-picker__preview-icon" aria-hidden="true">Aa</span>
+            <span class="ll-colour-picker__preview-caption">{{#str}}colourpreview, theme_learnlingo{{/str}}</span>
+        </div>
+        <div class="ll-colour-picker__fields">
+            <div class="ll-colour-picker__field">
+                <label for="{{id}}">{{#str}}colourhexvalue, theme_learnlingo{{/str}}</label>
+                <input type="text" name="{{name}}" id="{{id}}" value="{{value}}"
+                    class="form-control ll-colour-picker__hex text-ltr" autocomplete="off"
+                    spellcheck="false" dir="ltr" aria-describedby="{{id}}-help {{id}}-error"
+                    {{#readonly}}disabled{{/readonly}}>
+                <small id="{{id}}-help" class="ll-colour-picker__help">{{#str}}colourhexhelp, theme_learnlingo{{/str}}</small>
+                <small id="{{id}}-error" class="ll-colour-picker__error" data-colour-error hidden>
+                    {{#str}}colourinvalid, theme_learnlingo{{/str}}
+                </small>
+            </div>
+            <div class="ll-colour-picker__field ll-colour-picker__native-field">
+                <label for="{{id}}-native">{{#str}}colourcustom, theme_learnlingo{{/str}}</label>
+                <input type="color" id="{{id}}-native" class="ll-colour-picker__native"
+                    value="{{hex}}" {{#readonly}}disabled{{/readonly}}>
+            </div>
+        </div>
+    </div>
+    <div class="ll-colour-picker__palette-header">
+        <span class="ll-colour-picker__palette-label">{{#str}}colourpalette, theme_learnlingo{{/str}}</span>
+        <button type="button" class="ll-colour-picker__reset" data-colour-reset
+            {{#readonly}}disabled{{/readonly}}>{{#str}}colourreset, theme_learnlingo{{/str}}</button>
+    </div>
+    <div class="ll-colour-picker__swatches" role="group" aria-label="{{#str}}colourpalette, theme_learnlingo{{/str}}">
+        {{#presets}}
+            <button type="button" class="ll-colour-picker__swatch" style="--ll-picker-colour: {{colour}};"
+                data-colour="{{colour}}" aria-label="{{presetlabel}}: {{colour}}"
+                title="{{colour}}" aria-pressed="false" {{#readonly}}disabled{{/readonly}}>
+                <span class="ll-colour-picker__swatch-check" aria-hidden="true">&#10003;</span>
+            </button>
+        {{/presets}}
+    </div>
+</div>
