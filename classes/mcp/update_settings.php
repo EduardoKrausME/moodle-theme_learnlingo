@@ -177,6 +177,7 @@ final class update_settings extends base_tool {
             'footer_show_copywriter' => 'Show built-in credit line in traditional '
                 . 'moodle footer only; not rendered when footermode=html.',
             'showdashboardhero' => 'Display the introductory dashboard hero.',
+            'showwelcome' => 'Show the personalised welcome text to authenticated users on the LearnLingo homepage.',
             'showcoursehero' => 'Display the course header/hero.',
             'courseheroeyebrow' => 'Short caption above the course hero heading.',
             'showcourseherosummary' => 'Show course summary in the course hero.',
