@@ -30,9 +30,6 @@ use moodle_url;
  * Detect the installed Moodle plugin without changing its configuration.
  */
 final class dark_mode {
-    /** @var string Fully qualified plugin component. */
-    public const COMPONENT = 'local_boost_dark';
-
     /**
      * Installed means Moodle has registered the plugin version, not merely
      * that its files are present on the server.
@@ -40,7 +37,7 @@ final class dark_mode {
      * @return bool
      */
     public static function installed(): bool {
-        return get_config(self::COMPONENT, 'version') !== false;
+        return get_config('local_boost_dark', 'version') !== false;
     }
 
     /**
@@ -59,7 +56,7 @@ final class dark_mode {
      * @return bool
      */
     public static function enabled(): bool {
-        return self::installed() && (bool)get_config(self::COMPONENT, 'enable');
+        return self::installed() && (bool)get_config('local_boost_dark', 'enable');
     }
 
     /**
@@ -69,7 +66,7 @@ final class dark_mode {
      */
     public static function status(): array {
         return [
-            'plugin' => self::COMPONENT,
+            'plugin' => 'local_boost_dark',
             'installed' => self::installed(),
             'enabled' => self::enabled(),
             'css_selector' => '[data-bs-theme="dark"]',

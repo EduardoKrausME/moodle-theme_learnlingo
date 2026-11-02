@@ -21,33 +21,22 @@
 }}
 <div class="ll-darkmode-settings">
     <p>{{#str}}darkmodeintro, theme_learnlingo{{/str}}</p>
-    {{#installed}}
-        <p class="alert alert-success" role="status">{{#str}}darkmodeinstalled, theme_learnlingo{{/str}}</p>
-        {{#enabled}}
-            <p>{{#str}}darkmodeenabled, theme_learnlingo{{/str}}</p>
-        {{/enabled}}
-        {{^enabled}}
-            <p>{{#str}}darkmodedisabled, theme_learnlingo{{/str}}</p>
-        {{/enabled}}
-    {{/installed}}
-    {{^installed}}
-        <p>{{#str}}darkmodebenefitcomfort, theme_learnlingo{{/str}}</p>
-        <p>{{#str}}darkmodebenefitchoice, theme_learnlingo{{/str}}</p>
-        <p>{{#str}}darkmodebenefitcompat, theme_learnlingo{{/str}}</p>
-        {{^codeavailable}}
-            <p class="alert alert-info">{{#str}}darkmodemissingcode, theme_learnlingo{{/str}}
-                <a href="https://github.com/EduardoKrausME/moodle-local_boost_dark"
-                   target="_blank" rel="noopener noreferrer">local_boost_dark</a>
-            </p>
-        {{/codeavailable}}
-        <input type="hidden" name="cache" value="0">
-        <input type="hidden" name="confirmrelease" value="1">
-        <input type="hidden" name="confirmplugincheck" value="0">
-        <input type="hidden" name="installdep" value="local_boost_dark">
-        <input type="hidden" name="sesskey" value="{{sesskey}}">
-        <button type="submit" formaction="{{{installurl}}}" formmethod="post" class="btn btn-secondary">
-            {{#str}}darkmodeinstall, theme_learnlingo{{/str}}
-        </button>
-        <p class="small">{{#str}}darkmodeoptional, theme_learnlingo{{/str}}</p>
-    {{/installed}}
+    <p>{{#str}}darkmodebenefitcomfort, theme_learnlingo{{/str}}</p>
+    <p>{{#str}}darkmodebenefitchoice, theme_learnlingo{{/str}}</p>
+    <p>{{#str}}darkmodebenefitcompat, theme_learnlingo{{/str}}</p>
+    {{^codeavailable}}
+        <p class="alert alert-info">{{#str}}darkmodemissingcode, theme_learnlingo{{/str}}
+            <a href="https://github.com/EduardoKrausME/moodle-local_boost_dark"
+               target="_blank" rel="noopener noreferrer">local_boost_dark</a>
+        </p>
+    {{/codeavailable}}
+    <input type="hidden" name="cache" value="0">
+    <input type="hidden" name="confirmrelease" value="1">
+    <input type="hidden" name="confirmplugincheck" value="0">
+    <input type="hidden" name="installdep" value="local_boost_dark">
+    <input type="hidden" name="sesskey" value="{{sesskey}}">
+    <button type="submit" formaction="{{{installurl}}}" formmethod="post" class="btn btn-secondary">
+        {{#str}}darkmodeinstall, theme_learnlingo{{/str}}
+    </button>
+    <p class="small">{{#str}}darkmodeoptional, theme_learnlingo{{/str}}</p>
 </div>
