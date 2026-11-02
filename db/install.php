@@ -51,7 +51,7 @@ function xmldb_theme_learnlingo_install(): void {
         set_config('setup_pending', 1, 'theme_learnlingo');
     }
 
-    $source = "{$CFG->dirroot}/theme/learnlingo/pix/default-logo.png";
+    $source = "{$CFG->dirroot}/theme/learnlingo/pix/default-logo.svg";
     if (file_exists($source)) {
         $context = context_system::instance();
         $fs = get_file_storage();
@@ -74,8 +74,8 @@ function xmldb_theme_learnlingo_install(): void {
                     "filearea" => "logo",
                     "itemid" => 0,
                     "filepath" => "/",
-                    "filename" => "default-logo.png",
-                    "mimetype" => "image/png",
+                    "filename" => "default-logo.svg",
+                    "mimetype" => "image/svg+xml",
                     "userid" => 0,
                 ], $source);
             }
