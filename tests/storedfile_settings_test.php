@@ -188,6 +188,15 @@ final class storedfile_settings_test extends advanced_testcase {
         foreach ($files as $file) {
             $file->delete();
         }
+        // A real filemanager maintains the root directory even after deletion.
+        // This is required by core's safety check for an existing file area.
+        get_file_storage()->create_directory(
+            \context_user::instance($USER->id)->id,
+            'user',
+            'draft',
+            $emptydraftid,
+            '/'
+        );
         $this->assertSame('', $setting->write_setting($emptydraftid));
         $this->assertSame('', $setting->get_setting());
         $this->assertFalse(get_file_storage()->get_file(
