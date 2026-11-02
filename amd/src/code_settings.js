@@ -172,7 +172,7 @@ define([], function() {
                 highlightHtml(code, value + '\n ');
             }
             const total = value.split('\n').length;
-            lines.textContent = total + (total === 1 ? ' line' : ' lines');
+            lines.textContent = total + ' ' + (total === 1 ? root.dataset.oneLine : root.dataset.manyLines);
             const numbers = document.createDocumentFragment();
             for (let i = 1; i <= Math.min(total, 20000); i++) {
                 const number = document.createElement('span');
