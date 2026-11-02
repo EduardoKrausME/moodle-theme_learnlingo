@@ -27,6 +27,10 @@
 
 namespace theme_learnlingo;
 
+// The base admin settings classes are defined in adminlib.php on Moodle 4.5.
+global $CFG;
+require_once($CFG->libdir . '/adminlib.php');
+
 /**
  * Modern colour setting with native picker, presets, and editable value.
  */
