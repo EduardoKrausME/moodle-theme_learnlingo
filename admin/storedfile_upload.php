@@ -73,12 +73,37 @@ $setting = new \theme_learnlingo\admin_setting_configstoredfilemodern(
 $setting->set_updatedcallback('theme_reset_all_caches');
 
 try {
-    // Always create a private, fresh user draft. An interrupted upload cannot
-    // overwrite the existing image or corrupt another form's draft contents.
+    // Prepare a fresh private draft from the current setting. This also
+    // creates Moodle's required directory placeholder for the write_setting()
+    // safety checks, even when we subsequently remove the actual image.
     $draftid = file_get_unused_draft_itemid();
     $usercontext = context_user::instance($USER->id);
     $fs = get_file_storage();
     $filename = '';
+    $component = strtok($settingname, '/');
+    $component = $component ?: 'core';
+    file_prepare_draft_area(
+        $draftid,
+        context_system::instance()->id,
+        $component,
+        $definition['area'],
+        0,
+        ['subdirs' => 0, 'maxfiles' => 1, 'accepted_types' => $definition['types']]
+    );
+
+    // Keep the area directory record and remove only files, so the existing
+    // stored image is not accidentally included in a replacement or delete.
+    $previousfiles = $fs->get_area_files(
+        $usercontext->id,
+        'user',
+        'draft',
+        $draftid,
+        'sortorder,filepath,filename',
+        false
+    );
+    foreach ($previousfiles as $previousfile) {
+        $previousfile->delete();
+    }
 
     if ($action === 'upload') {
         if (empty($_FILES['image']) || !is_array($_FILES['image'])) {
@@ -122,7 +147,7 @@ try {
             'filename' => $filename,
             'userid' => $USER->id,
             'author' => fullname($USER),
-            'license' => $CFG->sitedefaultlicense ?: 'allrightsreserved',
+            'license' => !empty($CFG->sitedefaultlicense) ? $CFG->sitedefaultlicense : 'allrightsreserved',
         ];
         $fs->create_file_from_pathname($record, $upload['tmp_name']);
     }
