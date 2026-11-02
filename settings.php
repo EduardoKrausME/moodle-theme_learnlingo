@@ -193,7 +193,7 @@ if ($ADMIN->fulltree) {
         "theme_learnlingo/homepagepubliccourses",
         get_string("homepagepubliccourses", "theme_learnlingo"),
         get_string("homepagepubliccourses_desc", "theme_learnlingo"),
-        "",
+        [],
         $publiccourseoptions
     );
     $setting->set_updatedcallback("theme_learnlingo_homepage_cache_reset");
