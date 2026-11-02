@@ -125,7 +125,11 @@ final class update_settings extends base_tool {
                 . 'url, hasimage, imageurl, hasprogress and progress. '
                 . 'Read homepage_mustache from learnlingo_get_settings for '
                 . 'complete fields, examples, caching and security instructions. '
-                . 'Never hardcode names/progress or insert scripts.',
+                . 'Never hardcode names/progress or insert scripts. '
+                . 'Provide light and dark styles in homepagescss: use '
+                . '[data-bs-theme="dark"] .your-home for dark overrides '
+                . 'and --learnlingo-home-* tokens for adaptive surfaces. '
+                . 'Never invent a {{isdark}} Mustache field.',
             'homepagescss' => 'Global SCSS loaded on EVERY page in ALL homepage modes. '
                 . 'Can style the home, navbar, menus and footer. NOT automatically '
                 . 'scoped to home: use explicit homepage selectors for home-only rules. '
