@@ -131,6 +131,154 @@ define([], function() {
         addText(node, source.slice(offset));
     };
 
+
+    /**
+     * Safely indent HTML block boundaries when settings open. In particular,
+     * never alter inline text, quoted attributes or raw script/style/pre content.
+     *
+     * @param {String} source HTML source.
+     * @returns {String} Indented source or the original when markup is ambiguous.
+     */
+    const formatHtmlOnOpen = (source) => {
+        if (!source || source.length > 250000 || /<\?|<%/.test(source)) {
+            return source;
+        }
+        const blocks = new Set([
+            'address', 'article', 'aside', 'blockquote', 'body', 'caption', 'dd',
+            'details', 'dialog', 'div', 'dl', 'dt', 'fieldset', 'figcaption',
+            'figure', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+            'head', 'header', 'hgroup', 'html', 'li', 'main', 'menu', 'nav',
+            'ol', 'option', 'optgroup', 'p', 'section', 'summary', 'table',
+            'tbody', 'td', 'tfoot', 'th', 'thead', 'tr', 'ul'
+        ]);
+        const voids = new Set([
+            'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input',
+            'link', 'meta', 'param', 'source', 'track', 'wbr'
+        ]);
+        const opaque = new Set([
+            'code', 'iframe', 'math', 'noscript', 'pre', 'script', 'style',
+            'svg', 'template', 'textarea', 'title', 'xmp'
+        ]);
+        const tokens = [];
+        const tagStack = [];
+        let index = 0;
+        while (index < source.length) {
+            if (source[index] !== '<') {
+                const next = source.indexOf('<', index);
+                const end = next < 0 ? source.length : next;
+                tokens.push({kind: 'text', value: source.slice(index, end)});
+                index = end;
+                continue;
+            }
+            if (source.startsWith('<!--', index)) {
+                const end = source.indexOf('-->', index + 4);
+                if (end < 0) {
+                    return source;
+                }
+                tokens.push({kind: 'tag', value: source.slice(index, end + 3), block: true});
+                index = end + 3;
+                continue;
+            }
+            let end = index + 1;
+            let quote = '';
+            while (end < source.length) {
+                const char = source[end];
+                if (quote) {
+                    if (char === quote) {
+                        quote = '';
+                    }
+                } else if (char === '"' || char === "'") {
+                    quote = char;
+                } else if (char === '>') {
+                    break;
+                }
+                end++;
+            }
+            if (end === source.length) {
+                return source;
+            }
+            const tag = source.slice(index, end + 1);
+            const match = /^<(\/?)([a-z][\w:-]*)(?=[\s/>])/i.exec(tag);
+            if (!match) {
+                if (/^<!|^<\?/.test(tag)) {
+                    tokens.push({kind: 'tag', value: tag, block: true});
+                    index = end + 1;
+                } else {
+                    tokens.push({kind: 'text', value: '<'});
+                    index++;
+                }
+                continue;
+            }
+            const name = match[2].toLowerCase();
+            const closing = match[1] === '/';
+            const selfClosing = voids.has(name) || /\/\s*>$/.test(tag);
+            if (closing) {
+                if (tagStack.pop() !== name) {
+                    return source;
+                }
+            } else if (!selfClosing) {
+                tagStack.push(name);
+            }
+            if (!closing && !selfClosing && opaque.has(name)) {
+                const closingPattern = new RegExp('</' + name + '\\s*>', 'ig');
+                closingPattern.lastIndex = end + 1;
+                if (!closingPattern.exec(source)) {
+                    return source;
+                }
+                tagStack.pop();
+                tokens.push({
+                    kind: 'tag',
+                    value: source.slice(index, closingPattern.lastIndex),
+                    block: true
+                });
+                index = closingPattern.lastIndex;
+                continue;
+            }
+            tokens.push({
+                kind: 'tag',
+                value: tag,
+                block: blocks.has(name),
+                opening: !closing && !selfClosing,
+                closing: closing,
+                name: name
+            });
+            index = end + 1;
+        }
+        if (tagStack.length) {
+            return source;
+        }
+
+        let result = '';
+        let pending = '';
+        let previous = null;
+        let depth = 0;
+        tokens.forEach((token) => {
+            if (token.kind === 'text' && /^\s*$/.test(token.value)) {
+                pending += token.value;
+                return;
+            }
+            if (token.closing && token.block) {
+                depth = Math.max(0, depth - 1);
+            }
+            const contiguousBlocks = previous && previous.kind === 'tag' &&
+                previous.block && token.kind === 'tag' && token.block;
+            const emptyPair = previous && previous.opening && token.closing &&
+                previous.name === token.name;
+            if (contiguousBlocks && !emptyPair) {
+                result += '\n' + '    '.repeat(Math.min(depth, 80));
+            } else {
+                result += pending;
+            }
+            pending = '';
+            result += token.value;
+            if (token.opening && token.block) {
+                depth++;
+            }
+            previous = token;
+        });
+        return result + pending;
+    };
+
     const initialise = (root) => {
         if (root.dataset.codeInitialised === '1') {
             return;
@@ -148,6 +296,11 @@ define([], function() {
             return;
         }
         root.dataset.codeInitialised = '1';
+
+        // Format the editor's local value; Moodle config changes only on Save.
+        if (root.dataset.language === 'html' && !input.disabled) {
+            input.value = formatHtmlOnOpen(input.value);
+        }
 
         const syncScroll = () => {
             display.scrollTop = input.scrollTop;
