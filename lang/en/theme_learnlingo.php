@@ -73,16 +73,14 @@ $string['coursesettings'] = 'Course pages';
 $string['coursexpincourse'] = 'XP in this course';
 $string['coursexplevel'] = 'Current level';
 $string['coursexpreward'] = '+{$a} XP';
-$string['darkmodebenefitchoice'] = 'Each user can choose light or dark appearance independently.';
-$string['darkmodebenefitcomfort'] = 'Comfortable reading in dim environments with dark surfaces and readable text.';
-$string['darkmodebenefitcompat'] = 'LearnLingo cards, course pages, Dashboard and setup adapt automatically to the dark attribute.';
-$string['darkmodedisabled'] = 'The plugin is installed but currently disabled. Enable it in the local_boost_dark administration settings.';
-$string['darkmodeenabled'] = 'Dark Mode is enabled; each user\'s preference controls the appearance.';
 $string['darkmodeheading'] = 'Offer a comfortable Dark Mode';
-$string['darkmodeinstall'] = 'Install Dark Mode';
-$string['darkmodeintro'] = 'LearnLingo supports the optional local_boost_dark plugin, allowing students and teachers to choose a lighter or darker interface without changing the institutional identity.';
-$string['darkmodemissingcode'] = 'If the plugin files are not yet on this server, deploy the plugin first or consult its repository:';
-$string['darkmodeoptional'] = 'Optional integration. You may complete setup without installing this plugin; installation and activation remain under Moodle administrator control.';
+$string['darkmodeintro'] = '
+<p>LearnLingo supports the optional local_boost_dark plugin, allowing students and teachers to choose a light or dark interface without losing the institution\'s visual identity.</p>
+<p>More comfortable reading in low-light environments, with dark surfaces and legible text.</p>
+<p>Each user can independently choose a light or dark appearance.</p>
+<p>LearnLingo cards, course pages, Dashboard and setup wizard automatically adapt to dark mode.</p>
+<p><a href="{$a}" class="btn btn-primary">Install Dark Mode</a></p>
+<p class="small">Optional integration. You can complete the setup without installing the plugin; installation and activation remain under the Moodle administrator\'s control.</p>';
 $string['darkmodetab'] = 'Dark Mode';
 $string['dashboardcta'] = 'Keep learning';
 $string['dashboarddescription'] = 'Build your skills one lesson at a time, follow your progress and take on your next learning challenge.';
