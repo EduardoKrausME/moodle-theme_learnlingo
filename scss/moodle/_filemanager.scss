@@ -130,20 +130,20 @@
         .fp-file {
             position: relative;
             float: none;
-            flex: 0 1 146px;
-            width: 146px;
-            min-width: 0;
             margin: 0;
-            padding: .7rem .55rem .55rem;
             border: 1px solid var(--learnlingo-border);
             border-radius: .875rem;
             background: var(--learnlingo-surface);
             transition: border-color .15s ease, background-color .15s ease, box-shadow .15s ease;
+            padding: 0;
+            min-width: auto;
+            background: initial;
             &:hover,
             &:focus-within {
                 border-color: rgba($primary, .4);
                 background: rgba($primary, .025);
                 box-shadow: 0 5px 14px rgba(37, 42, 55, .07);
+                text-decoration: none;
             }
             &.selected,
             &.fp-selected {
@@ -158,10 +158,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto .5rem;
-            border: 1px solid var(--learnlingo-border);
-            border-radius: .65rem;
-            background: rgba($primary, .035);
+            margin: 0 auto;
             img {
                 max-width: 100%;
                 max-height: 100%;
@@ -172,9 +169,12 @@
             }
         }
         .fp-filename-field {
+            position: initial !important;
             max-width: 100%;
-            margin-top: .15rem;
             text-align: center;
+            height: auto;
+            margin-top: 0;
+            margin-bottom: 6px;
         }
         .fp-filename {
             max-width: 100%;
@@ -182,7 +182,10 @@
             color: var(--learnlingo-ink);
             font-size: .8rem;
             font-weight: 650;
-            line-height: 1.4;
+            line-height: 1;
+            background: initial;
+            text-align: center;
+            padding: 0 4px;
         }
         .fp-contextmenu {
             position: absolute;
