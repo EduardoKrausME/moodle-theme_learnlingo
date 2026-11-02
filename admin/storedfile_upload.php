@@ -105,6 +105,11 @@ try {
         $previousfile->delete();
     }
 
+    // An empty draft must retain the root directory record. Core's
+    // admin_setting_configstoredfile::write_setting() rejects deletion
+    // when the destination has a directory but the draft does not.
+    $fs->create_directory($usercontext->id, 'user', 'draft', $draftid, '/');
+
     if ($action === 'upload') {
         if (empty($_FILES['image']) || !is_array($_FILES['image'])) {
             throw new moodle_exception('filemodernuploaderror', 'theme_learnlingo');
