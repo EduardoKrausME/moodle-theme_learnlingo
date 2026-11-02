@@ -23,11 +23,15 @@
         "readonly": false
     }
 }}
-<div class="ll-code-editor" data-ll-code-editor data-language="{{language}}">
+<div class="ll-code-editor" data-ll-code-editor data-language="{{language}}"
+    data-one-line="{{#str}}codeeditorline, theme_learnlingo{{/str}}"
+    data-many-lines="{{#str}}codeeditorlines, theme_learnlingo{{/str}}">
     <div class="ll-code-editor__toolbar">
         <span class="ll-code-editor__language">{{languageupper}}</span>
         <span class="ll-code-editor__lines" data-code-lines aria-live="off"></span>
         <button class="ll-code-editor__expand" data-code-expand type="button"
+            data-expand-label="{{#str}}codeeditorfullscreen, theme_learnlingo{{/str}}"
+            data-collapse-label="{{#str}}codeeditorcollapse, theme_learnlingo{{/str}}"
             aria-pressed="false" aria-label="{{#str}}codeeditorfullscreen, theme_learnlingo{{/str}}">
             <i class="fa fa-expand" aria-hidden="true"></i>
             <span data-code-expand-label>{{#str}}codeeditorfullscreen, theme_learnlingo{{/str}}</span>
