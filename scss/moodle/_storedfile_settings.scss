@@ -1,0 +1,238 @@
+// Modern file settings UI; all uploads continue through Moodle's filemanager.
+.ll-storedfile {
+    max-width: 740px;
+    padding: 1rem;
+    border: 1px solid var(--learnlingo-border, #dce5e0);
+    border-radius: 1.25rem;
+    background: var(--learnlingo-surface, #fff);
+    box-shadow: 0 8px 28px rgba(20, 35, 40, .05);
+
+    &__preview {
+        display: grid;
+        grid-template-columns: minmax(120px, 190px) minmax(0, 1fr);
+        gap: 1.1rem;
+        align-items: center;
+        padding: .85rem;
+        margin-bottom: 1rem;
+        border: 1px solid var(--learnlingo-border, #dce5e0);
+        border-radius: .95rem;
+        background: rgba(121, 140, 150, .045);
+    }
+
+    &__canvas {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-height: 132px;
+        padding: 1rem;
+        overflow: hidden;
+        border-radius: .7rem;
+        background-color: #e8edf0;
+        background-image: linear-gradient(135deg, #f7f9fb 50%, #344556 50%);
+        border: 1px solid rgba(128, 144, 154, .16);
+        transition: background-color .18s ease;
+
+        &[data-background="dark"] {
+            background: #172734;
+        }
+
+        &[data-background="light"] {
+            background: #fff;
+        }
+    }
+
+    &__image {
+        display: block;
+        width: auto;
+        max-width: 100%;
+        max-height: 160px;
+        height: auto;
+        object-fit: contain;
+        filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .07));
+    }
+
+    &__image[hidden],
+    &__empty[hidden] {
+        display: none;
+    }
+
+    &__empty {
+        color: #68798a;
+        font-size: 2.65rem;
+    }
+
+    &__preview-details {
+        min-width: 0;
+    }
+
+    &__eyebrow {
+        display: block;
+        margin-bottom: .4rem;
+        font-size: .7rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: .08em;
+        color: var(--learnlingo-muted, #68756d);
+    }
+
+    &__filename {
+        display: block;
+        overflow-wrap: anywhere;
+        margin-bottom: .4rem;
+        font-size: .95rem;
+        font-weight: 750;
+        color: var(--learnlingo-ink, #263238);
+    }
+
+    &__preview-hint {
+        display: block;
+        color: var(--learnlingo-muted, #68756d);
+        line-height: 1.5;
+    }
+
+    &__manager {
+        min-width: 0;
+    }
+
+    // The custom drop surface lives in the actual core YUI upload target.
+    &__dropzone {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: .65rem;
+        min-height: 190px;
+        padding: 1.5rem;
+        margin: .7rem;
+        border: 2px dashed #9bb4a7;
+        border-radius: 1rem;
+        background: rgba($primary, .035);
+        color: var(--learnlingo-ink, #263238);
+        text-align: center;
+        transition: border-color .15s ease, background .15s ease;
+
+        &[hidden] {
+            display: none;
+        }
+    }
+
+    &__drop-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 46px;
+        height: 46px;
+        border-radius: 14px;
+        background: rgba($primary, .12);
+        color: $primary;
+        font-size: 1.45rem;
+    }
+
+    &__or,
+    &__instructions {
+        color: var(--learnlingo-muted, #68756d);
+        font-size: .84rem;
+    }
+
+    &__choose {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: .5rem;
+        min-height: 41px;
+        padding: .55rem 1.05rem;
+        border-radius: .75rem;
+        font-weight: 700;
+    }
+
+    &__file-input {
+        display: none;
+    }
+
+    // Only this setting gets the simplified, consolidated upload appearance.
+    .filemanager-container.dndupload-ready &__dropzone,
+    .filemanager.dndupload-ready &__dropzone {
+        border-color: $primary;
+        background: rgba($primary, .10);
+    }
+
+    .filemanager {
+        .filemanager-container {
+            border-radius: .9rem;
+            border-top: 1px solid var(--learnlingo-border, #dce5e0);
+        }
+
+        .fm-empty-container .dndupload-message {
+            display: none;
+        }
+
+        .fp-navbar {
+            border-radius: .9rem .9rem 0 0;
+        }
+
+        .filemanager-toolbar {
+            padding: .6rem .75rem;
+        }
+    }
+}
+
+[data-bs-theme="dark"] .ll-storedfile {
+    background: #202a35;
+    border-color: #465463;
+    box-shadow: none;
+
+    &__preview {
+        background: #263440;
+        border-color: #465463;
+    }
+
+    &__filename {
+        color: #f3f6fb;
+    }
+
+    &__eyebrow,
+    &__preview-hint,
+    &__or,
+    &__instructions {
+        color: #becad6;
+    }
+
+    &__dropzone {
+        background: rgba(110, 180, 155, .06);
+        border-color: #627b83;
+        color: #f3f6fb;
+    }
+
+    .filemanager .filemanager-container {
+        background: #263440;
+        border-color: #465463;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .ll-storedfile {
+        padding: .65rem;
+
+        &__preview {
+            grid-template-columns: minmax(0, 1fr);
+            gap: .7rem;
+        }
+
+        &__canvas {
+            min-height: 132px;
+        }
+
+        &__dropzone {
+            margin: .4rem;
+            padding: 1rem .6rem;
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ll-storedfile__canvas,
+    .ll-storedfile__dropzone {
+        transition: none;
+    }
+}
