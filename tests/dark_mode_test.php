@@ -91,20 +91,19 @@ final class dark_mode_test extends advanced_testcase {
     }
 
     /**
-     * test_installation_form_is_a_separate_post_request
+     * Dark Mode setup uses a link to Moodle's install page; settings use a separate POST form.
      *
      * @return void
      */
-    public function test_installation_form_is_a_separate_post_request(): void {
+    public function test_dark_mode_setup_link_and_settings_installation_form(): void {
         global $CFG;
         $setup = file_get_contents($CFG->dirroot . '/theme/learnlingo/templates/setup.mustache');
         $settings = file_get_contents($CFG->dirroot . '/theme/learnlingo/templates/darkmode_settings.mustache');
         $scss = file_get_contents($CFG->dirroot . '/theme/learnlingo/scss/_poss.scss');
 
-        $this->assertStringContainsString('form="ll-boost-dark-install"', $setup);
-        $this->assertStringContainsString('method="post" action="{{{darkinstallurl}}}"', $setup);
-        $this->assertStringContainsString('name="installdep" value="local_boost_dark"', $setup);
-        $this->assertStringContainsString('name="sesskey" value="{{sesskey}}"', $setup);
+        $this->assertStringContainsString('<a href="{{{darkinstallurl}}}" class="btn btn-secondary">', $setup);
+        $this->assertStringNotContainsString('ll-boost-dark-install"', $setup);
+        $this->assertStringNotContainsString('name="installdep" value="local_boost_dark"', $setup);
         $this->assertStringContainsString('<template id="ll-boost-dark-form-template">', $settings);
         $this->assertStringContainsString(
             '<form id="ll-boost-dark-install-settings" method="post" action="{{{installurl}}}">', $settings);

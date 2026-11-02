@@ -695,9 +695,9 @@
                         <p>{{#str}}darkmodebenefitcompat, theme_learnlingo{{/str}}</p>
                     </div>
                     <p class="ll-setup-dark__help">{{#str}}darkmodeoptional, theme_learnlingo{{/str}}</p>
-                    <button type="submit" form="ll-boost-dark-install" class="btn btn-secondary">
+                    <a href="{{{darkinstallurl}}}" class="btn btn-secondary">
                         {{#str}}darkmodeinstall, theme_learnlingo{{/str}}
-                    </button>
+                    </a>
                 </section>
             {{/stepdark}}
 
@@ -718,15 +718,5 @@
                 </button>
             </div>
         </form>
-        {{#stepdark}}
-        {{! The installer is a separate POST form, never nested inside the wizard. }}
-            <form id="ll-boost-dark-install" method="post" action="{{{darkinstallurl}}}">
-                <input type="hidden" name="cache" value="0">
-                <input type="hidden" name="confirmrelease" value="1">
-                <input type="hidden" name="confirmplugincheck" value="0">
-                <input type="hidden" name="installdep" value="local_boost_dark">
-                <input type="hidden" name="sesskey" value="{{sesskey}}">
-            </form>
-        {{/stepdark}}
     {{/done}}
 </div>
