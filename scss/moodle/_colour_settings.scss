@@ -1,0 +1,204 @@
+// Custom colour editor on Moodle's admin settings forms.
+// Uses local tokens rather than the configured brand colour, so even white,
+// black and highly saturated brand colours remain readable while editing.
+.ll-colour-picker {
+    --ll-picker-surface: #FFF;
+    --ll-picker-ink: #1F2937;
+    --ll-picker-muted: #526171;
+    --ll-picker-border: #D7E0E9;
+    --ll-picker-focus: #2563EB;
+    max-width: 670px;
+    padding: 1.15rem;
+    color: var(--ll-picker-ink);
+    background: var(--ll-picker-surface);
+    border: 1px solid var(--ll-picker-border);
+    border-radius: 20px;
+    box-shadow: 0 5px 20px rgba(21, 39, 57, .055);
+
+    &__editor {
+        display: grid;
+        grid-template-columns: minmax(140px, .7fr) minmax(190px, 1fr);
+        gap: 1.1rem;
+        align-items: stretch;
+    }
+    &__preview {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 150px;
+        padding: 1rem;
+        overflow: hidden;
+        color: var(--ll-picker-preview-ink, #FFF);
+        background-color: var(--ll-picker-colour, #58CC02);
+        border-radius: 15px;
+        border: 1px solid rgba(20, 34, 48, .12);
+        transition: background-color .16s ease;
+    }
+    &__preview-icon {
+        font-size: 2.35rem;
+        font-weight: 800;
+        line-height: 1;
+        letter-spacing: -.08em;
+    }
+    &__preview-caption {
+        font-size: .77rem;
+        font-weight: 700;
+    }
+    &__fields {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: .9rem;
+        min-width: 0;
+    }
+    &__field label {
+        display: block;
+        margin-bottom: .35rem;
+        color: var(--ll-picker-ink);
+        font-size: .81rem;
+        font-weight: 700;
+    }
+    &__hex {
+        max-width: 250px;
+        font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+        font-size: .97rem;
+        letter-spacing: .025em;
+        text-transform: uppercase;
+    }
+    &__hex[aria-invalid="true"] {
+        border-color: #D33A41;
+    }
+    &__help,
+    &__error {
+        display: block;
+        margin-top: .3rem;
+        color: var(--ll-picker-muted);
+        font-size: .72rem;
+        line-height: 1.4;
+    }
+    &__error:not([hidden]) {
+        color: #B42318;
+    }
+    &__error[hidden] {
+        display: none;
+    }
+    &__native {
+        display: block;
+        width: 100px;
+        height: 43px;
+        padding: 3px;
+        background: var(--ll-picker-surface);
+        border: 1px solid var(--ll-picker-border);
+        border-radius: 11px;
+        cursor: pointer;
+    }
+    &__native::-webkit-color-swatch-wrapper {
+        padding: 2px;
+    }
+    &__native::-webkit-color-swatch {
+        border: 0;
+        border-radius: 6px;
+    }
+    &__palette-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: .6rem;
+        margin: 1.15rem 0 .7rem;
+    }
+    &__palette-label {
+        font-size: .83rem;
+        font-weight: 750;
+    }
+    &__reset {
+        padding: .25rem .45rem;
+        color: #1759AC;
+        background: transparent;
+        border: 0;
+        border-radius: 5px;
+        font-size: .79rem;
+        font-weight: 700;
+        cursor: pointer;
+    }
+    &__reset:hover {
+        text-decoration: underline;
+    }
+    &__swatches {
+        display: flex;
+        flex-wrap: wrap;
+        gap: .55rem;
+    }
+    &__swatch {
+        position: relative;
+        display: grid;
+        place-items: center;
+        width: 31px;
+        height: 31px;
+        padding: 0;
+        color: var(--ll-picker-swatch-ink, #FFF);
+        background: var(--ll-picker-colour);
+        border: 1px solid rgba(15, 23, 42, .2);
+        border-radius: 10px;
+        cursor: pointer;
+        transition: transform .12s ease, box-shadow .12s ease;
+    }
+    &__swatch:hover:not(:disabled) {
+        transform: translateY(-2px);
+    }
+    &__swatch[aria-pressed="true"] {
+        box-shadow: 0 0 0 2px var(--ll-picker-surface), 0 0 0 4px var(--ll-picker-focus);
+    }
+    &__swatch-check {
+        visibility: hidden;
+        font-size: 1rem;
+        font-weight: 800;
+    }
+    &__swatch[aria-pressed="true"] .ll-colour-picker__swatch-check {
+        visibility: visible;
+    }
+    button:focus-visible,
+    input:focus-visible {
+        outline: 3px solid var(--ll-picker-focus);
+        outline-offset: 3px;
+    }
+    button:disabled,
+    input:disabled {
+        cursor: not-allowed;
+        opacity: .72;
+    }
+}
+
+[data-bs-theme="dark"] .ll-colour-picker {
+    --ll-picker-surface: #222D3B;
+    --ll-picker-ink: #E8EFF7;
+    --ll-picker-muted: #B5C4D3;
+    --ll-picker-border: #46576B;
+    --ll-picker-focus: #9FCEFF;
+    background: var(--ll-picker-surface);
+    box-shadow: none;
+    .ll-colour-picker__error:not([hidden]) {
+        color: #FFB4AD;
+    }
+    .ll-colour-picker__reset {
+        color: #ABD5FF;
+    }
+}
+
+@media (max-width: 580px) {
+    .ll-colour-picker {
+        padding: .85rem;
+        &__editor {
+            grid-template-columns: minmax(0, 1fr);
+        }
+        &__preview {
+            min-height: 110px;
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ll-colour-picker__preview,
+    .ll-colour-picker__swatch {
+        transition: none;
+    }
+}

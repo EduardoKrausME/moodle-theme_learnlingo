@@ -389,3 +389,13 @@ $string['showwelcome'] = 'Show welcome greeting';
 $string['showwelcome_desc'] = 'Display the personalised greeting on the LearnLingo homepage and enabled Dashboard / My courses pages. Does not enable these Moodle pages.';
 $string['textcolor'] = 'Text colour';
 $string['textcolor_desc'] = 'Main text and heading colour.';
+
+// Modern colour editor in admin settings.
+$string['colourcustom'] = 'Choose a custom colour';
+$string['colourhexvalue'] = 'Colour value';
+$string['colourhexhelp'] = 'Enter a HEX colour (for example #2563EB) or use the colour picker.';
+$string['colourinvalid'] = 'Enter a valid colour value.';
+$string['colourpalette'] = 'Suggested colours';
+$string['colourpreset'] = 'Use colour';
+$string['colourpreview'] = 'Live colour preview';
+$string['colourreset'] = 'Restore default';
