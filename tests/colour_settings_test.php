@@ -58,6 +58,8 @@ final class colour_settings_test extends advanced_testcase {
     public function test_colour_setting_renders_accessible_form(): void {
         $this->resetAfterTest();
         $this->setAdminUser();
+        global $CFG;
+        require_once($CFG->libdir . '/adminlib.php');
 
         $setting = new admin_setting_configcolourmodern(
             'theme_learnlingo/brandcolor', 'Primary', 'My theme colour', '#58cc02'
