@@ -42,7 +42,7 @@ reviewed visual configuration on another site.
 
 ## Customize LearnLingo with ChatGPT or Claude
 
-LearnLingo can optionally connect to ChatGPT or Claude through the Moodle MCP plugin (`local_mcp`). This allows an
+LearnLingo can optionally connect your Moodle site to ChatGPT or Claude (using the MCP protocol, provided by the `local_mcp` plugin). This allows an
 administrator to describe the changes they want in ordinary language, such as adjusting homepage content, changing
 colors or refining theme settings.
 
@@ -50,7 +50,7 @@ The assistant can inspect supported current settings before proposing changes. U
 explicit confirmation configured for the Moodle connection, helping administrators review what will change before
 publication.
 
-This integration is optional: LearnLingo works normally without ChatGPT, Claude or the Moodle MCP plugin.
+This integration is optional: LearnLingo works normally without connecting Moodle to ChatGPT or Claude (using the MCP protocol).
 
 ## Good practices
 
@@ -107,8 +107,8 @@ The assistant consists of **four or five independently saved steps**:
 2. **Homepage**: visually compare the LearnLingo homepage and Moodle's
    native homepage. A custom HTML homepage can still be selected in advanced
    settings, and an existing HTML layout isn't silently discarded.
-   The screen includes the optional Moodle MCP and a copy/paste JSON prompt
-   for ChatGPT or Claude, focused on personalizing the homepage.
+   The screen explains how to connect Moodle to ChatGPT or Claude (using the MCP protocol),
+   or use a copy/paste JSON prompt to personalize the homepage without installing anything.
 3. **Footer and components**: choose the native or custom HTML footer,
    configure course hero/full-width presentation, and use MCP, ChatGPT or
    Claude for optional footer customization.
@@ -158,8 +158,8 @@ remains available afterwards from the theme's advanced settings.
 
 The copy/paste prompts reuse `branding_exchange::export()` and the existing
 validated JSON importer at `/theme/learnlingo/admin/branding_json.php`.
-Moodle MCP remains optional, and updates made through an authorized MCP
-connection still require the existing explicit confirmation workflow.
+Connecting Moodle to ChatGPT or Claude (using the MCP protocol) remains optional,
+and updates made through that authorized connection still require explicit confirmation.
 Logo/favicon uploads are regular Moodle admin operations, not JSON strings.
 Administrators should review site content before sharing a prompt externally.
 
