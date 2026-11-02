@@ -44,7 +44,7 @@
     <div class="ll-storedfile__surface" data-file-dropzone>
         <div class="ll-storedfile__visual" data-file-canvas data-background="neutral">
             <img class="ll-storedfile__image" data-file-image
-                {{#haspreview}}src="{{previewurl}}"{{/haspreview}}
+                {{#haspreview}}src="{{{previewurl}}}"{{/haspreview}}
                 alt="{{filename}}" {{^haspreview}}hidden{{/haspreview}}>
             <span class="ll-storedfile__placeholder" data-file-empty
                 {{#haspreview}}hidden{{/haspreview}} aria-hidden="true">
