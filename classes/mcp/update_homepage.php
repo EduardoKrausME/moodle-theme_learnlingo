@@ -128,7 +128,10 @@ final class update_homepage extends base_tool {
                     . 'Guest content must not rely on user or mycourses. '
                     . 'Call learnlingo_get_homepage to read mustache.instructions '
                     . 'and full field reference. Do not hardcode visitor names, '
-                    . 'enrollments or percentages, and do not add scripts.'],
+                    . 'enrollments or percentages, and do not add scripts. '
+                    . 'The same Mustache HTML must work in light and dark mode; '
+                    . 'place CSS dark overrides in homepagescss, not conditional '
+                    . '{{isdark}} sections in homepagehtml.'],
             'publiccoursesperpage' => ['type' => 'string', 'pattern' => '^(?:[1-9]|1[0-2])$',
                 'description' => '1 to 12 course cards per page in {{#courses}} ONLY '
                     . 'for logged-out visitors, default 4. The guest-only '
@@ -148,8 +151,11 @@ final class update_homepage extends base_tool {
                 'description' => 'Full SCSS stylesheet compiled on every page regardless '
                     . 'of homepagemode; also styles the navbar, menu and footer. '
                     . 'NOT automatically scoped to the homepage. Use explicit '
-                    . 'homepage selectors for homepage-only rules. Do not use a '
-                    . 'bare & at stylesheet root or remote CSS imports.'],
+                    . 'homepage selectors for homepage-only rules. Use '
+                    . '[data-bs-theme="dark"] .your-home to adapt dark colors, '
+                    . 'cards, controls and accessible focus states, and prefer '
+                    . '--learnlingo-home-* variables for light/dark surfaces. '
+                    . 'Do not use a bare & at stylesheet root or remote CSS imports.'],
             'scss' => ['type' => 'string',
                 'description' => 'Global SCSS compiled after Boost on all pages, '
                     . 'independent of homepagemode and footermode. '
