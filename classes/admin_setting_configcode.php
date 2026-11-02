@@ -26,6 +26,10 @@ namespace theme_learnlingo;
 
 defined('MOODLE_INTERNAL') || die;
 
+// Admin setting base classes are defined in Moodle's admin library.
+global $CFG;
+require_once($CFG->libdir . '/adminlib.php');
+
 /**
  * Keep the same config persistence and validation as the standard admin textarea.
  */
@@ -40,6 +44,8 @@ class admin_setting_configcode extends \admin_setting_configtextarea {
     private $coderows;
 
     /**
+     * Create an HTML or SCSS textarea that preserves Moodle's raw configuration storage.
+     *
      * @param string $name Setting name.
      * @param string $visiblename Setting label.
      * @param string $description Setting description.

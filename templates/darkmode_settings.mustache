@@ -16,12 +16,11 @@
 }}
 {{!
     @template theme_learnlingo/darkmode_settings
-    Rendered inside Moodle's adminsettings form. The real installer form
-    lives in an inert HTML template and AMD relocates it outside that form.
+    Displays the optional plugin installation link inside Moodle's admin settings
+    form without introducing a nested form.
 }}
 <div class="ll-darkmode-settings">
-    {{! Kept inert while rendered inside Moodle's surrounding settings form. }}
-    <div id="ll-boost-dark-form-template" class="card">
+    <div class="card">
         <div class="card-header">{{#str}}darkmodeheading, theme_learnlingo{{/str}}</div>
         <div class="card-body">
             {{#str}}darkmodeintro, theme_learnlingo, {{{installurl}}}{{/str}}

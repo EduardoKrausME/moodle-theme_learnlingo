@@ -91,28 +91,32 @@ final class dark_mode_test extends advanced_testcase {
     }
 
     /**
-     * Dark Mode setup uses a link to Moodle's install page; settings use a separate POST form.
+     * Setup and settings link to Moodle's installer without nesting forms.
      *
      * @return void
      */
-    public function test_dark_mode_setup_link_and_settings_installation_form(): void {
+    public function test_dark_mode_setup_and_settings_use_install_links(): void {
         global $CFG;
         $setup = file_get_contents($CFG->dirroot . '/theme/learnlingo/templates/setup.mustache');
         $settings = file_get_contents($CFG->dirroot . '/theme/learnlingo/templates/darkmode_settings.mustache');
         $scss = file_get_contents($CFG->dirroot . '/theme/learnlingo/scss/_poss.scss');
+        $adminsettings = file_get_contents($CFG->dirroot . '/theme/learnlingo/settings.php');
 
         $this->assertStringContainsString('<a href="{{{darkinstallurl}}}" class="btn btn-secondary">', $setup);
-        $this->assertStringNotContainsString('ll-boost-dark-install"', $setup);
         $this->assertStringNotContainsString('name="installdep" value="local_boost_dark"', $setup);
-        $this->assertStringContainsString('<template id="ll-boost-dark-form-template">', $settings);
-        $this->assertStringContainsString(
-            '<form id="ll-boost-dark-install-settings" method="post" action="{{{installurl}}}">', $settings);
-        $this->assertStringContainsString('form="ll-boost-dark-install-settings"', $settings);
-        $this->assertStringContainsString('name="installdep" value="local_boost_dark"', $settings);
-        $this->assertStringContainsString('name="sesskey" value="{{sesskey}}"', $settings);
-        $this->assertStringNotContainsString('formaction="{{{installurl}}}"', $settings);
-        $script = file_get_contents($CFG->dirroot . '/theme/learnlingo/amd/src/darkmode_settings.js');
-        $this->assertStringContainsString('document.body.appendChild(form)', $script);
+        $this->assertStringContainsString('class="ll-darkmode-settings"', $settings);
+        $this->assertStringContainsString('{{#str}}darkmodeintro, theme_learnlingo, {{{installurl}}}{{/str}}', $settings);
+        $this->assertStringNotContainsString('<form', $settings);
+        $this->assertStringNotContainsString('ll-boost-dark-form-template', $settings);
+        $this->assertStringNotContainsString("js_call_amd('theme_learnlingo/darkmode_settings'", $adminsettings);
+
+        foreach (['en', 'pt_br'] as $lang) {
+            $string = [];
+            require($CFG->dirroot . '/theme/learnlingo/lang/' . $lang . '/theme_learnlingo.php');
+            $this->assertStringContainsString('<a href="{$a}"', $string['darkmodeintro']);
+            $this->assertStringNotContainsString('<form', $string['darkmodeintro']);
+        }
+
         $this->assertStringContainsString('@import "moodle/dark";', $scss);
     }
 }
