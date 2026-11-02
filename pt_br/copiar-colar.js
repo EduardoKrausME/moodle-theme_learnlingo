@@ -1,7 +1,6 @@
 'use strict';
 
 (() => {
-  const {translate, localize} = window.LearnLingoI18n;
   const mobileNav = document.querySelector('#mobile-nav');
   const menuButton = document.querySelector('.menu-toggle');
   const toast = document.querySelector('#guide-toast');
@@ -11,7 +10,6 @@
     mobileNav.hidden = true;
     menuButton.setAttribute('aria-expanded', 'false');
     menuButton.setAttribute('aria-label', 'Abrir menu');
-    localize(menuButton);
   }
 
   menuButton.addEventListener('click', () => {
@@ -19,7 +17,6 @@
     mobileNav.hidden = !shouldOpen;
     menuButton.setAttribute('aria-expanded', String(shouldOpen));
     menuButton.setAttribute('aria-label', shouldOpen ? 'Fechar menu' : 'Abrir menu');
-    localize(menuButton);
   });
   mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
   document.addEventListener('keydown', event => {
@@ -51,7 +48,7 @@
   }
 
   function showToast(message) {
-    toast.textContent = translate(message);
+    toast.textContent = message;
     toast.classList.add('show');
     clearTimeout(toastTimeout);
     toastTimeout = setTimeout(() => toast.classList.remove('show'), 3500);
@@ -73,6 +70,4 @@
       showToast('Não foi possível copiar. Selecione o texto manualmente.');
     }
   });
-
-  localize();
 })();

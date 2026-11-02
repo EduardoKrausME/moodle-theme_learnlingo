@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#78ce29">
+  <meta name="description" content="Learn to customize LearnLingo with ChatGPT or Claude: copy your Moodle settings prompt, discuss changes with AI, then import the reviewed JSON. No connection required.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Customize LearnLingo by copying and pasting | Practical guide">
+  <meta property="og:description" content="Copy the Moodle prompt, customize with ChatGPT or Claude, and import changes when you decide.">
+  <meta property="og:url" content="https://eduardokrausme.github.io/moodle-theme_learnlingo/en/copiar-colar.html">
+  <title>Copiar e colar com ChatGPT ou Claude | LearnLingo</title>
+  <script src="../preferences.js"></script>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900;1000&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../copiar-colar.css">
+  
+  
+  
+  <script src="../theme.js" defer></script><script src="copiar-colar.js" defer></script>
+  <link rel="canonical" href="https://eduardokrausme.github.io/moodle-theme_learnlingo/en/copiar-colar.html">
+  <link rel="alternate" hreflang="pt-BR" href="https://eduardokrausme.github.io/moodle-theme_learnlingo/pt_br/copiar-colar.html">
+  <link rel="alternate" hreflang="en" href="https://eduardokrausme.github.io/moodle-theme_learnlingo/en/copiar-colar.html">
+</head>
+<body>
+<a class="skip" href="#conteudo">Skip to content</a>
+<svg class="icon-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+<symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2 3 7 7 3-7 3-3 7-3-7-7-3 7-3 3-7Z"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M12 5C8 2 4 3 2 4v15c4-2 7-1 10 1 3-2 6-3 10-1V4c-3-1-6-2-10 1Zm0 0v15"/></symbol>
+<symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18h1c2 0 3-2 1-4-1-2 0-3 2-3h2c5 0 4-11-6-11Z"/><circle cx="7" cy="10" r=".8"/><circle cx="11" cy="7" r=".8"/><circle cx="16" cy="8" r=".8"/></symbol>
+<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Z"/><path d="m8 12 3 3 5-6"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M15 8V3H3v12h5"/></symbol>
+<symbol id="i-code" viewBox="0 0 24 24"><path d="m7 6-5 6 5 6m10-12 5 6-5 6M14 3l-4 18"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24"><path d="m9 5 11 7-11 7V5Z"/></symbol>
+<symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 3h16v13H9l-5 5V3Z"/><path d="M8 8h8m-8 4h5"/></symbol>
+</defs></svg>
+<header class="header">
+  <div class="nav wrap">
+    <a class="wordmark" href="index.html#" data-home-link="#" aria-label="LearnLingo, home"><img src="../assets/favicon.svg" width="34" height="38" alt=""><span>learn<span>lingo</span></span></a>
+    <nav class="desktop-nav" aria-label="Main navigation"><a href="index.html#experiencia" data-home-link="#experiencia">The theme</a><a href="index.html#sua-marca" data-home-link="#sua-marca">Make it yours</a><a href="index.html#mcp" data-home-link="#mcp">ChatGPT or Claude <span class="tiny-tag">new</span></a></nav>
+    <a class="button small outline header-cta" href="index.html#comecar" data-home-link="#comecar">Get it for my Moodle <svg><use href="#i-arrow"/></svg></a>
+    <div class="header-utilities">
+      <nav class="language-switch" aria-label="Language"><a href="../pt_br/copiar-colar.html" lang="pt-BR" title="Portuguese">PT</a><a href="../en/copiar-colar.html" lang="en" title="English" aria-current="page">EN</a></nav>
+      <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Switch to dark mode" title="Switch to dark mode" aria-pressed="false" data-activate-dark="Switch to dark mode" data-activate-light="Switch to light mode"><svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 13.5A8.5 8.5 0 0 1 10.5 3a8.5 8.5 0 1 0 10 10.5Z"/></svg><svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></button>
+    </div>
+    <button class="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span></button>
+  </div>
+  <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation" hidden><a href="index.html#experiencia" data-home-link="#experiencia">Explore the theme</a><a href="index.html#sua-marca" data-home-link="#sua-marca">Customize</a><a href="index.html#mcp" data-home-link="#mcp">ChatGPT or Claude</a><a href="index.html#assistente" data-home-link="#assistente">New setup wizard</a><a href="index.html#comecar" data-home-link="#comecar">Install LearnLingo</a></nav>
+</header>
+<main id="conteudo" class="copy-guide">
+  <section class="guide-hero">
+    <div class="wrap guide-hero-inner">
+      <div class="guide-hero-copy">
+        <nav class="guide-breadcrumb" aria-label="You are here"><a href="index.html" data-home-link="">Home</a><span aria-hidden="true">/</span><span>Copy-and-paste customization</span></nav>
+        <span class="eyebrow purple-text"><svg aria-hidden="true"><use href="#i-copy"/></svg> NO CONNECTION REQUIRED</span>
+        <h1>A fresh look for your Moodle.<br><span>Just copy and paste.</span></h1>
+        <p>LearnLingo generates a prompt with your current theme settings. Talk with ChatGPT or Claude, review the result, and decide when to import it. You do not need to connect AI to Moodle.</p>
+        <div class="guide-hero-actions">
+          <a class="button primary" href="#passo-a-passo">See the step-by-step guide <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="guide-back-link" href="index.html#mcp" data-home-link="#mcp">Explore other options <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+        <p class="guide-hero-note"><svg aria-hidden="true"><use href="#i-check"/></svg> Your settings change only after you import the JSON in Moodle.</p>
+      </div>
+      <div class="guide-hero-art" aria-label="Three steps: copy from Moodle, chat with ChatGPT or Claude, and import into Moodle" role="img">
+        <div class="guide-orbit"></div>
+        <div class="guide-art-card">
+          <div class="guide-art-top"><span class="guide-art-dots"><i></i><i></i><i></i></span><strong>Your way.</strong><span class="guide-art-star">✦</span></div>
+          <div class="guide-art-steps"><div><span class="guide-art-icon guide-purple"><svg><use href="#i-copy"/></svg></span><strong>01</strong><span>Copy from Moodle</span></div><div class="guide-art-connector"></div><div><span class="guide-art-icon guide-green"><svg><use href="#i-chat"/></svg></span><strong>02</strong><span>Chat with AI</span></div><div class="guide-art-connector"></div><div><span class="guide-art-icon guide-blue"><svg><use href="#i-check"/></svg></span><strong>03</strong><span>Import the JSON</span></div></div>
+          <div class="guide-art-result"><span class="guide-art-check"><svg><use href="#i-check"/></svg></span><div><strong>You stay in control.</strong><span>Review first. Publish afterward.</span></div></div>
+        </div>
+        <img class="guide-mascot" src="../assets/lio.svg" width="120" height="126" alt="">
+      </div>
+    </div>
+  </section>
+  <section id="passo-a-passo" class="guide-main section wrap" aria-labelledby="guide-steps-title">
+    <div class="guide-section-heading"><span class="eyebrow green-text">FROM FIRST CLICK TO PUBLICATION</span><h2 id="guide-steps-title">Five steps. No complications.</h2><p>Everything starts and finishes in Moodle, using features already available in LearnLingo.</p></div>
+    <div class="guide-steps">
+      <article class="guide-step"><div class="guide-step-number">01</div><div class="guide-step-content"><h3>Open the LearnLingo exporter</h3><p>Sign in as an administrator and open the theme settings under Site administration → Appearance → Themes → LearnLingo. Find the option to export a ChatGPT prompt and import JSON.</p><p>You can also open this path on your own Moodle site:</p><div class="guide-path"><code>/theme/learnlingo/admin/branding_json.php</code><button type="button" id="copy-path" aria-label="Copiar caminho do exportador"><svg aria-hidden="true"><use href="#i-copy"/></svg><span>Copy path</span></button></div></div></article>
+      <article class="guide-step"><div class="guide-step-number">02</div><div class="guide-step-content"><h3>Copy the complete prompt</h3><p>In the export section, select <strong>Copy prompt</strong>. The text already includes your current LearnLingo settings and instructions for AI to ask questions before proposing changes. You do not have to build JSON manually.</p><div class="guide-tip"><svg aria-hidden="true"><use href="#i-check"/></svg><p>The "Current JSON" field is available on the same page as a reference or backup before importing changes.</p></div></div></article>
+      <article class="guide-step"><div class="guide-step-number">03</div><div class="guide-step-content"><h3>Chat with ChatGPT or Claude</h3><p>Paste the complete prompt into a chat and explain what you want: colors, branding, home page, footer, login text, or course appearance. AI can clarify your preferences and prepare a proposal.</p><p>The example below can be sent as an additional message after the exported prompt; adapt it for your institution.</p><div class="guide-example"><div class="guide-example-head"><span><svg aria-hidden="true"><use href="#i-chat"/></svg> Example request</span><button type="button" id="copy-example"><svg aria-hidden="true"><use href="#i-copy"/></svg><span>Copy example</span></button></div><p id="guide-example-text">I want to customize LearnLingo for a school offering short courses. I prefer blue and green branding, a modern home page highlighting courses, and an institutional footer. Ask any questions you need, and preserve every setting I have not requested to change. Before generating the final JSON, summarize the proposed changes for my approval.</p></div></div></article>
+      <article class="guide-step"><div class="guide-step-number">04</div><div class="guide-step-content"><h3>Review the JSON returned by AI</h3><p>Once the proposal is ready, ask for the complete importable JSON, keeping the original structure and all fields. Carefully review text, HTML, colors, and SCSS, as these may affect other pages.</p><div class="guide-tip guide-tip-warning"><svg aria-hidden="true"><use href="#i-shield"/></svg><p>When importing, paste only the JSON object: no <code>```json</code>fences, comments, or text before or after. The importer validates everything before saving.</p></div></div></article>
+      <article class="guide-step"><div class="guide-step-number">05</div><div class="guide-step-content"><h3>Import and check in Moodle</h3><p>Return to the same LearnLingo page, paste the result into the import field, and select <strong>Import settings</strong>. The changes are only applied at this point, and the theme clears its caches after importing.</p><p>Check the home page as a visitor and a student, open a course, and review the login, footer, mobile navigation, and dark mode when available.</p></div></article>
+    </div>
+  </section>
+  <section class="guide-details">
+    <div class="wrap guide-details-inner">
+      <div class="guide-details-heading"><span class="eyebrow purple-text">BEFORE YOU BEGIN</span><h2>What does this method change?</h2><p>This exchanges settings rather than giving remote access to Moodle. ChatGPT or Claude prepares a file, but the administrator decides whether to apply it.</p></div>
+      <div class="guide-facts">
+        <article><div class="guide-fact-icon"><svg aria-hidden="true"><use href="#i-palette"/></svg></div><h3>What JSON can customize</h3><p>Colors, text, home-page HTML, SCSS styles, footer, course presentation, and theme options.</p></article>
+        <article><div class="guide-fact-icon"><svg aria-hidden="true"><use href="#i-shield"/></svg></div><h3>Some settings stay in Moodle</h3><p>Logos, favicon, and uploaded images must be configured separately. JSON does not include these files.</p></article>
+        <article><div class="guide-fact-icon"><svg aria-hidden="true"><use href="#i-copy"/></svg></div><h3>Keep a backup</h3><p>Before importing, save a copy of the current JSON, because importing replaces the settings in the document.</p></article>
+      </div>
+    </div>
+  </section>
+  <section class="guide-faq section wrap" aria-labelledby="guide-faq-title">
+    <div><span class="eyebrow green-text">QUESTIONS THAT COME UP IN PRACTICE</span><h2 id="guide-faq-title">Good to know before applying.</h2><p>The copy-and-paste workflow works independently of a direct connection between AI and Moodle.</p><img src="../assets/lio.svg" width="135" height="142" alt="" loading="lazy"></div>
+    <div class="guide-faq-items">
+      <details><summary>Do I need a ChatGPT or Claude connection plugin?<span aria-hidden="true">+</span></summary><p>No. All you need to copy the prompt and import JSON is the LearnLingo theme and administrator access. The integration plugin is optional and enables working directly from a conversation.</p></details>
+      <details><summary>Does ChatGPT change my Moodle automatically?<span aria-hidden="true">+</span></summary><p>Not with this method. You receive a JSON proposal and apply it only after pasting the content into the import page and confirming the operation in Moodle.</p></details>
+      <details><summary>Can I use a logo created by AI?<span aria-hidden="true">+</span></summary><p>Yes, but image files are not part of the JSON. Save the logo and upload it through the branding or login settings, depending on where you plan to use it.</p></details>
+      <details><summary>What if the importer rejects the JSON?<span aria-hidden="true">+</span></summary><p>Make sure the answer contains only complete JSON without Markdown fences. Ask AI to keep the same keys, identifiers, and types as the original, preserving fields you want unchanged. No settings are saved if validation fails.</p></details>
+      <details><summary>Can I put any institutional information in the prompt?<span aria-hidden="true">+</span></summary><p>The prompt includes existing text and settings, which may contain institutional content. Review what you share before pasting into external services and avoid unnecessary personal or restricted data.</p></details>
+    </div>
+  </section>
+  <section class="guide-bottom"><div class="wrap guide-bottom-inner"><span class="eyebrow">YOUR WAY, YOUR PACE</span><h2>Start with what you already have.</h2><p>A conversation helps shape the changes. You review and publish when ready.</p><a href="index.html#mcp" data-home-link="#mcp" class="button dark">Explore other ways to customize <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></div></section>
+</main>
+<footer class="footer wrap"><div class="footer-main"><a class="wordmark" href="index.html#" data-home-link="#"><img src="../assets/favicon.svg" width="32" height="36" alt=""><span>learn<span>lingo</span></span></a><p>Learning can have a fresh look.</p><nav aria-label="Footer links"><a href="https://github.com/EduardoKrausME/moodle-theme_learnlingo" target="_blank" rel="noopener">GitHub ↗</a><a href="https://github.com/EduardoKrausME/moodle-theme_learnlingo/issues" target="_blank" rel="noopener">Contribute ↗</a><a href="https://github.com/EduardoKrausME/moodle-theme_learnlingo/pull/4" target="_blank" rel="noopener">PR #4 ↗</a></nav></div><div class="footer-bottom"><span>© 2026 Eduardo Kraus · LearnLingo</span><span>An independent project, not affiliated with Duolingo or Moodle HQ.</span></div></footer>
+<div id="guide-toast" role="status" aria-live="polite"></div>
+</body>
+</html>

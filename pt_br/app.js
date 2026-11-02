@@ -1,6 +1,5 @@
 'use strict';
 
-const {translate, localize} = window.LearnLingoI18n;
 
 const icon = name => `<svg aria-hidden="true"><use href="#i-${name}"/></svg>`;
 const panel = document.querySelector('#preview-panel');
@@ -31,7 +30,6 @@ screenButtons.forEach(button => button.addEventListener('click', () => {
   panel.innerHTML=screens[button.dataset.screen];
   panel.setAttribute('aria-labelledby',button.id);
   document.querySelector('#preview-caption').textContent=captions[button.dataset.screen];
-  localize();
 }));
 keyboardTabs(screenButtons);
 panel.innerHTML=screens.home;
@@ -42,7 +40,6 @@ document.querySelectorAll('[data-palette]').forEach(button => button.addEventLis
   document.querySelectorAll('[data-palette]').forEach(item=>{const active=item===button; item.classList.toggle('active',active); item.setAttribute('aria-pressed',String(active)); item.setAttribute('aria-label',paletteNames[item.dataset.palette]+(active?', selecionado':''));});
   document.querySelector('.brand-art').dataset.theme=button.dataset.palette;
   document.querySelector('.palette-feedback').textContent=paletteMessages[button.dataset.palette];
-  localize();
 }));
 
 const prompts={
@@ -60,12 +57,11 @@ document.querySelectorAll('[data-prompt]').forEach(button=>button.addEventListen
   const result=document.querySelector('#chat-result');
   result.style.background=prompt.background;result.style.borderColor=prompt.border;result.style.setProperty('--result-accent',prompt.accent);
   result.innerHTML=`<span class="result-mark">${prompt.mark}</span><div><span>${prompt.category}</span><strong>${prompt.headline}</strong><span class="result-button">${prompt.cta}</span></div>`;
-  localize();
 }));
 let toastTimer;
-function toast(message){const el=document.querySelector('#toast'); el.textContent=message;localize(el);el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),4200);}
+function toast(message){const el=document.querySelector('#toast'); el.textContent=message;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),4200);}
 document.querySelector('#copy-prompt').addEventListener('click',async()=>{
-  const text=translate(prompts[currentPrompt].text)+' '+translate('Use a conexão autorizada entre o ChatGPT ou Claude e meu Moodle para consultar as configurações atuais do LearnLingo antes de propor mudanças. Preserve as configurações não relacionadas ao pedido e apresente a prévia para minha confirmação antes de gravar.');
+  const text=prompts[currentPrompt].text+' '+'Use a conexão autorizada entre o ChatGPT ou Claude e meu Moodle para consultar as configurações atuais do LearnLingo antes de propor mudanças. Preserve as configurações não relacionadas ao pedido e apresente a prévia para minha confirmação antes de gravar.';
   try{
     if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text);}
     else{const input=document.createElement('textarea');input.value=text;input.style.position='fixed';input.style.opacity='0';document.body.append(input);input.select();const copied=document.execCommand('copy');input.remove();if(!copied)throw new Error('Clipboard unavailable');}
@@ -82,14 +78,14 @@ const wizardSteps=[
 ];
 const stepButtons=[...document.querySelectorAll('[data-step]')];
 const wizardPanel=document.querySelector('#wizard-panel');
-function showStep(index){const step=wizardSteps[index];wizardPanel.innerHTML=`<div><span class="eyebrow">ETAPA ${index+1} · PRÉVIA DO ASSISTENTE</span><h3>${step.name}</h3><p>${step.description}</p><p class="step-extra">${icon('check')}${step.extra}</p></div><div class="wizard-visual">${step.visual}</div>`;wizardPanel.setAttribute('aria-labelledby',`step-tab-${index}`);selectTab(stepButtons,stepButtons[index]);localize(wizardPanel);}
+function showStep(index){const step=wizardSteps[index];wizardPanel.innerHTML=`<div><span class="eyebrow">ETAPA ${index+1} · PRÉVIA DO ASSISTENTE</span><h3>${step.name}</h3><p>${step.description}</p><p class="step-extra">${icon('check')}${step.extra}</p></div><div class="wizard-visual">${step.visual}</div>`;wizardPanel.setAttribute('aria-labelledby',`step-tab-${index}`);selectTab(stepButtons,stepButtons[index]);}
 stepButtons.forEach(button=>button.addEventListener('click',()=>showStep(Number(button.dataset.step))));
 keyboardTabs(stepButtons);showStep(0);
 
 const menuToggle=document.querySelector('.menu-toggle');
 const mobileNav=document.querySelector('#mobile-nav');
-function closeMenu(){mobileNav.hidden=true;menuToggle.setAttribute('aria-expanded','false');menuToggle.setAttribute('aria-label','Abrir menu');localize(menuToggle);}
-menuToggle.addEventListener('click',()=>{const open=mobileNav.hidden;mobileNav.hidden=!open;menuToggle.setAttribute('aria-expanded',String(open));menuToggle.setAttribute('aria-label',open?'Fechar menu':'Abrir menu');localize(menuToggle);});
+function closeMenu(){mobileNav.hidden=true;menuToggle.setAttribute('aria-expanded','false');menuToggle.setAttribute('aria-label','Abrir menu');}
+menuToggle.addEventListener('click',()=>{const open=mobileNav.hidden;mobileNav.hidden=!open;menuToggle.setAttribute('aria-expanded',String(open));menuToggle.setAttribute('aria-label',open?'Fechar menu':'Abrir menu');});
 mobileNav.querySelectorAll('a').forEach(link=>link.addEventListener('click',closeMenu));
 document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!mobileNav.hidden){closeMenu();menuToggle.focus();}});
 document.addEventListener('click',event=>{if(!mobileNav.hidden&&!event.target.closest('.header'))closeMenu();});
@@ -100,4 +96,3 @@ installDialog.addEventListener('close',()=>{document.body.style.overflow='';});
 installDialog.addEventListener('click',event=>{if(event.target===installDialog){const r=installDialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)installDialog.close();}});
 
 // Localize the initial dynamic previews after they are mounted.
-localize();
