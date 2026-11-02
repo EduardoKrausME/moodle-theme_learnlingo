@@ -159,6 +159,7 @@ final class homepage_context_test extends advanced_testcase {
         $event = \core\event\course_created::create([
             'objectid' => $course->id,
             'context' => \context_course::instance($course->id),
+            'other' => ['fullname' => $course->fullname],
         ]);
         observer::public_courses_changed($event);
         $this->assertFalse($cache->get('test_event_key'));
