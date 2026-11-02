@@ -74,7 +74,8 @@ final class get_settings implements tool_interface {
             . 'and state_hash for learnlingo_update_settings; include_images '
             . 'also returns small uploaded branding images. '
             . 'Also returns dark_mode status for optional local_boost_dark: '
-            . 'custom CSS and HTML must support both [data-bs-theme="dark"] and light mode.';
+            . 'custom CSS and HTML must support both [data-bs-theme="dark"] and light mode; '
+            . 'use homepage Mustache with CSS variables and dark overrides rather than {{isdark}}.';
     }
 
     /**
