@@ -95,8 +95,8 @@ final class storedfile_settings_test extends advanced_testcase {
 
         // Tiny valid PNG, stored via the same API as the existing setting.
         $bytes = base64_decode(
-            'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+a' .
-            'nQAAAABJRU5ErkJggg=='
+            'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGP4////fwAJ' .
+            '+wP9KobjigAAAABJRU5ErkJggg=='
         );
         get_file_storage()->create_file_from_string($record, $bytes);
         set_config('loginlogo', '/white-logo.png', 'theme_learnlingo');
