@@ -48,6 +48,14 @@ $string['cachedef_publiccourses'] = 'Public courses on the homepage';
 $string['canvascolor'] = 'Page background colour';
 $string['canvascolor_desc'] = 'Main background colour of the pages.';
 $string['choosereadme'] = 'LearnLingo is a Boost child theme designed for playful, gamified learning.';
+$string['colourcustom'] = 'Choose a custom colour';
+$string['colourhexhelp'] = 'Enter a HEX colour (for example #2563EB) or use the colour picker.';
+$string['colourhexvalue'] = 'Colour value';
+$string['colourinvalid'] = 'Enter a valid colour value.';
+$string['colourpalette'] = 'Suggested colours';
+$string['colourpreset'] = 'Use colour';
+$string['colourpreview'] = 'Live colour preview';
+$string['colourreset'] = 'Restore default';
 $string['configtitle'] = 'LearnLingo';
 $string['courseheroeyebrow'] = 'Course header label';
 $string['courseheroeyebrow_desc'] = 'Short label displayed above the course name in the playful course header.';
@@ -390,12 +398,3 @@ $string['showwelcome_desc'] = 'Display the personalised greeting on the LearnLin
 $string['textcolor'] = 'Text colour';
 $string['textcolor_desc'] = 'Main text and heading colour.';
 
-// Modern colour editor in admin settings.
-$string['colourcustom'] = 'Choose a custom colour';
-$string['colourhexvalue'] = 'Colour value';
-$string['colourhexhelp'] = 'Enter a HEX colour (for example #2563EB) or use the colour picker.';
-$string['colourinvalid'] = 'Enter a valid colour value.';
-$string['colourpalette'] = 'Suggested colours';
-$string['colourpreset'] = 'Use colour';
-$string['colourpreview'] = 'Live colour preview';
-$string['colourreset'] = 'Restore default';
