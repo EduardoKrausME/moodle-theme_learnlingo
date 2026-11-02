@@ -1,0 +1,68 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+}}
+{{!
+    @template theme_learnlingo/setting_storedfilemodern
+
+    Single-file admin upload with a preview and a progressive enhancement
+    of Moodle's standard filemanager. Core HTML is already trusted and
+    rendered by MoodleQuickForm_filemanager.
+
+    Example context (json):
+    {
+        "id": "id_s_theme_learnlingo_loginlogo",
+        "readonly": false,
+        "previewurl": "",
+        "filename": "",
+        "haspreview": false,
+        "draftpattern": "/draftfile.php/5/user/draft/123/__FILENAME__",
+        "filemanagerhtml": "<div class=\"filemanager\"></div>"
+    }
+}}
+<div class="ll-storedfile" data-ll-storedfile data-draft-pattern="{{draftpattern}}">
+    <div class="ll-storedfile__preview" data-file-preview>
+        <div class="ll-storedfile__canvas" data-file-canvas data-background="neutral">
+            <img class="ll-storedfile__image" data-file-image
+                src="{{previewurl}}" alt="{{filename}}" {{^haspreview}}hidden{{/haspreview}}>
+            <span class="ll-storedfile__empty" data-file-empty {{#haspreview}}hidden{{/haspreview}}
+                aria-hidden="true"><i class="fa fa-image"></i></span>
+        </div>
+        <div class="ll-storedfile__preview-details">
+            <span class="ll-storedfile__eyebrow" data-file-state>
+                {{#haspreview}}{{#str}}filemoderncurrent, theme_learnlingo{{/str}}{{/haspreview}}
+                {{^haspreview}}{{#str}}filemodernempty, theme_learnlingo{{/str}}{{/haspreview}}
+            </span>
+            <strong class="ll-storedfile__filename" data-file-name aria-live="polite">
+                {{#haspreview}}{{filename}}{{/haspreview}}
+                {{^haspreview}}{{#str}}filemodernnoimage, theme_learnlingo{{/str}}{{/haspreview}}
+            </strong>
+            <small class="ll-storedfile__preview-hint">
+                {{#str}}filemoderncontrast, theme_learnlingo{{/str}}
+            </small>
+        </div>
+    </div>
+
+    <div class="ll-storedfile__dropzone" data-file-dropzone hidden>
+        <span class="ll-storedfile__drop-icon" aria-hidden="true">
+            <i class="fa fa-cloud-upload"></i>
+        </span>
+        <strong>{{#str}}filemoderndrop, theme_learnlingo{{/str}}</strong>
+        <span class="ll-storedfile__or">{{#str}}filemodernor, theme_learnlingo{{/str}}</span>
+        <button class="btn btn-primary ll-storedfile__choose" type="button"
+            data-file-choose {{#readonly}}disabled{{/readonly}}>
+            <i class="fa fa-folder-open" aria-hidden="true"></i>
+            {{#str}}filemodernchoose, theme_learnlingo{{/str}}
+        </button>
+        <input class="ll-storedfile__file-input" type="file" accept="image/*,.ico,.svg"
+            tabindex="-1" aria-hidden="true" data-file-input {{#readonly}}disabled{{/readonly}}>
+        <span class="ll-storedfile__instructions">{{#str}}filemodernhelp, theme_learnlingo{{/str}}</span>
+    </div>
+
+    <div class="ll-storedfile__manager form-filemanager" data-fieldtype="filemanager">
+        {{{filemanagerhtml}}}
+    </div>
+</div>
