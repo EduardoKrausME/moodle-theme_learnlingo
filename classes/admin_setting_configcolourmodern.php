@@ -27,6 +27,8 @@
 
 namespace theme_learnlingo;
 
+defined('MOODLE_INTERNAL') || die;
+
 // The base admin settings classes are defined in adminlib.php on Moodle 4.5.
 global $CFG;
 require_once($CFG->libdir . '/adminlib.php');
