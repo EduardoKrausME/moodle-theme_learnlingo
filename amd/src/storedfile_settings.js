@@ -14,8 +14,7 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Improve Moodle's native admin filemanager with an image preview and upload surface.
- * Core YUI still handles the upload, file restrictions, draft files, and saving.
+ * Single image upload, preview and deletion for LearnLingo admin settings.
  *
  * @module     theme_learnlingo/storedfile_settings
  * @copyright  2026 Eduardo Kraus
@@ -25,17 +24,16 @@ define([], function() {
     'use strict';
 
     /**
-     * Choose a contrasting background from the actual visible image pixels.
-     * Ignore near-transparent pixels (essential for white transparent logos).
+     * Select a background that contrasts with the image's visible pixels.
+     * Transparent pixels must not make a white logo appear "dark".
      *
-     * @param {HTMLImageElement} image
-     * @param {HTMLElement} canvasContainer
+     * @param {HTMLImageElement} image Image being previewed.
+     * @param {HTMLElement} container Preview background.
      */
-    const selectBackground = (image, canvasContainer) => {
+    const selectBackground = (image, container) => {
         if (!image.complete || !image.naturalWidth) {
             return;
         }
-
         try {
             const canvas = document.createElement('canvas');
             canvas.width = 64;
@@ -44,36 +42,32 @@ define([], function() {
             if (!context) {
                 return;
             }
-            // Contain rather than crop so wide logos retain their important pixels.
-            const scale = Math.min(canvas.width / image.naturalWidth, canvas.height / image.naturalHeight);
+            const scale = Math.min(64 / image.naturalWidth, 64 / image.naturalHeight);
             const width = image.naturalWidth * scale;
             const height = image.naturalHeight * scale;
-            context.drawImage(image, (canvas.width - width) / 2, (canvas.height - height) / 2, width, height);
+            context.drawImage(image, (64 - width) / 2, (64 - height) / 2, width, height);
 
-            const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
-            let brightness = 0;
-            let visible = 0;
-            for (let index = 0; index < pixels.length; index += 4) {
-                const alpha = pixels[index + 3] / 255;
+            const pixels = context.getImageData(0, 0, 64, 64).data;
+            let sum = 0;
+            let weight = 0;
+            for (let i = 0; i < pixels.length; i += 4) {
+                const alpha = pixels[i + 3] / 255;
                 if (alpha < 0.12) {
                     continue;
                 }
-                // The weighted RGB luminance is perceptually closer to the actual contrast.
-                const luminance = 0.2126 * pixels[index] +
-                    0.7152 * pixels[index + 1] + 0.0722 * pixels[index + 2];
-                brightness += luminance * alpha;
-                visible += alpha;
+                sum += (0.2126 * pixels[i] + 0.7152 * pixels[i + 1] +
+                    0.0722 * pixels[i + 2]) * alpha;
+                weight += alpha;
             }
-
-            canvasContainer.dataset.background = visible && brightness / visible >= 148 ? 'dark' : 'light';
-        } catch (error) {
-            // Cross-origin or unsupported images keep the safe two-tone background.
-            canvasContainer.dataset.background = 'neutral';
+            container.dataset.background = !weight ? 'neutral' : (sum / weight >= 148 ? 'dark' : 'light');
+        } catch (exception) {
+            // An SVG or other non-readable image still gets a safe neutral background.
+            container.dataset.background = 'neutral';
         }
     };
 
     /**
-     * Initialise one independent stored-file field.
+     * Initialise one independent image setting.
      *
      * @param {HTMLElement} root
      */
@@ -83,172 +77,144 @@ define([], function() {
         }
         root.dataset.initialised = '1';
 
-        const manager = root.querySelector('.ll-storedfile__manager');
         const zone = root.querySelector('[data-file-dropzone]');
-        const button = root.querySelector('[data-file-choose]');
-        const fileInput = root.querySelector('[data-file-input]');
-        const image = root.querySelector('[data-file-image]');
+        const choose = root.querySelector('[data-file-choose]');
+        const remove = root.querySelector('[data-file-delete]');
+        const input = root.querySelector('[data-file-input]');
+        const draft = root.querySelector('[data-file-draft]');
+        const picture = root.querySelector('[data-file-image]');
         const empty = root.querySelector('[data-file-empty]');
         const canvas = root.querySelector('[data-file-canvas]');
         const name = root.querySelector('[data-file-name]');
         const state = root.querySelector('[data-file-state]');
-        const currentlabel = root.dataset.currentLabel;
-        const emptylabel = root.dataset.emptyLabel;
-        const newlabel = root.dataset.newLabel;
-        const noimagelabel = root.dataset.noImageLabel;
-        const existingFilename = image.getAttribute('alt') || '';
-        const template = root.dataset.draftPattern;
-        let filename = existingFilename;
-        let objectUrl = null;
+        const status = root.querySelector('[data-file-status]');
+        let busy = false;
+        let dragging = 0;
 
-        const releaseObjectUrl = () => {
-            if (objectUrl) {
-                URL.revokeObjectURL(objectUrl);
-                objectUrl = null;
-            }
-        };
-
-        const showPreview = (url, file, temporary) => {
-            if (url) {
-                if (!temporary) {
-                    releaseObjectUrl();
-                }
-                image.hidden = false;
-                empty.hidden = true;
-                filename = file;
-                image.alt = file;
-                image.onload = () => selectBackground(image, canvas);
-                image.onerror = () => {
-                    canvas.dataset.background = 'neutral';
-                };
-                canvas.dataset.background = 'neutral';
-                image.src = url;
-                if (image.complete && image.naturalWidth) {
-                    selectBackground(image, canvas);
-                }
-                name.textContent = file;
-                // Saved image vs new draft image.
-                if (file !== existingFilename || temporary) {
-                    state.textContent = newlabel;
-                } else {
-                    state.textContent = currentlabel;
-                }
-            } else {
-                releaseObjectUrl();
-                filename = '';
-                image.hidden = true;
-                image.removeAttribute('src');
-                empty.hidden = false;
-                canvas.dataset.background = 'neutral';
-                name.textContent = noimagelabel;
-                state.textContent = emptylabel;
-            }
-        };
-
-        image.addEventListener('load', () => selectBackground(image, canvas));
-        if (image.complete && image.naturalWidth) {
-            selectBackground(image, canvas);
+        picture.addEventListener('load', () => selectBackground(picture, canvas));
+        picture.addEventListener('error', () => {
+            canvas.dataset.background = 'neutral';
+        });
+        if (picture.complete && picture.naturalWidth) {
+            selectBackground(picture, canvas);
         }
 
-        const pickFromMoodle = () => {
-            const add = manager.querySelector('.fp-btn-add a');
-            if (add) {
-                add.click();
-            }
-        };
+        const show = (filename, url) => {
+            const hasImage = Boolean(filename && url);
+            empty.hidden = hasImage;
+            picture.hidden = !hasImage;
+            remove.hidden = !hasImage;
+            state.textContent = hasImage ? root.dataset.currentLabel : root.dataset.emptyLabel;
+            name.textContent = hasImage ? filename : root.dataset.noImageLabel;
+            canvas.dataset.background = 'neutral';
 
-        // Reuse the DnD upload handler already installed by Moodle on this container.
-        // A synthetic FileList from a local picker is handled by the same upload
-        // restrictions, progress notifications and draft-area refresh as real drops.
-        const uploadWithMoodle = (file) => {
-            const destination = manager.querySelector('.filemanager-container') ||
-                manager.querySelector('[id^="filemanager-"]');
-            if (!destination || !document.body.classList.contains('dndsupported') ||
-                    typeof DataTransfer === 'undefined' || typeof DragEvent === 'undefined') {
-                return false;
-            }
-            try {
-                const transfer = new DataTransfer();
-                transfer.items.add(file);
-                const event = new DragEvent('drop', {
-                    bubbles: true,
-                    cancelable: true,
-                    dataTransfer: transfer
-                });
-                return !destination.dispatchEvent(event);
-            } catch (error) {
-                return false;
-            }
-        };
-
-        button.addEventListener('click', () => {
-            if (document.body.classList.contains('dndsupported') &&
-                    typeof DataTransfer !== 'undefined' && typeof DragEvent !== 'undefined') {
-                fileInput.click();
-            } else {
-                pickFromMoodle();
-            }
-        });
-
-        fileInput.addEventListener('change', () => {
-            const file = fileInput.files && fileInput.files[0];
-            fileInput.value = '';
-            if (!file) {
-                return;
-            }
-            if (!uploadWithMoodle(file)) {
-                pickFromMoodle();
-                return;
-            }
-            releaseObjectUrl();
-            objectUrl = URL.createObjectURL(file);
-            showPreview(objectUrl, file.name, true);
-        });
-
-        // Install our dropzone inside the native YUI drag-and-drop target.
-        // The browser's actual drop event bubbles into Moodle's original listener.
-        const mountZone = () => {
-            const destination = manager.querySelector('.filemanager-container') ||
-                manager.querySelector('[id^="filemanager-"]');
-            if (destination && zone.parentElement !== destination) {
-                destination.prepend(zone);
-            }
-            zone.hidden = !destination;
-        };
-        mountZone();
-
-        // Moodle re-renders the file list after uploads/deletions. Keep the
-        // full-size preview in sync with that draft area without saving here.
-        const refresh = () => {
-            const entries = manager.querySelectorAll('.fp-file:not(.fp-folder)');
-            let active = null;
-            entries.forEach((entry) => {
-                const element = entry.querySelector('.fp-filename');
-                if (element && element.textContent.trim()) {
-                    active = element.textContent.trim();
+            if (hasImage) {
+                picture.alt = filename;
+                picture.src = url;
+                if (picture.complete && picture.naturalWidth) {
+                    selectBackground(picture, canvas);
                 }
-            });
-            if (active && (active !== filename || objectUrl)) {
-                const url = template.replace('__FILENAME__', encodeURIComponent(active));
-                showPreview(url, active, false);
-            } else if (!active && filename && manager.querySelector('.fm-empty-container')) {
-                showPreview('', '', false);
+            } else {
+                picture.removeAttribute('src');
+                picture.alt = '';
             }
         };
 
-        const observer = new MutationObserver((mutations) => {
-            if (mutations.some((mutation) =>
-                mutation.target.closest && mutation.target.closest('.fp-content')
-            )) {
-                refresh();
+        const setBusy = (active) => {
+            busy = active;
+            root.classList.toggle('ll-storedfile--busy', active);
+            choose.disabled = active;
+            remove.disabled = active;
+            input.disabled = active;
+            zone.setAttribute('aria-busy', active ? 'true' : 'false');
+        };
+
+        const request = async(action, file) => {
+            if (busy || draft.disabled) {
+                return;
+            }
+            setBusy(true);
+            status.textContent = action === 'upload' ? root.dataset.uploadingLabel : root.dataset.deletingLabel;
+            status.classList.remove('ll-storedfile__status--error');
+            const data = new FormData();
+            data.append('sesskey', root.dataset.sesskey);
+            data.append('setting', root.dataset.setting);
+            data.append('action', action);
+            if (file) {
+                data.append('image', file, file.name);
+            }
+
+            try {
+                const response = await fetch(root.dataset.uploadUrl, {
+                    method: 'POST',
+                    body: data,
+                    credentials: 'same-origin'
+                });
+                const result = await response.json();
+                if (!response.ok || !result.success) {
+                    throw new Error(result.message || root.dataset.errorLabel);
+                }
+                draft.value = String(result.draftid);
+                show(result.filename, result.previewurl);
+                status.textContent = action === 'upload' ? root.dataset.uploadedLabel : root.dataset.deletedLabel;
+            } catch (error) {
+                status.textContent = error.message || root.dataset.errorLabel;
+                status.classList.add('ll-storedfile__status--error');
+            } finally {
+                input.value = '';
+                setBusy(false);
+            }
+        };
+
+        choose.addEventListener('click', () => input.click());
+        input.addEventListener('change', () => {
+            if (input.files && input.files.length) {
+                request('upload', input.files[0]);
             }
         });
-        observer.observe(manager, {childList: true, subtree: true});
+        remove.addEventListener('click', () => {
+            if (!busy && window.confirm(root.dataset.deleteConfirm)) {
+                request('delete');
+            }
+        });
+
+        // The only drop target is our visual surface, not another Moodle widget.
+        zone.addEventListener('dragenter', (event) => {
+            if (busy || draft.disabled || !event.dataTransfer ||
+                    !Array.from(event.dataTransfer.types).includes('Files')) {
+                return;
+            }
+            event.preventDefault();
+            dragging++;
+            zone.classList.add('ll-storedfile__surface--dragging');
+        });
+        zone.addEventListener('dragover', (event) => {
+            if (!busy && !draft.disabled && event.dataTransfer &&
+                    Array.from(event.dataTransfer.types).includes('Files')) {
+                event.preventDefault();
+                event.dataTransfer.dropEffect = 'copy';
+            }
+        });
+        zone.addEventListener('dragleave', () => {
+            dragging = Math.max(0, dragging - 1);
+            if (!dragging) {
+                zone.classList.remove('ll-storedfile__surface--dragging');
+            }
+        });
+        zone.addEventListener('drop', (event) => {
+            if (busy || draft.disabled) {
+                return;
+            }
+            event.preventDefault();
+            dragging = 0;
+            zone.classList.remove('ll-storedfile__surface--dragging');
+            if (event.dataTransfer && event.dataTransfer.files.length) {
+                request('upload', event.dataTransfer.files[0]);
+            }
+        });
     };
 
     return {
-        init: () => {
-            document.querySelectorAll('[data-ll-storedfile]').forEach(setup);
-        }
+        init: () => document.querySelectorAll('[data-ll-storedfile]').forEach(setup)
     };
 });
