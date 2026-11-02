@@ -114,7 +114,7 @@ final class mcp_settings_test extends advanced_testcase {
         $this->assertStringContainsString('{{#mycourses}}', $properties['homepagehtml']['description']);
         $this->assertStringContainsString('Moodle sort order',
             $properties['homepagepubliccourses']['description']);
-        $this->assertStringContainsString('ONLY',
+        $this->assertStringContainsString('NOT logged in',
             $properties['homepagepubliccoursesperpage']['description']);
         $this->assertStringContainsString('homepage_mustache',
             (new get_settings())->get_description());
