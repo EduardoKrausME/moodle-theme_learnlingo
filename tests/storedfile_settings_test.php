@@ -48,9 +48,9 @@ final class storedfile_settings_test extends advanced_testcase {
     }
 
     /**
-     * Admin setting renders the native filemanager and new upload elements.
+     * Admin setting renders just one image editor, without a legacy filemanager.
      */
-    public function test_modern_setting_renders_native_filemanager(): void {
+    public function test_modern_setting_renders_one_image_editor(): void {
         $this->resetAfterTest();
         $this->setAdminUser();
         global $CFG;
@@ -70,8 +70,11 @@ final class storedfile_settings_test extends advanced_testcase {
         $this->assertStringContainsString('data-file-dropzone', $html);
         $this->assertStringContainsString('data-file-choose', $html);
         $this->assertStringContainsString('data-file-canvas', $html);
-        $this->assertStringContainsString('data-fieldtype="filemanager"', $html);
+        $this->assertStringContainsString('data-file-delete', $html);
+        $this->assertStringContainsString('type="file"', $html);
         $this->assertStringContainsString('type="hidden"', $html);
+        $this->assertStringNotContainsString('data-fieldtype="filemanager"', $html);
+        $this->assertStringNotContainsString('fp-btn-add', $html);
     }
 
     /**
@@ -112,10 +115,89 @@ final class storedfile_settings_test extends advanced_testcase {
         $html = $setting->output_html($setting->get_setting());
 
         $this->assertStringContainsString('alt="white-logo.png"', $html);
-        $this->assertStringContainsString('data-draft-pattern=', $html);
+        $this->assertStringContainsString('data-upload-url=', $html);
         $this->assertStringContainsString('draftfile.php', $html);
         $this->assertStringContainsString('data-file-image', $html);
         $this->assertSame('/white-logo.png', $setting->get_setting());
+    }
+
+    /**
+     * Core still saves and deletes actual File API entries from drafts.
+     */
+    public function test_modern_setting_keeps_core_file_persistence(): void {
+        $this->resetAfterTest();
+        $this->setAdminUser();
+        global $USER;
+
+        $setting = new admin_setting_configstoredfilemodern(
+            'theme_learnlingo/loginlogo',
+            'Login logo',
+            '',
+            'loginlogo',
+            0,
+            ['maxfiles' => 1, 'accepted_types' => ['.png']]
+        );
+        $draftid = file_get_unused_draft_itemid();
+        file_prepare_draft_area(
+            $draftid,
+            \context_system::instance()->id,
+            'theme_learnlingo',
+            'loginlogo',
+            0,
+            ['subdirs' => 0, 'maxfiles' => 1, 'accepted_types' => ['.png']]
+        );
+
+        get_file_storage()->create_file_from_string([
+            'contextid' => \context_user::instance($USER->id)->id,
+            'component' => 'user',
+            'filearea' => 'draft',
+            'itemid' => $draftid,
+            'filepath' => '/',
+            'filename' => 'new-logo.png',
+        ], 'image-content');
+
+        $this->assertSame('', $setting->write_setting($draftid));
+        $this->assertSame('/new-logo.png', $setting->get_setting());
+        $stored = get_file_storage()->get_file(
+            \context_system::instance()->id,
+            'theme_learnlingo',
+            'loginlogo',
+            0,
+            '/',
+            'new-logo.png'
+        );
+        $this->assertNotFalse($stored);
+
+        $emptydraftid = file_get_unused_draft_itemid();
+        file_prepare_draft_area(
+            $emptydraftid,
+            \context_system::instance()->id,
+            'theme_learnlingo',
+            'loginlogo',
+            0,
+            ['subdirs' => 0, 'maxfiles' => 1, 'accepted_types' => ['.png']]
+        );
+        $files = get_file_storage()->get_area_files(
+            \context_user::instance($USER->id)->id,
+            'user',
+            'draft',
+            $emptydraftid,
+            'sortorder,filepath,filename',
+            false
+        );
+        foreach ($files as $file) {
+            $file->delete();
+        }
+        $this->assertSame('', $setting->write_setting($emptydraftid));
+        $this->assertSame('', $setting->get_setting());
+        $this->assertFalse(get_file_storage()->get_file(
+            \context_system::instance()->id,
+            'theme_learnlingo',
+            'loginlogo',
+            0,
+            '/',
+            'new-logo.png'
+        ));
     }
 
     /**
@@ -126,8 +208,11 @@ final class storedfile_settings_test extends advanced_testcase {
 
         $identifiers = [
             'filemodernchoose', 'filemoderncontrast', 'filemoderncurrent',
-            'filemoderndrop', 'filemodernempty', 'filemodernhelp', 'filemodernnew',
-            'filemodernnoimage', 'filemodernor',
+            'filemoderndrop', 'filemodernempty', 'filemodernnew',
+            'filemodernnoimage', 'filemodernor', 'filemoderndelete',
+            'filemoderndeleteconfirm', 'filemodernuploading', 'filemoderndeleting',
+            'filemodernuploaded', 'filemoderndeleted', 'filemodernuploaderror',
+            'filemoderntypeerror', 'filemodernsizeerror',
         ];
 
         foreach (['en', 'pt_br'] as $lang) {
