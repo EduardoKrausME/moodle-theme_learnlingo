@@ -1,0 +1,249 @@
+// Source code editor for admin_setting_configcode only.
+// The original Moodle textarea stays in the page, so submissions remain native.
+.ll-code-editor {
+    --ll-code-bg: #fafcff;
+    --ll-code-ink: #26384c;
+    --ll-code-line: #f1f5f9;
+    --ll-code-gutter: #edf1f5;
+    --ll-code-border: #d2dce7;
+    --ll-code-muted: #66788a;
+    --ll-code-comment: #6e8797;
+    --ll-code-tag: #165cbd;
+    --ll-code-attribute: #a04d6d;
+    --ll-code-string: #157a52;
+    --ll-code-keyword: #8b48b3;
+    --ll-code-variable: #ae5a16;
+    --ll-code-number: #a24a19;
+    --ll-code-colour: #a24a19;
+    --ll-code-punctuation: #657383;
+    --ll-code-property: #1660a0;
+    --ll-code-entity: #94509a;
+    max-width: 100%;
+    min-width: 0;
+    border: 1px solid var(--ll-code-border);
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--ll-code-bg);
+    color: var(--ll-code-ink);
+    box-shadow: 0 4px 14px rgba(20, 36, 55, .055);
+
+    &__toolbar,
+    &__footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: .7rem;
+        padding: .45rem .8rem;
+        background: var(--ll-code-line);
+        color: var(--ll-code-muted);
+        font-size: .75rem;
+    }
+
+    &__toolbar {
+        border-bottom: 1px solid var(--ll-code-border);
+    }
+
+    &__footer {
+        border-top: 1px solid var(--ll-code-border);
+    }
+
+    &__language {
+        font-size: .69rem;
+        font-weight: 800;
+        letter-spacing: .085em;
+        color: var(--ll-code-tag);
+    }
+
+    &__lines {
+        margin-right: auto;
+    }
+
+    &__expand {
+        display: inline-flex;
+        align-items: center;
+        gap: .4rem;
+        padding: .28rem .5rem;
+        color: var(--ll-code-ink);
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: 6px;
+        font-size: .75rem;
+        cursor: pointer;
+
+        &:hover,
+        &:focus-visible {
+            border-color: var(--ll-code-border);
+            background: var(--ll-code-bg);
+        }
+    }
+
+    &__workspace {
+        display: flex;
+        height: 365px;
+        min-height: 150px;
+        max-height: 75vh;
+        resize: vertical;
+        overflow: hidden;
+        background: var(--ll-code-bg);
+    }
+
+    &__gutter {
+        display: none;
+        flex: 0 0 auto;
+        min-width: 49px;
+        padding: 12px 9px 12px 5px;
+        overflow: hidden;
+        background: var(--ll-code-gutter);
+        border-right: 1px solid var(--ll-code-border);
+        font: 13px/21px ui-monospace, SFMono-Regular, Consolas, monospace;
+        text-align: right;
+        user-select: none;
+        white-space: nowrap;
+
+        span {
+            display: block;
+            height: 21px;
+        }
+    }
+
+    &__area {
+        position: relative;
+        flex: 1;
+        min-width: 0;
+        min-height: 0;
+    }
+
+    &__input,
+    &__highlight {
+        box-sizing: border-box;
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 12px 15px;
+        border: 0;
+        border-radius: 0;
+        font: 13px/21px ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', monospace;
+        letter-spacing: 0;
+        tab-size: 4;
+        white-space: pre;
+        overflow-wrap: normal;
+        word-break: normal;
+        text-align: left;
+        direction: ltr;
+    }
+
+    &__input {
+        z-index: 1;
+        resize: none;
+        color: var(--ll-code-ink);
+        background: transparent;
+        -webkit-text-fill-color: var(--ll-code-ink);
+        overflow: auto;
+        white-space: pre;
+        caret-color: var(--ll-code-ink);
+        outline-offset: -3px;
+
+        &:focus {
+            background: transparent;
+            box-shadow: inset 0 0 0 1px #3c8cc4;
+        }
+
+        &:disabled {
+            opacity: .85;
+        }
+    }
+
+    &__highlight {
+        z-index: 0;
+        display: none;
+        overflow: hidden;
+        pointer-events: none;
+        color: var(--ll-code-ink);
+        background: var(--ll-code-bg);
+        white-space: pre;
+
+        code {
+            display: block;
+            font: inherit;
+            white-space: pre;
+            color: inherit;
+        }
+    }
+
+    &--ready {
+        .ll-code-editor__highlight,
+        .ll-code-editor__gutter {
+            display: block;
+        }
+
+        .ll-code-editor__input {
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            background: transparent;
+            caret-color: var(--ll-code-ink);
+        }
+    }
+
+    .ll-code-token--comment { color: var(--ll-code-comment); }
+    .ll-code-token--tag { color: var(--ll-code-tag); }
+    .ll-code-token--attribute { color: var(--ll-code-attribute); }
+    .ll-code-token--string { color: var(--ll-code-string); }
+    .ll-code-token--keyword { color: var(--ll-code-keyword); }
+    .ll-code-token--variable { color: var(--ll-code-variable); }
+    .ll-code-token--number { color: var(--ll-code-number); }
+    .ll-code-token--colour { color: var(--ll-code-colour); }
+    .ll-code-token--punctuation { color: var(--ll-code-punctuation); }
+    .ll-code-token--property { color: var(--ll-code-property); }
+    .ll-code-token--entity { color: var(--ll-code-entity); }
+
+    &--expanded {
+        position: fixed;
+        inset: 12px;
+        z-index: 1100;
+        display: flex;
+        flex-direction: column;
+        width: auto;
+        max-width: none;
+        background: var(--ll-code-bg);
+        box-shadow: 0 0 0 100vmax rgba(0, 0, 0, .62);
+
+        .ll-code-editor__workspace {
+            flex: 1;
+            height: auto;
+            max-height: none;
+            resize: none;
+        }
+    }
+}
+
+[data-bs-theme="dark"] .ll-code-editor {
+    --ll-code-bg: #192430;
+    --ll-code-ink: #e4ecf4;
+    --ll-code-line: #222f3f;
+    --ll-code-gutter: #243446;
+    --ll-code-border: #44586d;
+    --ll-code-muted: #b9c8d7;
+    --ll-code-comment: #95a9b5;
+    --ll-code-tag: #80b7ff;
+    --ll-code-attribute: #eda5bb;
+    --ll-code-string: #92d6a6;
+    --ll-code-keyword: #d2a3fa;
+    --ll-code-variable: #ffbd76;
+    --ll-code-number: #ffa977;
+    --ll-code-colour: #ffa977;
+    --ll-code-punctuation: #9db6c6;
+    --ll-code-property: #88c6ff;
+    --ll-code-entity: #dda8e4;
+}
+
+@media (max-width: 600px) {
+    .ll-code-editor {
+        &__workspace { height: 280px; }
+        &__input,
+        &__highlight { padding: 10px; font-size: 12px; }
+        &__gutter { min-width: 39px; padding-left: 3px; padding-right: 5px; font-size: 12px; }
+        &--expanded { inset: 0; border-radius: 0; }
+    }
+}
