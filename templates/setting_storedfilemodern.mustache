@@ -8,65 +8,73 @@
 {{!
     @template theme_learnlingo/setting_storedfilemodern
 
-    Single-file admin upload with a preview and a progressive enhancement
-    of Moodle's standard filemanager. Core HTML is already trusted and
-    rendered by MoodleQuickForm_filemanager.
+    One image editor. Uploads and deletions use theme_learnlingo's protected
+    endpoint and Moodle's File API; no YUI filemanager is rendered.
 
     Example context (json):
     {
         "id": "id_s_theme_learnlingo_loginlogo",
+        "name": "s_theme_learnlingo_loginlogo",
+        "draftid": 1234,
         "readonly": false,
-        "previewurl": "",
-        "filename": "",
-        "haspreview": false,
-        "draftpattern": "/draftfile.php/5/user/draft/123/__FILENAME__",
-        "filemanagerhtml": "<div class=\"filemanager\"></div>"
+        "haspreview": true,
+        "filename": "logo.png",
+        "previewurl": "/draftfile.php/5/user/draft/1234/logo.png",
+        "accept": ".png,.jpg,.jpeg,.webp,.svg",
+        "uploadurl": "/theme/learnlingo/admin/storedfile_upload.php",
+        "sesskey": "test"
     }
 }}
-<div class="ll-storedfile" data-ll-storedfile data-draft-pattern="{{draftpattern}}"
+<div class="ll-storedfile" data-ll-storedfile
+    data-setting="{{name}}"
+    data-upload-url="{{uploadurl}}"
+    data-sesskey="{{sesskey}}"
     data-current-label="{{#str}}filemoderncurrent, theme_learnlingo{{/str}}"
     data-empty-label="{{#str}}filemodernempty, theme_learnlingo{{/str}}"
     data-new-label="{{#str}}filemodernnew, theme_learnlingo{{/str}}"
     data-no-image-label="{{#str}}filemodernnoimage, theme_learnlingo{{/str}}">
-    <div class="ll-storedfile__preview" data-file-preview>
-        <div class="ll-storedfile__canvas" data-file-canvas data-background="neutral">
+    <input type="hidden" name="{{name}}" id="{{id}}" value="{{draftid}}"
+        data-file-draft {{#readonly}}disabled{{/readonly}}>
+    <div class="ll-storedfile__surface" data-file-dropzone>
+        <div class="ll-storedfile__visual" data-file-canvas data-background="neutral">
             <img class="ll-storedfile__image" data-file-image
-                {{#haspreview}}src="{{{previewurl}}}"{{/haspreview}} alt="{{filename}}" {{^haspreview}}hidden{{/haspreview}}>
-            <span class="ll-storedfile__empty" data-file-empty {{#haspreview}}hidden{{/haspreview}}
-                aria-hidden="true"><i class="fa fa-image"></i></span>
+                {{#haspreview}}src="{{{previewurl}}}"{{/haspreview}}
+                alt="{{filename}}" {{^haspreview}}hidden{{/haspreview}}>
+            <span class="ll-storedfile__placeholder" data-file-empty
+                {{#haspreview}}hidden{{/haspreview}} aria-hidden="true">
+                <i class="fa fa-image"></i>
+            </span>
         </div>
-        <div class="ll-storedfile__preview-details">
-            <span class="ll-storedfile__eyebrow" data-file-state>
+        <div class="ll-storedfile__content">
+            <span class="ll-storedfile__state" data-file-state>
                 {{#haspreview}}{{#str}}filemoderncurrent, theme_learnlingo{{/str}}{{/haspreview}}
                 {{^haspreview}}{{#str}}filemodernempty, theme_learnlingo{{/str}}{{/haspreview}}
             </span>
-            <strong class="ll-storedfile__filename" data-file-name aria-live="polite">
+            <strong class="ll-storedfile__name" data-file-name>
                 {{#haspreview}}{{filename}}{{/haspreview}}
                 {{^haspreview}}{{#str}}filemodernnoimage, theme_learnlingo{{/str}}{{/haspreview}}
             </strong>
-            <small class="ll-storedfile__preview-hint">
+            <span class="ll-storedfile__drop-hint">{{#str}}filemoderndrop, theme_learnlingo{{/str}}</span>
+            <div class="ll-storedfile__actions">
+                <button type="button" class="btn btn-primary ll-storedfile__choose"
+                    data-file-choose {{#readonly}}disabled{{/readonly}}>
+                    <i class="fa fa-folder-open" aria-hidden="true"></i>
+                    {{#str}}filemodernchoose, theme_learnlingo{{/str}}
+                </button>
+                <button type="button" class="btn btn-outline-danger ll-storedfile__delete"
+                    data-file-delete {{^haspreview}}hidden{{/haspreview}} {{#readonly}}disabled{{/readonly}}>
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                    {{#str}}filemoderndelete, theme_learnlingo{{/str}}
+                </button>
+            </div>
+            <small class="ll-storedfile__footnote">
                 {{#str}}filemoderncontrast, theme_learnlingo{{/str}}
             </small>
         </div>
     </div>
-
-    <div class="ll-storedfile__dropzone" data-file-dropzone hidden>
-        <span class="ll-storedfile__drop-icon" aria-hidden="true">
-            <i class="fa fa-cloud-upload"></i>
-        </span>
-        <strong>{{#str}}filemoderndrop, theme_learnlingo{{/str}}</strong>
-        <span class="ll-storedfile__or">{{#str}}filemodernor, theme_learnlingo{{/str}}</span>
-        <button class="btn btn-primary ll-storedfile__choose" type="button"
-            data-file-choose {{#readonly}}disabled{{/readonly}}>
-            <i class="fa fa-folder-open" aria-hidden="true"></i>
-            {{#str}}filemodernchoose, theme_learnlingo{{/str}}
-        </button>
-        <input class="ll-storedfile__file-input" type="file" accept="image/*,.ico,.svg"
-            tabindex="-1" aria-hidden="true" data-file-input {{#readonly}}disabled{{/readonly}}>
-        <span class="ll-storedfile__instructions">{{#str}}filemodernhelp, theme_learnlingo{{/str}}</span>
-    </div>
-
-    <div class="ll-storedfile__manager form-filemanager" data-fieldtype="filemanager">
-        {{{filemanagerhtml}}}
-    </div>
+    <input type="file" class="ll-storedfile__file-input"
+        accept="{{accept}}" data-file-input tabindex="-1"
+        aria-label="{{#str}}filemodernchoose, theme_learnlingo{{/str}}"
+        {{#readonly}}disabled{{/readonly}}>
+    <div class="ll-storedfile__status" data-file-status role="status" aria-live="polite"></div>
 </div>
