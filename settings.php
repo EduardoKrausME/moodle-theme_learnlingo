@@ -86,6 +86,7 @@ if ($ADMIN->fulltree) {
     // Initialise the modern colour editor on both the branding and footer tabs.
     $PAGE->requires->js_call_amd("theme_learnlingo/colour_settings", "init");
     $PAGE->requires->js_call_amd("theme_learnlingo/storedfile_settings", "init");
+    $PAGE->requires->js_call_amd("theme_learnlingo/code_settings", "init");
 
     // Use the Moodle-wide site logo, shared with core's Appearance > Logos page.
     $setting = new \theme_learnlingo\admin_setting_configstoredfilemodern(
@@ -132,24 +133,24 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback("theme_reset_all_caches");
     $page->add($setting);
 
-    $setting = new admin_setting_configtextarea(
+    $setting = new \theme_learnlingo\admin_setting_configcode(
         "theme_learnlingo/homepagehtml",
         get_string("homepagehtml", "theme_learnlingo"),
         get_string("homepagehtml_desc", "theme_learnlingo"),
         "config",
-        PARAM_RAW,
+        "html",
         "90",
         "18"
     );
     $setting->set_updatedcallback("theme_reset_all_caches");
     $page->add($setting);
 
-    $setting = new admin_setting_configtextarea(
+    $setting = new \theme_learnlingo\admin_setting_configcode(
         "theme_learnlingo/homepagescss",
         get_string("homepagescss", "theme_learnlingo"),
         get_string("homepagescss_desc", "theme_learnlingo"),
         "",
-        PARAM_RAW,
+        "scss",
         "90",
         "16"
     );
@@ -220,21 +221,22 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback("theme_reset_all_caches");
     $page->add($setting);
 
-    $setting = new admin_setting_configtextarea(
+    $setting = new \theme_learnlingo\admin_setting_configcode(
         "theme_learnlingo/footerhtml",
         get_string("footerhtml", "theme_learnlingo"),
         get_string("footerhtml_desc", "theme_learnlingo"),
-        ""
+        "",
+        "html"
     );
     $setting->set_updatedcallback("theme_reset_all_caches");
     $page->add($setting);
 
-    $setting = new admin_setting_configtextarea(
+    $setting = new \theme_learnlingo\admin_setting_configcode(
         "theme_learnlingo/footerscss",
         get_string("footerscss", "theme_learnlingo"),
         get_string("footerscss_desc", "theme_learnlingo"),
         "",
-        PARAM_RAW,
+        "scss",
         "90",
         "16"
     );
@@ -450,22 +452,22 @@ if ($ADMIN->fulltree) {
         get_string("scsssettings", "theme_learnlingo")
     );
 
-    $setting = new admin_setting_configtextarea(
+    $setting = new \theme_learnlingo\admin_setting_configcode(
         "theme_learnlingo/scsspre",
         get_string("scsspre", "theme_learnlingo"),
         get_string("scsspre_desc", "theme_learnlingo"),
         "",
-        PARAM_RAW
+        "scss"
     );
     $setting->set_updatedcallback("theme_reset_all_caches");
     $page->add($setting);
 
-    $setting = new admin_setting_configtextarea(
+    $setting = new \theme_learnlingo\admin_setting_configcode(
         "theme_learnlingo/scss",
         get_string("scss", "theme_learnlingo"),
         get_string("scss_desc", "theme_learnlingo"),
         "",
-        PARAM_RAW
+        "scss"
     );
     $setting->set_updatedcallback("theme_reset_all_caches");
     $page->add($setting);
