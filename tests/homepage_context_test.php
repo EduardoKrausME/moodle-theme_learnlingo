@@ -131,16 +131,36 @@ final class homepage_context_test extends advanced_testcase {
     }
 
     /**
-     * A real core course event must invalidate the public MUC catalogue.
+     * A core course-created event has a registered post-commit observer that clears MUC.
+     *
+     * PHPUnit keeps its database transaction open until teardown, so Moodle
+     * defers external observers ('internal' => false) rather than dispatching
+     * them synchronously. Test the observer registration and callback directly.
      */
     public function test_course_created_event_purges_public_cache(): void {
         $this->resetAfterTest();
         $this->setAdminUser();
+        global $CFG;
+
+        $observers = [];
+        require($CFG->dirroot . '/theme/learnlingo/db/events.php');
+        $matching = array_values(array_filter($observers, static function(array $definition): bool {
+            return $definition['eventname'] === '\\core\\event\\course_created';
+        }));
+        $this->assertCount(1, $matching);
+        $this->assertSame('\\theme_learnlingo\\observer::public_courses_changed', $matching[0]['callback']);
+        $this->assertFalse($matching[0]['internal']);
+
+        $course = $this->getDataGenerator()->create_course(['fullname' => 'New catalogue course']);
         $cache = cache::make('theme_learnlingo', 'publiccourses');
         $cache->set('test_event_key', [['id' => 99]]);
         $this->assertNotFalse($cache->get('test_event_key'));
 
-        $this->getDataGenerator()->create_course(['fullname' => 'New catalogue course']);
+        $event = \\core\\event\\course_created::create([
+            'objectid' => $course->id,
+            'context' => \\context_course::instance($course->id),
+        ]);
+        observer::public_courses_changed($event);
         $this->assertFalse($cache->get('test_event_key'));
     }
 
