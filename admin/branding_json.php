@@ -63,6 +63,39 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && $postmaxbytes > 0 &&
     require_sesskey();
     $importjson = optional_param('importjson', '', PARAM_RAW);
     try {
+        // Upload is optional. When supplied, it takes precedence over pasted text.
+        $upload = $_FILES['importfile'] ?? null;
+        if (is_array($upload) && (int)($upload['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_NO_FILE) {
+            $uploaderror = (int)($upload['error'] ?? UPLOAD_ERR_NO_FILE);
+            if ($uploaderror !== UPLOAD_ERR_OK) {
+                $errornames = [
+                    UPLOAD_ERR_INI_SIZE => 'upload_max_filesize',
+                    UPLOAD_ERR_FORM_SIZE => 'MAX_FILE_SIZE',
+                    UPLOAD_ERR_PARTIAL => 'partial',
+                    UPLOAD_ERR_NO_TMP_DIR => 'temporary_directory',
+                    UPLOAD_ERR_CANT_WRITE => 'disk_write',
+                    UPLOAD_ERR_EXTENSION => 'extension',
+                ];
+                throw new moodle_exception('jsonerrorupload', 'theme_learnlingo', '',
+                    $errornames[$uploaderror] ?? (string)$uploaderror);
+            }
+            $filename = (string)($upload['name'] ?? '');
+            if (strtolower(pathinfo($filename, PATHINFO_EXTENSION)) !== 'json') {
+                throw new moodle_exception('jsonerrorfiletype', 'theme_learnlingo');
+            }
+            $tmpname = (string)($upload['tmp_name'] ?? '');
+            if (!is_uploaded_file($tmpname)) {
+                throw new moodle_exception('jsonerrorupload', 'theme_learnlingo', '', 'invalid_upload');
+            }
+            $contents = file_get_contents($tmpname);
+            if ($contents === false) {
+                throw new moodle_exception('jsonerrorupload', 'theme_learnlingo', '', 'read_failed');
+            }
+            $importjson = $contents;
+        }
+        if (trim($importjson) === '') {
+            throw new moodle_exception('jsonerrorempty', 'theme_learnlingo');
+        }
         // Save valid fields; report every rejected setting without changing it.
         $validation = branding_exchange::validate_import($importjson);
         $result = branding_exchange::apply_import($validation['valid']);
