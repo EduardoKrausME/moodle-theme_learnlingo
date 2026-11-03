@@ -33,8 +33,6 @@ use JsonException;
 final class branding_exchange {
     /** Schema version. */
     public const SCHEMA_VERSION = 1;
-    /** Maximum JSON payload size. */
-    public const MAX_JSON_LENGTH = 400000;
 
     /**
      * All portable theme settings, with their types and default values.
@@ -361,9 +359,6 @@ PROMPT;
      * @return array Normalized document.
      */
     public static function parse(string $source): array {
-        if (strlen($source) > self::MAX_JSON_LENGTH) {
-            throw new invalid_parameter_exception(get_string('jsonerrorlarge', 'theme_learnlingo'));
-        }
         try {
             $data = json_decode(trim($source), true, 32, JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
@@ -410,9 +405,6 @@ PROMPT;
      * @return array{valid: array, issues: array}
      */
     public static function validate_import(string $source): array {
-        if (strlen($source) > self::MAX_JSON_LENGTH) {
-            throw new \moodle_exception('jsonerrorlarge', 'theme_learnlingo');
-        }
         try {
             $data = json_decode(trim($source), true, 32, JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
@@ -525,15 +517,6 @@ PROMPT;
             return get_string('jsonvalidatestring', 'theme_learnlingo', get_debug_type($value));
         }
 
-        $limits = ['color' => 7, 'text' => 1500, 'homepage' => 20,
-            'footermode' => 6, 'html' => 150000, 'scss' => 80000,
-            'courseids' => 8000, 'pagecount' => 2];
-        if (strlen($value) > $limits[$type]) {
-            return get_string('jsonvalidatelength', 'theme_learnlingo', (object)[
-                'actual' => strlen($value),
-                'limit' => $limits[$type],
-            ]);
-        }
         if ($type === 'color' && !preg_match('/^#[A-Fa-f0-9]{6}$/D', $value)) {
             return get_string('jsonvalidatecolor', 'theme_learnlingo');
         }
