@@ -39,15 +39,40 @@ $PAGE->set_heading(get_string('jsonpagetitle', 'theme_learnlingo'));
 
 $error = '';
 $importjson = '';
-if (optional_param('action', '', PARAM_ALPHA) === 'import') {
+$report = '';
+$reportclass = '';
+$issues = [];
+
+// PHP can discard the entire POST body when post_max_size is exceeded.
+// Explain the real server limit instead of silently losing the import.
+$postmax = trim((string)ini_get('post_max_size'));
+$postmaxbytes = 0;
+if (preg_match('/^(\d+(?:\.\d+)?)\s*([KMG]?)B?$/i', $postmax, $postmaxmatches)) {
+    $units = ['' => 1, 'K' => 1024, 'M' => 1048576, 'G' => 1073741824];
+    $postmaxbytes = (int)((float)$postmaxmatches[1] * $units[strtoupper($postmaxmatches[2])]);
+}
+$contentlength = (int)($_SERVER['CONTENT_LENGTH'] ?? 0);
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && $postmaxbytes > 0 &&
+    $contentlength > $postmaxbytes) {
+    $error = get_string('jsonerrorposttoolarge', 'theme_learnlingo', (object)[
+        'received' => $contentlength,
+        'limit' => $postmaxbytes,
+        'setting' => $postmax,
+    ]);
+} else if (optional_param('action', '', PARAM_ALPHA) === 'import') {
     require_sesskey();
     $importjson = optional_param('importjson', '', PARAM_RAW);
     try {
-        // Parse and validate every field, including SCSS, HTML and SVG, before
-        // changing any Moodle config record.
-        $configuration = branding_exchange::parse($importjson);
-        branding_exchange::apply($configuration);
-        redirect(new moodle_url($url, ['saved' => 1]));
+        // Save valid fields; report every rejected setting without changing it.
+        $validation = branding_exchange::validate_import($importjson);
+        $result = branding_exchange::apply_import($validation['valid']);
+        $issues = $validation['issues'];
+        $report = get_string('jsonimportreport', 'theme_learnlingo', (object)[
+            'updated' => $result['updated'],
+            'unchanged' => $result['unchanged'],
+            'rejected' => count($issues),
+        ]);
+        $reportclass = $issues ? 'alert-warning' : 'alert-success';
     } catch (Throwable $e) {
         $error = $e->getMessage();
     }
@@ -65,6 +90,10 @@ echo $OUTPUT->render_from_template('theme_learnlingo/branding_json', [
     'sesskey' => sesskey(),
     'saved' => optional_param('saved', 0, PARAM_BOOL),
     'error' => $error,
+    'report' => $report,
+    'reportclass' => $reportclass,
+    'hasissues' => !empty($issues),
+    'issues' => $issues,
     'prompt' => $prompt,
     'importjson' => $importjson,
     'exportjson' => $exportjson,
