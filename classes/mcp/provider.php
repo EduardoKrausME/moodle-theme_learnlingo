@@ -45,6 +45,7 @@ final class provider implements read_provider_interface, write_provider_interfac
         return self::available_tools([
             'learnlingo_get_homepage' => get_homepage::class,
             'learnlingo_get_settings' => get_settings::class,
+            'learnlingo_get_menu_guide' => get_menu_guide::class,
         ]);
     }
 
