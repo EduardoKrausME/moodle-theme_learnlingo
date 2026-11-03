@@ -88,9 +88,13 @@ final class update_settings extends base_tool {
             . 'learnlingo_get_settings first and pass state_hash as expected_hash. '
             . 'The shared site logo and favicon use core_admin; the separate login '
             . 'logo uses theme_learnlingo. Favicon supports PNG, JPEG, WebP or ICO. '
-            . 'Read and update them through images.logo, '
-            . 'images.favicon and images.loginlogo (Base64 or public HTTPS), '
-            . 'without changing the other image areas.';
+            . 'For images.logo, prefer a transparent PNG, NEVER a logo with built-in '
+            . 'white/colored background or empty/transparent/white padding at the '
+            . 'four canvas edges: crop the artwork tightly without cutting or '
+            . 'distorting it. Distinguish image padding from navbar CSS padding. '
+            . 'Read and update through images.logo, images.favicon and '
+            . 'images.loginlogo (Base64 or public HTTPS), without changing '
+            . 'the other image areas.';
     }
 
     /**
@@ -249,7 +253,17 @@ final class update_settings extends base_tool {
                 'description' => 'Upload, replace or remove branding images. Provide expected_hash. '
                     . 'Only the supplied file areas change; the global logo, favicon and login logo are independent.',
                 'properties' => [
-                    'logo' => $image,
+                    'logo' => [
+                        'type' => 'object',
+                        'description' => 'Shared site logo. Prefer transparent PNG with artwork '
+                            . 'tightly cropped to the content on ALL four sides: NEVER '
+                            . 'leave transparent, white, or empty canvas margins around '
+                            . 'the logo. Remove an opaque background when appropriate, '
+                            . 'preserve aspect ratio and do not clip visible details. '
+                            . 'Inspect/preview the final image before approval.',
+                        'properties' => $image['properties'],
+                        'additionalProperties' => false,
+                    ],
                     'favicon' => $faviconimage,
                     'loginlogo' => $loginimage,
                 ],
