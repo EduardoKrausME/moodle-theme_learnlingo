@@ -76,6 +76,10 @@ final class get_settings implements tool_interface {
             . 'updating. Prefer a transparent PNG site logo tightly cropped on all '
             . 'four edges: NEVER include empty/transparent/white margins inside the '
             . 'image itself. Do not confuse embedded image padding with CSS spacing. '
+            . 'The response includes menu_guide with the complete minimal navbar selector '
+            . 'structure for logged-in users and guests. For ANY menu/navbar CSS task, '
+            . 'the menu_guide instructions and scss_outline are MANDATORY; alternatively '
+            . 'call learnlingo_get_menu_guide directly. '
             . 'Shared navbar/menu CSS belongs in global scss, '
             . 'homepagescss only for scoped homepage rules, and footer CSS in '
             . 'footerscss. Do not declare the redesign complete without verifying '
@@ -136,6 +140,7 @@ final class get_settings implements tool_interface {
         $result = settings_service::snapshot(!empty($arguments['include_images']));
         // Send the complete field guide alongside settings, without changing state_hash.
         $result['homepage_mustache'] = homepage_context::schema();
+        $result['menu_guide'] = menu_guide::schema();
         return $result;
     }
 }
