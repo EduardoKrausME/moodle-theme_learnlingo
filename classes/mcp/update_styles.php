@@ -70,7 +70,10 @@ final class update_styles extends base_tool {
             . 'and compile-time settings.',
         'scss' => 'Global SCSS inserted after Boost/Bootstrap and applied to every page '
             . 'in all homepage and footer modes. Put navbar, menu and global '
-            . 'header styles here, never in homepagescss. For local_boost_dark compatibility, '
+            . 'header styles here, never in homepagescss. For any navbar/menu change '
+            . 'FIRST read menu_guide from learnlingo_get_settings or call '
+            . 'learnlingo_get_menu_guide; cover every applicable logged-in/guest '
+            . 'navbar group in its selector hierarchy. For local_boost_dark compatibility, '
             . 'include [data-bs-theme="dark"] overrides and check text contrast.',
     ];
 
@@ -116,6 +119,11 @@ final class update_styles extends base_tool {
             . 'favicon, footermode, footerhtml and footerscss using '
             . 'learnlingo_get_settings, then request separate approvals for '
             . 'branding (learnlingo_update_settings) and footer where needed. '
+            . 'MANDATORY for menu/navbar edits: inspect the complete menu_guide '
+            . 'structure and scss_outline returned by learnlingo_get_settings '
+            . 'or call learnlingo_get_menu_guide. Cover logo, toggle, primary links, '
+            . 'More, notifications, messages, dark mode, login, user menu and edit switch '
+            . 'for guests and logged-in users as applicable. '
             . 'Move ONLY legacy shared menu/nav rules from homepagescss to '
             . 'scss, removing the old copies in ONE confirmed write; preserve '
             . 'homepage-specific rules. Other fields remain unchanged. '
