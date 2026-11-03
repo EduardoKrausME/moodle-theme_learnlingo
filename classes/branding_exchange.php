@@ -321,9 +321,11 @@ SCSS AND HTML RULES
 MANDATORY FINAL RESPONSE FORMAT
 - Return only one Markdown code block with the json language identifier,
   without paragraphs before or after the block.
-- Preserve EXACTLY the four top-level keys schema_version, plugin,
-  repository, and settings, as well as ALL original settings keys.
-- Never add, rename, or remove fields; preserve their data types.
+- For a complete export, preserve the four top-level keys schema_version,
+  plugin, repository and settings. To update only selected settings, return
+  a partial document containing only {"settings": {"field": "value"}}.
+  Omitted settings remain unchanged on import.
+- Use only real setting names from the original export and preserve data types.
   schema_version must remain 1; plugin and repository must not change.
 - All four colors must be "#RRGGBB" strings.
 - true/false fields must be JSON booleans, not strings.
@@ -333,8 +335,9 @@ MANDATORY FINAL RESPONSE FORMAT
 - Do not include secrets, PHP, JavaScript, external scripts, or any
   executable content.
 - Ensure the output is valid JSON with exactly the supplied structure.
-  The importer rejects missing or unknown keys, invalid types, and
-  unsafe SVG.
+  The importer accepts partial settings objects and reports each rejected
+  field with its value and reason. Omitted fields remain unchanged;
+  unknown or invalid fields are ignored while valid fields are saved.
 
 The user will copy only the contents of the final JSON and paste them
 into the second text area on the LearnLingo page, then click Import settings.
@@ -383,59 +386,8 @@ PROMPT;
         $normalized = [];
         foreach (self::definitions() as $name => [$type, $default]) {
             $value = $values[$name];
-            if ($type === 'bool') {
-                if (!is_bool($value)) {
-                    self::invalid_field($name);
-                }
-            } else {
-                if (!is_string($value)) {
-                    self::invalid_field($name);
-                }
-                $limits = ['color' => 7, 'text' => 1500, 'homepage' => 20,
-                    'footermode' => 6, 'html' => 150000, 'scss' => 80000,
-                    'courseids' => 8000, 'pagecount' => 2];
-                if (strlen($value) > $limits[$type]) {
-                    self::invalid_field($name);
-                }
-                if ($type === 'color' && !preg_match('/^#[A-Fa-f0-9]{6}$/D', $value)) {
-                    self::invalid_field($name);
-                }
-                if ($type === 'homepage' && !in_array($value, ['learnlingo', 'moodle', 'html'], true)) {
-                    self::invalid_field($name);
-                }
-                if ($type === 'pagecount' && !preg_match('/^(?:[1-9]|1[0-2])$/D', $value)) {
-                    self::invalid_field($name);
-                }
-                if ($type === 'courseids' && $value !== '' &&
-                    !preg_match('/^[1-9][0-9]*(,[1-9][0-9]*)*$/D', $value)) {
-                    self::invalid_field($name);
-                }
-                if ($type === 'footermode' && !in_array($value, ['moodle', 'html'], true)) {
-                    self::invalid_field($name);
-                }
-                if ($type === 'text' && (str_contains($value, '<') ||
-                        str_contains($value, '>') || str_contains($value, "\0"))) {
-                    self::invalid_field($name);
-                }
-                if (($type === 'html' || $type === 'scss') &&
-                    (str_contains($value, '<?') || str_contains($value, "\0"))) {
-                    self::invalid_field($name);
-                }
-                // No remote CSS imports or executable embeds in generated content.
-                if ($type === 'scss' &&
-                    preg_match('~@import\s+(?:url\s*\(|[\x22\x27]https?://)~i', $value)) {
-                    self::invalid_field($name);
-                }
-                // Prevent page-scoped SCSS from generating unscoped Sass rules.
-                if (in_array($name, ['homepagescss', 'footerscss'], true) &&
-                    preg_match('~@(at-root|import|use|forward|extend|keyframes|font-face|charset|namespace|property)\b~i',
-                        $value)) {
-                    self::invalid_field($name);
-                }
-                if ($type === 'html' &&
-                    preg_match('~<\s*(script|iframe|object|embed|form)\b~i', $value)) {
-                    self::invalid_field($name);
-                }
+            if (self::field_error($name, $type, $value) !== null) {
+                self::invalid_field($name);
             }
             $normalized[$name] = $value;
         }
@@ -445,6 +397,204 @@ PROMPT;
             'repository' => $data['repository'],
             'settings' => $normalized,
         ];
+    }
+
+    /**
+     * Validate an import field by field, without discarding valid changes.
+     *
+     * Accept both the full exported document and partial {"settings": {...}}
+     * documents. A flat object of setting names is also accepted.
+     * Identity mismatches and malformed JSON stop the entire import.
+     *
+     * @param string $source JSON document.
+     * @return array{valid: array, issues: array}
+     */
+    public static function validate_import(string $source): array {
+        if (strlen($source) > self::MAX_JSON_LENGTH) {
+            throw new \moodle_exception('jsonerrorlarge', 'theme_learnlingo');
+        }
+        try {
+            $data = json_decode(trim($source), true, 32, JSON_THROW_ON_ERROR);
+        } catch (JsonException $e) {
+            throw new \moodle_exception('jsonerrorinvaliddetail', 'theme_learnlingo', '', $e->getMessage());
+        }
+
+        if (!is_array($data) || ($data !== [] && array_is_list($data))) {
+            throw new \moodle_exception('jsonerrorstructure', 'theme_learnlingo');
+        }
+
+        $identity = [
+            'schema_version' => self::SCHEMA_VERSION,
+            'plugin' => 'theme_learnlingo',
+            'repository' => 'https://github.com/EduardoKrausME/moodle-theme_learnlingo',
+        ];
+        foreach ($identity as $name => $expected) {
+            if (array_key_exists($name, $data) && $data[$name] !== $expected) {
+                throw new \moodle_exception('jsonerrormetadata', 'theme_learnlingo', '', (object)[
+                    'field' => $name,
+                    'expected' => self::display_value($expected),
+                    'received' => self::display_value($data[$name]),
+                ]);
+            }
+        }
+
+        $issues = [];
+        if (array_key_exists('settings', $data)) {
+            $settings = $data['settings'];
+            if (!is_array($settings) || ($settings !== [] && array_is_list($settings))) {
+                throw new \moodle_exception('jsonerrorsettingstype', 'theme_learnlingo');
+            }
+            foreach ($data as $name => $value) {
+                if ($name !== 'settings' && !array_key_exists($name, $identity)) {
+                    $issues[] = self::issue('root.' . $name,
+                        get_string('jsonunknownsetting', 'theme_learnlingo'), $value);
+                }
+            }
+        } else {
+            $settings = array_diff_key($data, $identity);
+        }
+
+        $definitions = self::definitions();
+        $valid = [];
+        foreach ($settings as $name => $value) {
+            if (!array_key_exists($name, $definitions)) {
+                $issues[] = self::issue('settings.' . $name,
+                    get_string('jsonunknownsetting', 'theme_learnlingo'), $value);
+                continue;
+            }
+            [$type] = $definitions[$name];
+            $reason = self::field_error($name, $type, $value);
+            if ($reason !== null) {
+                $issues[] = self::issue('settings.' . $name, $reason, $value);
+                continue;
+            }
+            $valid[$name] = $value;
+        }
+
+        if ($settings === []) {
+            $issues[] = self::issue('settings',
+                get_string('jsonnoimportfields', 'theme_learnlingo'), $settings);
+        }
+
+        return ['valid' => $valid, 'issues' => $issues];
+    }
+
+    /**
+     * Save only validated fields, preserving invalid and omitted settings.
+     *
+     * @param array $valid Map of previously validated settings.
+     * @return array{updated: int, unchanged: int}
+     */
+    public static function apply_import(array $valid): array {
+        $updated = 0;
+        $unchanged = 0;
+        foreach ($valid as $name => $value) {
+            [$type, $default] = self::definitions()[$name];
+            $old = get_config('theme_learnlingo', $name);
+            if ($old === false || $old === null) {
+                $old = $default;
+            }
+            $old = $type === 'bool' ? (bool)$old : (string)$old;
+            if ($old === $value) {
+                $unchanged++;
+                continue;
+            }
+            set_config($name, $type === 'bool' ? (int)$value : $value, 'theme_learnlingo');
+            $updated++;
+        }
+        if ($updated > 0) {
+            homepage_context::purge_public_cache();
+            theme_reset_all_caches();
+        }
+        return ['updated' => $updated, 'unchanged' => $unchanged];
+    }
+
+    /**
+     * Return the specific reason why a field is invalid, if any.
+     *
+     * @param string $name Setting name.
+     * @param string $type Setting type.
+     * @param mixed $value Submitted value.
+     * @return string|null Localized explanation.
+     */
+    private static function field_error(string $name, string $type, mixed $value): ?string {
+        if ($type === 'bool') {
+            return is_bool($value) ? null : get_string('jsonvalidateboolean', 'theme_learnlingo');
+        }
+        if (!is_string($value)) {
+            return get_string('jsonvalidatestring', 'theme_learnlingo', get_debug_type($value));
+        }
+
+        $limits = ['color' => 7, 'text' => 1500, 'homepage' => 20,
+            'footermode' => 6, 'html' => 150000, 'scss' => 80000,
+            'courseids' => 8000, 'pagecount' => 2];
+        if (strlen($value) > $limits[$type]) {
+            return get_string('jsonvalidatelength', 'theme_learnlingo', (object)[
+                'actual' => strlen($value),
+                'limit' => $limits[$type],
+            ]);
+        }
+        if ($type === 'color' && !preg_match('/^#[A-Fa-f0-9]{6}$/D', $value)) {
+            return get_string('jsonvalidatecolor', 'theme_learnlingo');
+        }
+        if ($type === 'homepage' && !in_array($value, ['learnlingo', 'moodle', 'html'], true)) {
+            return get_string('jsonvalidatehomepage', 'theme_learnlingo');
+        }
+        if ($type === 'pagecount' && !preg_match('/^(?:[1-9]|1[0-2])$/D', $value)) {
+            return get_string('jsonvalidatepagecount', 'theme_learnlingo');
+        }
+        if ($type === 'courseids' && $value !== '' &&
+            !preg_match('/^[1-9][0-9]*(,[1-9][0-9]*)*$/D', $value)) {
+            return get_string('jsonvalidatecourseids', 'theme_learnlingo');
+        }
+        if ($type === 'footermode' && !in_array($value, ['moodle', 'html'], true)) {
+            return get_string('jsonvalidatefootermode', 'theme_learnlingo');
+        }
+        if ($type === 'text' && (str_contains($value, '<') ||
+                str_contains($value, '>') || str_contains($value, "\0"))) {
+            return get_string('jsonvalidatetext', 'theme_learnlingo');
+        }
+        if (($type === 'html' || $type === 'scss') &&
+            (str_contains($value, '<?') || str_contains($value, "\0"))) {
+            return get_string('jsonvalidateexecutable', 'theme_learnlingo');
+        }
+        if ($type === 'scss' &&
+            preg_match('~@import\s+(?:url\s*\(|[\x22\x27]https?://)~i', $value)) {
+            return get_string('jsonvalidateremoteimport', 'theme_learnlingo');
+        }
+        if (in_array($name, ['homepagescss', 'footerscss'], true) &&
+            preg_match('~@(at-root|import|use|forward|extend|keyframes|font-face|charset|namespace|property)\b~i',
+                $value)) {
+            return get_string('jsonvalidatescssdirective', 'theme_learnlingo');
+        }
+        if ($type === 'html' && preg_match('~<\s*(script|iframe|object|embed|form)\b~i', $value)) {
+            return get_string('jsonvalidatehtml', 'theme_learnlingo');
+        }
+        return null;
+    }
+
+    /**
+     * Supply an exact, escaped-in-template value for a rejected setting.
+     *
+     * @param mixed $value Rejected JSON value.
+     * @return string Serialized value.
+     */
+    private static function display_value(mixed $value): string {
+        $json = json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES |
+            JSON_INVALID_UTF8_SUBSTITUTE);
+        return $json === false ? get_debug_type($value) : $json;
+    }
+
+    /**
+     * Create one human-readable field diagnostic.
+     *
+     * @param string $name Field path.
+     * @param string $reason Explanation.
+     * @param mixed $value Submitted value.
+     * @return array
+     */
+    private static function issue(string $name, string $reason, mixed $value): array {
+        return ['name' => $name, 'reason' => $reason, 'value' => self::display_value($value)];
     }
 
     /**
