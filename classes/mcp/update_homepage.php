@@ -62,6 +62,9 @@ final class update_homepage extends base_tool {
             . 'shown above course cards in learnlingo mode and is the main content '
             . 'in html mode. homepagescss is compiled on every page in all modes; '
             . 'reserve it for explicitly scoped homepage-only rules. '
+            . 'For any navbar/menu CSS task, MUST follow the complete menu_guide '
+            . 'selector structure from learnlingo_get_homepage/get_settings or '
+            . 'call learnlingo_get_menu_guide to cover guests and logged-in users. '
             . 'Navbar, menu and shared header CSS MUST go into global scss, '
             . 'not homepagescss, even though that field also compiles globally. '
             . 'Custom Mustache homes must work in light and dark modes: '
@@ -169,7 +172,9 @@ final class update_homepage extends base_tool {
                 'description' => 'Global SCSS compiled after Boost on all pages, '
                     . 'independent of homepagemode and footermode. Put shared '
                     . 'navigation, navbar, menu and header CSS here, not in '
-                    . 'homepagescss; preserve existing rules and avoid duplicates.'],
+                    . 'homepagescss; preserve existing rules and avoid duplicates. '
+                    . 'MUST follow menu_guide selectors returned by learnlingo_get_homepage '
+                    . 'or learnlingo_get_menu_guide for any navbar/menu CSS.'],
             'expected_hash' => ['type' => 'string',
                 'description' => 'Optional state_hash from learnlingo_get_homepage for concurrency checking.'],
         ]);
