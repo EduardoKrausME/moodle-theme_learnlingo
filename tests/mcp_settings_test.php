@@ -33,6 +33,7 @@ use local_mcp\protocol\tool_schema;
 use local_mcp\security\authenticated_identity;
 use ReflectionMethod;
 use theme_learnlingo\mcp\get_homepage;
+use theme_learnlingo\mcp\get_menu_guide;
 use theme_learnlingo\mcp\get_settings;
 use theme_learnlingo\mcp\provider;
 use theme_learnlingo\mcp\update_settings;
@@ -71,10 +72,11 @@ final class mcp_settings_test extends advanced_testcase {
         $readnames = array_map(static fn($tool): string => $tool->get_name(), $provider->get_read_tools());
         $writenames = array_map(static fn($tool): string => $tool->get_name(), $provider->get_write_tools());
         $this->assertContains('learnlingo_get_settings', $readnames);
+        $this->assertContains('learnlingo_get_menu_guide', $readnames);
         $this->assertContains('learnlingo_update_settings', $writenames);
         $this->assertContains('learnlingo_update_styles', $writenames);
         $this->assertContains('learnlingo_update_footer', $writenames);
-        $this->assertCount(2, $readnames);
+        $this->assertCount(3, $readnames);
         $this->assertCount(4, $writenames);
         // Tool schemas may contain nested stdClass objects from the MCP schema builder.
         $schema = json_decode(json_encode((new update_settings())->get_input_schema()), true);
@@ -131,6 +133,42 @@ final class mcp_settings_test extends advanced_testcase {
         $issues = [];
         tool_schema::normalize($schema, $issues);
         $this->assertSame([], array_values(array_filter($issues, static fn($issue): bool => !$issue['repaired'])));
+    }
+
+    /**
+     * MCP must always expose the complete minimal menu structure when an AI
+     * consults the theme to produce navbar CSS for guests and signed-in users.
+     */
+    public function test_menu_guide_is_available_in_all_relevant_read_tools(): void {
+        $this->require_mcp();
+        $identity = $this->identity();
+        $menu = new get_menu_guide();
+        $this->assertSame('moodle/site:config', $menu->get_required_capability());
+        $this->assertSame('learnlingo_get_menu_guide', $menu->get_name());
+        $this->assertSame('object', $menu->get_input_schema()['type']);
+        $guide = $menu->execute([], $identity);
+
+        $this->assertNotEmpty($guide['instructions']);
+        foreach ([
+            '.navbar.fixed-top', '.navbar-toggler', '.navbar-toggler-icon',
+            '.navbar-brand.learnlingo-navbar-brand', '.logo', '.learnlingo-wordmark',
+            '.primary-navigation', '.moremenu', '.nav-link.active', '.dropdownmoremenu',
+            '#usernavigation', '.popover-region-notifications', '.popover-region-messages',
+            '.popover-region-toggle', '.count-container', '.popover-region-container',
+            '.kraus-layout-dark', '.dark-mode', '.light-mode', '.usermenu-container',
+            '.login a', '.dropdown-toggle', '.dropdown-item', '.editmode-switch-form',
+        ] as $selector) {
+            $this->assertStringContainsString($selector, $guide['structure']);
+        }
+        $this->assertStringContainsString('.navbar.fixed-top', $guide['scss_outline']);
+        $this->assertStringContainsString('global scss', implode(' ', $guide['instructions']));
+        $this->assertStringContainsString('homepagescss', implode(' ', $guide['instructions']));
+        $this->assertSame($guide, (new get_homepage())->execute([], $identity)['menu_guide']);
+        $this->assertSame($guide, (new get_settings())->execute([], $identity)['menu_guide']);
+        $this->assertStringContainsString('menu_guide', (new get_homepage())->get_description());
+        $this->assertStringContainsString('menu_guide', (new get_settings())->get_description());
+        $this->assertStringContainsString('learnlingo_get_menu_guide', (new update_styles())->get_description());
+        $this->assertStringContainsString('learnlingo_get_menu_guide', (new update_settings())->get_description());
     }
 
     /**
