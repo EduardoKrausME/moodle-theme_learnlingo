@@ -58,6 +58,7 @@ final class home_service {
         $home['state_hash'] = hash('sha256', json_encode($home,
             JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR));
         $home['mustache'] = homepage_context::schema();
+        $home['menu_guide'] = menu_guide::schema();
         return $home;
     }
 
