@@ -51,6 +51,23 @@
 {{#error}}
     <div class="alert alert-danger" role="alert">{{error}}</div>
 {{/error}}
+{{#report}}
+    <div class="alert {{reportclass}}" role="status">{{report}}</div>
+{{/report}}
+{{#hasissues}}
+    <h4>{{#str}}jsonrejectedtitle, theme_learnlingo{{/str}}</h4>
+    <ul class="list-unstyled">
+        {{#issues}}
+            <li class="mb-3 border rounded p-3">
+                <strong><code>{{name}}</code></strong>: {{reason}}
+                <details class="mt-2">
+                    <summary>{{#str}}jsonrejectedvalue, theme_learnlingo{{/str}}</summary>
+                    <pre class="border rounded p-2 mt-2 overflow-auto" style="max-height: 15rem; white-space: pre-wrap;">{{value}}</pre>
+                </details>
+            </li>
+        {{/issues}}
+    </ul>
+{{/hasissues}}
 <form action="{{actionurl}}" method="post">
     <input type="hidden" name="sesskey" value="{{sesskey}}">
     <input type="hidden" name="action" value="import">
