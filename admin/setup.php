@@ -253,7 +253,7 @@ if ($action !== '') {
 // This is a standalone static CSS file, not a Moodle theme CSS build. Give
 // its URL a revision so browsers/CDNs do not keep an earlier stepper layout
 // even after the administrator purges Moodle caches.
-$PAGE->requires->css(new moodle_url('/theme/learnlingo/styles/admin/setup.css'));
+$PAGE->requires->css(new moodle_url('/theme/learnlingo/admin/styles/setup.css'));
 
 if (!$themeactive) {
     echo $OUTPUT->header();
