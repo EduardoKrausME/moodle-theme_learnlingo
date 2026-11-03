@@ -166,6 +166,40 @@ final class homepage_context {
                 . 'Native Moodle/parent theme Mustache templates, footerhtml and SCSS are unchanged.',
             'rendered_by' => 'Server-side PHP Mustache, for the current visitor on each homepage request.',
             'instructions' => [
+                'COMPLETE SITE DESIGN CHECKLIST: when asked to create or redesign a homepage, '
+                . 'treat homepage content, site navigation, footer, shared logo and favicon '
+                . 'as one visual delivery. Read learnlingo_get_homepage AND '
+                . 'learnlingo_get_settings (include_images when needed) before planning. '
+                . 'Inspect existing branding and footer, propose matching changes and '
+                . 'request separate explicit MCP previews/approvals before applying them. '
+                . 'Do not report a complete redesign while the footer/logo/favicon are '
+                . 'still default or inconsistent. For a small isolated edit, preserve '
+                . 'the existing branding/footer unless the administrator requests otherwise.',
+                'MENU AND NAVIGATION: put all shared navbar, menu, header and navigation '
+                . 'styles in the global scss field (learnlingo_update_styles or '
+                . 'learnlingo_update_settings), never in homepagescss. homepagescss '
+                . 'technically compiles globally but is reserved for homepage-only '
+                . 'selectors. If older menu rules are in homepagescss, move ONLY those '
+                . 'rules into scss and remove their duplicates in the same confirmed '
+                . 'learnlingo_update_styles write; preserve unrelated home SCSS.',
+                'FOOTER: read footermode, footerhtml and footerscss; configure the custom '
+                . 'HTML footer to match the new home when a full redesign requires it, '
+                . 'with at least 20px horizontal padding on desktop and mobile and '
+                . '[data-bs-theme="dark"] support. Footer styles belong in footerscss, '
+                . 'not homepagescss; do not add a second footer element. Use '
+                . 'learnlingo_update_footer or learnlingo_update_settings with approval.',
+                'BRANDING: inspect images.logo and images.favicon through '
+                . 'learnlingo_get_settings. For a new brand, propose a properly '
+                . 'transparent horizontal site logo and a square favicon; update via '
+                . 'learnlingo_update_settings images.logo/images.favicon only after '
+                . 'explicit approval. Preserve the independent loginlogo unless requested.',
+                'PUBLICATION: after each approved homepage/SCSS/footer/branding update, '
+                . 'verify the saved fields using learnlingo_get_homepage and/or '
+                . 'learnlingo_get_settings, and check the returned theme_revision and '
+                . 'theme_cache_purged status. Theme CSS caches are purged automatically '
+                . 'on execution, without opening the admin settings page. Report any '
+                . 'missing or unapproved footer/logo/favicon work instead of silently '
+                . 'calling the redesign finished.',
                 'When asked to design or edit the LearnLingo home, first call '
                 . 'learnlingo_get_homepage and read its mustache instructions, fields and examples. '
                 . 'Reuse the actual placeholders instead of hardcoding a particular user, '
@@ -213,8 +247,10 @@ final class homepage_context {
                 . 'database queries, JavaScript, PHP, or Moodle helper calls. '
                 . 'Do not generate executable scripts, partials or lambdas.',
                 'Keep semantic responsive HTML in homepagehtml and CSS/SCSS in '
-                . 'homepagescss. Beware homepagescss is applied globally on every '
-                . 'page, so scope homepage-only rules with explicit selectors.',
+                . 'homepagescss for homepage-only selectors; place shared menu, '
+                . 'navigation and header styles in the global scss field. '
+                . 'homepagescss is technically compiled on every page, so scope '
+                . 'its rules to the homepage root.'
                 'MANDATORY DARK MODE SUPPORT: every custom Mustache homepage must '
                 . 'look correct in both light and dark appearances. The optional '
                 . 'local_boost_dark plugin sets data-bs-theme="dark" on <html>. '

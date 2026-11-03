@@ -61,8 +61,9 @@ final class update_homepage extends base_tool {
             . 'full-width layout, homepagescss or global scss. homepagehtml is '
             . 'shown above course cards in learnlingo mode and is the main content '
             . 'in html mode. homepagescss is compiled on every page in all modes; '
-            . 'it can style the homepage, navbar, menus and shared footer. '
-            . 'Use explicit homepage selectors for homepage-only rules. '
+            . 'reserve it for explicitly scoped homepage-only rules. '
+            . 'Navbar, menu and shared header CSS MUST go into global scss, '
+            . 'not homepagescss, even though that field also compiles globally. '
             . 'Custom Mustache homes must work in light and dark modes: '
             . 'use [data-bs-theme="dark"] .your-home in homepagescss '
             . 'with dark-specific contrast, surfaces, cards and controls; '
@@ -87,9 +88,14 @@ final class update_homepage extends base_tool {
             . 'missing courses to fill a fixed-width grid. '
             . 'Guest catalogue is MUC-cached for 300s with event invalidation; '
             . 'user data, enrollments, progress and final HTML are never shared-cached. '
-            . 'For footermode, footerhtml and footer-scoped footerscss use '
-            . 'learnlingo_update_settings. Validates changes, previews them and '
-            . 'requires explicit confirmation. Read learnlingo_get_homepage first.';
+            . 'For a full site/home redesign also read learnlingo_get_settings; '
+            . 'coordinate footerhtml/footerscss/footermode, images.logo and '
+            . 'images.favicon with the home, request separate approval using '
+            . 'learnlingo_update_footer or learnlingo_update_settings, and verify '
+            . 'them after execution. Do not call the redesign finished while '
+            . 'branding/footer are inconsistent. Theme CSS caches are purged '
+            . 'automatically when the approved write executes; verify theme_revision '
+            . 'in the result. Validates, previews and requires explicit confirmation.';
     }
 
     /**
@@ -149,8 +155,10 @@ final class update_homepage extends base_tool {
                     . 'for learnlingo and html homepage modes; irrelevant in moodle mode.'],
             'homepagescss' => ['type' => 'string',
                 'description' => 'Full SCSS stylesheet compiled on every page regardless '
-                    . 'of homepagemode; also styles the navbar, menu and footer. '
-                    . 'NOT automatically scoped to the homepage. Use explicit '
+                    . 'of homepagemode; it could affect navbar, menu and footer but '
+                    . 'MUST contain only scoped homepage-specific rules. '
+                    . 'Put all shared menu/nav CSS in global scss and footer CSS in '
+                    . 'footerscss. NOT automatically scoped; use explicit '
                     . 'homepage selectors for homepage-only rules. Use '
                     . '[data-bs-theme="dark"] .your-home to adapt dark colors, '
                     . 'cards, controls and accessible focus states, and prefer '
@@ -158,8 +166,9 @@ final class update_homepage extends base_tool {
                     . 'Do not use a bare & at stylesheet root or remote CSS imports.'],
             'scss' => ['type' => 'string',
                 'description' => 'Global SCSS compiled after Boost on all pages, '
-                    . 'independent of homepagemode and footermode. '
-                    . 'homepagescss is also global, not homepage-only.'],
+                    . 'independent of homepagemode and footermode. Put shared '
+                    . 'navigation, navbar, menu and header CSS here, not in '
+                    . 'homepagescss; preserve existing rules and avoid duplicates.'],
             'expected_hash' => ['type' => 'string',
                 'description' => 'Optional state_hash from learnlingo_get_homepage for concurrency checking.'],
         ]);
@@ -235,6 +244,8 @@ final class update_homepage extends base_tool {
             'scss_bytes' => strlen($current['scss']),
             'state_hash' => $current['state_hash'],
             'changed_settings' => array_keys($prepared['settings']),
+            'theme_cache_purged' => true,
+            'theme_revision' => theme_get_revision(),
         ];
     }
 }

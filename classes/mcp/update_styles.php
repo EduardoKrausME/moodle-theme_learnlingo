@@ -51,8 +51,10 @@ final class update_styles extends base_tool {
             . 'learnlingo_get_settings first for all variables, examples and cache/privacy rules. '
             . 'Never hardcode student data or insert scripts, PHP or extra html/body wrappers.',
         'homepagescss' => 'Full SCSS loaded globally on every page, regardless of homepagemode. '
-            . 'This includes menus, navbar and footer; use specific homepage selectors for '
-            . 'home-only rules. Can be cleared with an empty string after migrating CSS '
+            . 'It can affect menus, navbar and footer, but MUST be used only for '
+            . 'homepage-specific rules with explicit scope; place menu/navigation '
+            . 'CSS in global scss and footer CSS in footerscss. '
+            . 'Can be cleared with an empty string after migrating CSS '
             . 'to scss in the same operation.',
         'footermode' => 'moodle uses the traditional columns and credits; html renders '
             . 'footerhtml on all pages. Independent of homepagemode. Existing settings '
@@ -67,7 +69,8 @@ final class update_styles extends base_tool {
         'scsspre' => 'Global SCSS inserted before Boost/Bootstrap for Sass variables '
             . 'and compile-time settings.',
         'scss' => 'Global SCSS inserted after Boost/Bootstrap and applied to every page '
-            . 'in all homepage and footer modes. For local_boost_dark compatibility, '
+            . 'in all homepage and footer modes. Put navbar, menu and global '
+            . 'header styles here, never in homepagescss. For local_boost_dark compatibility, '
             . 'include [data-bs-theme="dark"] overrides and check text contrast.',
     ];
 
@@ -109,8 +112,13 @@ final class update_styles extends base_tool {
             . 'or publiccoursesperpage via learnlingo_update_homepage; do not '
             . 'limit logged-in enrolled courses. MUC-cached anonymous catalogue '
             . 'never shares student data. '
-            . 'Move CSS from homepagescss to scss and clear homepagescss in ONE confirmed '
-            . 'write to avoid duplication. Other fields remain unchanged. '
+            . 'For a full homepage redesign, inspect and coordinate site logo, '
+            . 'favicon, footermode, footerhtml and footerscss using '
+            . 'learnlingo_get_settings, then request separate approvals for '
+            . 'branding (learnlingo_update_settings) and footer where needed. '
+            . 'Move ONLY legacy shared menu/nav rules from homepagescss to '
+            . 'scss, removing the old copies in ONE confirmed write; preserve '
+            . 'homepage-specific rules. Other fields remain unchanged. '
             . 'Read learnlingo_get_settings first; expected_hash is REQUIRED to '
             . 'protect against concurrent changes. Always preview and obtain '
             . 'explicit confirmation before applying.';
@@ -251,6 +259,8 @@ final class update_styles extends base_tool {
             'success' => true,
             'changed_settings' => array_keys($prepared['settings']),
             'state_hash' => settings_service::snapshot()['state_hash'],
+            'theme_cache_purged' => true,
+            'theme_revision' => theme_get_revision(),
         ];
     }
 }

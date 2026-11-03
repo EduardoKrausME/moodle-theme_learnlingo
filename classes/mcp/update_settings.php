@@ -65,6 +65,12 @@ final class update_settings extends base_tool {
             . 'traditional footer columns/credits and login/dashboard/course '
             . 'options. Homepage and footer modes are independent. Only specified '
             . 'settings change; hidden/inactive fields retain their values. '
+            . 'When creating a complete homepage, also inspect and coordinate '
+            . 'the footer, shared logo and favicon. Put shared navbar/menu styles '
+            . 'in global scss, homepage-only styles in scoped homepagescss, and '
+            . 'custom footer styles in footerscss. Never silently skip an '
+            . 'inconsistent footer or default logo/favicon, but preserve existing '
+            . 'branding for small isolated edits or until separately approved. '
             . 'Only homepagehtml accepts PHP-rendered Mustache. Read the '
             . 'homepage_mustache instructions from learnlingo_get_settings '
             . 'or mustache instructions from learnlingo_get_homepage before '
@@ -131,8 +137,9 @@ final class update_settings extends base_tool {
                 . 'and --learnlingo-home-* tokens for adaptive surfaces. '
                 . 'Never invent a {{isdark}} Mustache field.',
             'homepagescss' => 'Global SCSS loaded on EVERY page in ALL homepage modes. '
-                . 'Can style the home, navbar, menus and footer. NOT automatically '
-                . 'scoped to home: use explicit homepage selectors for home-only rules. '
+                . 'Can affect navbar, menus and footer, but DO NOT put shared '
+                . 'navigation styles here: use global scss. Reserve homepagescss '
+                . 'for homepage-only rules, with explicit root selectors. '
                 . 'Do not use bare & at stylesheet root or remote imports.',
             'homepagepubliccoursesperpage' => 'Number 1-12 as a string, default 4, '
                 . 'of public course cards per page for visitors NOT logged in only. '
@@ -190,7 +197,8 @@ final class update_settings extends base_tool {
             'scsspre' => 'Global pre-SCSS compiled BEFORE Boost/Bootstrap; use '
                 . 'for Sass variables and compile-time overrides.',
             'scss' => 'Global SCSS compiled AFTER Boost on all pages, regardless '
-                . 'of homepage or footer modes. homepagescss is also global.',
+                . 'of homepage or footer modes. Put shared navbar, header and '
+                . 'menu styling here; homepagescss is for scoped homepage rules.',
         ];
         $properties = [];
         foreach (branding_exchange::definitions() as $name => [$type, $default]) {
@@ -322,6 +330,8 @@ final class update_settings extends base_tool {
             'changed_settings' => array_keys($prepared['settings']),
             'changed_images' => array_keys($prepared['images']),
             'state_hash' => settings_service::snapshot()['state_hash'],
+            'theme_cache_purged' => true,
+            'theme_revision' => theme_get_revision(),
         ];
     }
 }

@@ -104,6 +104,9 @@ final class mcp_homepage_test extends advanced_testcase {
         $this->assertStringContainsString('MUC', $instructions);
         $this->assertStringContainsString('instead of hardcoding', $instructions);
         $this->assertStringContainsString('[data-bs-theme="dark"]', $instructions);
+        $this->assertStringContainsString('global scss', $instructions);
+        $this->assertStringContainsString('logo', $instructions);
+        $this->assertStringContainsString('FOOTER', $instructions);
         $html = '<section class="welcome"><h1>New Moodle home</h1></section>';
         $arguments = [
             'html' => $html,
@@ -141,6 +144,8 @@ final class mcp_homepage_test extends advanced_testcase {
 
         $result = $writer->execute($arguments, $identity);
         $this->assertTrue($result['success']);
+        $this->assertTrue($result['theme_cache_purged']);
+        $this->assertSame(theme_get_revision(), $result['theme_revision']);
         $after = $reader->execute([], $identity);
         $this->assertSame('learnlingo', $after['mode']);
         $this->assertSame($html, $after['html']);

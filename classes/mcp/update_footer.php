@@ -105,7 +105,11 @@ final class update_footer extends base_tool {
             . 'The html footer uses footerhtml and footerscss; the moodle footer '
             . 'uses four optional columns, background color and credits. '
             . 'Footer mode is independent of homepage mode. Switching modes '
-            . 'never clears inactive fields. Read learnlingo_get_settings first '
+            . 'never clears inactive fields. During a complete homepage redesign, '
+            . 'inspect and match the existing footer to the new brand (including '
+            . 'dark mode and at least 20px of lateral padding), rather than '
+            . 'silently leaving the default footer. Preserve it for isolated edits. '
+            . 'Read learnlingo_get_settings first '
             . 'and pass its state_hash as required expected_hash. Submit only '
             . 'the fields to change. Preview and obtain explicit confirmation '
             . 'before writing. All thirteen fields use the existing validator.';

@@ -130,6 +130,8 @@ final class home_service {
             set_config($name, is_bool($value) ? (int)$value : $value, 'theme_learnlingo');
         }
         homepage_context::purge_public_cache();
-        theme_reset_all_caches();
+        // Same theme CSS purge as Administration > Development > Purge caches.
+        // It increments themerev and invalidates compiled SCSS and browser CSS URLs.
+        purge_caches(['theme' => true]);
     }
 }

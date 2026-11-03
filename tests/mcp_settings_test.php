@@ -144,6 +144,7 @@ final class mcp_settings_test extends advanced_testcase {
         $this->assertSame(['moodle', 'html'], $props['footermode']['enum']);
         $this->assertStringContainsString('globally', $props['homepagescss']['description']);
         $this->assertStringContainsString('automatically scoped', $props['footerscss']['description']);
+        $this->assertStringContainsString('global scss', $props['homepagescss']['description']);
         $this->assertSame('moodle/site:config', $tool->get_required_capability());
         $this->assertTrue($tool->requires_confirmation());
         $this->assertTrue($tool->supports_dry_run());
@@ -183,6 +184,8 @@ final class mcp_settings_test extends advanced_testcase {
         $this->assertTrue($preview['requires_confirmation']);
         $result = $tool->execute($patch, $identity);
         $this->assertTrue($result['success']);
+        $this->assertTrue($result['theme_cache_purged']);
+        $this->assertSame(theme_get_revision(), $result['theme_revision']);
         $after = $reader->execute([], $identity);
         $this->assertSame('', $after['settings']['homepagescss']);
         $this->assertSame(1, substr_count($after['settings']['scss'], '.navbar { color: #123456; }'));
