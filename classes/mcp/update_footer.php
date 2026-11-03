@@ -249,6 +249,8 @@ final class update_footer extends base_tool {
             'success' => true,
             'changed_settings' => array_keys($prepared['settings']),
             'state_hash' => settings_service::snapshot()['state_hash'],
+            'theme_cache_purged' => true,
+            'theme_revision' => theme_get_revision(),
         ];
     }
 }

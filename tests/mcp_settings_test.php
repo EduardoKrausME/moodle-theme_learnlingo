@@ -197,6 +197,28 @@ final class mcp_settings_test extends advanced_testcase {
     }
 
     /**
+     * Changing homepage content through the general styles tool must invalidate
+     * the anonymous catalogue cache, not just the theme's compiled CSS.
+     */
+    public function test_styles_homepage_write_invalidates_public_course_cache(): void {
+        $this->require_mcp();
+        $this->resetAfterTest();
+        $identity = $this->identity();
+        $cache = \core_cache\cache::make('theme_learnlingo', 'publiccourses');
+        $cache->set('mcp_styles_test', [['id' => 91]]);
+        $this->assertNotFalse($cache->get('mcp_styles_test'));
+
+        $reader = new get_settings();
+        $before = $reader->execute([], $identity);
+        $result = (new update_styles())->execute([
+            'expected_hash' => $before['state_hash'],
+            'settings' => ['homepagehtml' => '<section class="new-home">Hello</section>'],
+        ], $identity);
+        $this->assertTrue($result['theme_cache_purged']);
+        $this->assertFalse($cache->get('mcp_styles_test'));
+    }
+
+    /**
      * The new writer cannot silently bypass read-before-write or its allowlist.
      */
     public function test_styles_tool_requires_hash_and_rejects_other_settings(): void {
