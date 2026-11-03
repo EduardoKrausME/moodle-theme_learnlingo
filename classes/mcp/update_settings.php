@@ -68,6 +68,9 @@ final class update_settings extends base_tool {
             . 'When creating a complete homepage, also inspect and coordinate '
             . 'the footer, shared logo and favicon. Put shared navbar/menu styles '
             . 'in global scss, homepage-only styles in scoped homepagescss, and '
+            . 'for ANY navbar/menu CSS change first follow the mandatory menu_guide '
+            . 'returned by learnlingo_get_settings (or learnlingo_get_menu_guide) '
+            . 'covering guest/login, authenticated icons, dropdowns and edit mode. '
             . 'custom footer styles in footerscss. Never silently skip an '
             . 'inconsistent footer or default logo/favicon, but preserve existing '
             . 'branding for small isolated edits or until separately approved. '
@@ -202,7 +205,9 @@ final class update_settings extends base_tool {
                 . 'for Sass variables and compile-time overrides.',
             'scss' => 'Global SCSS compiled AFTER Boost on all pages, regardless '
                 . 'of homepage or footer modes. Put shared navbar, header and '
-                . 'menu styling here; homepagescss is for scoped homepage rules.',
+                . 'menu styling here; homepagescss is for scoped homepage rules. '
+                . 'MUST consult menu_guide from learnlingo_get_settings or '
+                . 'learnlingo_get_menu_guide before generating navbar/menu CSS.',
         ];
         $properties = [];
         foreach (branding_exchange::definitions() as $name => [$type, $default]) {
