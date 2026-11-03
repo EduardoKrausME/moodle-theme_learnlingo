@@ -133,6 +133,19 @@ final class branding_exchange_test extends advanced_testcase {
     }
 
     /**
+     * The importer must not impose its former 400 KB JSON payload limit.
+     */
+    public function test_large_json_payload_is_accepted(): void {
+        $source = branding_exchange::json([
+            'settings' => ['homepagehtml' => str_repeat('<p>Content</p>', 35000)],
+        ]);
+        $this->assertGreaterThan(400000, strlen($source));
+        $validation = branding_exchange::validate_import($source);
+        $this->assertSame([], $validation['issues']);
+        $this->assertSame(str_repeat('<p>Content</p>', 35000), $validation['valid']['homepagehtml']);
+    }
+
+    /**
      * Invalid identity metadata rejects the import before changes.
      */
     public function test_identity_mismatch_is_rejected(): void {
