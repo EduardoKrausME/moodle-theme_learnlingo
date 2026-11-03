@@ -1,0 +1,9 @@
+[data-bs-theme=dark] {
+    .header-maxwidth .navigation .nav-tabs,
+    .secondary-navigation .navigation .nav-tabs {
+        background-color: transparent !important;
+    }
+    .secondary-navigation {
+        box-shadow: 0 4px 0 rgba(225, 225, 225, 0.18);
+    }
+}
