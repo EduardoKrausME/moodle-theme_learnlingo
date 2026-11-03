@@ -260,6 +260,8 @@ final class homepage_context_test extends advanced_testcase {
         $this->assertArrayHasKey('coursepagination', $schema['fields']);
         $this->assertStringContainsString('ONLY', implode(' ', $schema['instructions']));
         $this->assertStringContainsString('coursecolumns', implode(' ', $schema['instructions']));
+        $this->assertStringContainsString('tightly cropped', implode(' ', $schema['instructions']));
+        $this->assertStringContainsString('NEVER leave blank', implode(' ', $schema['instructions']));
         $this->assertStringContainsString('MENU AND NAVIGATION', implode(' ', $schema['instructions']));
         $this->assertStringContainsString('BRANDING', implode(' ', $schema['instructions']));
     }

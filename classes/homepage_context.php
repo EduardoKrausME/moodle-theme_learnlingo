@@ -189,10 +189,19 @@ final class homepage_context {
                 . 'not homepagescss; do not add a second footer element. Use '
                 . 'learnlingo_update_footer or learnlingo_update_settings with approval.',
                 'BRANDING: inspect images.logo and images.favicon through '
-                . 'learnlingo_get_settings. For a new brand, propose a properly '
-                . 'transparent horizontal site logo and a square favicon; update via '
-                . 'learnlingo_update_settings images.logo/images.favicon only after '
-                . 'explicit approval. Preserve the independent loginlogo unless requested.',
+                . 'learnlingo_get_settings. Prefer a PNG logo with real alpha transparency '
+                . '(no white, colored or opaque rectangle behind the artwork). '
+                . 'CRITICAL: the logo artwork must be tightly cropped to its visible '
+                . 'content; NEVER leave blank, transparent or white padding between '
+                . 'the logo artwork and the image canvas edges. Trim all four sides '
+                . 'to the visible artwork bounding box before uploading, without '
+                . 'distorting proportions or cutting off visible details. Image '
+                . 'padding is NOT the same as navbar CSS spacing: review both separately. '
+                . 'Prefer a horizontal shared site logo and a separate square favicon, '
+                . 'which has its own dimensions and may have a deliberate background. '
+                . 'Preview the actual cropped image and request explicit approval '
+                . 'before learnlingo_update_settings images.logo/images.favicon. '
+                . 'Preserve the independent loginlogo unless requested.',
                 'PUBLICATION: after each approved homepage/SCSS/footer/branding update, '
                 . 'verify the saved fields using learnlingo_get_homepage and/or '
                 . 'learnlingo_get_settings, and check the returned theme_revision and '

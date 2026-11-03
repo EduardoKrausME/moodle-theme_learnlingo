@@ -95,6 +95,10 @@ final class mcp_settings_test extends advanced_testcase {
         $this->assertArrayHasKey('images', $schema['properties']);
         $imageschema = $schema['properties']['images'];
         $this->assertEqualsCanonicalizing(['logo', 'favicon', 'loginlogo'], array_keys($imageschema['properties']));
+        $this->assertStringContainsString('transparent PNG',
+            $imageschema['properties']['logo']['description']);
+        $this->assertStringContainsString('ALL four sides',
+            $imageschema['properties']['logo']['description']);
         $this->assertStringContainsString('WebP',
             $imageschema['properties']['loginlogo']['properties']['image_base64']['description']);
         $this->assertFalse($imageschema['additionalProperties']);
