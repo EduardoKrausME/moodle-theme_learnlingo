@@ -89,6 +89,8 @@ final class mcp_homepage_test extends advanced_testcase {
         $writer = new update_homepage();
         $before = $reader->execute([], $identity);
         $this->assertArrayHasKey('mustache', $before);
+        $this->assertArrayHasKey('menu_guide', $before);
+        $this->assertStringContainsString('#usernavigation', $before['menu_guide']['structure']);
         $this->assertSame('homepagehtml', $before['mustache']['field']);
         $this->assertArrayHasKey('mycourses', $before['mustache']['fields']);
         $this->assertArrayHasKey('coursepagination', $before['mustache']['fields']);
