@@ -120,7 +120,7 @@ final class home_service {
     }
 
     /**
-     * Persist the validated changes and clear theme caches.
+     * Persist the validated changes and purge caches as in Moodle administration.
      *
      * @param array $prepared Result of prepare().
      * @return void
@@ -129,9 +129,10 @@ final class home_service {
         foreach ($prepared['settings'] as $name => $value) {
             set_config($name, is_bool($value) ? (int)$value : $value, 'theme_learnlingo');
         }
-        homepage_context::purge_public_cache();
-        // Same theme CSS purge as Administration > Development > Purge caches.
-        // It increments themerev and invalidates compiled SCSS and browser CSS URLs.
-        purge_caches(['theme' => true]);
+        // Replicate the administrator's "Purge all caches" action.
+        // Theme-only invalidation was insufficient on installations where other
+        // Moodle cache areas held stale homepage or compiled style dependencies.
+        // This also purges the anonymous public course MUC cache.
+        purge_all_caches();
     }
 }

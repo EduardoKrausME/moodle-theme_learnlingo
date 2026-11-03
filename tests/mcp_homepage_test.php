@@ -145,6 +145,7 @@ final class mcp_homepage_test extends advanced_testcase {
         $result = $writer->execute($arguments, $identity);
         $this->assertTrue($result['success']);
         $this->assertTrue($result['theme_cache_purged']);
+        $this->assertSame('all', $result['cache_purge_scope']);
         $this->assertSame(theme_get_revision(), $result['theme_revision']);
         $after = $reader->execute([], $identity);
         $this->assertSame('learnlingo', $after['mode']);

@@ -124,6 +124,7 @@ final class mcp_footer_test extends advanced_testcase {
         $result = $tool->execute($args, $identity);
         $this->assertTrue($result['success']);
         $this->assertTrue($result['theme_cache_purged']);
+        $this->assertSame('all', $result['cache_purge_scope']);
         $this->assertSame(theme_get_revision(), $result['theme_revision']);
         $after = $reader->execute([], $identity);
         foreach ($changes as $name => $value) {

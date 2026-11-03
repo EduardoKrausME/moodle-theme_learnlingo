@@ -250,7 +250,7 @@ final class homepage_context {
                 . 'homepagescss for homepage-only selectors; place shared menu, '
                 . 'navigation and header styles in the global scss field. '
                 . 'homepagescss is technically compiled on every page, so scope '
-                . 'its rules to the homepage root.'
+                . 'its rules to the homepage root.',
                 'MANDATORY DARK MODE SUPPORT: every custom Mustache homepage must '
                 . 'look correct in both light and dark appearances. The optional '
                 . 'local_boost_dark plugin sets data-bs-theme="dark" on <html>. '

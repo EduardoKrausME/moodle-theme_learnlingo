@@ -34,7 +34,6 @@ use stored_file;
 use theme_config;
 use theme_learnlingo\branding_exchange;
 use theme_learnlingo\dark_mode;
-use theme_learnlingo\homepage_context;
 
 /**
  * Use the same validation contract as the LearnLingo JSON importer.
@@ -356,15 +355,11 @@ final class settings_service {
             }
         }
         $transaction->allow_commit();
-        // The settings/styles tools can change guest course selection as well as the home HTML.
-        if (array_intersect(array_keys($prepared['settings']), [
-                'homepagemode', 'homepagehtml', 'homepagepubliccourses',
-                'homepagepubliccoursesperpage', 'homepagefullwidth'])) {
-            homepage_context::purge_public_cache();
-        }
-        // This is the theme-specific equivalent of the admin cache purge.
-        // Always invalidate compiled SCSS after an approved MCP settings/styles write.
-        purge_caches(['theme' => true]);
+        // Match Site administration > Development > Purge all caches, rather
+        // than purging only theme assets. This invalidates MUC, templates and
+        // generated theme CSS after the database transaction has committed.
+        // A failed purge throws instead of reporting publication as successful.
+        purge_all_caches();
     }
 
     /**

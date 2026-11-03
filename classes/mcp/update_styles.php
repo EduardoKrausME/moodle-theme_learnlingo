@@ -260,6 +260,7 @@ final class update_styles extends base_tool {
             'changed_settings' => array_keys($prepared['settings']),
             'state_hash' => settings_service::snapshot()['state_hash'],
             'theme_cache_purged' => true,
+            'cache_purge_scope' => 'all',
             'theme_revision' => theme_get_revision(),
         ];
     }

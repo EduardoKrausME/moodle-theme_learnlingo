@@ -93,8 +93,9 @@ final class update_homepage extends base_tool {
             . 'images.favicon with the home, request separate approval using '
             . 'learnlingo_update_footer or learnlingo_update_settings, and verify '
             . 'them after execution. Do not call the redesign finished while '
-            . 'branding/footer are inconsistent. Theme CSS caches are purged '
-            . 'automatically when the approved write executes; verify theme_revision '
+            . 'branding/footer are inconsistent. The approved write executes '
+            . 'Moodle purge_all_caches after saving, the same operation as the '
+            . 'admin Purge all caches button; verify theme_revision '
             . 'in the result. Validates, previews and requires explicit confirmation.';
     }
 
@@ -245,6 +246,7 @@ final class update_homepage extends base_tool {
             'state_hash' => $current['state_hash'],
             'changed_settings' => array_keys($prepared['settings']),
             'theme_cache_purged' => true,
+            'cache_purge_scope' => 'all',
             'theme_revision' => theme_get_revision(),
         ];
     }
