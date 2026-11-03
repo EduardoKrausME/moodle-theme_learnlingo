@@ -18,6 +18,12 @@
     --ll-code-punctuation: #657383;
     --ll-code-property: #1660a0;
     --ll-code-entity: #94509a;
+    --ll-code-mustache: #8b48b3;
+    --ll-code-mustache-section: #ad4e90;
+    --ll-code-mustache-variable: #2360a7;
+    --ll-code-selector: #7753a8;
+    --ll-code-function: #227b91;
+    --ll-code-interpolation: #9e6215;
     max-width: 100%;
     min-width: 0;
     border: 1px solid var(--ll-code-border);
@@ -197,6 +203,12 @@
     .ll-code-token--punctuation { color: var(--ll-code-punctuation); }
     .ll-code-token--property { color: var(--ll-code-property); }
     .ll-code-token--entity { color: var(--ll-code-entity); }
+    .ll-code-token--mustache-delimiter { color: var(--ll-code-mustache); }
+    .ll-code-token--mustache-section { color: var(--ll-code-mustache-section); font-weight: 700; }
+    .ll-code-token--mustache-variable { color: var(--ll-code-mustache-variable); }
+    .ll-code-token--selector { color: var(--ll-code-selector); }
+    .ll-code-token--function { color: var(--ll-code-function); }
+    .ll-code-token--interpolation { color: var(--ll-code-interpolation); }
 
     &--expanded {
         position: fixed;
@@ -236,6 +248,12 @@
     --ll-code-punctuation: #9db6c6;
     --ll-code-property: #88c6ff;
     --ll-code-entity: #dda8e4;
+    --ll-code-mustache: #d0a8fa;
+    --ll-code-mustache-section: #ffb3d2;
+    --ll-code-mustache-variable: #86d4ff;
+    --ll-code-selector: #e6b0ff;
+    --ll-code-function: #90ddea;
+    --ll-code-interpolation: #ffca85;
 }
 
 @media (max-width: 600px) {
