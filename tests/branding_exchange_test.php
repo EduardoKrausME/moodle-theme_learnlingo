@@ -67,6 +67,88 @@ final class branding_exchange_test extends advanced_testcase {
     }
 
     /**
+     * Partial JSON updates only the provided setting, preserving others.
+     */
+    public function test_partial_import_updates_only_submitted_fields(): void {
+        $this->resetAfterTest();
+        set_config('brandcolor', '#112233', 'theme_learnlingo');
+        set_config('accentcolor', '#445566', 'theme_learnlingo');
+
+        $validation = branding_exchange::validate_import('{"settings":{"brandcolor":"#abcdef"}}');
+        $this->assertSame(['brandcolor' => '#abcdef'], $validation['valid']);
+        $this->assertSame([], $validation['issues']);
+
+        $result = branding_exchange::apply_import($validation['valid']);
+        $this->assertSame(1, $result['updated']);
+        $this->assertSame(0, $result['unchanged']);
+        $this->assertSame('#abcdef', get_config('theme_learnlingo', 'brandcolor'));
+        $this->assertSame('#445566', get_config('theme_learnlingo', 'accentcolor'));
+    }
+
+    /**
+     * Invalid and unknown fields are reported without blocking valid settings.
+     */
+    public function test_invalid_fields_do_not_block_valid_settings(): void {
+        $this->resetAfterTest();
+        set_config('showwelcome', 1, 'theme_learnlingo');
+        set_config('footerscss', '.old { color: red; }', 'theme_learnlingo');
+
+        $data = [
+            'settings' => [
+                'brandcolor' => '#123abc',
+                'showwelcome' => 'false',
+                'footerscss' => '@import "remote.css";',
+                'extra_field' => 'unknown',
+            ],
+        ];
+        $validation = branding_exchange::validate_import(branding_exchange::json($data));
+
+        $this->assertSame(['brandcolor' => '#123abc'], $validation['valid']);
+        $this->assertCount(3, $validation['issues']);
+        $this->assertSame('settings.showwelcome', $validation['issues'][0]['name']);
+        $this->assertSame('"false"', $validation['issues'][0]['value']);
+        $this->assertSame('settings.footerscss', $validation['issues'][1]['name']);
+        $this->assertSame('settings.extra_field', $validation['issues'][2]['name']);
+
+        $result = branding_exchange::apply_import($validation['valid']);
+        $this->assertSame(1, $result['updated']);
+        $this->assertSame('#123abc', get_config('theme_learnlingo', 'brandcolor'));
+        $this->assertSame('1', (string)get_config('theme_learnlingo', 'showwelcome'));
+        $this->assertSame('.old { color: red; }', get_config('theme_learnlingo', 'footerscss'));
+    }
+
+    /**
+     * Long HTML and SCSS must not be rejected by arbitrary byte limits.
+     */
+    public function test_large_html_and_scss_fields_are_accepted(): void {
+        $data = [
+            'settings' => [
+                'homepagehtml' => str_repeat('<p>Exemplo</p>', 15000),
+                'homepagescss' => str_repeat('.example { padding: 1px; }', 4000),
+            ],
+        ];
+        $validation = branding_exchange::validate_import(branding_exchange::json($data));
+        $this->assertSame([], $validation['issues']);
+        $this->assertSame($data['settings'], $validation['valid']);
+    }
+
+    /**
+     * Invalid identity metadata rejects the import before changes.
+     */
+    public function test_identity_mismatch_is_rejected(): void {
+        $this->expectException(\moodle_exception::class);
+        branding_exchange::validate_import('{"schema_version":99,"settings":{"brandcolor":"#abcdef"}}');
+    }
+
+    /**
+     * Malformed input rejects the import instead of partially changing settings.
+     */
+    public function test_invalid_json_is_rejected(): void {
+        $this->expectException(\moodle_exception::class);
+        branding_exchange::validate_import('{"settings":');
+    }
+
+    /**
      * Reject executable SVG while allowing basic generated vector logos.
      */
     public function test_svg_must_be_static(): void {
