@@ -1,0 +1,260 @@
+<?php
+// This file is part of Moodle - http://moodle.org/
+// @package theme_learnlingo
+// @copyright 2026 Eduardo Kraus
+// @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+
+namespace theme_learnlingo;
+
+use context_system;
+use moodle_url;
+use stdClass;
+
+/**
+ * Storage, routing and navigation for custom LearnLingo pages.
+ * Never coupled to homepagemode/homepagehtml.
+ */
+final class pages {
+    /** Return whether the schema is installed, including during upgrade. */
+    public static function ready(): bool {
+        global $DB;
+        return $DB->get_manager()->table_exists('theme_learnlingo_pages')
+            && $DB->get_manager()->table_exists('theme_learnlingo_pagecats');
+    }
+
+    /** URL path to category/page, without a leading slash. */
+    public static function path(stdClass $page, ?stdClass $category = null): string {
+        return ($category ? $category->slug . '/' : '') . $page->slug;
+    }
+
+    /** Public URL, with friendly PATH_INFO only if explicitly configured. */
+    public static function url(stdClass $page, ?stdClass $category = null): moodle_url {
+        $path = self::path($page, $category);
+        if ((int)get_config('theme_learnlingo', 'pagefriendlyurls') === 1) {
+            return new moodle_url('/index.php/' .
+                ($category ? $category->slug . '/' : '') . 'page-' . $page->slug);
+        }
+        return new moodle_url('/', ['page' => $path]);
+    }
+
+    /** A request must have GET ?page= or a terminal /page-{slug} segment. */
+    public static function request_path(): ?string {
+        global $CFG;
+
+        if (PHP_SAPI === 'cli' || defined('CLI_SCRIPT') || empty($_SERVER['REQUEST_URI'])) {
+            return null;
+        }
+        $requestpath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $basepath = (string)(parse_url($CFG->wwwroot, PHP_URL_PATH) ?: '');
+        $relative = substr((string)$requestpath, strlen($basepath));
+        if ($basepath !== '' && !str_starts_with((string)$requestpath, rtrim($basepath, '/') . '/')
+            && (string)$requestpath !== $basepath) {
+            return null;
+        }
+        $relative = '/' . ltrim($relative, '/');
+        // Only intercept Moodle's real front-page entry point, not other PHP scripts.
+        if (($relative === '/' || $relative === '/index.php') && array_key_exists('page', $_GET)) {
+            return is_string($_GET['page']) ? (string)$_GET['page'] : '';
+        }
+        if (preg_match('~^/index\.php/(?:(?<category>[a-z0-9-]+)/)?page-(?<slug>[a-z0-9-]+)$~D',
+            $relative, $matches)) {
+            return (!empty($matches['category']) ? $matches['category'] . '/' : '') . $matches['slug'];
+        }
+        return null;
+    }
+
+    /** Validate a category/page path, rejecting nesting and malformed slugs. */
+    public static function split_path(string $path): ?array {
+        if (!preg_match('~^(?:([a-z0-9-]+)/)?([a-z0-9-]+)$~D', $path, $matches)) {
+            return null;
+        }
+        return ['category' => $matches[1] ?? '', 'slug' => $matches[2]];
+    }
+
+    /** Resolve an existing published page. Hidden categories remain directly accessible. */
+    public static function published(string $path): ?array {
+        global $DB;
+        $parts = self::split_path($path);
+        if (!$parts || !self::ready()) {
+            return null;
+        }
+        if ($parts['category'] !== '') {
+            $category = $DB->get_record('theme_learnlingo_pagecats', ['slug' => $parts['category']]);
+            if (!$category) {
+                return null;
+            }
+            $categoryid = (int)$category->id;
+        } else {
+            $category = null;
+            $categoryid = 0;
+        }
+        $page = $DB->get_record('theme_learnlingo_pages', [
+            'categoryid' => $categoryid, 'slug' => $parts['slug'], 'status' => 1,
+        ]);
+        return $page ? [$page, $category] : null;
+    }
+
+    /** Dispatch a custom page directly from the Moodle front-page request. */
+    public static function dispatch(string $path): void {
+        global $PAGE, $OUTPUT;
+
+        $found = self::published($path);
+        if (!$found) {
+            http_response_code(404);
+            throw new \moodle_exception('custompagesnotfound', 'theme_learnlingo');
+        }
+        [$page, $category] = $found;
+        if ((int)$page->accesslevel === 1) {
+            require_login();
+        }
+        $pageurl = self::url($page, $category);
+        $PAGE->set_url($pageurl);
+        $PAGE->set_context(context_system::instance());
+        $PAGE->set_pagelayout('standard');
+        $PAGE->set_pagetype('theme-learnlingo-custom-page');
+        $PAGE->set_title(format_string($page->title));
+        $PAGE->set_heading(format_string($page->title));
+        $PAGE->add_body_class('learnlingo-custom-page');
+        $PAGE->add_body_class('learnlingo-page-' . (int)$page->id);
+        if ((int)$page->fullwidth === 1) {
+            $PAGE->add_body_class('learnlingo-html-home-fullwidth');
+        }
+        if (trim((string)$page->metadescription) !== '') {
+            $PAGE->requires->add_head_code('<meta name="description" content="' .
+                s($page->metadescription) . '">');
+        }
+        echo $OUTPUT->header();
+        echo '<main class="learnlingo-custom-page-content" id="learnlingo-custom-content">';
+        echo homepage_context::render((string)$page->content);
+        echo '</main>';
+        echo $OUTPUT->footer();
+        exit;
+    }
+
+    /** Existing categories, ordered for the editor. */
+    public static function categories(): array {
+        global $DB;
+        return self::ready() ? array_values($DB->get_records('theme_learnlingo_pagecats',
+            null, 'sortorder ASC, name ASC')) : [];
+    }
+
+    /** Existing pages, ordered for the editor. */
+    public static function all(): array {
+        global $DB;
+        return self::ready() ? array_values($DB->get_records('theme_learnlingo_pages',
+            null, 'sortorder ASC, title ASC')) : [];
+    }
+
+    /** Normalize ASCII slug; accents and punctuation are stripped. */
+    public static function slug(string $value): string {
+        $ascii = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $value);
+        $value = strtolower($ascii === false ? $value : $ascii);
+        return trim((string)preg_replace('/[^a-z0-9]+/', '-', $value), '-');
+    }
+
+    /** Validate names and collisions in a way shared by administration and MCP. */
+    public static function validate(stdClass $data, bool $category = false): void {
+        global $DB;
+        $data->slug = trim((string)$data->slug);
+        if (!preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/D', $data->slug)) {
+            throw new \moodle_exception('custompagesinvalidslug', 'theme_learnlingo');
+        }
+        $table = $category ? 'theme_learnlingo_pagecats' : 'theme_learnlingo_pages';
+        $conditions = $category ? ['slug' => $data->slug] :
+            ['categoryid' => (int)$data->categoryid, 'slug' => $data->slug];
+        $existing = $DB->get_record($table, $conditions, 'id');
+        if ($existing && (int)$existing->id !== (int)($data->id ?? 0)) {
+            throw new \moodle_exception('custompagesduplicateslug', 'theme_learnlingo');
+        }
+        if (!$category && (int)$data->categoryid !== 0 &&
+            !$DB->record_exists('theme_learnlingo_pagecats', ['id' => (int)$data->categoryid])) {
+            throw new \moodle_exception('custompagesinvalidcategory', 'theme_learnlingo');
+        }
+    }
+
+    /** Save one page. All callers must check moodle/site:config first. */
+    public static function save_page(stdClass $data): int {
+        global $DB, $USER;
+        self::validate($data);
+        $now = time();
+        $data->timemodified = $now;
+        $data->usermodified = (int)$USER->id;
+        if (!empty($data->id)) {
+            $DB->update_record('theme_learnlingo_pages', $data);
+            $id = (int)$data->id;
+        } else {
+            unset($data->id);
+            $data->timecreated = $now;
+            $data->usercreated = (int)$USER->id;
+            $id = (int)$DB->insert_record('theme_learnlingo_pages', $data);
+        }
+        theme_reset_all_caches();
+        return $id;
+    }
+
+    /** Save one category; categories cannot nest. */
+    public static function save_category(stdClass $data): int {
+        global $DB;
+        self::validate($data, true);
+        $now = time();
+        $data->timemodified = $now;
+        if (!empty($data->id)) {
+            $DB->update_record('theme_learnlingo_pagecats', $data);
+            $id = (int)$data->id;
+        } else {
+            unset($data->id);
+            $data->timecreated = $now;
+            $id = (int)$DB->insert_record('theme_learnlingo_pagecats', $data);
+        }
+        theme_reset_all_caches();
+        return $id;
+    }
+
+    /**
+     * Navigation items shown on desktop and mobile. The menu contains only
+     * published, permitted pages; an unpublished page never leaks into menus.
+     */
+    public static function navigation(): array {
+        global $DB;
+        if (!self::ready()) {
+            return [];
+        }
+        $loggedin = isloggedin() && !isguestuser();
+        $where = 'p.status = 1 AND p.showinmenu = 1 AND (p.accesslevel = 0';
+        $where .= $loggedin ? ' OR p.accesslevel = 1)' : ')';
+        $records = $DB->get_records_sql('SELECT p.*, c.name AS catname, c.slug AS catslug,
+                    c.visible AS catvisible, c.sortorder AS catsort
+                FROM {theme_learnlingo_pages} p
+                LEFT JOIN {theme_learnlingo_pagecats} c ON c.id = p.categoryid
+                WHERE ' . $where . '
+                ORDER BY p.menuorder ASC, p.title ASC');
+        $groups = [];
+        $root = [];
+        foreach ($records as $page) {
+            $category = null;
+            if ((int)$page->categoryid !== 0) {
+                if (empty($page->catvisible)) {
+                    continue;
+                }
+                $category = (object)['slug' => $page->catslug];
+            }
+            $entry = [
+                'text' => s($page->menutitle ?: $page->title),
+                'url' => self::url($page, $category)->out(false),
+                'isactive' => false,
+                'haschildren' => false,
+            ];
+            if (!$category) {
+                $root[] = $entry;
+            } else {
+                $groups[$page->categoryid]['text'] = s($page->catname);
+                $groups[$page->categoryid]['sort'] = 700000 + (int)$page->categoryid;
+                $groups[$page->categoryid]['catsort'] = (int)$page->catsort;
+                $groups[$page->categoryid]['children'][] = $entry;
+                $groups[$page->categoryid]['haschildren'] = true;
+            }
+        }
+        uasort($groups, static fn($a, $b) => $a['catsort'] <=> $b['catsort']);
+        return array_merge($root, array_values($groups));
+    }
+}
