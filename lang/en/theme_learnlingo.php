@@ -489,3 +489,5 @@ $string['custompagesinvalidcategory'] = 'The selected category does not exist.';
 $string['custompagesnotfound'] = 'Page not found.';
 $string['custompagesneedupgrade'] = 'Upgrade the LearnLingo theme database before managing custom pages.';
 $string['custompagesmenu'] = 'Custom pages';
+
+$string['custompagespreviewnotice'] = 'Preview only: this page may not be published.';
