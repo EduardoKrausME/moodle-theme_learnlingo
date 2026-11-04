@@ -44,13 +44,21 @@ final class page_service {
     /** Fields which MCP may change on existing categories. */
     public const CATEGORY_FIELDS = ['name', 'slug', 'description', 'sortorder', 'visible'];
 
-    /** Compute a hash of the exact persisted record to detect concurrent changes. */
+    /**
+     * Compute a hash of the exact persisted record to detect concurrent changes.
+     *
+     * @return mixed See declared method return type.
+     */
     public static function hash(stdClass $record): string {
         return hash('sha256', json_encode((array)$record,
             JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR));
     }
 
-    /** Check the database was upgraded before exposing/editing custom pages. */
+    /**
+     * Check the database was upgraded before exposing/editing custom pages.
+     *
+     * @return mixed See declared method return type.
+     */
     public static function require_schema(): void {
         if (!pages::ready()) {
             throw new api_exception('theme_upgrade_required', 409,
@@ -58,7 +66,11 @@ final class page_service {
         }
     }
 
-    /** Read a saved page or category by numeric ID. */
+    /**
+     * Read a saved page or category by numeric ID.
+     *
+     * @return mixed See declared method return type.
+     */
     public static function record(string $type, int $id): stdClass {
         global $DB;
         self::require_schema();
@@ -76,7 +88,11 @@ final class page_service {
         return $record;
     }
 
-    /** Validate the expected SHA-256 hash of the saved record. */
+    /**
+     * Validate the expected SHA-256 hash of the saved record.
+     *
+     * @return mixed See declared method return type.
+     */
     public static function check_hash(stdClass $record, string $expected): void {
         if (!preg_match('/^[0-9a-f]{64}$/D', $expected)) {
             throw new api_exception('expected_hash_required', 400,
@@ -88,7 +104,11 @@ final class page_service {
         }
     }
 
-    /** Sanitize and prepare a create or update, without writing anything. */
+    /**
+     * Sanitize and prepare a create or update, without writing anything.
+     *
+     * @return mixed See declared method return type.
+     */
     public static function prepare(string $type, array $arguments): array {
         self::require_schema();
         $operation = (string)($arguments['operation'] ?? '');
@@ -184,7 +204,11 @@ final class page_service {
         ];
     }
 
-    /** Produce a non-executing preview without leaking long HTML/SCSS. */
+    /**
+     * Produce a non-executing preview without leaking long HTML/SCSS.
+     *
+     * @return mixed See declared method return type.
+     */
     public static function preview(array $prepared): array {
         $after = $prepared['after'];
         return [
@@ -203,9 +227,12 @@ final class page_service {
         ];
     }
 
-    /** Apply a freshly revalidated operation, returning identifiers and revision. */
+    /**
+     * Apply a freshly revalidated operation, returning identifiers and revision.
+     *
+     * @return mixed See declared method return type.
+     */
     public static function apply(array $prepared, int $userid): array {
-        global $DB;
         $id = $prepared['type'] === 'page'
             ? pages::save_page($prepared['after'], $userid)
             : pages::save_category($prepared['after']);
@@ -221,7 +248,11 @@ final class page_service {
         ];
     }
 
-    /** Prepare deletion; category deletion requires moving its pages first. */
+    /**
+     * Prepare deletion; category deletion requires moving its pages first.
+     *
+     * @return mixed See declared method return type.
+     */
     public static function prepare_delete(array $arguments): array {
         global $DB;
         $type = (string)($arguments['type'] ?? '');
@@ -246,7 +277,11 @@ final class page_service {
         ];
     }
 
-    /** Delete only the exact record and revalidate the category before deletion. */
+    /**
+     * Delete only the exact record and revalidate the category before deletion.
+     *
+     * @return mixed See declared method return type.
+     */
     public static function apply_delete(array $prepared): array {
         global $DB;
         $type = $prepared['type'];
