@@ -243,8 +243,11 @@ function theme_learnlingo_homepage_cache_reset(): void {
  */
 function theme_learnlingo_after_config(): void {
     global $CFG;
-    if (defined('CLI_SCRIPT') || defined('AJAX_SCRIPT') || defined('WS_SERVER')
-        || defined('ABORT_AFTER_CONFIG') || !empty($CFG->upgraderunning)
+    if ((defined('CLI_SCRIPT') && CLI_SCRIPT)
+        || (defined('AJAX_SCRIPT') && AJAX_SCRIPT)
+        || (defined('WS_SERVER') && WS_SERVER)
+        || (defined('ABORT_AFTER_CONFIG') && ABORT_AFTER_CONFIG)
+        || !empty($CFG->upgraderunning)
         || ($CFG->theme ?? '') !== 'learnlingo') {
         return;
     }
