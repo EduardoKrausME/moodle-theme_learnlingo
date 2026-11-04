@@ -70,7 +70,7 @@ class page_form extends \moodleform {
             ['rows' => 3, 'class' => 'form-control w-100']);
         $mform->setType('description', PARAM_TEXT);
         $mform->addElement('textarea', 'metadescription', get_string('custompagesmetadescription', 'theme_learnlingo'),
-            ['rows' => 3, 'cols' => 80]);
+            ['rows' => 3, 'class' => 'form-control w-100']);
         $mform->setType('metadescription', PARAM_TEXT);
         $mform->addElement('select', 'status', get_string('custompagesstatus', 'theme_learnlingo'), [
             0 => get_string('custompagesdraft', 'theme_learnlingo'),
