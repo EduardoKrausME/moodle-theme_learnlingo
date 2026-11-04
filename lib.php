@@ -237,5 +237,3 @@ function theme_learnlingo_homepage_cache_reset(): void {
     homepage_context::purge_public_cache();
     theme_reset_all_caches();
 }
-
-
