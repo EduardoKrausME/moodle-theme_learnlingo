@@ -138,8 +138,11 @@ function theme_learnlingo_get_extra_scss(theme_config $theme): string {
     global $DB;
     if ($DB->get_manager()->table_exists('theme_learnlingo_pages')) {
         $styles = $DB->get_records_select('theme_learnlingo_pages',
-            $DB->sql_isnotempty('theme_learnlingo_pages', 'scss', false), null, 'id ASC', 'id,scss');
+            'scss IS NOT NULL', null, 'id ASC', 'id,scss');
         foreach ($styles as $page) {
+            if (trim((string)$page->scss) === '') {
+                continue;
+            }
             $scss .= theme_learnlingo_scope_scss((string)$page->scss,
                 'body.learnlingo-page-' . (int)$page->id, ['body', ':root']);
         }
