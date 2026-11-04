@@ -33,17 +33,29 @@ use local_mcp\write\tool\base_tool;
  * Delete one page or empty category after an explicitly approved preview.
  */
 final class delete_page extends base_tool {
-    /** Return tool identifier. */
+    /**
+     * Return tool identifier.
+     *
+     * @return mixed See declared method return type.
+     */
     public function get_name(): string {
         return 'learnlingo_delete_page';
     }
 
-    /** Return tool title. */
+    /**
+     * Return tool title.
+     *
+     * @return mixed See declared method return type.
+     */
     public function get_title(): string {
         return 'Delete LearnLingo page or empty page category';
     }
 
-    /** Describe the destructive operation and safeguards. */
+    /**
+     * Describe the destructive operation and safeguards.
+     *
+     * @return mixed See declared method return type.
+     */
     public function get_description(): string {
         return 'Permanently remove ONE custom HTML page or ONE EMPTY page category. '
             . 'Required type=page or category, id and exact expected_hash from '
@@ -54,7 +66,11 @@ final class delete_page extends base_tool {
             . 'No content is deleted during preview.';
     }
 
-    /** Describe required deletion parameters. */
+    /**
+     * Describe required deletion parameters.
+     *
+     * @return mixed See declared method return type.
+     */
     public function get_input_schema(): array {
         return $this->object_schema([
             'type' => ['type' => 'string', 'enum' => ['page', 'category'],
@@ -66,7 +82,11 @@ final class delete_page extends base_tool {
         ], ['type', 'id', 'expected_hash']);
     }
 
-    /** Require administrator-level Moodle access. */
+    /**
+     * Require administrator-level Moodle access.
+     *
+     * @return mixed See declared method return type.
+     */
     public function get_required_capability(): string {
         return 'moodle/site:config';
     }
@@ -81,12 +101,20 @@ final class delete_page extends base_tool {
         return context_system::instance();
     }
 
-    /** Always preview before deletion. */
+    /**
+     * Always preview before deletion.
+     *
+     * @return mixed See declared method return type.
+     */
     public function supports_dry_run(): bool {
         return true;
     }
 
-    /** Mark this tool as destructive. */
+    /**
+     * Mark this tool as destructive.
+     *
+     * @return mixed See declared method return type.
+     */
     public function is_destructive(): bool {
         return true;
     }
