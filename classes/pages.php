@@ -359,19 +359,19 @@ final class pages {
      *
      * @return mixed See method declaration.
      */
-    public static function save_page(stdClass $data): int {
+    public static function save_page(stdClass $data, ?int $actorid = null): int {
         global $DB, $USER;
         self::validate($data);
         $now = time();
         $data->timemodified = $now;
-        $data->usermodified = (int)$USER->id;
+        $data->usermodified = $actorid ?? (int)$USER->id;
         if (!empty($data->id)) {
             $DB->update_record('theme_learnlingo_pages', $data);
             $id = (int)$data->id;
         } else {
             unset($data->id);
             $data->timecreated = $now;
-            $data->usercreated = (int)$USER->id;
+            $data->usercreated = $actorid ?? (int)$USER->id;
             $id = (int)$DB->insert_record('theme_learnlingo_pages', $data);
         }
         theme_reset_all_caches();
