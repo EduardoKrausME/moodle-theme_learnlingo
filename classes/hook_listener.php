@@ -64,6 +64,16 @@ final class hook_listener {
             return;
         }
 
+        // Custom pages share the site's index.php but must bypass the Home
+        // wizard and homepagemode. Only explicit page requests are handled.
+        if (($CFG->theme ?? '') === 'learnlingo' && !during_initial_install()
+            && empty($CFG->upgraderunning) && !moodle_needs_upgrading()) {
+            $path = pages::request_path();
+            if ($path !== null) {
+                pages::dispatch($path);
+            }
+        }
+
         // Guests and regular learners always see the real site homepage.
         // Check the user before querying theme configuration.
         if (!isloggedin() || isguestuser() || !is_siteadmin()) {
