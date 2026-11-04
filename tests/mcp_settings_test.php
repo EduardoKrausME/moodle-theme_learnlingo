@@ -141,6 +141,7 @@ final class mcp_settings_test extends advanced_testcase {
      */
     public function test_menu_guide_is_available_in_all_relevant_read_tools(): void {
         $this->require_mcp();
+        $this->resetAfterTest(true);
         $identity = $this->identity();
         $menu = new get_menu_guide();
         $this->assertSame('moodle/site:config', $menu->get_required_capability());
