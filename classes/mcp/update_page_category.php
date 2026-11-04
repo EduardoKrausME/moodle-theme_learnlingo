@@ -33,17 +33,29 @@ use local_mcp\write\tool\base_tool;
  * Create and edit only top-level categories for custom HTML pages.
  */
 final class update_page_category extends base_tool {
-    /** Return unique MCP tool name. */
+    /**
+     * Return unique MCP tool name.
+     *
+     * @return mixed See declared method return type.
+     */
     public function get_name(): string {
         return 'learnlingo_update_page_category';
     }
 
-    /** Return administrator-facing tool title. */
+    /**
+     * Return administrator-facing tool title.
+     *
+     * @return mixed See declared method return type.
+     */
     public function get_title(): string {
         return 'Create or update LearnLingo page category';
     }
 
-    /** Document strict category semantics. */
+    /**
+     * Document strict category semantics.
+     *
+     * @return mixed See declared method return type.
+     */
     public function get_description(): string {
         return 'Create or update a top-level category used by LearnLingo custom pages. '
             . 'Categories NEVER have subcategories, only directly assigned pages. '
@@ -54,7 +66,11 @@ final class update_page_category extends base_tool {
             . 'Every mutation requires dry-run preview and explicit confirmation.';
     }
 
-    /** Provide a strict schema for category operations. */
+    /**
+     * Provide a strict schema for category operations.
+     *
+     * @return mixed See declared method return type.
+     */
     public function get_input_schema(): array {
         return $this->object_schema([
             'operation' => ['type' => 'string', 'enum' => ['create', 'update'],
@@ -73,7 +89,11 @@ final class update_page_category extends base_tool {
         ], ['operation']);
     }
 
-    /** Require Moodle site configuration capability. */
+    /**
+     * Require Moodle site configuration capability.
+     *
+     * @return mixed See declared method return type.
+     */
     public function get_required_capability(): string {
         return 'moodle/site:config';
     }
@@ -88,7 +108,11 @@ final class update_page_category extends base_tool {
         return context_system::instance();
     }
 
-    /** Always permit a preview without writing. */
+    /**
+     * Always permit a preview without writing.
+     *
+     * @return mixed See declared method return type.
+     */
     public function supports_dry_run(): bool {
         return true;
     }
