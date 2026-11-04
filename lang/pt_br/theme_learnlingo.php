@@ -489,3 +489,5 @@ $string['custompagesinvalidcategory'] = 'A categoria selecionada não existe.';
 $string['custompagesnotfound'] = 'Página não encontrada.';
 $string['custompagesneedupgrade'] = 'Atualize o banco de dados do LearnLingo antes de gerenciar páginas.';
 $string['custompagesmenu'] = 'Páginas personalizadas';
+
+$string['custompagespreviewnotice'] = 'Somente prévia: esta página pode não estar publicada.';
