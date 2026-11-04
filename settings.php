@@ -202,6 +202,31 @@ if ($ADMIN->fulltree) {
     $PAGE->requires->js_call_amd("theme_learnlingo/homepage_settings", "init");
     $settings->add($page);
 
+    // Custom pages are independent of the homepage mode, including Moodle's native home.
+    $page = new admin_settingpage(
+        'theme_learnlingo_pages',
+        get_string('custompagestab', 'theme_learnlingo')
+    );
+    $setting = new admin_setting_configselect(
+        'theme_learnlingo/pagefriendlyurls',
+        get_string('custompagesfriendlyurls', 'theme_learnlingo'),
+        get_string('custompagesfriendlyurlsdesc', 'theme_learnlingo'),
+        '0',
+        [
+            '0' => get_string('custompagesqueryurls', 'theme_learnlingo'),
+            '1' => get_string('custompagespathurls', 'theme_learnlingo'),
+        ]
+    );
+    $page->add($setting);
+    $PAGE->requires->css(new moodle_url('/theme/learnlingo/admin/styles/pages.css'));
+    $page->add(new admin_setting_heading(
+        'theme_learnlingo/custompagesmanagement',
+        get_string('custompagesmanage', 'theme_learnlingo'),
+        $OUTPUT->render_from_template('theme_learnlingo/page_tree',
+            \theme_learnlingo\pages::tree_data())
+    ));
+    $settings->add($page);
+
     $page = new admin_settingpage(
         "theme_learnlingo_footer",
         get_string("footersettings", "theme_learnlingo")
