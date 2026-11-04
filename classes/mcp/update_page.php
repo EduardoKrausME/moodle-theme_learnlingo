@@ -33,17 +33,29 @@ use local_mcp\write\tool\base_tool;
  * Create and update page HTML and settings after an explicit MCP preview.
  */
 final class update_page extends base_tool {
-    /** Return MCP tool name. */
+    /**
+     * Return MCP tool name.
+     *
+     * @return mixed See declared method return type.
+     */
     public function get_name(): string {
         return 'learnlingo_update_page';
     }
 
-    /** Return human-readable tool title. */
+    /**
+     * Return human-readable tool title.
+     *
+     * @return mixed See declared method return type.
+     */
     public function get_title(): string {
         return 'Create or update a LearnLingo custom page';
     }
 
-    /** Describe page editing semantics and confirmation requirements. */
+    /**
+     * Describe page editing semantics and confirmation requirements.
+     *
+     * @return mixed See declared method return type.
+     */
     public function get_description(): string {
         return 'Create or update one custom HTML page with optional page-specific SCSS, '
             . 'categoryid (0 = root), status (0 = draft, 1 = published), '
@@ -61,7 +73,11 @@ final class update_page extends base_tool {
             . 'the write. An intervening edit invalidates expected_hash.';
     }
 
-    /** Describe supported page fields with a strict JSON schema. */
+    /**
+     * Describe supported page fields with a strict JSON schema.
+     *
+     * @return mixed See declared method return type.
+     */
     public function get_input_schema(): array {
         return $this->object_schema([
             'operation' => ['type' => 'string', 'enum' => ['create', 'update'],
@@ -93,7 +109,11 @@ final class update_page extends base_tool {
         ], ['operation']);
     }
 
-    /** Require configuration permissions for all page writes. */
+    /**
+     * Require configuration permissions for all page writes.
+     *
+     * @return mixed See declared method return type.
+     */
     public function get_required_capability(): string {
         return 'moodle/site:config';
     }
@@ -108,7 +128,11 @@ final class update_page extends base_tool {
         return context_system::instance();
     }
 
-    /** Enable safe dry-run previews before every page write. */
+    /**
+     * Enable safe dry-run previews before every page write.
+     *
+     * @return mixed See declared method return type.
+     */
     public function supports_dry_run(): bool {
         return true;
     }
