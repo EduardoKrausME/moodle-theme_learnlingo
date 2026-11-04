@@ -28,7 +28,6 @@ use context;
 use context_system;
 use local_mcp\read\tool_interface;
 use local_mcp\security\authenticated_identity;
-use moodle_url;
 use theme_learnlingo\homepage_context;
 use theme_learnlingo\pages;
 
@@ -36,17 +35,29 @@ use theme_learnlingo\pages;
  * Return metadata for all pages and full content for the explicitly selected page.
  */
 final class get_pages implements tool_interface {
-    /** Return the unique read tool identifier. */
+    /**
+     * Return the unique read tool identifier.
+     *
+     * @return mixed See declared method return type.
+     */
     public function get_name(): string {
         return 'learnlingo_get_pages';
     }
 
-    /** Return the tool title. */
+    /**
+     * Return the tool title.
+     *
+     * @return mixed See declared method return type.
+     */
     public function get_title(): string {
         return 'List/read LearnLingo custom pages and categories';
     }
 
-    /** Describe page editing instructions for the connected AI client. */
+    /**
+     * Describe page editing instructions for the connected AI client.
+     *
+     * @return mixed See declared method return type.
+     */
     public function get_description(): string {
         return 'List LearnLingo custom pages, flat categories (no subcategories), '
             . 'and page status, menu visibility, access and URLs. Pass pageid to fetch '
@@ -63,7 +74,11 @@ final class get_pages implements tool_interface {
             . 'Always read before writing; preview and get explicit confirmation.';
     }
 
-    /** Return strict read input schema. */
+    /**
+     * Return strict read input schema.
+     *
+     * @return mixed See declared method return type.
+     */
     public function get_input_schema(): array {
         return [
             'type' => 'object',
@@ -79,7 +94,11 @@ final class get_pages implements tool_interface {
         ];
     }
 
-    /** Require the Moodle site configuration capability. */
+    /**
+     * Require the Moodle site configuration capability.
+     *
+     * @return mixed See declared method return type.
+     */
     public function get_required_capability(): string {
         return 'moodle/site:config';
     }
@@ -102,7 +121,6 @@ final class get_pages implements tool_interface {
      * @return array Page index or detail.
      */
     public function execute(array $arguments, authenticated_identity $identity): array {
-        global $DB;
         page_service::require_schema();
         $categories = [];
         foreach (pages::categories() as $category) {
