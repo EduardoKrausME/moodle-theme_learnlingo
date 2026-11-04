@@ -1,14 +1,37 @@
 <?php
 // This file is part of Moodle - http://moodle.org/
-// @package theme_learnlingo
-// @copyright 2026 Eduardo Kraus
-// @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Tests for flat categories and custom pages.
+ *
+ * @package theme_learnlingo
+ * @copyright 2026 Eduardo Kraus
+ * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
 namespace theme_learnlingo;
 
-defined('MOODLE_INTERNAL') || die;
-
-/** Tests for flat category routing, collisions and visibility. */
+/**
+ * Test category-scoped slugs, route resolution, and menu visibility.
+ *
+ * @package theme_learnlingo
+ * @copyright 2026 Eduardo Kraus
+ * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @covers \theme_learnlingo\pages
+ */
 final class pages_test extends \advanced_testcase {
     public function test_only_root_or_single_category_paths_are_valid(): void {
         $this->assertSame(['category' => '', 'slug' => 'sobre-nos'], pages::split_path('sobre-nos'));
@@ -79,6 +102,13 @@ final class pages_test extends \advanced_testcase {
         $this->assertSame('Pública', $menu[0]['text']);
     }
 
+    /**
+     * Create a valid page fixture.
+     *
+     * @param int $categoryid Category identifier.
+     * @param string $slug Page slug.
+     * @return \stdClass Page data.
+     */
     private function page_record(int $categoryid, string $slug): \stdClass {
         return (object)[
             'categoryid' => $categoryid, 'title' => 'Pública', 'slug' => $slug,
