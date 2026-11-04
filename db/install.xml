@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="theme/learnlingo/db" VERSION="2026110300" COMMENT="Custom pages and flat page categories for LearnLingo"
+<XMLDB PATH="theme/learnlingo/db" VERSION="20261103" COMMENT="Custom pages and flat page categories for LearnLingo"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd">
   <TABLES>
