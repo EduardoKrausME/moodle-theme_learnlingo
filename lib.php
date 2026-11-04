@@ -236,23 +236,3 @@ function theme_learnlingo_homepage_cache_reset(): void {
 }
 
 
-/**
- * Route only explicit public custom page requests at bootstrap, before Moodle
- * redirects a site homepage to the dashboard or resolves its homepagemode.
- * Never intercept other Moodle scripts, AJAX, CLI, installation or upgrades.
- */
-function theme_learnlingo_after_config(): void {
-    global $CFG;
-    if ((defined('CLI_SCRIPT') && CLI_SCRIPT)
-        || (defined('AJAX_SCRIPT') && AJAX_SCRIPT)
-        || (defined('WS_SERVER') && WS_SERVER)
-        || (defined('ABORT_AFTER_CONFIG') && ABORT_AFTER_CONFIG)
-        || !empty($CFG->upgraderunning)
-        || ($CFG->theme ?? '') !== 'learnlingo') {
-        return;
-    }
-    $path = \theme_learnlingo\pages::request_path();
-    if ($path !== null) {
-        \theme_learnlingo\pages::dispatch($path);
-    }
-}
