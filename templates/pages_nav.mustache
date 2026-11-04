@@ -12,13 +12,13 @@
                     aria-expanded="false">{{{text}}}</a>
                 <ul class="dropdown-menu" aria-labelledby="ll-page-category-{{sort}}">
                     {{#children}}
-                        <li><a class="dropdown-item" href="{{url}}">{{{text}}}</a></li>
+                        <li><a class="dropdown-item" href="{{{url}}}">{{{text}}}</a></li>
                     {{/children}}
                 </ul>
             </li>
         {{/haschildren}}
         {{^haschildren}}
-            <li class="nav-item"><a class="nav-link" href="{{url}}">{{{text}}}</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{{url}}}">{{{text}}}</a></li>
         {{/haschildren}}
     {{/learnlingopagesnav}}
 </ul>
