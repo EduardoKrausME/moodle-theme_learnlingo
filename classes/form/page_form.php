@@ -60,14 +60,14 @@ class page_form extends \moodleform {
         $mform->addElement('select', 'categoryid', get_string('custompagescategory', 'theme_learnlingo'), $categories);
         $mform->setType('categoryid', PARAM_INT);
         $mform->addElement('textarea', 'content', get_string('custompageshtml', 'theme_learnlingo'),
-            ['rows' => 22, 'cols' => 100, 'class' => 'form-control font-monospace']);
+            ['rows' => 22, 'class' => 'form-control w-100 font-monospace']);
         $mform->setType('content', PARAM_RAW);
         $mform->addRule('content', null, 'required');
         $mform->addElement('textarea', 'scss', get_string('custompagesscss', 'theme_learnlingo'),
-            ['rows' => 12, 'cols' => 100, 'class' => 'form-control font-monospace']);
+            ['rows' => 12, 'class' => 'form-control w-100 font-monospace']);
         $mform->setType('scss', PARAM_RAW);
         $mform->addElement('textarea', 'description', get_string('custompagesdescription', 'theme_learnlingo'),
-            ['rows' => 3, 'cols' => 80]);
+            ['rows' => 3, 'class' => 'form-control w-100']);
         $mform->setType('description', PARAM_TEXT);
         $mform->addElement('textarea', 'metadescription', get_string('custompagesmetadescription', 'theme_learnlingo'),
             ['rows' => 3, 'cols' => 80]);
