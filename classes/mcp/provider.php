@@ -46,6 +46,7 @@ final class provider implements read_provider_interface, write_provider_interfac
             'learnlingo_get_homepage' => get_homepage::class,
             'learnlingo_get_settings' => get_settings::class,
             'learnlingo_get_menu_guide' => get_menu_guide::class,
+            'learnlingo_get_pages' => get_pages::class,
         ]);
     }
 
@@ -60,6 +61,9 @@ final class provider implements read_provider_interface, write_provider_interfac
             'learnlingo_update_settings' => update_settings::class,
             'learnlingo_update_styles' => update_styles::class,
             'learnlingo_update_footer' => update_footer::class,
+            'learnlingo_update_page' => update_page::class,
+            'learnlingo_update_page_category' => update_page_category::class,
+            'learnlingo_delete_page' => delete_page::class,
         ]);
     }
 
