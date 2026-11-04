@@ -40,6 +40,13 @@ if ($data = $form->get_data()) {
         get_string('changessaved'), null, \core\output\notification::NOTIFY_SUCCESS);
 }
 
+$PAGE->requires->js_call_amd('theme_learnlingo/page_editor', 'init', [[
+    'oneLine' => get_string('codeeditorline', 'theme_learnlingo'),
+    'manyLines' => get_string('codeeditorlines', 'theme_learnlingo'),
+    'hint' => get_string('codeeditorhint', 'theme_learnlingo'),
+    'expand' => get_string('codeeditorfullscreen', 'theme_learnlingo'),
+    'collapse' => get_string('codeeditorcollapse', 'theme_learnlingo'),
+]]);
 echo $OUTPUT->header();
 $form->display();
 echo $OUTPUT->footer();
