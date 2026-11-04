@@ -99,14 +99,22 @@ final class pages {
         global $PAGE, $OUTPUT;
 
         $found = self::published($path);
+        // The after_config hook catches thrown exceptions. Render an actual 404
+        // instead of throwing here, which would silently fall back to the Home.
         if (!$found) {
             http_response_code(404);
-            throw new \moodle_exception('custompagesnotfound', 'theme_learnlingo');
+            $PAGE->set_url(new moodle_url('/', ['page' => $path]));
+            $PAGE->set_context(context_system::instance());
+            $PAGE->set_pagelayout('standard');
+            $PAGE->set_pagetype('theme-learnlingo-custom-page');
+            $PAGE->set_title(get_string('custompagesnotfound', 'theme_learnlingo'));
+            $PAGE->set_heading(get_string('custompagesnotfound', 'theme_learnlingo'));
+            echo $OUTPUT->header();
+            echo $OUTPUT->notification(get_string('custompagesnotfound', 'theme_learnlingo'), 'notifyproblem');
+            echo $OUTPUT->footer();
+            exit;
         }
         [$page, $category] = $found;
-        if ((int)$page->accesslevel === 1) {
-            require_login();
-        }
         $pageurl = self::url($page, $category);
         $PAGE->set_url($pageurl);
         $PAGE->set_context(context_system::instance());
@@ -114,14 +122,20 @@ final class pages {
         $PAGE->set_pagetype('theme-learnlingo-custom-page');
         $PAGE->set_title(format_string($page->title));
         $PAGE->set_heading(format_string($page->title));
+        if ((int)$page->accesslevel === 1) {
+            require_login();
+        }
         $PAGE->add_body_class('learnlingo-custom-page');
         $PAGE->add_body_class('learnlingo-page-' . (int)$page->id);
         if ((int)$page->fullwidth === 1) {
             $PAGE->add_body_class('learnlingo-html-home-fullwidth');
         }
+        global $CFG;
+        $CFG->additionalhtmlhead = (string)($CFG->additionalhtmlhead ?? '') .
+            '<link rel="canonical" href="' . s($pageurl->out(false)) . '">';
         if (trim((string)$page->metadescription) !== '') {
-            $PAGE->requires->add_head_code('<meta name="description" content="' .
-                s($page->metadescription) . '">');
+            $CFG->additionalhtmlhead .= '<meta name="description" content="' .
+                s($page->metadescription) . '">';
         }
         echo $OUTPUT->header();
         echo '<main class="learnlingo-custom-page-content" id="learnlingo-custom-content">';
@@ -227,6 +241,18 @@ final class pages {
         $data->slug = trim((string)$data->slug);
         if (!preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/D', $data->slug)) {
             throw new \moodle_exception('custompagesinvalidslug', 'theme_learnlingo');
+        }
+        if (!$category) {
+            $html = (string)($data->content ?? '');
+            $scss = (string)($data->scss ?? '');
+            if (str_contains($html, '<?') || str_contains($html, "\0") ||
+                preg_match('~<\s*(script|iframe|object|embed|form)\b~i', $html)) {
+                throw new \moodle_exception('jsonvalidatehtml', 'theme_learnlingo');
+            }
+            if (str_contains($scss, '<?') || str_contains($scss, "\0") ||
+                preg_match('~@import\s+(?:url\s*\(|[\x22\x27]https?://)~i', $scss)) {
+                throw new \moodle_exception('jsonvalidateremoteimport', 'theme_learnlingo');
+            }
         }
         $table = $category ? 'theme_learnlingo_pagecats' : 'theme_learnlingo_pages';
         $conditions = $category ? ['slug' => $data->slug] :
