@@ -1,8 +1,26 @@
 <?php
 // This file is part of Moodle - http://moodle.org/
-// @package theme_learnlingo
-// @copyright 2026 Eduardo Kraus
-// @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Custom pages storage, routing, and navigation.
+ *
+ * @package theme_learnlingo
+ * @copyright 2026 Eduardo Kraus
+ * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
 namespace theme_learnlingo;
 
@@ -12,22 +30,39 @@ use stdClass;
 
 /**
  * Storage, routing and navigation for custom LearnLingo pages.
+ *
  * Never coupled to homepagemode/homepagehtml.
+ *
+ * @package theme_learnlingo
+ * @copyright 2026 Eduardo Kraus
+ * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 final class pages {
-    /** Return whether the schema is installed, including during upgrade. */
+    /**
+     * Return whether the schema is installed, including during upgrade.
+     *
+     * @return mixed See method declaration.
+     */
     public static function ready(): bool {
         global $DB;
         return $DB->get_manager()->table_exists('theme_learnlingo_pages')
             && $DB->get_manager()->table_exists('theme_learnlingo_pagecats');
     }
 
-    /** URL path to category/page, without a leading slash. */
+    /**
+     * URL path to category/page, without a leading slash.
+     *
+     * @return mixed See method declaration.
+     */
     public static function path(stdClass $page, ?stdClass $category = null): string {
         return ($category ? $category->slug . '/' : '') . $page->slug;
     }
 
-    /** Public URL, with friendly PATH_INFO only if explicitly configured. */
+    /**
+     * Public URL, with friendly PATH_INFO only if explicitly configured.
+     *
+     * @return mixed See method declaration.
+     */
     public static function url(stdClass $page, ?stdClass $category = null): moodle_url {
         $path = self::path($page, $category);
         if ((int)get_config('theme_learnlingo', 'pagefriendlyurls') === 1) {
@@ -37,7 +72,11 @@ final class pages {
         return new moodle_url('/', ['page' => $path]);
     }
 
-    /** A request must have GET ?page= or a terminal /page-{slug} segment. */
+    /**
+     * A request must have GET ?page= or a terminal /page-{slug} segment.
+     *
+     * @return mixed See method declaration.
+     */
     public static function request_path(): ?string {
         global $CFG;
 
@@ -63,7 +102,11 @@ final class pages {
         return null;
     }
 
-    /** Validate a category/page path, rejecting nesting and malformed slugs. */
+    /**
+     * Validate a category/page path, rejecting nesting and malformed slugs.
+     *
+     * @return mixed See method declaration.
+     */
     public static function split_path(string $path): ?array {
         if (!preg_match('~^(?:([a-z0-9-]+)/)?([a-z0-9-]+)$~D', $path, $matches)) {
             return null;
@@ -71,7 +114,11 @@ final class pages {
         return ['category' => $matches[1] ?? '', 'slug' => $matches[2]];
     }
 
-    /** Resolve an existing published page. Hidden categories remain directly accessible. */
+    /**
+     * Resolve an existing published page. Hidden categories remain directly accessible.
+     *
+     * @return mixed See method declaration.
+     */
     public static function published(string $path): ?array {
         global $DB;
         $parts = self::split_path($path);
@@ -94,7 +141,11 @@ final class pages {
         return $page ? [$page, $category] : null;
     }
 
-    /** Dispatch a custom page directly from the Moodle front-page request. */
+    /**
+     * Dispatch a custom page directly from the Moodle front-page request.
+     *
+     * @return mixed See method declaration.
+     */
     public static function dispatch(string $path): void {
         global $PAGE, $OUTPUT;
 
@@ -165,7 +216,11 @@ final class pages {
         exit;
     }
 
-    /** Renderable hierarchy: root pages and one category level, never nested categories. */
+    /**
+     * Renderable hierarchy: root pages and one category level, never nested categories.
+     *
+     * @return mixed See method declaration.
+     */
     public static function tree_data(): array {
         $categories = [];
         $root = [];
@@ -220,34 +275,54 @@ final class pages {
         ];
     }
 
-    /** Category slug by its id; used only in administrative previews. */
+    /**
+     * Category slug by its id; used only in administrative previews.
+     *
+     * @return mixed See method declaration.
+     */
     private static function category_slug(int $id): string {
         global $DB;
         return (string)$DB->get_field('theme_learnlingo_pagecats', 'slug', ['id' => $id], MUST_EXIST);
     }
 
-    /** Existing categories, ordered for the editor. */
+    /**
+     * Existing categories, ordered for the editor.
+     *
+     * @return mixed See method declaration.
+     */
     public static function categories(): array {
         global $DB;
         return self::ready() ? array_values($DB->get_records('theme_learnlingo_pagecats',
             null, 'sortorder ASC, name ASC')) : [];
     }
 
-    /** Existing pages, ordered for the editor. */
+    /**
+     * Existing pages, ordered for the editor.
+     *
+     * @return mixed See method declaration.
+     */
     public static function all(): array {
         global $DB;
         return self::ready() ? array_values($DB->get_records('theme_learnlingo_pages',
             null, 'sortorder ASC, title ASC')) : [];
     }
 
-    /** Normalize ASCII slug; accents and punctuation are stripped. */
+    /**
+     * Normalize ASCII slug; accents and punctuation are stripped.
+     *
+     * @return mixed See method declaration.
+     */
     public static function slug(string $value): string {
         $ascii = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $value);
         $value = strtolower($ascii === false ? $value : $ascii);
         return trim((string)preg_replace('/[^a-z0-9]+/', '-', $value), '-');
     }
 
-    /** Validate names and collisions in a way shared by administration and MCP. */
+    /**
+     * Validate names and collisions in a way shared by administration and MCP.
+     *
+     * @return mixed See method declaration.
+     */
     public static function validate(stdClass $data, bool $category = false): void {
         global $DB;
         $data->slug = trim((string)$data->slug);
@@ -279,7 +354,11 @@ final class pages {
         }
     }
 
-    /** Save one page. All callers must check moodle/site:config first. */
+    /**
+     * Save one page. All callers must check moodle/site:config first.
+     *
+     * @return mixed See method declaration.
+     */
     public static function save_page(stdClass $data): int {
         global $DB, $USER;
         self::validate($data);
@@ -299,7 +378,11 @@ final class pages {
         return $id;
     }
 
-    /** Save one category; categories cannot nest. */
+    /**
+     * Save one category; categories cannot nest.
+     *
+     * @return mixed See method declaration.
+     */
     public static function save_category(stdClass $data): int {
         global $DB;
         self::validate($data, true);
