@@ -58,20 +58,24 @@ final class hook_listener {
         if ((defined('CLI_SCRIPT') && CLI_SCRIPT)
             || (defined('PHPUNIT_TEST') && PHPUNIT_TEST)
             || (defined('BEHAT_SITE_RUNNING') && BEHAT_SITE_RUNNING)
-            || ($_SERVER['REQUEST_METHOD'] ?? '') !== 'GET'
-            || !self::is_site_frontpage_request(
-                (string)($_SERVER['SCRIPT_NAME'] ?? ''), (string)$CFG->wwwroot)) {
+            || ($_SERVER['REQUEST_METHOD'] ?? '') !== 'GET') {
             return;
         }
 
         // Custom pages share the site's index.php but must bypass the Home
-        // wizard and homepagemode. Only explicit page requests are handled.
+        // wizard and homepagemode. Detect using the request URL so PATH_INFO
+        // installations which append to SCRIPT_NAME are also supported.
         if (($CFG->theme ?? '') === 'learnlingo' && !during_initial_install()
             && empty($CFG->upgraderunning) && !moodle_needs_upgrading()) {
             $path = pages::request_path();
             if ($path !== null) {
                 pages::dispatch($path);
             }
+        }
+
+        if (!self::is_site_frontpage_request(
+            (string)($_SERVER['SCRIPT_NAME'] ?? ''), (string)$CFG->wwwroot)) {
+            return;
         }
 
         // Guests and regular learners always see the real site homepage.
