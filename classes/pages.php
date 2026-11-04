@@ -41,7 +41,7 @@ final class pages {
     public static function request_path(): ?string {
         global $CFG;
 
-        if (PHP_SAPI === 'cli' || defined('CLI_SCRIPT') || empty($_SERVER['REQUEST_URI'])) {
+        if (PHP_SAPI === 'cli' || (defined('CLI_SCRIPT') && CLI_SCRIPT) || empty($_SERVER['REQUEST_URI'])) {
             return null;
         }
         $requestpath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
