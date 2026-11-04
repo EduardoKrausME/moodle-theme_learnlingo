@@ -4,10 +4,10 @@
 }}
 <div class="ll-pages-manager">
     <div class="d-flex flex-wrap gap-2 mb-3">
-        <a class="btn btn-primary" href="{{newpageurl}}">
+        <a class="btn btn-primary" href="{{{newpageurl}}}">
             <i class="fa fa-plus" aria-hidden="true"></i> {{#str}}custompagesnewpage, theme_learnlingo{{/str}}
         </a>
-        <a class="btn btn-outline-secondary" href="{{newcategoryurl}}">
+        <a class="btn btn-outline-secondary" href="{{{newcategoryurl}}}">
             <i class="fa fa-folder-open" aria-hidden="true"></i> {{#str}}custompagesnewcategory, theme_learnlingo{{/str}}
         </a>
     </div>
@@ -27,9 +27,9 @@
                         {{#showinmenu}} · {{#str}}custompagesinmenu, theme_learnlingo{{/str}}{{/showinmenu}}
                     </span>
                     <span class="ll-pages-actions">
-                        {{#viewurl}}<a href="{{viewurl}}" target="_blank" rel="noopener">{{#str}}custompagesview, theme_learnlingo{{/str}}</a>{{/viewurl}}
-                        <a href="{{editurl}}">{{#str}}edit, moodle{{/str}}</a>
-                        <a class="text-danger" href="{{deleteurl}}">{{#str}}delete, moodle{{/str}}</a>
+                        {{#viewurl}}<a href="{{{viewurl}}}" target="_blank" rel="noopener">{{#str}}custompagesview, theme_learnlingo{{/str}}</a>{{/viewurl}}
+                        <a href="{{{editurl}}}">{{#str}}edit, moodle{{/str}}</a>
+                        <a class="text-danger" href="{{{deleteurl}}}">{{#str}}delete, moodle{{/str}}</a>
                     </span>
                 </div>
             {{/rootpages}}
@@ -41,9 +41,9 @@
                             <small class="text-muted">({{count}})</small>
                         </span>
                         <span class="ll-pages-actions" onclick="event.stopPropagation()">
-                            <a href="{{newpageurl}}">{{#str}}custompagesnewpage, theme_learnlingo{{/str}}</a>
-                            <a href="{{editurl}}">{{#str}}edit, moodle{{/str}}</a>
-                            <a class="text-danger" href="{{deleteurl}}">{{#str}}delete, moodle{{/str}}</a>
+                            <a href="{{{newpageurl}}}">{{#str}}custompagesnewpage, theme_learnlingo{{/str}}</a>
+                            <a href="{{{editurl}}}">{{#str}}edit, moodle{{/str}}</a>
+                            <a class="text-danger" href="{{{deleteurl}}}">{{#str}}delete, moodle{{/str}}</a>
                         </span>
                     </summary>
                     <div class="ll-pages-children">
@@ -58,9 +58,9 @@
                                     {{#showinmenu}} · {{#str}}custompagesinmenu, theme_learnlingo{{/str}}{{/showinmenu}}
                                 </span>
                                 <span class="ll-pages-actions">
-                                    {{#viewurl}}<a href="{{viewurl}}" target="_blank" rel="noopener">{{#str}}custompagesview, theme_learnlingo{{/str}}</a>{{/viewurl}}
-                                    <a href="{{editurl}}">{{#str}}edit, moodle{{/str}}</a>
-                                    <a class="text-danger" href="{{deleteurl}}">{{#str}}delete, moodle{{/str}}</a>
+                                    {{#viewurl}}<a href="{{{viewurl}}}" target="_blank" rel="noopener">{{#str}}custompagesview, theme_learnlingo{{/str}}</a>{{/viewurl}}
+                                    <a href="{{{editurl}}}">{{#str}}edit, moodle{{/str}}</a>
+                                    <a class="text-danger" href="{{{deleteurl}}}">{{#str}}delete, moodle{{/str}}</a>
                                 </span>
                             </div>
                         {{/pages}}
