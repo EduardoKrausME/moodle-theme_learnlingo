@@ -115,14 +115,26 @@ final class pages {
             exit;
         }
         [$page, $category] = $found;
-        $pageurl = self::url($page, $category);
+        self::render($page, $category);
+    }
+
+    /**
+     * Render an existing page; draft preview is allowed only by a separately
+     * authenticated, site-configuration-capable administrative entry point.
+     */
+    public static function render(stdClass $page, ?stdClass $category = null, bool $preview = false): void {
+        global $PAGE, $OUTPUT, $CFG;
+
+        $pageurl = $preview
+            ? new moodle_url('/theme/learnlingo/admin/preview.php', ['id' => $page->id])
+            : self::url($page, $category);
         $PAGE->set_url($pageurl);
         $PAGE->set_context(context_system::instance());
         $PAGE->set_pagelayout('standard');
         $PAGE->set_pagetype('theme-learnlingo-custom-page');
         $PAGE->set_title(format_string($page->title));
         $PAGE->set_heading(format_string($page->title));
-        if ((int)$page->accesslevel === 1) {
+        if ((int)$page->accesslevel === 1 && !$preview) {
             require_login();
         }
         $PAGE->add_body_class('learnlingo-custom-page');
@@ -130,21 +142,28 @@ final class pages {
         if ((int)$page->fullwidth === 1) {
             $PAGE->add_body_class('learnlingo-html-home-fullwidth');
         }
-        global $CFG;
-        $CFG->additionalhtmlhead = (string)($CFG->additionalhtmlhead ?? '') .
-            '<link rel="canonical" href="' . s($pageurl->out(false)) . '">';
-        if (trim((string)$page->metadescription) !== '') {
-            $CFG->additionalhtmlhead .= '<meta name="description" content="' .
-                s($page->metadescription) . '">';
+        if ($preview) {
+            $CFG->additionalhtmlhead = (string)($CFG->additionalhtmlhead ?? '') .
+                '<meta name="robots" content="noindex,nofollow">';
+        } else {
+            $CFG->additionalhtmlhead = (string)($CFG->additionalhtmlhead ?? '') .
+                '<link rel="canonical" href="' . s($pageurl->out(false)) . '">';
+            if (trim((string)$page->metadescription) !== '') {
+                $CFG->additionalhtmlhead .= '<meta name="description" content="' .
+                    s($page->metadescription) . '">';
+            }
         }
         echo $OUTPUT->header();
+        if ($preview) {
+            echo $OUTPUT->notification(get_string('custompagespreviewnotice', 'theme_learnlingo'),
+                'notifymessage');
+        }
         echo '<main class="learnlingo-custom-page-content" id="learnlingo-custom-content">';
         echo homepage_context::render((string)$page->content);
         echo '</main>';
         echo $OUTPUT->footer();
         exit;
     }
-
 
     /** Renderable hierarchy: root pages and one category level, never nested categories. */
     public static function tree_data(): array {
@@ -165,7 +184,8 @@ final class pages {
                 'showinmenu' => (bool)($page->status && $page->showinmenu),
                 'editurl' => (new moodle_url('/theme/learnlingo/admin/page.php',
                     ['id' => $page->id]))->out(false),
-                'viewurl' => (int)$page->status === 1 ? self::url($page, $category)->out(false) : '',
+                'viewurl' => (int)$page->status === 1 ? self::url($page, $category)->out(false) :
+                    (new moodle_url('/theme/learnlingo/admin/preview.php', ['id' => $page->id]))->out(false),
                 'deleteurl' => $deleteurl,
                 'sesskey' => $sesskey,
                 'confirmdelete' => $confirmdelete,
