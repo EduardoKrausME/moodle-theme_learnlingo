@@ -45,20 +45,26 @@ class category_form extends \moodleform {
      */
     protected function definition(): void {
         $mform = $this->_form;
+
         $mform->addElement('hidden', 'id', 0);
         $mform->setType('id', PARAM_INT);
+
         $mform->addElement('text', 'name', get_string('custompagescategoryname', 'theme_learnlingo'), ['size' => 60]);
         $mform->setType('name', PARAM_TEXT);
         $mform->addRule('name', null, 'required');
+
         $mform->addElement('text', 'slug', get_string('custompagesslug', 'theme_learnlingo'), ['size' => 60]);
         $mform->setType('slug', PARAM_ALPHANUMEXT);
         $mform->addRule('slug', null, 'required');
+
         $mform->addElement('textarea', 'description',
             get_string('custompagesdescription', 'theme_learnlingo'), ['rows' => 3, 'cols' => 80]);
         $mform->setType('description', PARAM_TEXT);
+
         $mform->addElement('text', 'sortorder', get_string('custompagesorder', 'theme_learnlingo'), ['size' => 10]);
         $mform->setType('sortorder', PARAM_INT);
         $mform->setDefault('sortorder', 0);
+
         $mform->addElement('advcheckbox', 'visible', get_string('custompagescatvisible', 'theme_learnlingo'));
         $mform->setDefault('visible', 1);
         $this->add_action_buttons();
