@@ -170,13 +170,7 @@ final class pages {
         $categories = [];
         $root = [];
         $haspages = false;
-        $deleteurl = (new moodle_url('/theme/learnlingo/admin/manage_pages.php'))->out(false);
-        $sesskey = sesskey();
-        $confirmdelete = get_string('custompagesconfirmdelete', 'theme_learnlingo');
-
-        $row = static function(stdClass $page, ?stdClass $category = null) use (
-            $deleteurl, $sesskey, $confirmdelete
-        ): array {
+        $row = static function(stdClass $page, ?stdClass $category = null): array {
             return [
                 'id' => (int)$page->id,
                 'title' => $page->title,
@@ -186,9 +180,8 @@ final class pages {
                     ['id' => $page->id]))->out(false),
                 'viewurl' => (int)$page->status === 1 ? self::url($page, $category)->out(false) :
                     (new moodle_url('/theme/learnlingo/admin/preview.php', ['id' => $page->id]))->out(false),
-                'deleteurl' => $deleteurl,
-                'sesskey' => $sesskey,
-                'confirmdelete' => $confirmdelete,
+                'deleteurl' => (new moodle_url('/theme/learnlingo/admin/manage_pages.php',
+                    ['deletepage' => $page->id]))->out(false),
             ];
         };
         foreach (self::categories() as $category) {
@@ -200,9 +193,8 @@ final class pages {
                     ['categoryid' => $category->id]))->out(false),
                 'editurl' => (new moodle_url('/theme/learnlingo/admin/category.php',
                     ['id' => $category->id]))->out(false),
-                'deleteurl' => $deleteurl,
-                'sesskey' => $sesskey,
-                'confirmdelete' => $confirmdelete,
+                'deleteurl' => (new moodle_url('/theme/learnlingo/admin/manage_pages.php',
+                    ['deletecategory' => $category->id]))->out(false),
             ];
         }
         foreach (self::all() as $page) {
