@@ -131,6 +131,75 @@ final class pages {
         exit;
     }
 
+
+    /** Renderable hierarchy: root pages and one category level, never nested categories. */
+    public static function tree_data(): array {
+        $categories = [];
+        $root = [];
+        $haspages = false;
+        $deleteurl = (new moodle_url('/theme/learnlingo/admin/manage_pages.php'))->out(false);
+        $sesskey = sesskey();
+        $confirmdelete = get_string('custompagesconfirmdelete', 'theme_learnlingo');
+
+        $row = static function(stdClass $page, ?stdClass $category = null) use (
+            $deleteurl, $sesskey, $confirmdelete
+        ): array {
+            return [
+                'id' => (int)$page->id,
+                'title' => $page->title,
+                'status' => (bool)$page->status,
+                'showinmenu' => (bool)($page->status && $page->showinmenu),
+                'editurl' => (new moodle_url('/theme/learnlingo/admin/page.php',
+                    ['id' => $page->id]))->out(false),
+                'viewurl' => (int)$page->status === 1 ? self::url($page, $category)->out(false) : '',
+                'deleteurl' => $deleteurl,
+                'sesskey' => $sesskey,
+                'confirmdelete' => $confirmdelete,
+            ];
+        };
+        foreach (self::categories() as $category) {
+            $categories[$category->id] = [
+                'id' => (int)$category->id,
+                'name' => $category->name,
+                'pages' => [],
+                'newpageurl' => (new moodle_url('/theme/learnlingo/admin/page.php',
+                    ['categoryid' => $category->id]))->out(false),
+                'editurl' => (new moodle_url('/theme/learnlingo/admin/category.php',
+                    ['id' => $category->id]))->out(false),
+                'deleteurl' => $deleteurl,
+                'sesskey' => $sesskey,
+                'confirmdelete' => $confirmdelete,
+            ];
+        }
+        foreach (self::all() as $page) {
+            $haspages = true;
+            if ((int)$page->categoryid !== 0 && isset($categories[$page->categoryid])) {
+                $category = (object)['slug' => self::category_slug($page->categoryid)];
+                $categories[$page->categoryid]['pages'][] = $row($page, $category);
+            } else {
+                $root[] = $row($page);
+            }
+        }
+        foreach ($categories as &$category) {
+            $category['count'] = count($category['pages']);
+        }
+        unset($category);
+        return [
+            'ready' => self::ready(),
+            'haspages' => $haspages || (bool)$categories,
+            'rootpages' => $root,
+            'categories' => array_values($categories),
+            'newpageurl' => (new moodle_url('/theme/learnlingo/admin/page.php'))->out(false),
+            'newcategoryurl' => (new moodle_url('/theme/learnlingo/admin/category.php'))->out(false),
+        ];
+    }
+
+    /** Category slug by its id; used only in administrative previews. */
+    private static function category_slug(int $id): string {
+        global $DB;
+        return (string)$DB->get_field('theme_learnlingo_pagecats', 'slug', ['id' => $id], MUST_EXIST);
+    }
+
     /** Existing categories, ordered for the editor. */
     public static function categories(): array {
         global $DB;
