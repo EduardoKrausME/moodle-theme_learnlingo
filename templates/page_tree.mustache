@@ -1,0 +1,78 @@
+{{!
+    @template theme_learnlingo/page_tree
+    Custom page administration: pages in root or one flat category.
+}}
+<div class="ll-pages-manager">
+    <div class="d-flex flex-wrap gap-2 mb-3">
+        <a class="btn btn-primary" href="{{{newpageurl}}}">
+            <i class="fa fa-plus" aria-hidden="true"></i> {{#str}}custompagesnewpage, theme_learnlingo{{/str}}
+        </a>
+        <a class="btn btn-outline-secondary" href="{{{newcategoryurl}}}">
+            <i class="fa fa-folder-open" aria-hidden="true"></i> {{#str}}custompagesnewcategory, theme_learnlingo{{/str}}
+        </a>
+    </div>
+    {{^ready}}
+        <div class="alert alert-warning">{{#str}}custompagesneedupgrade, theme_learnlingo{{/str}}</div>
+    {{/ready}}
+    {{#ready}}
+        <div class="ll-pages-tree">
+            {{#rootpages}}
+                <div class="ll-pages-row ll-pages-root">
+                    <span class="ll-pages-name">
+                        <i class="fa fa-file-text-o" aria-hidden="true"></i> {{title}}
+                    </span>
+                    <span class="ll-pages-status">
+                        {{#status}}{{#str}}custompagespublished, theme_learnlingo{{/str}}{{/status}}
+                        {{^status}}{{#str}}custompagesdraft, theme_learnlingo{{/str}}{{/status}}
+                        {{#showinmenu}} · {{#str}}custompagesinmenu, theme_learnlingo{{/str}}{{/showinmenu}}
+                    </span>
+                    <span class="ll-pages-actions">
+                        {{#viewurl}}<a href="{{{viewurl}}}" target="_blank" rel="noopener">{{#str}}custompagesview, theme_learnlingo{{/str}}</a>{{/viewurl}}
+                        <a href="{{{editurl}}}">{{#str}}edit, moodle{{/str}}</a>
+                        <a class="text-danger" href="{{{deleteurl}}}">{{#str}}delete, moodle{{/str}}</a>
+                    </span>
+                </div>
+            {{/rootpages}}
+            {{#categories}}
+                <details class="ll-pages-category" open>
+                    <summary class="ll-pages-category-head">
+                        <span class="ll-pages-category-name">
+                            <i class="fa fa-folder-o" aria-hidden="true"></i> {{name}}
+                            <small class="text-muted">({{count}})</small>
+                        </span>
+                        <span class="ll-pages-actions" onclick="event.stopPropagation()">
+                            <a href="{{{newpageurl}}}">{{#str}}custompagesnewpage, theme_learnlingo{{/str}}</a>
+                            <a href="{{{editurl}}}">{{#str}}edit, moodle{{/str}}</a>
+                            <a class="text-danger" href="{{{deleteurl}}}">{{#str}}delete, moodle{{/str}}</a>
+                        </span>
+                    </summary>
+                    <div class="ll-pages-children">
+                        {{#pages}}
+                            <div class="ll-pages-row">
+                                <span class="ll-pages-name">
+                                    <i class="fa fa-file-text-o" aria-hidden="true"></i> {{title}}
+                                </span>
+                                <span class="ll-pages-status">
+                                    {{#status}}{{#str}}custompagespublished, theme_learnlingo{{/str}}{{/status}}
+                                    {{^status}}{{#str}}custompagesdraft, theme_learnlingo{{/str}}{{/status}}
+                                    {{#showinmenu}} · {{#str}}custompagesinmenu, theme_learnlingo{{/str}}{{/showinmenu}}
+                                </span>
+                                <span class="ll-pages-actions">
+                                    {{#viewurl}}<a href="{{{viewurl}}}" target="_blank" rel="noopener">{{#str}}custompagesview, theme_learnlingo{{/str}}</a>{{/viewurl}}
+                                    <a href="{{{editurl}}}">{{#str}}edit, moodle{{/str}}</a>
+                                    <a class="text-danger" href="{{{deleteurl}}}">{{#str}}delete, moodle{{/str}}</a>
+                                </span>
+                            </div>
+                        {{/pages}}
+                        {{^pages}}
+                            <div class="ll-pages-empty">{{#str}}custompagesemptycategory, theme_learnlingo{{/str}}</div>
+                        {{/pages}}
+                    </div>
+                </details>
+            {{/categories}}
+            {{^haspages}}
+                <div class="ll-pages-empty">{{#str}}custompagesempty, theme_learnlingo{{/str}}</div>
+            {{/haspages}}
+        </div>
+    {{/ready}}
+</div>

@@ -133,6 +133,21 @@ function theme_learnlingo_get_extra_scss(theme_config $theme): string {
         );
     }
 
+    // Page-specific styles are compiled with Boost and scoped to an individual page.
+    // This avoids executing a Sass compiler on every anonymous page request.
+    global $DB;
+    if ($DB->get_manager()->table_exists('theme_learnlingo_pages')) {
+        $styles = $DB->get_records_select('theme_learnlingo_pages',
+            'scss IS NOT NULL', null, 'id ASC', 'id,scss');
+        foreach ($styles as $page) {
+            if (trim((string)$page->scss) === '') {
+                continue;
+            }
+            $scss .= theme_learnlingo_scope_scss((string)$page->scss,
+                'body.learnlingo-page-' . (int)$page->id, ['body', ':root']);
+        }
+    }
+
     return $scss;
 }
 

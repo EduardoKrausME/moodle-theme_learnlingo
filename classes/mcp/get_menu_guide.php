@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * MCP READ tool exposing the full LearnLingo navbar structure.
@@ -33,17 +33,29 @@ use local_mcp\security\authenticated_identity;
  * Give MCP clients the actual logged-in and guest navbar selector hierarchy.
  */
 final class get_menu_guide implements tool_interface {
-    /** @return string */
+    /**
+     * Describe the menu-structure tool output.
+     *
+     * @return string Tool output.
+     */
     public function get_name(): string {
         return 'learnlingo_get_menu_guide';
     }
 
-    /** @return string */
+    /**
+     * Describe the menu-structure tool output.
+     *
+     * @return string Tool output.
+     */
     public function get_title(): string {
         return 'LearnLingo menu structure and SCSS guide';
     }
 
-    /** @return string */
+    /**
+     * Describe the menu-structure tool output.
+     *
+     * @return string Tool output.
+     */
     public function get_description(): string {
         return 'MANDATORY reference for creating, editing or explaining the LearnLingo menu, '
             . 'navbar or its CSS/SCSS. Returns the complete minimal selector hierarchy '
@@ -55,7 +67,11 @@ final class get_menu_guide implements tool_interface {
             . 'to read current styles, and preview and request approval.';
     }
 
-    /** @return array */
+    /**
+     * Describe the menu-structure tool output.
+     *
+     * @return array Tool output.
+     */
     public function get_input_schema(): array {
         return [
             'type' => 'object',
@@ -64,23 +80,31 @@ final class get_menu_guide implements tool_interface {
         ];
     }
 
-    /** @return string */
+    /**
+     * Describe the menu-structure tool output.
+     *
+     * @return string Tool output.
+     */
     public function get_required_capability(): string {
         return 'moodle/site:config';
     }
 
     /**
-     * @param array $arguments
-     * @return context
+     * Resolve the system security context.
+     *
+     * @param array $arguments Request arguments.
+     * @return context System context.
      */
     public function resolve_context(array $arguments): context {
         return context_system::instance();
     }
 
     /**
-     * @param array $arguments
-     * @param authenticated_identity $identity
-     * @return array
+     * Return the complete navigation styling guide.
+     *
+     * @param array $arguments Request arguments.
+     * @param authenticated_identity $identity Authenticated administrator.
+     * @return array Guide data.
      */
     public function execute(array $arguments, authenticated_identity $identity): array {
         return menu_guide::schema();

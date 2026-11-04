@@ -73,11 +73,15 @@ final class mcp_settings_test extends advanced_testcase {
         $writenames = array_map(static fn($tool): string => $tool->get_name(), $provider->get_write_tools());
         $this->assertContains('learnlingo_get_settings', $readnames);
         $this->assertContains('learnlingo_get_menu_guide', $readnames);
+        $this->assertContains('learnlingo_get_pages', $readnames);
         $this->assertContains('learnlingo_update_settings', $writenames);
         $this->assertContains('learnlingo_update_styles', $writenames);
         $this->assertContains('learnlingo_update_footer', $writenames);
-        $this->assertCount(3, $readnames);
-        $this->assertCount(4, $writenames);
+        $this->assertContains('learnlingo_update_page', $writenames);
+        $this->assertContains('learnlingo_update_page_category', $writenames);
+        $this->assertContains('learnlingo_delete_page', $writenames);
+        $this->assertCount(4, $readnames);
+        $this->assertCount(7, $writenames);
         // Tool schemas may contain nested stdClass objects from the MCP schema builder.
         $schema = json_decode(json_encode((new update_settings())->get_input_schema()), true);
         $this->assertArrayHasKey('scsspre', (array)$schema['properties']['settings']['properties']);
@@ -141,6 +145,7 @@ final class mcp_settings_test extends advanced_testcase {
      */
     public function test_menu_guide_is_available_in_all_relevant_read_tools(): void {
         $this->require_mcp();
+        $this->resetAfterTest(true);
         $identity = $this->identity();
         $menu = new get_menu_guide();
         $this->assertSame('moodle/site:config', $menu->get_required_capability());
