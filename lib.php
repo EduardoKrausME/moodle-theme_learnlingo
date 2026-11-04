@@ -133,6 +133,18 @@ function theme_learnlingo_get_extra_scss(theme_config $theme): string {
         );
     }
 
+    // Page-specific styles are compiled with Boost and scoped to an individual page.
+    // This avoids executing a Sass compiler on every anonymous page request.
+    global $DB;
+    if ($DB->get_manager()->table_exists('theme_learnlingo_pages')) {
+        $styles = $DB->get_records_select('theme_learnlingo_pages',
+            $DB->sql_isnotempty('theme_learnlingo_pages', 'scss', false), null, 'id ASC', 'id,scss');
+        foreach ($styles as $page) {
+            $scss .= theme_learnlingo_scope_scss((string)$page->scss,
+                'body.learnlingo-page-' . (int)$page->id, ['body', ':root']);
+        }
+    }
+
     return $scss;
 }
 
@@ -221,4 +233,23 @@ function theme_learnlingo_homepage_html(theme_config $theme): string {
 function theme_learnlingo_homepage_cache_reset(): void {
     homepage_context::purge_public_cache();
     theme_reset_all_caches();
+}
+
+
+/**
+ * Route only explicit public custom page requests at bootstrap, before Moodle
+ * redirects a site homepage to the dashboard or resolves its homepagemode.
+ * Never intercept other Moodle scripts, AJAX, CLI, installation or upgrades.
+ */
+function theme_learnlingo_after_config(): void {
+    global $CFG;
+    if (defined('CLI_SCRIPT') || defined('AJAX_SCRIPT') || defined('WS_SERVER')
+        || defined('ABORT_AFTER_CONFIG') || !empty($CFG->upgraderunning)
+        || ($CFG->theme ?? '') !== 'learnlingo') {
+        return;
+    }
+    $path = \theme_learnlingo\pages::request_path();
+    if ($path !== null) {
+        \theme_learnlingo\pages::dispatch($path);
+    }
 }
