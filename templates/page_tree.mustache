@@ -29,11 +29,7 @@
                     <span class="ll-pages-actions">
                         {{#viewurl}}<a href="{{viewurl}}" target="_blank" rel="noopener">{{#str}}custompagesview, theme_learnlingo{{/str}}</a>{{/viewurl}}
                         <a href="{{editurl}}">{{#str}}edit, moodle{{/str}}</a>
-                        <form action="{{deleteurl}}" method="post" class="d-inline" onsubmit="return confirm(this.dataset.confirm)" data-confirm="{{confirmdelete}}">
-                            <input type="hidden" name="sesskey" value="{{sesskey}}">
-                            <input type="hidden" name="deletepage" value="{{id}}">
-                            <button type="submit" class="btn btn-link btn-sm text-danger p-0">{{#str}}delete, moodle{{/str}}</button>
-                        </form>
+                        <a class="text-danger" href="{{deleteurl}}">{{#str}}delete, moodle{{/str}}</a>
                     </span>
                 </div>
             {{/rootpages}}
@@ -47,11 +43,7 @@
                         <span class="ll-pages-actions" onclick="event.stopPropagation()">
                             <a href="{{newpageurl}}">{{#str}}custompagesnewpage, theme_learnlingo{{/str}}</a>
                             <a href="{{editurl}}">{{#str}}edit, moodle{{/str}}</a>
-                            <form action="{{deleteurl}}" method="post" class="d-inline" onsubmit="return confirm(this.dataset.confirm)" data-confirm="{{confirmdelete}}">
-                                <input type="hidden" name="sesskey" value="{{sesskey}}">
-                                <input type="hidden" name="deletecategory" value="{{id}}">
-                                <button type="submit" class="btn btn-link btn-sm text-danger p-0">{{#str}}delete, moodle{{/str}}</button>
-                            </form>
+                            <a class="text-danger" href="{{deleteurl}}">{{#str}}delete, moodle{{/str}}</a>
                         </span>
                     </summary>
                     <div class="ll-pages-children">
@@ -68,11 +60,7 @@
                                 <span class="ll-pages-actions">
                                     {{#viewurl}}<a href="{{viewurl}}" target="_blank" rel="noopener">{{#str}}custompagesview, theme_learnlingo{{/str}}</a>{{/viewurl}}
                                     <a href="{{editurl}}">{{#str}}edit, moodle{{/str}}</a>
-                                    <form action="{{deleteurl}}" method="post" class="d-inline" onsubmit="return confirm(this.dataset.confirm)" data-confirm="{{confirmdelete}}">
-                                        <input type="hidden" name="sesskey" value="{{sesskey}}">
-                                        <input type="hidden" name="deletepage" value="{{id}}">
-                                        <button type="submit" class="btn btn-link btn-sm text-danger p-0">{{#str}}delete, moodle{{/str}}</button>
-                                    </form>
+                                    <a class="text-danger" href="{{deleteurl}}">{{#str}}delete, moodle{{/str}}</a>
                                 </span>
                             </div>
                         {{/pages}}
