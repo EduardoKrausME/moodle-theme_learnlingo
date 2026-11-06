@@ -218,7 +218,6 @@ if ($ADMIN->fulltree) {
         ]
     );
     $page->add($setting);
-    $PAGE->requires->css(new moodle_url('/theme/learnlingo/admin/styles/pages.css'));
     $page->add(new admin_setting_heading(
         'theme_learnlingo/custompagesmanagement',
         get_string('custompagesmanage', 'theme_learnlingo'),
