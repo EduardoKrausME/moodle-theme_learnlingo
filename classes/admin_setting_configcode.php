@@ -65,6 +65,26 @@ class admin_setting_configcode extends admin_setting_configtextarea {
     }
 
     /**
+     * Block Sass directives that could escape the home/footer component wrapper.
+     *
+     * @param mixed $data Submitted value.
+     * @return bool|string True or a validation error.
+     */
+    public function validate($data) {
+        $result = parent::validate($data);
+        if ($result !== true) {
+            return $result;
+        }
+        if ($this->language === 'scss' &&
+            preg_match('~/(homepagescss|footerscss)$~', $this->name) &&
+            preg_match('~@(at-root|import|use|forward|extend|keyframes|font-face|charset|namespace|property)\\b~i',
+                (string)$data)) {
+            return get_string('jsonvalidatescssdirective', 'theme_learnlingo');
+        }
+        return true;
+    }
+
+    /**
      * Render an ordinary form textarea with optional progressive code highlighting.
      *
      * @param mixed $data Current value.

@@ -180,7 +180,7 @@ HOW TO CONDUCT THE CONVERSATION
 4. Ask which homepage mode is preferred: "moodle" (native Moodle),
    "learnlingo" (LearnLingo layout), or "html" (custom homepage).
    Explain where homepagehtml is displayed and that homepagescss is
-   compiled on EVERY page, even with homepagemode="moodle".
+    scoped to .learnlingo-home, even with homepagemode="moodle".
    Ask separately whether footermode should be "moodle" (traditional
    columns and credits) or "html" (the custom footerhtml content).
    Discuss the matching HTML and SCSS fields only when relevant, but
@@ -219,15 +219,11 @@ Homepage:
 - settings.homepagehtml: HTML shown above course cards in "learnlingo"
   mode; becomes the homepage's main content in "html" mode. It is not
   displayed in "moodle" mode. Write markup/content only, without scripts.
-- settings.homepagescss: a standalone, full SCSS stylesheet, compiled
-  globally on EVERY page and in ALL homepage modes. Despite its name,
-  it is NOT automatically restricted to the homepage: it can style
-  homepage content, the navigation menu, navbar, footer, and other
-  shared elements. Use explicit homepage selectors when a rule should
-  affect ONLY the homepage; use shared selectors intentionally for
-  navigation or footer changes. Do NOT nest its entire stylesheet in
-  a frontpage selector, and do NOT use bare "&" as its root.
-  Example selectors: .learnlingo-html-home .hero, .navbar, #page-footer.
+- settings.homepagescss: a standalone SCSS stylesheet, automatically
+   nested beneath body#page-site-index .learnlingo-home. It styles
+   the homepage component only, not shared navbar or footer elements.
+   Place navigation rules in settings.scss and footer rules in footerscss.
+   Example selectors: .hero, .learnlingo-html-home .hero, &.featured.
 - settings.homepagepubliccourses: comma-separated course IDs for the public
   {{#courses}} loop in homepagehtml for logged-out visitors. An empty
   string means all visible, accessible courses in Moodle sort order.
@@ -300,8 +296,8 @@ Advanced styles:
 - settings.scss: global SCSS loaded AFTER Boost for site-wide style
   overrides, regardless of homepage/footer modes. Use it for genuinely
   shared styles, not as a workaround for the dedicated HTML-footer SCSS.
-  homepagescss is ALSO globally loaded, so selectors affecting shared
-  elements there do not have to be moved into settings.scss.
+  homepagescss is scoped to .learnlingo-home; use settings.scss
+   for shared menu and navigation rules.
 
 SCSS AND HTML RULES
 - Keep HTML in homepagehtml/footerhtml and SCSS in homepagescss,

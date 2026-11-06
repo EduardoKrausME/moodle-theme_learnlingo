@@ -180,8 +180,8 @@ final class homepage_context {
                 'MENU AND NAVIGATION: put all shared navbar, menu, header and navigation '
                 . 'styles in the global scss field (learnlingo_update_styles or '
                 . 'learnlingo_update_settings), never in homepagescss. homepagescss '
-                . 'technically compiles globally but is reserved for homepage-only '
-                . 'selectors. If older menu rules are in homepagescss, move ONLY those '
+                . 'is automatically scoped to .learnlingo-home and cannot style '
+                . 'the navbar. If older menu rules are in homepagescss, move ONLY those '
                 . 'rules into scss and remove their duplicates in the same confirmed '
                 . 'learnlingo_update_styles write; preserve unrelated home SCSS.',
                 'FOOTER: read footermode, footerhtml and footerscss; configure the custom '
@@ -260,8 +260,8 @@ final class homepage_context {
                 'Keep semantic responsive HTML in homepagehtml and CSS/SCSS in '
                 . 'homepagescss for homepage-only selectors; place shared menu, '
                 . 'navigation and header styles in the global scss field. '
-                . 'homepagescss is technically compiled on every page, so scope '
-                . 'its rules to the homepage root.',
+                . 'homepagescss is automatically scoped to .learnlingo-home; '
+                . 'do not target external Moodle components.',
                 'MANDATORY DARK MODE SUPPORT: every custom Mustache homepage must '
                 . 'look correct in both light and dark appearances. The optional '
                 . 'local_boost_dark plugin sets data-bs-theme="dark" on <html>. '

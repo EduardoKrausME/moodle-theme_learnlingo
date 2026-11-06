@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Homepage SCSS isolation checks.
+ * Component-specific SCSS regression tests.
  *
  * @package theme_learnlingo
  * @copyright 2026 Eduardo Kraus
@@ -28,110 +28,74 @@ use advanced_testcase;
 use theme_config;
 
 /**
- * Check the global homepage SCSS and the HTML-footer-only SCSS.
+ * Check that home and footer styles stay inside their respective DOM roots.
  *
- * @package theme_learnlingo
- * @copyright 2026 Eduardo Kraus
- * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @coversNothing
  */
 final class scoped_scss_test extends advanced_testcase {
-    /**
-     * Homepage and global SCSS apply everywhere while footer SCSS remains scoped.
-     */
-    public function test_homepage_is_global_and_footer_remains_scoped(): void {
+    public function test_home_and_footer_are_scoped_but_global_scss_is_not(): void {
         global $CFG;
         $this->resetAfterTest();
         require_once($CFG->dirroot . '/theme/learnlingo/lib.php');
 
-        set_config('homepagemode', 'learnlingo', 'theme_learnlingo');
+        set_config('homepagemode', 'html', 'theme_learnlingo');
         set_config('footermode', 'html', 'theme_learnlingo');
-        set_config('homepagescss', '.homepage-marker { padding: 1rem; }', 'theme_learnlingo');
-        set_config('footerscss', '.footer-marker { margin: 2rem; }', 'theme_learnlingo');
-        set_config('scss', '.global-marker { display: block; }', 'theme_learnlingo');
+        set_config('homepagescss', '.hero{color:red}nav.navbar{display:none}', 'theme_learnlingo');
+        set_config('footerscss', '.links{color:blue}', 'theme_learnlingo');
+        set_config('scss', 'nav.navbar{background:black}', 'theme_learnlingo');
         theme_reset_all_caches();
 
         $scss = theme_learnlingo_get_extra_scss(theme_config::load('learnlingo'));
-        $this->assertStringContainsString('.global-marker { display: block; }', $scss);
-        $this->assertStringContainsString("\n.homepage-marker { padding: 1rem; }", $scss);
-        $this->assertStringNotContainsString("body#page-site-index {\n.homepage-marker", $scss);
+        $this->assertStringContainsString("\nnav.navbar{background:black}", $scss);
         $this->assertStringContainsString(
-            "#page-footer.learnlingo-site-footer.learnlingo-footer-html-mode {\n.footer-marker", $scss
-        );
+            "body#page-site-index .learnlingo-home {\n.hero{color:red}nav.navbar{display:none}", $scss);
+        $this->assertStringContainsString(
+            "#page-footer.learnlingo-site-footer.learnlingo-footer-html-mode {\n.links{color:blue}", $scss);
     }
 
-    /**
-     * Homepage styles remain active in Moodle homepage mode; footer styles still follow its mode.
-     */
-    public function test_moodle_mode_keeps_global_homepage_scss_and_disables_html_footer_scss(): void {
+    public function test_moodle_home_mode_keeps_component_scope_without_html_footer(): void {
         global $CFG;
         $this->resetAfterTest();
         require_once($CFG->dirroot . '/theme/learnlingo/lib.php');
 
         set_config('homepagemode', 'moodle', 'theme_learnlingo');
         set_config('footermode', 'moodle', 'theme_learnlingo');
-        set_config('homepagescss', '.homepage-marker { padding: 1rem; }', 'theme_learnlingo');
-        set_config('footerscss', '.footer-marker { margin: 2rem; }', 'theme_learnlingo');
+        set_config('homepagescss', '.hero{color:red}', 'theme_learnlingo');
+        set_config('footerscss', '.footer-links{color:blue}', 'theme_learnlingo');
         theme_reset_all_caches();
 
         $scss = theme_learnlingo_get_extra_scss(theme_config::load('learnlingo'));
-        $this->assertStringContainsString('.homepage-marker { padding: 1rem; }', $scss);
-        $this->assertStringNotContainsString('.footer-marker { margin: 2rem; }', $scss);
-        $this->assertSame('.homepage-marker { padding: 1rem; }',
-            get_config('theme_learnlingo', 'homepagescss'));
-        $this->assertSame('.footer-marker { margin: 2rem; }',
-            get_config('theme_learnlingo', 'footerscss'));
+        $this->assertStringContainsString("body#page-site-index .learnlingo-home {\n.hero{color:red}", $scss);
+        $this->assertStringNotContainsString('.footer-links{color:blue}', $scss);
     }
 
-    /**
-     * Full CSS selectors including root variables, menu, footer, and media queries remain untouched.
-     */
-    public function test_homepage_css_works_across_the_entire_site(): void {
+    public function test_root_media_and_dark_mode_selectors_are_scoped(): void {
         global $CFG;
-        $this->resetAfterTest();
         require_once($CFG->dirroot . '/theme/learnlingo/lib.php');
 
-        set_config('homepagemode', 'html', 'theme_learnlingo');
-        set_config('homepagescss',
-            ':root{--home-ink:#123456}body#page-site-index .hero{color:var(--home-ink)}'
-            . 'nav.navbar{background:#101f38}#page-footer{color:#fff}'
-            . '@media(max-width:600px){nav.navbar{padding:0}}', 'theme_learnlingo');
-        theme_reset_all_caches();
+        $home = theme_learnlingo_scope_scss(
+            ':root{--ink:#123}body#page-site-index .hero{color:var(--ink)}'
+            . '.learnlingo-home{padding:1rem}@media(max-width:600px){body#page-site-index .hero{padding:0}}'
+            . '[data-bs-theme="dark"] .card{color:red}html[data-bs-theme="light"] .card{color:black}',
+            'body#page-site-index .learnlingo-home',
+            ['body#page-site-index .learnlingo-home', 'body#page-site-index', '.learnlingo-home', ':root', 'body', 'html']);
+        $this->assertStringContainsString('&{--ink:#123}', $home);
+        $this->assertStringContainsString('& .hero{color:var(--ink)}', $home);
+        $this->assertStringContainsString('&{padding:1rem}', $home);
+        $this->assertStringContainsString('@media(max-width:600px){& .hero{padding:0}}', $home);
+        $this->assertStringContainsString('[data-bs-theme="dark"] & .card{color:red}', $home);
+        $this->assertStringContainsString('html[data-bs-theme="light"] & .card{color:black}', $home);
 
-        $scss = theme_learnlingo_get_extra_scss(theme_config::load('learnlingo'));
-
-        $this->assertStringContainsString(':root{--home-ink:#123456}', $scss);
-        $this->assertStringContainsString('body#page-site-index .hero{color:var(--home-ink)}', $scss);
-        $this->assertStringContainsString('nav.navbar{background:#101f38}', $scss);
-        $this->assertStringContainsString('#page-footer{color:#fff}', $scss);
-        $this->assertStringContainsString('@media(max-width:600px){nav.navbar{padding:0}}', $scss);
-        $this->assertStringNotContainsString("body#page-site-index {\n:root", $scss);
+        $footer = theme_learnlingo_scope_scss('#page-footer{background:#123}#page-footer .links{color:white}',
+            '#page-footer.learnlingo-site-footer.learnlingo-footer-html-mode', ['#page-footer']);
+        $this->assertStringContainsString('&{background:#123}& .links{color:white}', $footer);
     }
 
-    /**
-     * Footer CSS with an explicit footer root must not target a nonexistent nested footer.
-     */
-    public function test_html_footer_full_stylesheet_root_selectors_are_rebased(): void {
+    public function test_unsafe_sass_directives_are_blocked(): void {
         global $CFG;
-        $this->resetAfterTest();
         require_once($CFG->dirroot . '/theme/learnlingo/lib.php');
-
-        set_config('footermode', 'html', 'theme_learnlingo');
-        set_config('footerscss',
-            '#page-footer{background:#101f38}#page-footer .o90-footer{color:#fff}'
-            . '@media(max-width:600px){#page-footer .o90-footer{padding:1rem}}',
-            'theme_learnlingo');
-        theme_reset_all_caches();
-
-        $scss = theme_learnlingo_get_extra_scss(theme_config::load('learnlingo'));
-
-        $this->assertStringContainsString(
-            "#page-footer.learnlingo-site-footer.learnlingo-footer-html-mode {\n&{background:#101f38}"
-            . '& .o90-footer{color:#fff}', $scss
-        );
-        $this->assertStringContainsString(
-            '@media(max-width:600px){& .o90-footer{padding:1rem}}', $scss
-        );
-        $this->assertStringNotContainsString('#page-footer #page-footer', $scss);
+        $this->assertFalse(theme_learnlingo_safe_component_scss('@at-root .navbar{display:none}'));
+        $this->assertFalse(theme_learnlingo_safe_component_scss('@import "https://example.com/test.css";'));
+        $this->assertTrue(theme_learnlingo_safe_component_scss('@media(max-width:600px){.card{padding:0}}'));
     }
 }

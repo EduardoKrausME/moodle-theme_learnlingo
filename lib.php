@@ -71,28 +71,40 @@ function theme_learnlingo_get_pre_scss(theme_config $theme): string {
 }
 
 /**
- * Scope an author's SCSS while recognising selectors that refer to the scope root.
+ * Nest component SCSS under its DOM root while rebasing explicit root selectors.
  *
- * A complete CSS stylesheet can start with :root, body or #page-footer.
- * Blindly nesting these selectors creates descendants that cannot match the DOM.
- * Rebase only root selectors to Sass's parent selector (&); leave ordinary selectors
- * and nested @media rules intact.
- *
- * @param string $scss Configured CSS/SCSS.
- * @param string $scope Selector limiting where it may apply.
- * @param string[] $rootselectors Root selectors accepted by this scope, longest first.
+ * @param string $scss Configured component stylesheet.
+ * @param string $scope Component root selector.
+ * @param string[] $rootselectors Accepted document/component root selectors.
  * @return string
  */
 function theme_learnlingo_scope_scss(string $scss, string $scope, array $rootselectors): string {
-    $escaped = array_map(static function (string $selector): string {
-        return preg_quote($selector, '/');
-    }, $rootselectors);
-    // Match selector boundaries, not similar text inside a class name or property value.
-    $pattern = '/(^|[{},])(\s*)(?:' . implode('|', $escaped)
-        . ')(?=(?:\s*[\{.#:\[>,+~]|\s+[a-zA-Z*]))/m';
+    // Dark-mode selectors describe ancestors of the component.
+    $themeattribute = '(?:html|body)?\\[data-bs-theme\\s*=\\s*'
+        . '(?:"(?:dark|light)"|\\x27(?:dark|light)\\x27|(?:dark|light))\\]';
+    $themedpattern = '/(^|[{},])(\\s*)(' . $themeattribute
+        . ')(\\s+)(?=[.#a-zA-Z*:])/m';
+    $scss = preg_replace($themedpattern, '$1$2$3 &$4', $scss);
+
+    // Prefer longer roots, so body#page-site-index wins over body.
+    usort($rootselectors, static fn(string $a, string $b): int => strlen($b) <=> strlen($a));
+    $escaped = array_map(static fn(string $selector): string => preg_quote($selector, '/'), $rootselectors);
+    $pattern = '/(^|[{},])(\\s*)(?:' . implode('|', $escaped)
+        . ')(?!\\[data-bs-theme)(?=(?:\\s*[\\{.#:\\[>,+~]|\\s+[a-zA-Z*]))/m';
     $normalized = preg_replace($pattern, '$1$2&', $scss);
 
-    return "\n{$scope} {\n{$normalized}\n}\n";
+    return "\\n{$scope} {\\n{$normalized}\\n}\\n";
+}
+
+/**
+ * Reject directives that could emit styles outside the component's selector.
+ *
+ * @param string $scss Configured SCSS.
+ * @return bool
+ */
+function theme_learnlingo_safe_component_scss(string $scss): bool {
+    return !preg_match('~@(at-root|import|use|forward|extend|keyframes|font-face|charset|namespace|property)\\b~i',
+        $scss);
 }
 
 /**
@@ -117,24 +129,32 @@ function theme_learnlingo_get_extra_scss(theme_config $theme): string {
         $scss .= "\n{$theme->settings->scss}";
     }
 
-    // Homepage SCSS is a full stylesheet: it also styles shared navigation and footer elements.
-    // Do not wrap it in a frontpage selector or disable it when the Moodle homepage mode is selected.
+    // Global SCSS is the only editor that may modify shared navbar and layout styles.
     if (!empty($theme->settings->homepagescss)) {
-        $scss .= "\n{$theme->settings->homepagescss}";
+        if (theme_learnlingo_safe_component_scss($theme->settings->homepagescss)) {
+            $scss .= theme_learnlingo_scope_scss(
+                $theme->settings->homepagescss,
+                'body#page-site-index .learnlingo-home',
+                ['body#page-site-index .learnlingo-home', 'body#page-site-index',
+                    '.learnlingo-home', ':root', 'body', 'html']
+            );
+        } else {
+            debugging('LearnLingo: unsupported directive in homepagescss.', DEBUG_DEVELOPER);
+        }
     }
 
-    // HTML footer styles must target the existing #page-footer, not a nested copy.
+    // Custom footer SCSS is limited to the existing HTML footer element.
     if (($theme->settings->footermode ?? 'moodle') === 'html' && !empty($theme->settings->footerscss)) {
-        $scss .= theme_learnlingo_scope_scss(
-            $theme->settings->footerscss,
-            '#page-footer.learnlingo-site-footer.learnlingo-footer-html-mode',
-            [
+        if (theme_learnlingo_safe_component_scss($theme->settings->footerscss)) {
+            $scss .= theme_learnlingo_scope_scss(
+                $theme->settings->footerscss,
                 '#page-footer.learnlingo-site-footer.learnlingo-footer-html-mode',
-                '#page-footer.learnlingo-site-footer',
-                '#page-footer',
-                ':root',
-            ]
-        );
+                ['#page-footer.learnlingo-site-footer.learnlingo-footer-html-mode',
+                    '#page-footer.learnlingo-site-footer', '#page-footer', ':root', 'body', 'html']
+            );
+        } else {
+            debugging('LearnLingo: unsupported directive in footerscss.', DEBUG_DEVELOPER);
+        }
     }
 
     // Page-specific styles are compiled with Boost and scoped to an individual page.

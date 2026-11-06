@@ -60,15 +60,16 @@ class course_renderer extends core_course_renderer {
 
         $mode = theme_learnlingo_homepage_mode($this->page->theme);
         if ($mode === 'moodle') {
-            return parent::frontpage();
+            return '<div class="learnlingo-home">' . parent::frontpage() . '</div>';
         }
         if ($mode === 'html') {
             $html = theme_learnlingo_homepage_html($this->page->theme);
             if ($html === '') {
                 // An empty HTML configuration must not result in an empty site homepage.
-                return parent::frontpage();
+                return '<div class="learnlingo-home">' . parent::frontpage() . '</div>';
             }
-            return '<div class="learnlingo-html-home">' . homepage_context::render($html) . '</div>';
+            return '<div class="learnlingo-home"><div class="learnlingo-html-home">'
+                . homepage_context::render($html) . '</div></div>';
         }
 
         [$courses, $isenrolledlist] = $this->getfrontpagecourses();
@@ -136,14 +137,11 @@ class course_renderer extends core_course_renderer {
             'showempty' => empty($featuredcourse) && empty($coursecards),
         ];
 
-        $homepage = $this->render_from_template('theme_learnlingo/frontpage', $data);
         $extrahtml = theme_learnlingo_homepage_html($this->page->theme);
-        if (trim($extrahtml) !== '') {
-            // Preserve the LearnLingo course cards beneath the optional custom content.
-            $homepage = '<div class="learnlingo-home-intro">' . homepage_context::render($extrahtml)
-                . '</div>' . $homepage;
-        }
-        return $homepage;
+        $data['homepageintrohtml'] = trim($extrahtml) !== '' ? homepage_context::render($extrahtml) : '';
+
+        // Both custom HTML and native course cards now share the same component scope.
+        return $this->render_from_template('theme_learnlingo/frontpage', $data);
     }
 
     /**
