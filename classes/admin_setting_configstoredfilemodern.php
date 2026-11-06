@@ -37,6 +37,26 @@ require_once($CFG->libdir . '/adminlib.php');
  */
 class admin_setting_configstoredfilemodern extends \admin_setting_configstoredfile {
     /**
+     * Resolve an AJAX setting to a whitelisted canonical config key.
+     *
+     * Previously rendered forms submit the HTML field name (s_component_setting)
+     * instead of the config key (component/setting). Keep them working until
+     * the page is refreshed, but never accept an unknown setting.
+     *
+     * @param string $submittedname Submitted setting identifier.
+     * @param string[] $allowednames Whitelisted config setting names.
+     * @return string|null Canonical name, or null if not allowed.
+     */
+    public static function normalise_ajax_setting_name(string $submittedname, array $allowednames): ?string {
+        foreach ($allowednames as $name) {
+            if ($submittedname === $name || $submittedname === 's_' . str_replace('/', '_', $name)) {
+                return $name;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Render one upload surface, with no second native filemanager control.
      *
      * The hidden draft ID remains so saving other settings in the form
@@ -104,6 +124,7 @@ class admin_setting_configstoredfilemodern extends \admin_setting_configstoredfi
         $element = $OUTPUT->render_from_template('theme_learnlingo/setting_storedfilemodern', [
             'id' => $this->get_id(),
             'name' => $name,
+            'settingname' => $this->name,
             'draftid' => $draftid,
             'readonly' => $this->is_readonly(),
             'filename' => $filename,

@@ -78,6 +78,57 @@ final class storedfile_settings_test extends advanced_testcase {
     }
 
     /**
+     * The AJAX endpoint must receive the config key, not the settings form field name.
+     */
+    public function test_ajax_uses_canonical_setting_name_for_all_image_fields(): void {
+        $this->resetAfterTest();
+        $this->setAdminUser();
+
+        $settings = [
+            ['core_admin/logo', 'logo'],
+            ['core_admin/favicon', 'favicon'],
+            ['theme_boost/loginbackgroundimage', 'loginbackgroundimage'],
+            ['theme_learnlingo/loginlogo', 'loginlogo'],
+        ];
+        foreach ($settings as [$name, $area]) {
+            $setting = new admin_setting_configstoredfilemodern(
+                $name, 'Image', '', $area, 0, ['maxfiles' => 1, 'accepted_types' => ['image']]
+            );
+            $html = $setting->output_html('');
+            $this->assertStringContainsString('data-setting="' . $name . '"', $html);
+            $this->assertStringContainsString(
+                'name="s_' . str_replace('/', '_', $name) . '"', $html
+            );
+        }
+    }
+
+    /**
+     * Older rendered forms must still be able to upload or delete an image.
+     */
+    public function test_ajax_normalises_legacy_setting_names_without_bypassing_allowlist(): void {
+        $settings = [
+            'core_admin/logo',
+            'core_admin/favicon',
+            'theme_boost/loginbackgroundimage',
+            'theme_learnlingo/loginlogo',
+        ];
+        foreach ($settings as $name) {
+            $this->assertSame($name, admin_setting_configstoredfilemodern::normalise_ajax_setting_name(
+                $name, $settings
+            ));
+            $this->assertSame($name, admin_setting_configstoredfilemodern::normalise_ajax_setting_name(
+                's_' . str_replace('/', '_', $name), $settings
+            ));
+        }
+        $this->assertNull(admin_setting_configstoredfilemodern::normalise_ajax_setting_name(
+            's_theme_learnlingo_unknown', $settings
+        ));
+        $this->assertNull(admin_setting_configstoredfilemodern::normalise_ajax_setting_name(
+            'core_admin/unknown', $settings
+        ));
+    }
+
+    /**
      * Preview the existing image in a user-accessible draft area.
      */
     public function test_modern_setting_previews_existing_image(): void {

@@ -52,12 +52,17 @@ $definitions = [
     ],
 ];
 
-$settingname = required_param('setting', PARAM_RAW_TRIMMED);
+// Accept the canonical config key as well as the old HTML field name.
+// A cached settings form may still submit e.g. s_core_admin_logo.
+$settingname = \theme_learnlingo\admin_setting_configstoredfilemodern::normalise_ajax_setting_name(
+    required_param('setting', PARAM_RAW_TRIMMED),
+    array_keys($definitions)
+);
 $action = required_param('action', PARAM_ALPHA);
 
-if (!isset($definitions[$settingname]) || !in_array($action, ['upload', 'delete'], true)) {
+if ($settingname === null || !in_array($action, ['upload', 'delete'], true)) {
     http_response_code(400);
-    echo json_encode(['success' => false, 'message' => get_string('invalidparameter')]);
+    echo json_encode(['success' => false, 'message' => get_string('invalidparameter', 'debug')]);
     exit;
 }
 
