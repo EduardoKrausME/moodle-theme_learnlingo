@@ -108,6 +108,10 @@ function theme_learnlingo_get_extra_scss(theme_config $theme): string {
 
     $scss = file_get_contents("{$CFG->dirroot}/theme/learnlingo/scss/_poss.scss");
 
+    // Admin page-tree styling belongs to the theme stylesheet, not to settings.php.
+    // Moodle also reads theme settings after the page head has already been output.
+    $scss .= "\n" . file_get_contents("{$CFG->dirroot}/theme/learnlingo/admin/styles/pages.css");
+
     // The existing SCSS setting remains global for backwards compatibility.
     if (!empty($theme->settings->scss)) {
         $scss .= "\n{$theme->settings->scss}";
