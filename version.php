@@ -24,8 +24,8 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-$plugin->version = 2026110300;
-$plugin->release = '2.0.0';
+$plugin->version = 2026110600;
+$plugin->release = '2.0.1';
 $plugin->component = 'theme_learnlingo';
 $plugin->requires = 2024042212;
 $plugin->maturity = MATURITY_STABLE;
