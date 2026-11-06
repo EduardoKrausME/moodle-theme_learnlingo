@@ -71,6 +71,9 @@ class admin_setting_configstoredfilemodern extends \admin_setting_configstoredfi
 
         $options = $this->get_options();
         $name = $this->get_full_name();
+        // Keep Moodle's HTML field name separate from the canonical AJAX config key.
+        // Core splits settings such as core_admin/logo into $plugin and $name.
+        $settingname = $this->plugin === null ? $this->name : $this->plugin . '/' . $this->name;
         $draftid = file_get_submitted_draft_itemid($name);
         $component = is_null($this->plugin) ? 'core' : $this->plugin;
 
@@ -124,7 +127,7 @@ class admin_setting_configstoredfilemodern extends \admin_setting_configstoredfi
         $element = $OUTPUT->render_from_template('theme_learnlingo/setting_storedfilemodern', [
             'id' => $this->get_id(),
             'name' => $name,
-            'settingname' => $this->name,
+            'settingname' => $settingname,
             'draftid' => $draftid,
             'readonly' => $this->is_readonly(),
             'filename' => $filename,
