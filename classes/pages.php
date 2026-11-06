@@ -449,6 +449,66 @@ final class pages {
         return array_merge($root, array_values($groups));
     }
     /**
+     * Append visible pages to Moodle's custom menu on older releases lacking
+     * the primary_extend hook. Never persist this request-only menu in config.
+     *
+     * @param string $current Existing administrator-defined custom menu.
+     * @return string Menu with LearnLingo pages added, without duplicate URLs.
+     */
+    public static function append_custom_menu(string $current): string {
+        $lines = preg_split('/\r\n|\r|\n/', $current);
+        $knownurls = [];
+        foreach ($lines as $line) {
+            $parts = explode('|', trim($line), 3);
+            if (isset($parts[1]) && trim($parts[1]) !== '') {
+                $knownurls[html_entity_decode(trim($parts[1]), ENT_QUOTES | ENT_HTML5, 'UTF-8')] = true;
+            }
+        }
+
+        $added = [];
+        foreach (self::navigation() as $item) {
+            if (!empty($item['haschildren'])) {
+                $children = [];
+                foreach ($item['children'] as $child) {
+                    $url = $child['url'];
+                    if (isset($knownurls[$url])) {
+                        continue;
+                    }
+                    $children[] = '-' . self::custom_menu_label($child['text']) . '|' . $url;
+                    $knownurls[$url] = true;
+                }
+                if ($children) {
+                    // A category is an unlinked parent in the native custom-menu syntax.
+                    $added[] = self::custom_menu_label($item['text']);
+                    array_push($added, ...$children);
+                }
+            } else {
+                $url = $item['url'];
+                if (!isset($knownurls[$url])) {
+                    $added[] = self::custom_menu_label($item['text']) . '|' . $url;
+                    $knownurls[$url] = true;
+                }
+            }
+        }
+
+        if (!$added) {
+            return $current;
+        }
+        return rtrim($current, "\r\n") . ($current === '' ? '' : "\n") . implode("\n", $added);
+    }
+
+    /**
+     * Strip custom-menu syntax characters from labels, including stored HTML entities.
+     *
+     * @param string $text Already escaped menu label from navigation().
+     * @return string Plain text safe for Moodle's pipe-delimited menu definition.
+     */
+    private static function custom_menu_label(string $text): string {
+        $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        return trim(str_replace(['|', "\r", "\n"], [' ', ' ', ' '], $text));
+    }
+
+    /**
      * Add published LearnLingo pages to Moodle's native primary navigation.
      *
      * The core primary_extend hook calls this before navigation is rendered, so

@@ -96,6 +96,12 @@ if ($PAGE->has_secondary_navigation()) {
     }
 }
 
+// Moodle merges custommenuitems into both desktop and mobile primary menus.
+// Only use this compatibility path when the native primary_extend hook is absent.
+if (!class_exists(\core\hook\navigation\primary_extend::class)) {
+    $CFG->custommenuitems = \theme_learnlingo\pages::append_custom_menu((string)($CFG->custommenuitems ?? ''));
+}
+
 $primary = new core\navigation\output\primary($PAGE);
 $renderer = $PAGE->get_renderer('core');
 $primarymenu = $primary->export_for_template($renderer);
