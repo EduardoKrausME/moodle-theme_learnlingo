@@ -28,7 +28,6 @@ use core_completion\progress;
 use local_personalxp\service\xp_manager;
 use theme_learnlingo\output\footer_renderer;
 use theme_learnlingo\setup_steps;
-use theme_learnlingo\pages;
 
 defined('MOODLE_INTERNAL') || die;
 
@@ -245,8 +244,6 @@ if ($coursehero) {
     }
 }
 
-$custompagesnav = pages::navigation();
-
 $templatecontext = [
     'brandlogo' => theme_learnlingo_logo_url($PAGE->theme, 'logo'),
     'hasbrandlogo' => (bool)theme_learnlingo_logo_url($PAGE->theme, 'logo'),
@@ -262,8 +259,7 @@ $templatecontext = [
     'courseindex' => $courseindex,
     'primarymoremenu' => $primarymenu['moremenu'],
     'secondarymoremenu' => $customfrontpage ? false : ($secondarynavigation ?: false),
-    'mobileprimarynav' => array_merge($primarymenu['mobileprimarynav'], $custompagesnav),
-    'learnlingopagesnav' => $custompagesnav,
+    'mobileprimarynav' => $primarymenu['mobileprimarynav'],
     'usermenu' => $primarymenu['user'],
     'langmenu' => $primarymenu['lang'],
     'forceblockdraweropen' => $forceblockdraweropen,
