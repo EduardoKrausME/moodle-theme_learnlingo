@@ -1,28 +1,94 @@
 /* Flat, progressively enhanced custom-page tree in theme settings. */
-.ll-pages-manager { margin: 0.75rem 0 1.5rem; }
-.ll-pages-tree { border: 1px solid var(--bs-border-color, #ddd); border-radius: .5rem; overflow: hidden; }
+.ll-pages-manager {
+  margin: 0.75rem 0 1.5rem;
+}
+
+.ll-pages-tree {
+  border: 1px solid var(--bs-border-color, #DDD);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
 .ll-pages-category + .ll-pages-category,
 .ll-pages-category + .ll-pages-row,
 .ll-pages-row + .ll-pages-category,
-.ll-pages-row + .ll-pages-row { border-top: 1px solid var(--bs-border-color, #ddd); }
-.ll-pages-category-head, .ll-pages-row {
-    display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem;
-    padding: .75rem 1rem;
+.ll-pages-row + .ll-pages-row {
+  border-top: 1px solid var(--bs-border-color, #DDD);
 }
-.ll-pages-category-head { cursor: pointer; background: var(--bs-secondary-bg, #f3f4f5); }
-.ll-pages-category-head:hover { filter: brightness(.98); }
-.ll-pages-category-head::marker { color: var(--bs-secondary-color, #666); }
-.ll-pages-name, .ll-pages-category-name { flex: 1 1 15rem; font-weight: 500; min-width: 0; overflow-wrap: anywhere; }
-.ll-pages-status { font-size: .8rem; color: var(--bs-secondary-color, #666); }
-.ll-pages-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .7rem; font-size: .86rem; }
-.ll-pages-actions form { margin: 0; }
-.ll-pages-children { padding-left: 1.25rem; border-left: 3px solid var(--bs-border-color, #ddd); }
-.ll-pages-category[open] .ll-pages-children { animation: ll-pages-reveal .18s ease-out both; }
-.ll-pages-empty { color: var(--bs-secondary-color, #666); padding: .9rem 1rem; }
+
+.ll-pages-category-head, .ll-pages-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
+}
+
+.ll-pages-category-head {
+  cursor: pointer;
+  background: var(--bs-secondary-bg, #F3F4F5);
+}
+
+.ll-pages-category-head:hover {
+  filter: brightness(0.98);
+}
+
+.ll-pages-category-head::marker {
+  color: var(--bs-secondary-color, #666);
+}
+
+.ll-pages-name, .ll-pages-category-name {
+  flex: 1 1 15rem;
+  font-weight: 500;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.ll-pages-status {
+  font-size: 0.8rem;
+  color: var(--bs-secondary-color, #666);
+}
+
+.ll-pages-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 0.86rem;
+}
+
+.ll-pages-actions form {
+  margin: 0;
+}
+
+.ll-pages-children {
+  padding-left: 1.25rem;
+  border-left: 3px solid var(--bs-border-color, #DDD);
+}
+
+.ll-pages-category[open] .ll-pages-children {
+  animation: ll-pages-reveal 0.18s ease-out both;
+}
+
+.ll-pages-empty {
+  color: var(--bs-secondary-color, #666);
+  padding: 0.9rem 1rem;
+}
+
 @keyframes ll-pages-reveal {
-    from { opacity: 0; transform: translateY(-5px); }
-    to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 @media (prefers-reduced-motion: reduce) {
-    .ll-pages-category[open] .ll-pages-children { animation: none; }
+  .ll-pages-category[open] .ll-pages-children {
+    animation: none;
+  }
 }
+
+/*# sourceMappingURL=pages.css.map */
