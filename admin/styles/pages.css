@@ -90,5 +90,10 @@
     animation: none;
   }
 }
+#page-theme-learnlingo-custom-page #page-header,
+.learnlingo-custom-page #page-header,
+.path-theme-learnlingo-custom #page-header {
+  display: none;
+}
 
 /*# sourceMappingURL=pages.css.map */
