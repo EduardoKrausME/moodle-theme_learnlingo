@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Offer first-run setup from the site homepage via Moodle's after_config hook.
+ * LearnLingo core hook registrations for routing and primary navigation.
  *
  * @package theme_learnlingo
  * @copyright 2026 Eduardo Kraus
@@ -31,5 +31,9 @@ $callbacks = [
     [
         'hook' => after_config::class,
         'callback' => [hook_listener::class, 'after_config'],
+    ],
+    [
+        'hook' => \core\hook\navigation\primary_extend::class,
+        'callback' => [\theme_learnlingo\hooks\primary_extend::class, 'callback'],
     ],
 ];

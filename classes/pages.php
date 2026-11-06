@@ -429,6 +429,7 @@ final class pages {
                 $category = (object)['slug' => $page->catslug];
             }
             $entry = [
+                'id' => (int)$page->id,
                 'text' => s($page->menutitle ?: $page->title),
                 'url' => self::url($page, $category)->out(false),
                 'isactive' => false,
@@ -447,4 +448,39 @@ final class pages {
         uasort($groups, static fn($a, $b) => $a['catsort'] <=> $b['catsort']);
         return array_merge($root, array_values($groups));
     }
+    /**
+     * Add published LearnLingo pages to Moodle's native primary navigation.
+     *
+     * The core primary_extend hook calls this before navigation is rendered, so
+     * Moodle handles the More menu, responsive layout and active items itself.
+     *
+     * @param \core\navigation\views\primary $primaryview Moodle primary navigation.
+     */
+    public static function extend_primary_navigation(\core\navigation\views\primary $primaryview): void {
+        foreach (self::navigation() as $item) {
+            if (!empty($item['haschildren'])) {
+                $key = 'learnlingo-category-' . (int)($item['sort'] ?? 0);
+                $category = $primaryview->get($key, \navigation_node::TYPE_CUSTOM);
+                if (!$category) {
+                    $category = $primaryview->add($item['text'], null,
+                        \navigation_node::TYPE_CUSTOM, null, $key);
+                    $category->showchildreninsubmenu = true;
+                }
+                foreach ($item['children'] as $child) {
+                    $childkey = 'learnlingo-page-' . (int)$child['id'];
+                    if (!$category->get($childkey, \navigation_node::TYPE_CUSTOM)) {
+                        $category->add($child['text'], new moodle_url($child['url']),
+                            \navigation_node::TYPE_CUSTOM, null, $childkey);
+                    }
+                }
+            } else {
+                $key = 'learnlingo-page-' . (int)$item['id'];
+                if (!$primaryview->get($key, \navigation_node::TYPE_CUSTOM)) {
+                    $primaryview->add($item['text'], new moodle_url($item['url']),
+                        \navigation_node::TYPE_CUSTOM, null, $key);
+                }
+            }
+        }
+    }
+
 }

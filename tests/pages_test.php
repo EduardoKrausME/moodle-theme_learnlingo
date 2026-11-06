@@ -102,6 +102,64 @@ final class pages_test extends \advanced_testcase {
         $this->assertSame('Pública', $menu[0]['text']);
     }
 
+    public function test_pages_use_native_primary_navigation_without_changing_custommenuitems(): void {
+        global $CFG, $DB, $PAGE;
+        $this->resetAfterTest(true);
+        $this->setUser(0);
+        $PAGE->set_url(new \moodle_url('/'));
+        $PAGE->set_context(\context_system::instance());
+
+        $now = time();
+        $categoryid = $DB->insert_record('theme_learnlingo_pagecats', (object)[
+            'name' => 'Recursos', 'slug' => 'recursos', 'sortorder' => 0,
+            'visible' => 1, 'timecreated' => $now, 'timemodified' => $now,
+        ]);
+
+        $root = $this->page_record(0, 'sobre');
+        $root->title = 'Sobre';
+        $root->showinmenu = 1;
+        $rootid = $DB->insert_record('theme_learnlingo_pages', $root);
+
+        $child = $this->page_record($categoryid, 'faq');
+        $child->title = 'FAQ';
+        $child->showinmenu = 1;
+        $childid = $DB->insert_record('theme_learnlingo_pages', $child);
+
+        $draft = $this->page_record(0, 'rascunho');
+        $draft->showinmenu = 1;
+        $draft->status = 0;
+        $draftid = $DB->insert_record('theme_learnlingo_pages', $draft);
+
+        $private = $this->page_record(0, 'privada');
+        $private->showinmenu = 1;
+        $private->accesslevel = 1;
+        $privateid = $DB->insert_record('theme_learnlingo_pages', $private);
+
+        $CFG->custommenuitems = 'Ajuda|https://example.org/help';
+        $primary = new \core\navigation\views\primary($PAGE);
+        pages::extend_primary_navigation($primary);
+
+        $rootnode = $primary->get('learnlingo-page-' . $rootid, \navigation_node::TYPE_CUSTOM);
+        $this->assertNotFalse($rootnode);
+        $this->assertSame('Sobre', $rootnode->text);
+
+        $category = $primary->get('learnlingo-category-' . (700000 + $categoryid),
+            \navigation_node::TYPE_CUSTOM);
+        $this->assertNotFalse($category);
+        $childnode = $category->get('learnlingo-page-' . $childid, \navigation_node::TYPE_CUSTOM);
+        $this->assertNotFalse($childnode);
+        $this->assertSame('FAQ', $childnode->text);
+        $this->assertTrue($category->showchildreninsubmenu);
+
+        $this->assertFalse($primary->get('learnlingo-page-' . $draftid, \navigation_node::TYPE_CUSTOM));
+        $this->assertFalse($primary->get('learnlingo-page-' . $privateid, \navigation_node::TYPE_CUSTOM));
+        $this->assertSame('Ajuda|https://example.org/help', $CFG->custommenuitems);
+
+        pages::extend_primary_navigation($primary);
+        $this->assertCount(2, $primary->children);
+        $this->assertCount(1, $category->children);
+    }
+
     /**
      * Create a valid page fixture.
      *
