@@ -160,6 +160,61 @@ final class pages_test extends \advanced_testcase {
         $this->assertCount(1, $category->children);
     }
 
+
+    public function test_legacy_custom_menu_preserves_site_links_and_adds_visible_pages_once(): void {
+        global $DB;
+        $this->resetAfterTest(true);
+        $this->setUser(0);
+
+        $now = time();
+        $categoryid = $DB->insert_record('theme_learnlingo_pagecats', (object)[
+            'name' => 'Recursos', 'slug' => 'recursos', 'sortorder' => 0,
+            'visible' => 1, 'timecreated' => $now, 'timemodified' => $now,
+        ]);
+
+        $root = $this->page_record(0, 'sobre');
+        $root->title = 'Sobre';
+        $root->showinmenu = 1;
+        $DB->insert_record('theme_learnlingo_pages', $root);
+
+        $child = $this->page_record($categoryid, 'faq');
+        $child->title = 'FAQ';
+        $child->showinmenu = 1;
+        $DB->insert_record('theme_learnlingo_pages', $child);
+
+        $draft = $this->page_record(0, 'rascunho');
+        $draft->status = 0;
+        $draft->showinmenu = 1;
+        $DB->insert_record('theme_learnlingo_pages', $draft);
+
+        $private = $this->page_record(0, 'privada');
+        $private->accesslevel = 1;
+        $private->showinmenu = 1;
+        $DB->insert_record('theme_learnlingo_pages', $private);
+
+        $existing = 'Ajuda|https://example.org/help';
+        $result = pages::append_custom_menu($existing);
+        $this->assertStringStartsWith($existing . "\n", $result);
+        $this->assertStringContainsString("Sobre|", $result);
+        $this->assertStringContainsString("Recursos\n-FAQ|", $result);
+        $this->assertStringNotContainsString('rascunho', $result);
+        $this->assertStringNotContainsString('privada', $result);
+        $this->assertSame($result, pages::append_custom_menu($result));
+    }
+
+    public function test_legacy_custom_menu_does_not_duplicate_an_existing_page_url(): void {
+        global $DB;
+        $this->resetAfterTest(true);
+        $this->setUser(0);
+        $page = $this->page_record(0, 'sobre');
+        $page->title = 'Sobre';
+        $page->showinmenu = 1;
+        $DB->insert_record('theme_learnlingo_pages', $page);
+
+        $existing = 'Sobre a instituição|' . pages::url($page)->out(false);
+        $this->assertSame($existing, pages::append_custom_menu($existing));
+    }
+
     /**
      * Create a valid page fixture.
      *
