@@ -22,11 +22,13 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use core\hook\navigation\primary_extend;
 use core\navigation\output\more_menu;
 use core\output\select_menu;
 use core_completion\progress;
 use local_personalxp\service\xp_manager;
 use theme_learnlingo\output\footer_renderer;
+use theme_learnlingo\pages;
 use theme_learnlingo\setup_steps;
 
 defined('MOODLE_INTERNAL') || die;
@@ -98,8 +100,8 @@ if ($PAGE->has_secondary_navigation()) {
 
 // Moodle merges custommenuitems into both desktop and mobile primary menus.
 // Only use this compatibility path when the native primary_extend hook is absent.
-if (!class_exists(\core\hook\navigation\primary_extend::class)) {
-    $CFG->custommenuitems = \theme_learnlingo\pages::append_custom_menu((string)($CFG->custommenuitems ?? ''));
+if (!class_exists(primary_extend::class)) {
+    $CFG->custommenuitems = pages::append_custom_menu((string)($CFG->custommenuitems ?? ''));
 }
 
 $primary = new core\navigation\output\primary($PAGE);

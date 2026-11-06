@@ -24,6 +24,7 @@
 
 require_once(__DIR__ . '/../../../config.php');
 
+use core\output\notification;
 use theme_learnlingo\form\category_form;
 use theme_learnlingo\pages;
 
@@ -51,7 +52,7 @@ if ($data = $form->get_data()) {
     $data->id = $id;
     pages::save_category($data);
     redirect(new moodle_url('/admin/settings.php', ['section' => 'themesettinglearnlingo']),
-        get_string('changessaved'), null, \core\output\notification::NOTIFY_SUCCESS);
+        get_string('changessaved'), null, notification::NOTIFY_SUCCESS);
 }
 echo $OUTPUT->header();
 $form->display();

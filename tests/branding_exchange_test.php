@@ -26,6 +26,7 @@ namespace theme_learnlingo;
 
 use advanced_testcase;
 use invalid_parameter_exception;
+use moodle_exception;
 
 /**
  * Round-trip validation and safe SVG checks.
@@ -149,7 +150,7 @@ final class branding_exchange_test extends advanced_testcase {
      * Invalid identity metadata rejects the import before changes.
      */
     public function test_identity_mismatch_is_rejected(): void {
-        $this->expectException(\moodle_exception::class);
+        $this->expectException(moodle_exception::class);
         branding_exchange::validate_import('{"schema_version":99,"settings":{"brandcolor":"#abcdef"}}');
     }
 
@@ -157,7 +158,7 @@ final class branding_exchange_test extends advanced_testcase {
      * Malformed input rejects the import instead of partially changing settings.
      */
     public function test_invalid_json_is_rejected(): void {
-        $this->expectException(\moodle_exception::class);
+        $this->expectException(moodle_exception::class);
         branding_exchange::validate_import('{"settings":');
     }
 

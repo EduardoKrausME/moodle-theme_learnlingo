@@ -24,6 +24,7 @@
 
 require_once(__DIR__ . '/../../../config.php');
 
+use core\output\notification;
 use theme_learnlingo\form\page_form;
 use theme_learnlingo\pages;
 
@@ -55,7 +56,7 @@ if ($data = $form->get_data()) {
     $data->id = $id;
     $savedid = pages::save_page($data);
     redirect(new moodle_url('/theme/learnlingo/admin/page.php', ['id' => $savedid]),
-        get_string('changessaved'), null, \core\output\notification::NOTIFY_SUCCESS);
+        get_string('changessaved'), null, notification::NOTIFY_SUCCESS);
 }
 
 $PAGE->requires->js_call_amd('theme_learnlingo/page_editor', 'init', [[

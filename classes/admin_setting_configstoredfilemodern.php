@@ -24,6 +24,10 @@
 
 namespace theme_learnlingo;
 
+use admin_setting_configstoredfile;
+use context_user;
+use moodle_url;
+
 defined('MOODLE_INTERNAL') || die;
 
 global $CFG;
@@ -35,7 +39,7 @@ require_once($CFG->libdir . '/adminlib.php');
  * Extending core's stored-file setting preserves configuration ownership,
  * the File API file area and its normal settings form submission behaviour.
  */
-class admin_setting_configstoredfilemodern extends \admin_setting_configstoredfile {
+class admin_setting_configstoredfilemodern extends admin_setting_configstoredfile {
     /**
      * Resolve an AJAX setting to a whitelisted canonical config key.
      *
@@ -86,7 +90,7 @@ class admin_setting_configstoredfilemodern extends \admin_setting_configstoredfi
             $options
         );
 
-        $usercontext = \context_user::instance($USER->id);
+        $usercontext = context_user::instance($USER->id);
         $files = get_file_storage()->get_area_files(
             $usercontext->id,
             'user',
@@ -103,7 +107,7 @@ class admin_setting_configstoredfilemodern extends \admin_setting_configstoredfi
                 continue;
             }
             $filename = $file->get_filename();
-            $previewurl = \moodle_url::make_draftfile_url(
+            $previewurl = moodle_url::make_draftfile_url(
                 $draftid,
                 $file->get_filepath(),
                 $filename
@@ -134,7 +138,7 @@ class admin_setting_configstoredfilemodern extends \admin_setting_configstoredfi
             'previewurl' => $previewurl,
             'haspreview' => $previewurl !== '',
             'accept' => $accept,
-            'uploadurl' => (new \moodle_url('/theme/learnlingo/admin/storedfile_upload.php'))->out(false),
+            'uploadurl' => (new moodle_url('/theme/learnlingo/admin/storedfile_upload.php'))->out(false),
             'sesskey' => sesskey(),
         ]);
 

@@ -26,6 +26,7 @@ namespace theme_learnlingo;
 
 use advanced_testcase;
 use context_system;
+use core_cache\cache;
 use core_component;
 use invalid_parameter_exception;
 use local_mcp\exception\api_exception;
@@ -252,7 +253,7 @@ final class mcp_settings_test extends advanced_testcase {
         $this->require_mcp();
         $this->resetAfterTest();
         $identity = $this->identity();
-        $cache = \core_cache\cache::make('theme_learnlingo', 'publiccourses');
+        $cache = cache::make('theme_learnlingo', 'publiccourses');
         $cache->set('mcp_styles_test', [['id' => 91]]);
         $this->assertNotFalse($cache->get('mcp_styles_test'));
 

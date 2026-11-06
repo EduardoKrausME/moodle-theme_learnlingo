@@ -24,7 +24,10 @@
 
 namespace theme_learnlingo;
 
+use admin_setting_configstoredfile;
 use advanced_testcase;
+use context_system;
+use context_user;
 
 /**
  * Check that the upload widget preserves Moodle's File API and draft previews.
@@ -44,7 +47,7 @@ final class storedfile_settings_test extends advanced_testcase {
             0,
             ['maxfiles' => 1, 'accepted_types' => ['.png']]
         );
-        $this->assertInstanceOf(\admin_setting_configstoredfile::class, $setting);
+        $this->assertInstanceOf(admin_setting_configstoredfile::class, $setting);
     }
 
     /**
@@ -137,7 +140,7 @@ final class storedfile_settings_test extends advanced_testcase {
         global $CFG;
         require_once($CFG->libdir . '/adminlib.php');
 
-        $context = \context_system::instance();
+        $context = context_system::instance();
         $record = [
             'contextid' => $context->id,
             'component' => 'theme_learnlingo',
@@ -191,7 +194,7 @@ final class storedfile_settings_test extends advanced_testcase {
         $draftid = file_get_unused_draft_itemid();
         file_prepare_draft_area(
             $draftid,
-            \context_system::instance()->id,
+            context_system::instance()->id,
             'theme_learnlingo',
             'loginlogo',
             0,
@@ -199,7 +202,7 @@ final class storedfile_settings_test extends advanced_testcase {
         );
 
         get_file_storage()->create_file_from_string([
-            'contextid' => \context_user::instance($USER->id)->id,
+            'contextid' => context_user::instance($USER->id)->id,
             'component' => 'user',
             'filearea' => 'draft',
             'itemid' => $draftid,
@@ -210,7 +213,7 @@ final class storedfile_settings_test extends advanced_testcase {
         $this->assertSame('', $setting->write_setting($draftid));
         $this->assertSame('/new-logo.png', $setting->get_setting());
         $stored = get_file_storage()->get_file(
-            \context_system::instance()->id,
+            context_system::instance()->id,
             'theme_learnlingo',
             'loginlogo',
             0,
@@ -222,14 +225,14 @@ final class storedfile_settings_test extends advanced_testcase {
         $emptydraftid = file_get_unused_draft_itemid();
         file_prepare_draft_area(
             $emptydraftid,
-            \context_system::instance()->id,
+            context_system::instance()->id,
             'theme_learnlingo',
             'loginlogo',
             0,
             ['subdirs' => 0, 'maxfiles' => 1, 'accepted_types' => ['.png']]
         );
         $files = get_file_storage()->get_area_files(
-            \context_user::instance($USER->id)->id,
+            context_user::instance($USER->id)->id,
             'user',
             'draft',
             $emptydraftid,
@@ -242,7 +245,7 @@ final class storedfile_settings_test extends advanced_testcase {
         // A real filemanager maintains the root directory even after deletion.
         // This is required by core's safety check for an existing file area.
         get_file_storage()->create_directory(
-            \context_user::instance($USER->id)->id,
+            context_user::instance($USER->id)->id,
             'user',
             'draft',
             $emptydraftid,
@@ -251,7 +254,7 @@ final class storedfile_settings_test extends advanced_testcase {
         $this->assertSame('', $setting->write_setting($emptydraftid));
         $this->assertSame('', $setting->get_setting());
         $this->assertFalse(get_file_storage()->get_file(
-            \context_system::instance()->id,
+            context_system::instance()->id,
             'theme_learnlingo',
             'loginlogo',
             0,

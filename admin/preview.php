@@ -22,6 +22,8 @@
  * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use theme_learnlingo\pages;
+
 require_once(__DIR__ . '/../../../config.php');
 
 require_login();
@@ -30,4 +32,4 @@ $id = required_param('id', PARAM_INT);
 $page = $DB->get_record('theme_learnlingo_pages', ['id' => $id], '*', MUST_EXIST);
 $category = $page->categoryid ?
     $DB->get_record('theme_learnlingo_pagecats', ['id' => $page->categoryid], '*', MUST_EXIST) : null;
-\theme_learnlingo\pages::render($page, $category, true);
+pages::render($page, $category, true);

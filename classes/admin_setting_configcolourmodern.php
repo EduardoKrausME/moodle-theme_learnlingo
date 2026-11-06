@@ -27,6 +27,8 @@
 
 namespace theme_learnlingo;
 
+use admin_setting_configcolourpicker;
+
 defined('MOODLE_INTERNAL') || die;
 
 // The base admin settings classes are defined in adminlib.php on Moodle 4.5.
@@ -36,7 +38,7 @@ require_once($CFG->libdir . '/adminlib.php');
 /**
  * Modern colour setting with native picker, presets, and editable value.
  */
-class admin_setting_configcolourmodern extends \admin_setting_configcolourpicker {
+class admin_setting_configcolourmodern extends admin_setting_configcolourpicker {
     /**
      * Return an HTML colour input-compatible six-digit hexadecimal value.
      *

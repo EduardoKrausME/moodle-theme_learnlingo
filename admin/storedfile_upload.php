@@ -22,6 +22,9 @@
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use core_form\filetypes_util;
+use theme_learnlingo\admin_setting_configstoredfilemodern;
+
 require_once(__DIR__ . '/../../../config.php');
 require_once($CFG->libdir . '/adminlib.php');
 require_once($CFG->libdir . '/filelib.php');
@@ -54,7 +57,7 @@ $definitions = [
 
 // Accept the canonical config key as well as the old HTML field name.
 // A cached settings form may still submit e.g. s_core_admin_logo.
-$settingname = \theme_learnlingo\admin_setting_configstoredfilemodern::normalise_ajax_setting_name(
+$settingname = admin_setting_configstoredfilemodern::normalise_ajax_setting_name(
     required_param('setting', PARAM_RAW_TRIMMED),
     array_keys($definitions)
 );
@@ -67,7 +70,7 @@ if ($settingname === null || !in_array($action, ['upload', 'delete'], true)) {
 }
 
 $definition = $definitions[$settingname];
-$setting = new \theme_learnlingo\admin_setting_configstoredfilemodern(
+$setting = new admin_setting_configstoredfilemodern(
     $settingname,
     '',
     '',
@@ -132,7 +135,7 @@ try {
             throw new moodle_exception('filemodernuploaderror', 'theme_learnlingo');
         }
 
-        $filetypes = new \core_form\filetypes_util();
+        $filetypes = new filetypes_util();
         $allowed = $filetypes->normalize_file_types($definition['types']);
         if (!$filetypes->is_allowed_file_type($filename, $allowed) ||
                 strpos((string)mimeinfo('type', $filename), 'image/') !== 0) {

@@ -25,7 +25,10 @@
 namespace theme_learnlingo;
 
 use context_system;
+use core\navigation\views\primary;
+use moodle_exception;
 use moodle_url;
+use navigation_node;
 use stdClass;
 
 /**
@@ -327,18 +330,18 @@ final class pages {
         global $DB;
         $data->slug = trim((string)$data->slug);
         if (!preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/D', $data->slug)) {
-            throw new \moodle_exception('custompagesinvalidslug', 'theme_learnlingo');
+            throw new moodle_exception('custompagesinvalidslug', 'theme_learnlingo');
         }
         if (!$category) {
             $html = (string)($data->content ?? '');
             $scss = (string)($data->scss ?? '');
             if (str_contains($html, '<?') || str_contains($html, "\0") ||
                 preg_match('~<\s*(script|iframe|object|embed|form)\b~i', $html)) {
-                throw new \moodle_exception('jsonvalidatehtml', 'theme_learnlingo');
+                throw new moodle_exception('jsonvalidatehtml', 'theme_learnlingo');
             }
             if (str_contains($scss, '<?') || str_contains($scss, "\0") ||
                 preg_match('~@import\s+(?:url\s*\(|[\x22\x27]https?://)~i', $scss)) {
-                throw new \moodle_exception('jsonvalidateremoteimport', 'theme_learnlingo');
+                throw new moodle_exception('jsonvalidateremoteimport', 'theme_learnlingo');
             }
         }
         $table = $category ? 'theme_learnlingo_pagecats' : 'theme_learnlingo_pages';
@@ -346,11 +349,11 @@ final class pages {
             ['categoryid' => (int)$data->categoryid, 'slug' => $data->slug];
         $existing = $DB->get_record($table, $conditions, 'id');
         if ($existing && (int)$existing->id !== (int)($data->id ?? 0)) {
-            throw new \moodle_exception('custompagesduplicateslug', 'theme_learnlingo');
+            throw new moodle_exception('custompagesduplicateslug', 'theme_learnlingo');
         }
         if (!$category && (int)$data->categoryid !== 0 &&
             !$DB->record_exists('theme_learnlingo_pagecats', ['id' => (int)$data->categoryid])) {
-            throw new \moodle_exception('custompagesinvalidcategory', 'theme_learnlingo');
+            throw new moodle_exception('custompagesinvalidcategory', 'theme_learnlingo');
         }
     }
 
@@ -514,30 +517,30 @@ final class pages {
      * The core primary_extend hook calls this before navigation is rendered, so
      * Moodle handles the More menu, responsive layout and active items itself.
      *
-     * @param \core\navigation\views\primary $primaryview Moodle primary navigation.
+     * @param primary $primaryview Moodle primary navigation.
      */
-    public static function extend_primary_navigation(\core\navigation\views\primary $primaryview): void {
+    public static function extend_primary_navigation(primary $primaryview): void {
         foreach (self::navigation() as $item) {
             if (!empty($item['haschildren'])) {
                 $key = 'learnlingo-category-' . (int)($item['sort'] ?? 0);
-                $category = $primaryview->get($key, \navigation_node::TYPE_CUSTOM);
+                $category = $primaryview->get($key, navigation_node::TYPE_CUSTOM);
                 if (!$category) {
                     $category = $primaryview->add($item['text'], null,
-                        \navigation_node::TYPE_CUSTOM, null, $key);
+                        navigation_node::TYPE_CUSTOM, null, $key);
                     $category->showchildreninsubmenu = true;
                 }
                 foreach ($item['children'] as $child) {
                     $childkey = 'learnlingo-page-' . (int)$child['id'];
-                    if (!$category->get($childkey, \navigation_node::TYPE_CUSTOM)) {
+                    if (!$category->get($childkey, navigation_node::TYPE_CUSTOM)) {
                         $category->add($child['text'], new moodle_url($child['url']),
-                            \navigation_node::TYPE_CUSTOM, null, $childkey);
+                            navigation_node::TYPE_CUSTOM, null, $childkey);
                     }
                 }
             } else {
                 $key = 'learnlingo-page-' . (int)$item['id'];
-                if (!$primaryview->get($key, \navigation_node::TYPE_CUSTOM)) {
+                if (!$primaryview->get($key, navigation_node::TYPE_CUSTOM)) {
                     $primaryview->add($item['text'], new moodle_url($item['url']),
-                        \navigation_node::TYPE_CUSTOM, null, $key);
+                        navigation_node::TYPE_CUSTOM, null, $key);
                 }
             }
         }

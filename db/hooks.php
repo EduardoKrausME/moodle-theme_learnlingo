@@ -24,6 +24,7 @@
 
 use core\hook\after_config;
 use theme_learnlingo\hook_listener;
+use theme_learnlingo\hooks\primary_extend;
 
 defined('MOODLE_INTERNAL') || die;
 
@@ -34,6 +35,6 @@ $callbacks = [
     ],
     [
         'hook' => \core\hook\navigation\primary_extend::class,
-        'callback' => [\theme_learnlingo\hooks\primary_extend::class, 'callback'],
+        'callback' => [primary_extend::class, 'callback'],
     ],
 ];

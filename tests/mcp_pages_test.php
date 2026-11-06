@@ -27,6 +27,7 @@ namespace theme_learnlingo;
 use advanced_testcase;
 use local_mcp\exception\api_exception;
 use local_mcp\security\authenticated_identity;
+use moodle_exception;
 use theme_learnlingo\mcp\delete_page;
 use theme_learnlingo\mcp\get_pages;
 use theme_learnlingo\mcp\page_service;
@@ -157,7 +158,7 @@ final class mcp_pages_test extends advanced_testcase {
     public function test_unsafe_html_rejected(): void {
         $this->resetAfterTest(true);
         $identity = $this->identity();
-        $this->expectException(\moodle_exception::class);
+        $this->expectException(moodle_exception::class);
         (new update_page())->preview([
             'operation' => 'create', 'title' => 'Insegura',
             'content' => '<script>alert(1)</script>',

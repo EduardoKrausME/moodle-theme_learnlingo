@@ -22,8 +22,12 @@
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use theme_learnlingo\admin_setting_configcode;
+use theme_learnlingo\admin_setting_configcolourmodern;
+use theme_learnlingo\admin_setting_configstoredfilemodern;
 use theme_learnlingo\dark_mode;
 use theme_learnlingo\mcp_banner;
+use theme_learnlingo\pages;
 
 defined('MOODLE_INTERNAL') || die;
 
@@ -73,7 +77,7 @@ if ($ADMIN->fulltree) {
         "textcolor" => "#263238",
     ];
     foreach ($colors as $name => $default) {
-        $setting = new \theme_learnlingo\admin_setting_configcolourmodern(
+        $setting = new admin_setting_configcolourmodern(
             "theme_learnlingo/{$name}",
             get_string($name, "theme_learnlingo"),
             get_string("{$name}_desc", "theme_learnlingo"),
@@ -89,7 +93,7 @@ if ($ADMIN->fulltree) {
     $PAGE->requires->js_call_amd("theme_learnlingo/code_settings", "init");
 
     // Use the Moodle-wide site logo, shared with core's Appearance > Logos page.
-    $setting = new \theme_learnlingo\admin_setting_configstoredfilemodern(
+    $setting = new admin_setting_configstoredfilemodern(
         "core_admin/logo",
         get_string("logo", "theme_learnlingo"),
         get_string("logo_desc", "theme_learnlingo"),
@@ -101,7 +105,7 @@ if ($ADMIN->fulltree) {
     $page->add($setting);
 
     // Favicon file setting.
-    $setting = new \theme_learnlingo\admin_setting_configstoredfilemodern(
+    $setting = new admin_setting_configstoredfilemodern(
         "core_admin/favicon",
         get_string("favicon", "theme_learnlingo"),
         get_string("favicon_desc", "theme_learnlingo"),
@@ -110,7 +114,6 @@ if ($ADMIN->fulltree) {
     );
     $setting->set_updatedcallback("theme_reset_all_caches");
     $page->add($setting);
-
 
     $settings->add($page);
 
@@ -133,7 +136,7 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback("theme_reset_all_caches");
     $page->add($setting);
 
-    $setting = new \theme_learnlingo\admin_setting_configcode(
+    $setting = new admin_setting_configcode(
         "theme_learnlingo/homepagehtml",
         get_string("homepagehtml", "theme_learnlingo"),
         get_string("homepagehtml_desc", "theme_learnlingo"),
@@ -145,7 +148,7 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback("theme_reset_all_caches");
     $page->add($setting);
 
-    $setting = new \theme_learnlingo\admin_setting_configcode(
+    $setting = new admin_setting_configcode(
         "theme_learnlingo/homepagescss",
         get_string("homepagescss", "theme_learnlingo"),
         get_string("homepagescss_desc", "theme_learnlingo"),
@@ -207,22 +210,25 @@ if ($ADMIN->fulltree) {
         'theme_learnlingo_pages',
         get_string('custompagestab', 'theme_learnlingo')
     );
+
+    $urls = [
+        '0' => get_string('custompagesqueryurls', 'theme_learnlingo'),
+        '1' => get_string('custompagespathurls', 'theme_learnlingo'),
+    ];
     $setting = new admin_setting_configselect(
         'theme_learnlingo/pagefriendlyurls',
         get_string('custompagesfriendlyurls', 'theme_learnlingo'),
         get_string('custompagesfriendlyurlsdesc', 'theme_learnlingo'),
-        '0',
-        [
-            '0' => get_string('custompagesqueryurls', 'theme_learnlingo'),
-            '1' => get_string('custompagespathurls', 'theme_learnlingo'),
-        ]
+        '1',
+        $urls
     );
     $page->add($setting);
+
     $page->add(new admin_setting_heading(
         'theme_learnlingo/custompagesmanagement',
         get_string('custompagesmanage', 'theme_learnlingo'),
         $OUTPUT->render_from_template('theme_learnlingo/page_tree',
-            \theme_learnlingo\pages::tree_data())
+            pages::tree_data())
     ));
     $settings->add($page);
 
@@ -245,7 +251,7 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback("theme_reset_all_caches");
     $page->add($setting);
 
-    $setting = new \theme_learnlingo\admin_setting_configcode(
+    $setting = new admin_setting_configcode(
         "theme_learnlingo/footerhtml",
         get_string("footerhtml", "theme_learnlingo"),
         get_string("footerhtml_desc", "theme_learnlingo"),
@@ -255,7 +261,7 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback("theme_reset_all_caches");
     $page->add($setting);
 
-    $setting = new \theme_learnlingo\admin_setting_configcode(
+    $setting = new admin_setting_configcode(
         "theme_learnlingo/footerscss",
         get_string("footerscss", "theme_learnlingo"),
         get_string("footerscss_desc", "theme_learnlingo"),
@@ -269,7 +275,7 @@ if ($ADMIN->fulltree) {
 
     $PAGE->requires->js_call_amd("theme_learnlingo/footer_settings", "init");
 
-    $setting = new \theme_learnlingo\admin_setting_configcolourmodern(
+    $setting = new admin_setting_configcolourmodern(
         "theme_learnlingo/footer_background_color",
         get_string("footer_background_color", "theme_learnlingo"),
         get_string("footer_background_color_desc", "theme_learnlingo"),
@@ -293,6 +299,7 @@ if ($ADMIN->fulltree) {
         );
         $setting->set_updatedcallback("theme_reset_all_caches");
         $page->add($setting);
+
         $setting = new admin_setting_confightmleditor(
             "theme_learnlingo/footer_html_{$i}",
             get_string("footer_html", "theme_learnlingo", $i),
@@ -311,6 +318,7 @@ if ($ADMIN->fulltree) {
     );
     $setting->set_updatedcallback("theme_reset_all_caches");
     $page->add($setting);
+
     $settings->add($page);
 
     $page = new admin_settingpage(
@@ -412,15 +420,16 @@ if ($ADMIN->fulltree) {
     );
 
     // Login Background image setting.
-    $name = "theme_boost/loginbackgroundimage";
-    $title = get_string("loginbackgroundimage", "theme_boost");
-    $description = get_string("loginbackgroundimage_desc", "theme_boost");
-    $setting = new \theme_learnlingo\admin_setting_configstoredfilemodern($name, $title, $description, "loginbackgroundimage");
+    $setting = new admin_setting_configstoredfilemodern(
+        "theme_boost/loginbackgroundimage",
+        get_string("loginbackgroundimage", "theme_boost"),
+        get_string("loginbackgroundimage_desc", "theme_boost"),
+        "loginbackgroundimage");
     $setting->set_updatedcallback("theme_reset_all_caches");
     $page->add($setting);
 
     // Optional logo for the login form, independent of the Moodle-wide site logo.
-    $setting = new \theme_learnlingo\admin_setting_configstoredfilemodern(
+    $setting = new admin_setting_configstoredfilemodern(
         "theme_learnlingo/loginlogo",
         get_string("loginlogo", "theme_learnlingo"),
         get_string("loginlogo_desc", "theme_learnlingo"),
@@ -474,7 +483,7 @@ if ($ADMIN->fulltree) {
         get_string("scsssettings", "theme_learnlingo")
     );
 
-    $setting = new \theme_learnlingo\admin_setting_configcode(
+    $setting = new admin_setting_configcode(
         "theme_learnlingo/scsspre",
         get_string("scsspre", "theme_learnlingo"),
         get_string("scsspre_desc", "theme_learnlingo"),
@@ -484,7 +493,7 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback("theme_reset_all_caches");
     $page->add($setting);
 
-    $setting = new \theme_learnlingo\admin_setting_configcode(
+    $setting = new admin_setting_configcode(
         "theme_learnlingo/scss",
         get_string("scss", "theme_learnlingo"),
         get_string("scss_desc", "theme_learnlingo"),

@@ -26,6 +26,7 @@ namespace theme_learnlingo;
 
 use invalid_parameter_exception;
 use JsonException;
+use moodle_exception;
 
 /**
  * Versioned, strictly validated configuration interchange.
@@ -408,11 +409,11 @@ PROMPT;
         try {
             $data = json_decode(trim($source), true, 32, JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
-            throw new \moodle_exception('jsonerrorinvaliddetail', 'theme_learnlingo', '', $e->getMessage());
+            throw new moodle_exception('jsonerrorinvaliddetail', 'theme_learnlingo', '', $e->getMessage());
         }
 
         if (!is_array($data) || ($data !== [] && array_is_list($data))) {
-            throw new \moodle_exception('jsonerrorstructure', 'theme_learnlingo');
+            throw new moodle_exception('jsonerrorstructure', 'theme_learnlingo');
         }
 
         $identity = [
@@ -422,7 +423,7 @@ PROMPT;
         ];
         foreach ($identity as $name => $expected) {
             if (array_key_exists($name, $data) && $data[$name] !== $expected) {
-                throw new \moodle_exception('jsonerrormetadata', 'theme_learnlingo', '', (object)[
+                throw new moodle_exception('jsonerrormetadata', 'theme_learnlingo', '', (object)[
                     'field' => $name,
                     'expected' => self::display_value($expected),
                     'received' => self::display_value($data[$name]),
@@ -434,7 +435,7 @@ PROMPT;
         if (array_key_exists('settings', $data)) {
             $settings = $data['settings'];
             if (!is_array($settings) || ($settings !== [] && array_is_list($settings))) {
-                throw new \moodle_exception('jsonerrorsettingstype', 'theme_learnlingo');
+                throw new moodle_exception('jsonerrorsettingstype', 'theme_learnlingo');
             }
             foreach ($data as $name => $value) {
                 if ($name !== 'settings' && !array_key_exists($name, $identity)) {

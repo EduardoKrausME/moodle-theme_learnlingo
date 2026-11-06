@@ -25,6 +25,8 @@
 namespace theme_learnlingo;
 
 use advanced_testcase;
+use context_course;
+use core\event\course_created;
 use core_cache\cache;
 
 /**
@@ -156,9 +158,9 @@ final class homepage_context_test extends advanced_testcase {
         $cache->set('test_event_key', [['id' => 99]]);
         $this->assertNotFalse($cache->get('test_event_key'));
 
-        $event = \core\event\course_created::create([
+        $event = course_created::create([
             'objectid' => $course->id,
-            'context' => \context_course::instance($course->id),
+            'context' => context_course::instance($course->id),
             'other' => ['fullname' => $course->fullname],
         ]);
         observer::public_courses_changed($event);

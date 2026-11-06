@@ -22,12 +22,15 @@
  * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use core\output\notification;
+use theme_learnlingo\pages;
+
 require_once(__DIR__ . '/../../../config.php');
 
 require_login();
 require_capability('moodle/site:config', context_system::instance());
 
-if (!\theme_learnlingo\pages::ready()) {
+if (!pages::ready()) {
     throw new moodle_exception('custompagesneedupgrade', 'theme_learnlingo');
 }
 $deletepage = optional_param('deletepage', 0, PARAM_INT);
@@ -63,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $DB->delete_records('theme_learnlingo_pagecats', ['id' => $deletecategory]);
     }
     theme_reset_all_caches();
-    redirect($adminurl, get_string('changessaved'), null, \core\output\notification::NOTIFY_SUCCESS);
+    redirect($adminurl, get_string('changessaved'), null, notification::NOTIFY_SUCCESS);
 }
 
 echo $OUTPUT->header();

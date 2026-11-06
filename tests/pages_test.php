@@ -24,6 +24,14 @@
 
 namespace theme_learnlingo;
 
+use advanced_testcase;
+use context_system;
+use core\navigation\views\primary;
+use moodle_exception;
+use moodle_url;
+use navigation_node;
+use stdClass;
+
 /**
  * Test category-scoped slugs, route resolution, and menu visibility.
  *
@@ -32,7 +40,7 @@ namespace theme_learnlingo;
  * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @covers \theme_learnlingo\pages
  */
-final class pages_test extends \advanced_testcase {
+final class pages_test extends advanced_testcase {
     public function test_only_root_or_single_category_paths_are_valid(): void {
         $this->assertSame(['category' => '', 'slug' => 'sobre-nos'], pages::split_path('sobre-nos'));
         $this->assertSame(['category' => 'empresa', 'slug' => 'sobre-nos'],
@@ -62,7 +70,7 @@ final class pages_test extends \advanced_testcase {
         $this->assertNull(pages::published('sobre-nos'));
         pages::validate((object)['id' => 0, 'slug' => 'sobre-nos', 'categoryid' => $cat2,
             'content' => '<h1>Institutional</h1>', 'scss' => '']);
-        $this->expectException(\moodle_exception::class);
+        $this->expectException(moodle_exception::class);
         pages::validate((object)['id' => 0, 'slug' => 'sobre-nos', 'categoryid' => $cat1,
             'content' => '<h1>Collision</h1>', 'scss' => '']);
     }
@@ -106,8 +114,8 @@ final class pages_test extends \advanced_testcase {
         global $CFG, $DB, $PAGE;
         $this->resetAfterTest(true);
         $this->setUser(0);
-        $PAGE->set_url(new \moodle_url('/'));
-        $PAGE->set_context(\context_system::instance());
+        $PAGE->set_url(new moodle_url('/'));
+        $PAGE->set_context(context_system::instance());
 
         $now = time();
         $categoryid = $DB->insert_record('theme_learnlingo_pagecats', (object)[
@@ -136,23 +144,23 @@ final class pages_test extends \advanced_testcase {
         $privateid = $DB->insert_record('theme_learnlingo_pages', $private);
 
         $CFG->custommenuitems = 'Ajuda|https://example.org/help';
-        $primary = new \core\navigation\views\primary($PAGE);
+        $primary = new primary($PAGE);
         pages::extend_primary_navigation($primary);
 
-        $rootnode = $primary->get('learnlingo-page-' . $rootid, \navigation_node::TYPE_CUSTOM);
+        $rootnode = $primary->get('learnlingo-page-' . $rootid, navigation_node::TYPE_CUSTOM);
         $this->assertNotFalse($rootnode);
         $this->assertSame('Sobre', $rootnode->text);
 
         $category = $primary->get('learnlingo-category-' . (700000 + $categoryid),
-            \navigation_node::TYPE_CUSTOM);
+            navigation_node::TYPE_CUSTOM);
         $this->assertNotFalse($category);
-        $childnode = $category->get('learnlingo-page-' . $childid, \navigation_node::TYPE_CUSTOM);
+        $childnode = $category->get('learnlingo-page-' . $childid, navigation_node::TYPE_CUSTOM);
         $this->assertNotFalse($childnode);
         $this->assertSame('FAQ', $childnode->text);
         $this->assertTrue($category->showchildreninsubmenu);
 
-        $this->assertFalse($primary->get('learnlingo-page-' . $draftid, \navigation_node::TYPE_CUSTOM));
-        $this->assertFalse($primary->get('learnlingo-page-' . $privateid, \navigation_node::TYPE_CUSTOM));
+        $this->assertFalse($primary->get('learnlingo-page-' . $draftid, navigation_node::TYPE_CUSTOM));
+        $this->assertFalse($primary->get('learnlingo-page-' . $privateid, navigation_node::TYPE_CUSTOM));
         $this->assertSame('Ajuda|https://example.org/help', $CFG->custommenuitems);
 
         pages::extend_primary_navigation($primary);
@@ -220,9 +228,9 @@ final class pages_test extends \advanced_testcase {
      *
      * @param int $categoryid Category identifier.
      * @param string $slug Page slug.
-     * @return \stdClass Page data.
+     * @return stdClass Page data.
      */
-    private function page_record(int $categoryid, string $slug): \stdClass {
+    private function page_record(int $categoryid, string $slug): stdClass {
         return (object)[
             'categoryid' => $categoryid, 'title' => 'Pública', 'slug' => $slug,
             'content' => '<p>Hello</p>', 'scss' => '', 'description' => '',

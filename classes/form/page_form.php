@@ -28,6 +28,8 @@ defined('MOODLE_INTERNAL') || die;
 global $CFG;
 require_once($CFG->libdir . '/formslib.php');
 
+use moodle_exception;
+use moodleform;
 use theme_learnlingo\pages;
 
 /**
@@ -37,7 +39,7 @@ use theme_learnlingo\pages;
  * @copyright 2026 Eduardo Kraus
  * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class page_form extends \moodleform {
+class page_form extends moodleform {
     /**
      * Define the Moodle form fields.
      *
@@ -122,7 +124,7 @@ class page_form extends \moodleform {
         $errors = parent::validation($data, $files);
         try {
             pages::validate((object)$data);
-        } catch (\moodle_exception $e) {
+        } catch (moodle_exception $e) {
             $errors['slug'] = $e->getMessage();
         }
         return $errors;

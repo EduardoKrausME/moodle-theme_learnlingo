@@ -24,6 +24,7 @@
 
 namespace theme_learnlingo;
 
+use admin_setting_configcolourpicker;
 use advanced_testcase;
 
 /**
@@ -41,7 +42,7 @@ final class colour_settings_test extends advanced_testcase {
             'theme_learnlingo/brandcolor', 'Primary', '', '#58cc02'
         );
 
-        $this->assertInstanceOf(\admin_setting_configcolourpicker::class, $setting);
+        $this->assertInstanceOf(admin_setting_configcolourpicker::class, $setting);
         $this->assertSame('', $setting->write_setting('#123456'));
         $this->assertSame('#123456', get_config('theme_learnlingo', 'brandcolor'));
         $this->assertNotSame('', $setting->write_setting('not-a-valid-colour'));

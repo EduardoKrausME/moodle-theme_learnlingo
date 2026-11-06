@@ -29,6 +29,8 @@ use core_completion\progress;
 use core_course_category;
 use core_course_list_element;
 use moodle_url;
+use Mustache\Engine;
+use Mustache_Engine;
 use Throwable;
 
 /**
@@ -52,16 +54,16 @@ final class homepage_context {
 
         // Moodle 5.x uses Mustache\\Engine; older releases use Mustache_Engine.
         // Reuse the Moodle-registered autoloader, as in local_kopere_bi.
-        if (!class_exists(\Mustache_Engine::class)) {
-            if (!class_exists(\Mustache\Engine::class)) {
+        if (!class_exists(Mustache_Engine::class)) {
+            if (!class_exists(Engine::class)) {
                 debugging('LearnLingo homepage Mustache engine is not available.', DEBUG_DEVELOPER);
                 return $html;
             }
-            class_alias(\Mustache\Engine::class, 'Mustache_Engine');
+            class_alias(Engine::class, 'Mustache_Engine');
         }
 
         try {
-            $engine = new \Mustache_Engine([
+            $engine = new Mustache_Engine([
                 // The context is already escaped so triple braces are safe too.
                 'escape' => static function ($value): string {
                     return (string)$value;
