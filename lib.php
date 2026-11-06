@@ -93,7 +93,7 @@ function theme_learnlingo_scope_scss(string $scss, string $scope, array $rootsel
         . ')(?!\\[data-bs-theme)(?=(?:\\s*[\\{.#:\\[>,+~]|\\s+[a-zA-Z*]))/m';
     $normalized = preg_replace($pattern, '$1$2&', $scss);
 
-    return "\\n{$scope} {\\n{$normalized}\\n}\\n";
+    return "\n{$scope} {\n{$normalized}\n}\n";
 }
 
 /**
