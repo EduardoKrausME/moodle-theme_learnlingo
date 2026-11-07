@@ -269,6 +269,19 @@ function theme_learnlingo_homepage_html(theme_config $theme): string {
 }
 
 /**
+ * Purge cached compiled CSS after a LearnLingo SCSS setting has changed.
+ *
+ * Moodle's theme cache reset bumps the theme revision and deletes compiled
+ * stylesheets. The additional MUC purge also clears cached CSS dependencies
+ * so a saved change is visible on the next page request.
+ *
+ * @return void
+ */
+function theme_learnlingo_purge_css_cache(): void {
+    purge_caches(['muc' => true, 'theme' => true]);
+}
+
+/**
  * Invalidate the guest catalogue after home settings change in the admin UI.
  *
  * @return void

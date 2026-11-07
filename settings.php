@@ -33,6 +33,9 @@ defined('MOODLE_INTERNAL') || die;
 
 global $PAGE, $OUTPUT, $ADMIN, $CFG, $DB;
 
+// The SCSS settings callbacks must work even when a different theme is active.
+require_once($CFG->dirroot . '/theme/learnlingo/lib.php');
+
 // The admin tree must expose the settings page even when fulltree is false.
 $settings->hidden = false;
 
@@ -157,7 +160,7 @@ if ($ADMIN->fulltree) {
         "90",
         "16"
     );
-    $setting->set_updatedcallback("theme_reset_all_caches");
+    $setting->set_updatedcallback("theme_learnlingo_purge_css_cache");
     $page->add($setting);
 
     // Limit ONLY the guest-facing {{#courses}} list; student lists are never paginated.
@@ -270,7 +273,7 @@ if ($ADMIN->fulltree) {
         "90",
         "16"
     );
-    $setting->set_updatedcallback("theme_reset_all_caches");
+    $setting->set_updatedcallback("theme_learnlingo_purge_css_cache");
     $page->add($setting);
 
     $PAGE->requires->js_call_amd("theme_learnlingo/footer_settings", "init");
@@ -490,7 +493,7 @@ if ($ADMIN->fulltree) {
         "",
         "scss"
     );
-    $setting->set_updatedcallback("theme_reset_all_caches");
+    $setting->set_updatedcallback("theme_learnlingo_purge_css_cache");
     $page->add($setting);
 
     $setting = new admin_setting_configcode(
@@ -500,7 +503,7 @@ if ($ADMIN->fulltree) {
         "",
         "scss"
     );
-    $setting->set_updatedcallback("theme_reset_all_caches");
+    $setting->set_updatedcallback("theme_learnlingo_purge_css_cache");
     $page->add($setting);
 
     $settings->add($page);

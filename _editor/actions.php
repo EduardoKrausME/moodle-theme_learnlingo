@@ -24,6 +24,7 @@
 
 require_once(__DIR__ . '/../../../config.php');
 require_once(__DIR__ . '/editor-lib.php');
+require_once($CFG->dirroot . '/theme/learnlingo/lib.php');
 
 use theme_learnlingo\pages;
 
@@ -61,9 +62,17 @@ if ($action === 'page-save') {
                 $scss)) {
             throw new invalid_parameter_exception(get_string('jsonvalidatescssdirective', 'theme_learnlingo'));
         }
-        set_config($target . 'html', $html, $component);
-        set_config($target === 'homepage' ? 'homepagescss' : 'footerscss', $scss, $component);
-        theme_reset_all_caches();
+        $scssfield = $target === 'homepage' ? 'homepagescss' : 'footerscss';
+        $htmlfield = $target . 'html';
+        $scsschanged = (string)get_config($component, $scssfield) !== $scss;
+        $htmlchanged = (string)get_config($component, $htmlfield) !== $html;
+        set_config($htmlfield, $html, $component);
+        set_config($scssfield, $scss, $component);
+        if ($scsschanged) {
+            theme_learnlingo_purge_css_cache();
+        } else if ($htmlchanged) {
+            theme_reset_all_caches();
+        }
     }
     $data = theme_learnlingo_editor_data($target, $id);
     redirect($data['returnurl'], get_string('changessaved'), null, \core\output\notification::NOTIFY_SUCCESS);

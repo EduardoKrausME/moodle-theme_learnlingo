@@ -57,6 +57,19 @@ final class code_settings_test extends advanced_testcase {
     }
 
     /**
+     * A CSS setting save must invalidate the generated theme stylesheet revision.
+     */
+    public function test_css_purge_bumps_theme_revision(): void {
+        $this->resetAfterTest();
+        set_config('themedesignermode', 0);
+        $before = theme_get_revision();
+
+        \theme_learnlingo_purge_css_cache();
+
+        $this->assertGreaterThan($before, theme_get_revision());
+    }
+
+    /**
      * SCSS is not cleaned, interpreted or converted into rich-text HTML.
      */
     public function test_scss_setting_preserves_source(): void {
