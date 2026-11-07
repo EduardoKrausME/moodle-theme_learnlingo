@@ -128,12 +128,104 @@
         background: var(--learnlingo-surface);
         border-color: var(--learnlingo-border);
     }
-    .btn-outline-secondary,
-    .form-control,
-    .form-select,
-    textarea,
-    input[type="text"] {
+    // Global light button/input defaults must not leak into dark mode.
+    .btn-secondary,
+    .btn-outline-secondary {
+        color: var(--learnlingo-ink);
+        background: var(--learnlingo-surface);
         border-color: var(--learnlingo-border);
+        box-shadow: 0 3px 0 rgba(0, 0, 0, .2);
+    }
+    .btn-secondary:hover,
+    .btn-secondary:focus,
+    .btn-outline-secondary:hover,
+    .btn-outline-secondary:focus {
+        color: #FFF;
+        background: #324256;
+        border-color: #70849B;
+        box-shadow: 0 3px 0 rgba(0, 0, 0, .24);
+    }
+    .btn-secondary:disabled,
+    .btn-secondary.disabled,
+    .btn-outline-secondary:disabled,
+    .btn-outline-secondary.disabled {
+        color: var(--learnlingo-muted);
+        background: #273240;
+        border-color: var(--learnlingo-border);
+        box-shadow: none;
+        opacity: .55;
+    }
+    .form-control,
+    .custom-select,
+    .form-select,
+    .form-file-input,
+    textarea,
+    input[type="text"],
+    input[type="number"],
+    input[type="email"] {
+        color: var(--learnlingo-ink);
+        background-color: var(--learnlingo-surface);
+        border-color: var(--learnlingo-border);
+    }
+    .form-control:disabled,
+    .custom-select:disabled,
+    .form-select:disabled {
+        color: var(--learnlingo-muted);
+        background-color: #273240;
+        opacity: .65;
+    }
+    .form-control::placeholder,
+    textarea::placeholder,
+    input[type="text"]::placeholder {
+        color: var(--learnlingo-muted);
+        opacity: .85;
+    }
+    .form-label,
+    .col-form-label {
+        color: var(--learnlingo-ink);
+    }
+    .text-muted,
+    .dimmed,
+    .dimmed_text,
+    .course-description-item,
+    .small-info {
+        color: var(--learnlingo-muted) !important;
+    }
+    // Custom-page management uses the same surfaces and accessible action states.
+    .ll-pages-manager {
+        .ll-pages-tree,
+        .ll-pages-children,
+        .ll-pages-row,
+        .ll-pages-category {
+            border-color: var(--learnlingo-border);
+        }
+        .ll-pages-category-head {
+            color: var(--learnlingo-ink);
+            background: #263343;
+            &:hover {
+                background: #2F4053;
+                filter: none;
+            }
+        }
+        .ll-pages-status,
+        .ll-pages-empty,
+        .ll-pages-category-name small {
+            color: var(--learnlingo-muted) !important;
+        }
+        .ll-pages-actions a:not(.btn) {
+            color: #B9DFFF;
+            &:hover,
+            &:focus-visible {
+                color: #E0F2FF;
+            }
+            &.text-danger {
+                color: #FFAAA9 !important;
+                &:hover,
+                &:focus-visible {
+                    color: #FFD1D0 !important;
+                }
+            }
+        }
     }
     .learnlingo-course-xp {
         color: var(--learnlingo-ink);
