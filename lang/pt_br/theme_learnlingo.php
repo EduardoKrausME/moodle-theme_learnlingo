@@ -23,9 +23,6 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-// Configurable footer adapted from theme_eadtraining.
-// Visual setup and post-install onboarding.
-// Theme activation, illustrated homepage comparison and ChatGPT copy/paste.
 
 $string['accentcolor'] = 'Cor de destaque';
 $string['accentcolor_desc'] = 'Cor secundária usada em degradês e elementos decorativos.';
