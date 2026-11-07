@@ -488,3 +488,11 @@ $string['showwelcome'] = 'Exibir boas-vindas';
 $string['showwelcome_desc'] = 'Exibe a saudação personalizada na home LearnLingo e nas páginas habilitadas de Painel e Meus cursos. Não ativa essas páginas no Moodle.';
 $string['textcolor'] = 'Cor do texto';
 $string['textcolor_desc'] = 'Cor principal dos textos e títulos.';
+
+$string['visualeditoropen'] = 'Abrir editor visual';
+$string['visualeditormode'] = 'Visual';
+$string['visualeditorsource'] = 'Código HTML / SCSS';
+$string['visualeditormustache'] = 'Expressões e seções Mustache são preservadas no modo de código.';
+$string['visualeditorwarning'] = 'Este conteúdo contém expressões Mustache. A edição visual pode reorganizar o HTML. O salvamento será bloqueado se alguma expressão for perdida ou mudar de ordem. Continuar?';
+$string['visualeditortokenerror'] = 'O editor visual alterou as expressões Mustache ou sua ordem. Nada foi salvo. Use o editor de código para este modelo.';
+$string['visualeditorreload'] = 'O código foi alterado. Salve e reabra o editor visual antes de alternar de modo.';

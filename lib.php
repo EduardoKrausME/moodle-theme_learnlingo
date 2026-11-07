@@ -208,6 +208,22 @@ function theme_learnlingo_pluginfile($course, $cm, $context, $filearea, $args, $
     if ($context->contextlevel !== CONTEXT_SYSTEM) {
         send_file_not_found();
     }
+    // Images uploaded through the visual editor are public assets used by
+    // the homepage, footer and published custom pages.
+    if ($filearea === 'editor_assets') {
+        $itemid = (int)array_shift($args);
+        $filename = array_shift($args);
+        if ($itemid < 1 || !$filename || $args) {
+            send_file_not_found();
+        }
+        $file = get_file_storage()->get_file($context->id, 'theme_learnlingo',
+            'editor_assets', $itemid, '/', $filename);
+        if (!$file || $file->is_directory()) {
+            send_file_not_found();
+        }
+        send_stored_file($file, 86400, 0, $forcedownload, $options);
+        return;
+    }
     // Moodle adds the theme revision to the URL. The core helper removes it
     // and resolves the configured file in the system context.
     theme_config::load('learnlingo')->setting_file_serve($filearea, $args, $forcedownload, $options);

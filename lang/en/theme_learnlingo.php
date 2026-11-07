@@ -488,3 +488,11 @@ $string['showwelcome'] = 'Show welcome greeting';
 $string['showwelcome_desc'] = 'Display the personalised greeting on the LearnLingo homepage and enabled Dashboard / My courses pages. Does not enable these Moodle pages.';
 $string['textcolor'] = 'Text colour';
 $string['textcolor_desc'] = 'Main text and heading colour.';
+
+$string['visualeditoropen'] = 'Open visual editor';
+$string['visualeditormode'] = 'Visual';
+$string['visualeditorsource'] = 'HTML / SCSS code';
+$string['visualeditormustache'] = 'Mustache expressions and sections are preserved in source mode.';
+$string['visualeditorwarning'] = 'This content contains Mustache expressions. Visual editing may rearrange the markup. You will be prevented from saving if any Mustache expression is lost or reordered. Continue?';
+$string['visualeditortokenerror'] = 'The visual editor changed the Mustache expressions or their order. Your changes were not saved. Use the code editor for this template.';
+$string['visualeditorreload'] = 'The source code has changed. Save it first and reopen the visual editor before switching modes.';

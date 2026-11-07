@@ -111,6 +111,19 @@ class admin_setting_configcode extends admin_setting_configtextarea {
             'readonly' => $this->is_readonly(),
         ];
         $element = $OUTPUT->render_from_template('theme_learnlingo/setting_configcode', $context);
+        // Keep the existing code textarea and Moodle form persistence. The
+        // visual editor is an optional, separate route for each HTML/SCSS pair.
+        $targets = [
+            'theme_learnlingo/homepagehtml' => 'homepage',
+            'theme_learnlingo/footerhtml' => 'footer',
+        ];
+        if (isset($targets[$this->name]) && !$this->is_readonly()) {
+            $url = new \moodle_url('/theme/learnlingo/_editor/editor.php',
+                ['target' => $targets[$this->name]]);
+            $element .= \html_writer::div(\html_writer::link($url,
+                get_string('visualeditoropen', 'theme_learnlingo'),
+                ['class' => 'btn btn-outline-primary mt-2']), 'mt-2');
+        }
         return format_admin_setting(
             $this, $this->visiblename, $element, $this->description, true, '', $defaultinfo, $query
         );
