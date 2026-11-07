@@ -228,7 +228,12 @@ final class pages {
         $categories = [];
         $root = [];
         $haspages = false;
-        $row = static function(stdClass $page, ?stdClass $category = null): array {
+        $moveurl = static function(string $type, int $id, string $direction): string {
+            return (new moodle_url('/theme/learnlingo/admin/reorder_pages.php', [
+                'type' => $type, 'id' => $id, 'direction' => $direction, 'sesskey' => sesskey(),
+            ]))->out(false);
+        };
+        $row = static function(stdClass $page, ?stdClass $category = null) use ($moveurl): array {
             return [
                 'id' => (int)$page->id,
                 'title' => $page->title,
@@ -240,6 +245,8 @@ final class pages {
                     (new moodle_url('/theme/learnlingo/admin/preview.php', ['id' => $page->id]))->out(false),
                 'deleteurl' => (new moodle_url('/theme/learnlingo/admin/manage_pages.php',
                     ['deletepage' => $page->id]))->out(false),
+                'upurl' => $moveurl('page', (int)$page->id, 'up'),
+                'downurl' => $moveurl('page', (int)$page->id, 'down'),
             ];
         };
         foreach (self::categories() as $category) {
@@ -253,6 +260,8 @@ final class pages {
                     ['id' => $category->id]))->out(false),
                 'deleteurl' => (new moodle_url('/theme/learnlingo/admin/manage_pages.php',
                     ['deletecategory' => $category->id]))->out(false),
+                'upurl' => $moveurl('category', (int)$category->id, 'up'),
+                'downurl' => $moveurl('category', (int)$category->id, 'down'),
             ];
         }
         foreach (self::all() as $page) {
@@ -296,7 +305,7 @@ final class pages {
     public static function categories(): array {
         global $DB;
         return self::ready() ? array_values($DB->get_records('theme_learnlingo_pagecats',
-            null, 'sortorder ASC, name ASC')) : [];
+            null, 'sortorder ASC, id ASC')) : [];
     }
 
     /**
@@ -307,7 +316,7 @@ final class pages {
     public static function all(): array {
         global $DB;
         return self::ready() ? array_values($DB->get_records('theme_learnlingo_pages',
-            null, 'sortorder ASC, title ASC')) : [];
+            null, 'sortorder ASC, id ASC')) : [];
     }
 
     /**
@@ -358,6 +367,53 @@ final class pages {
     }
 
     /**
+     * Move a page within its category or reorder flat categories.
+     * Menu and administrative page orders are kept in sync after a move.
+     *
+     * @param string $type page or category.
+     * @param int $id Record identifier.
+     * @param string $direction up or down.
+     * @return bool Whether the record moved.
+     */
+    public static function move(string $type, int $id, string $direction): bool {
+        global $DB;
+        if (!in_array($type, ['page', 'category'], true) ||
+            !in_array($direction, ['up', 'down'], true) || $id <= 0) {
+            throw new moodle_exception('invalidrequest');
+        }
+        $table = $type === 'page' ? 'theme_learnlingo_pages' : 'theme_learnlingo_pagecats';
+        $record = $DB->get_record($table, ['id' => $id], '*', MUST_EXIST);
+        $conditions = $type === 'page' ? ['categoryid' => (int)$record->categoryid] : [];
+        $siblings = array_values($DB->get_records($table, $conditions, 'sortorder ASC, id ASC', 'id,sortorder'));
+        $index = null;
+        foreach ($siblings as $position => $sibling) {
+            if ((int)$sibling->id === $id) {
+                $index = $position;
+                break;
+            }
+        }
+        if ($index === null) {
+            throw new moodle_exception('invalidrequest');
+        }
+        $next = $index + ($direction === 'up' ? -1 : 1);
+        if ($next < 0 || $next >= count($siblings)) {
+            return false;
+        }
+        [$siblings[$index], $siblings[$next]] = [$siblings[$next], $siblings[$index]];
+        $transaction = $DB->start_delegated_transaction();
+        foreach ($siblings as $position => $sibling) {
+            $update = (object)['id' => (int)$sibling->id, 'sortorder' => $position];
+            if ($type === 'page') {
+                $update->menuorder = $position;
+            }
+            $DB->update_record($table, $update);
+        }
+        $transaction->allow_commit();
+        theme_reset_all_caches();
+        return true;
+    }
+
+    /**
      * Save one page. All callers must check moodle/site:config first.
      *
      * @return mixed See method declaration.
@@ -373,6 +429,15 @@ final class pages {
             $id = (int)$data->id;
         } else {
             unset($data->id);
+            if (!isset($data->sortorder)) {
+                $data->sortorder = (int)$DB->get_field_sql(
+                    'SELECT COALESCE(MAX(sortorder), -1) + 1 FROM {theme_learnlingo_pages} WHERE categoryid = ?',
+                    [(int)$data->categoryid]
+                );
+            }
+            if (!isset($data->menuorder)) {
+                $data->menuorder = (int)$data->sortorder;
+            }
             $data->timecreated = $now;
             $data->usercreated = $actorid ?? (int)$USER->id;
             $id = (int)$DB->insert_record('theme_learnlingo_pages', $data);
@@ -396,6 +461,11 @@ final class pages {
             $id = (int)$data->id;
         } else {
             unset($data->id);
+            if (!isset($data->sortorder)) {
+                $data->sortorder = (int)$DB->get_field_sql(
+                    'SELECT COALESCE(MAX(sortorder), -1) + 1 FROM {theme_learnlingo_pagecats}'
+                );
+            }
             $data->timecreated = $now;
             $id = (int)$DB->insert_record('theme_learnlingo_pagecats', $data);
         }

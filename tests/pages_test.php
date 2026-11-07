@@ -223,6 +223,43 @@ final class pages_test extends advanced_testcase {
         $this->assertSame($existing, pages::append_custom_menu($existing));
     }
 
+    public function test_reordering_pages_updates_display_and_menu_order(): void {
+        global $DB;
+        $this->resetAfterTest(true);
+        $this->setUser(0);
+        $first = $this->page_record(0, 'primeira');
+        $first->title = 'Primeira';
+        $first->showinmenu = 1;
+        $firstid = $DB->insert_record('theme_learnlingo_pages', $first);
+        $second = $this->page_record(0, 'segunda');
+        $second->title = 'Segunda';
+        $second->showinmenu = 1;
+        $secondid = $DB->insert_record('theme_learnlingo_pages', $second);
+        $this->assertTrue(pages::move('page', $secondid, 'up'));
+        $this->assertFalse(pages::move('page', $secondid, 'up'));
+        $this->assertSame(0, (int)$DB->get_field('theme_learnlingo_pages', 'sortorder', ['id' => $secondid]));
+        $this->assertSame(0, (int)$DB->get_field('theme_learnlingo_pages', 'menuorder', ['id' => $secondid]));
+        $this->assertSame(1, (int)$DB->get_field('theme_learnlingo_pages', 'sortorder', ['id' => $firstid]));
+        $this->assertSame($secondid, pages::navigation()[0]['id']);
+    }
+
+    public function test_reordering_categories_updates_category_list(): void {
+        global $DB;
+        $this->resetAfterTest(true);
+        $now = time();
+        $firstid = $DB->insert_record('theme_learnlingo_pagecats', (object)[
+            'name' => 'First', 'slug' => 'first', 'sortorder' => 0,
+            'visible' => 1, 'timecreated' => $now, 'timemodified' => $now,
+        ]);
+        $secondid = $DB->insert_record('theme_learnlingo_pagecats', (object)[
+            'name' => 'Second', 'slug' => 'second', 'sortorder' => 0,
+            'visible' => 1, 'timecreated' => $now, 'timemodified' => $now,
+        ]);
+        $this->assertTrue(pages::move('category', $secondid, 'up'));
+        $this->assertSame($secondid, (int)pages::categories()[0]->id);
+        $this->assertSame(1, (int)$DB->get_field('theme_learnlingo_pagecats', 'sortorder', ['id' => $firstid]));
+    }
+
     /**
      * Create a valid page fixture.
      *

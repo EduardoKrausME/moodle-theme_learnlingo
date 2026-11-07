@@ -78,9 +78,6 @@ class page_form extends moodleform {
             ['rows' => 12, 'class' => 'form-control w-100 font-monospace']);
         $mform->setType('scss', PARAM_RAW);
 
-        $mform->addElement('textarea', 'description', get_string('custompagesdescription', 'theme_learnlingo'),
-            ['rows' => 3, 'class' => 'form-control w-100']);
-        $mform->setType('description', PARAM_TEXT);
 
         $mform->addElement('textarea', 'metadescription', get_string('custompagesmetadescription', 'theme_learnlingo'),
             ['rows' => 3, 'class' => 'form-control w-100']);
@@ -103,13 +100,7 @@ class page_form extends moodleform {
 
         $mform->addElement('advcheckbox', 'showinmenu', get_string('custompagesshowinmenu', 'theme_learnlingo'));
 
-        $mform->addElement('text', 'menuorder', get_string('custompagesmenuorder', 'theme_learnlingo'), ['size' => 10]);
-        $mform->setType('menuorder', PARAM_INT);
-        $mform->setDefault('menuorder', 0);
 
-        $mform->addElement('text', 'sortorder', get_string('custompagesorder', 'theme_learnlingo'), ['size' => 10]);
-        $mform->setType('sortorder', PARAM_INT);
-        $mform->setDefault('sortorder', 0);
         $this->add_action_buttons();
     }
 

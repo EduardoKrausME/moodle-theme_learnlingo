@@ -59,13 +59,7 @@ class category_form extends moodleform {
         $mform->setType('slug', PARAM_ALPHANUMEXT);
         $mform->addRule('slug', null, 'required');
 
-        $mform->addElement('textarea', 'description',
-            get_string('custompagesdescription', 'theme_learnlingo'), ['rows' => 3, 'cols' => 80]);
-        $mform->setType('description', PARAM_TEXT);
 
-        $mform->addElement('text', 'sortorder', get_string('custompagesorder', 'theme_learnlingo'), ['size' => 10]);
-        $mform->setType('sortorder', PARAM_INT);
-        $mform->setDefault('sortorder', 0);
 
         $mform->addElement('advcheckbox', 'visible', get_string('custompagescatvisible', 'theme_learnlingo'));
         $mform->setDefault('visible', 1);
