@@ -78,7 +78,6 @@ class page_form extends moodleform {
             ['rows' => 12, 'class' => 'form-control w-100 font-monospace']);
         $mform->setType('scss', PARAM_RAW);
 
-
         $mform->addElement('textarea', 'metadescription', get_string('custompagesmetadescription', 'theme_learnlingo'),
             ['rows' => 3, 'class' => 'form-control w-100']);
         $mform->setType('metadescription', PARAM_TEXT);
@@ -99,7 +98,6 @@ class page_form extends moodleform {
         $mform->setDefault('fullwidth', 1);
 
         $mform->addElement('advcheckbox', 'showinmenu', get_string('custompagesshowinmenu', 'theme_learnlingo'));
-
 
         $this->add_action_buttons();
     }

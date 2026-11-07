@@ -59,8 +59,6 @@ class category_form extends moodleform {
         $mform->setType('slug', PARAM_ALPHANUMEXT);
         $mform->addRule('slug', null, 'required');
 
-
-
         $mform->addElement('advcheckbox', 'visible', get_string('custompagescatvisible', 'theme_learnlingo'));
         $mform->setDefault('visible', 1);
         $this->add_action_buttons();

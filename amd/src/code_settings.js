@@ -40,7 +40,6 @@ define([], function() {
         parent.appendChild(span);
     };
 
-
     // Mustache variables, block sections, partials, comments and Moodle helpers.
     const mustache = (node, value) => {
         const width = value.startsWith('{{{') ? 3 : 2;
@@ -335,7 +334,6 @@ define([], function() {
         });
         return result + pending;
     };
-
 
     // Indent existing rule lines without rewriting declarations, strings or Sass interpolation.
     const formatScssOnOpen = (source) => {
