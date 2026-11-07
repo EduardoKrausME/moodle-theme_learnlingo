@@ -214,19 +214,6 @@ if ($ADMIN->fulltree) {
         get_string('custompagestab', 'theme_learnlingo')
     );
 
-    $urls = [
-        '0' => get_string('custompagesqueryurls', 'theme_learnlingo'),
-        '1' => get_string('custompagespathurls', 'theme_learnlingo'),
-    ];
-    $setting = new admin_setting_configselect(
-        'theme_learnlingo/pagefriendlyurls',
-        get_string('custompagesfriendlyurls', 'theme_learnlingo'),
-        get_string('custompagesfriendlyurlsdesc', 'theme_learnlingo'),
-        '1',
-        $urls
-    );
-    $page->add($setting);
-
     $page->add(new admin_setting_heading(
         'theme_learnlingo/custompagesmanagement',
         get_string('custompagesmanage', 'theme_learnlingo'),

@@ -145,7 +145,6 @@ final class get_pages implements tool_interface {
             ];
         }
         $result = [
-            'pagefriendlyurls' => (int)get_config('theme_learnlingo', 'pagefriendlyurls'),
             'independent_of_homepage_mode' => true,
             'url_examples' => [
                 '?page=empresa/sobre-nos',

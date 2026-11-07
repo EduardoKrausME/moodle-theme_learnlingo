@@ -68,10 +68,6 @@ final class pages {
      */
     public static function url(stdClass $page, ?stdClass $category = null): moodle_url {
         $path = self::path($page, $category);
-        if ((int)get_config('theme_learnlingo', 'pagefriendlyurls') === 1) {
-            return new moodle_url('/index.php/' .
-                ($category ? $category->slug . '/' : '') . 'page-' . $page->slug);
-        }
         return new moodle_url('/', ['page' => $path]);
     }
 
