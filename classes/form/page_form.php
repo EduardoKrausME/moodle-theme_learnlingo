@@ -59,6 +59,9 @@ class page_form extends moodleform {
         $mform->setType('title', PARAM_TEXT);
         $mform->addRule('title', null, 'required');
 
+        $mform->addElement('text', 'menutitle', get_string('custompagesmenutitle', 'theme_learnlingo'), ['size' => 60]);
+        $mform->setType('menutitle', PARAM_TEXT);
+
         $mform->addElement('text', 'slug', get_string('custompagesslug', 'theme_learnlingo'), ['size' => 60]);
         $mform->setType('slug', PARAM_ALPHANUMEXT);
         $mform->addRule('slug', null, 'required');
@@ -99,9 +102,6 @@ class page_form extends moodleform {
         $mform->setDefault('fullwidth', 1);
 
         $mform->addElement('advcheckbox', 'showinmenu', get_string('custompagesshowinmenu', 'theme_learnlingo'));
-
-        $mform->addElement('text', 'menutitle', get_string('custompagesmenutitle', 'theme_learnlingo'), ['size' => 60]);
-        $mform->setType('menutitle', PARAM_TEXT);
 
         $mform->addElement('text', 'menuorder', get_string('custompagesmenuorder', 'theme_learnlingo'), ['size' => 10]);
         $mform->setType('menuorder', PARAM_INT);
