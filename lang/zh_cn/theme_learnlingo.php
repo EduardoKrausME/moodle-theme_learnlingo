@@ -467,3 +467,11 @@ $string['setuppalettedescsunset'] = '温暖宜人。';
 $string['setuppalettedescviolet'] = '富有创意且现代。';
 $string['setuppalettepreservedesc'] = '适合已具备自身品牌视觉设计的站点。';
 $string['setuppreservenote'] = '仅更改选中的选项。现有内容、图片、徽标和自定义 CSS 均保留。';
+
+$string['darkmodeintro'] = '
+<p>LearnLingo 支持可选插件 local_boost_dark，让学生和教师能够在浅色与深色界面之间切换，同时保留机构的视觉品牌风格。</p>
+<p>在光线较暗时，深色背景与清晰文字能带来更舒适的阅读体验。</p>
+<p>每位用户都可以独立选择浅色或深色外观。</p>
+<p>LearnLingo 卡片、课程页面、仪表板和设置向导会自动适应深色模式。</p>
+<p><a href="{$a}" class="btn btn-primary">安装深色模式</a></p>
+<p class="small">此集成为可选功能。无需安装插件也能完成设置；插件的安装与启用仍由 Moodle 管理员控制。</p>';
