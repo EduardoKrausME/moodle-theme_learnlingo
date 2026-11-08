@@ -68,13 +68,13 @@ final class code_settings_test extends advanced_testcase {
         $this->resetAfterTest();
 
         $cache = \cache::make('theme_learnlingo', 'publiccourses');
-        $cache->set('test-css-purge', 'cached');
-        $this->assertSame('cached', $cache->get('test-css-purge'));
+        $cache->set('testcsspurge', 'cached');
+        $this->assertSame('cached', $cache->get('testcsspurge'));
 
         \theme_learnlingo_purge_css_cache();
 
         $cache = \cache::make('theme_learnlingo', 'publiccourses');
-        $this->assertFalse($cache->get('test-css-purge'));
+        $this->assertFalse($cache->get('testcsspurge'));
     }
 
     /**
