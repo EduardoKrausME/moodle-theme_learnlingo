@@ -490,3 +490,11 @@ $string['showcourseherosummary_desc'] = 'Mostra un riepilogo breve del corso Moo
 $string['showdashboardhero_desc'] = 'Mostra il benvenuto LearnLingo in Dashboard se attivo, senza cambiare Home o I miei corsi.';
 $string['showpersonalxp_desc'] = 'Mostra XP personali se local_personalxp è attivo. Nascondere non disinstalla il plugin.';
 $string['showwelcome_desc'] = 'Mostra il saluto in Home, Dashboard e I miei corsi se attivi. Non attiva le pagine.';
+
+$string['darkmodeintro'] = '
+<p>LearnLingo supporta il plugin facoltativo local_boost_dark, che permette a studenti e docenti di scegliere un\'interfaccia chiara o scura senza perdere l\'identità visiva dell\'istituzione.</p>
+<p>Lettura più confortevole con poca luce, superfici scure e testo leggibile.</p>
+<p>Ogni utente può scegliere autonomamente l\'aspetto chiaro o scuro.</p>
+<p>Le schede LearnLingo, le pagine dei corsi, la dashboard e la procedura guidata si adattano automaticamente alla modalità scura.</p>
+<p><a href="{$a}" class="btn btn-primary">Installa la modalità scura</a></p>
+<p class="small">Integrazione facoltativa. Puoi completare la configurazione senza installare il plugin; installazione e attivazione restano sotto il controllo dell\'amministratore Moodle.</p>';
