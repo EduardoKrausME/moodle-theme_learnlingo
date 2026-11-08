@@ -490,3 +490,11 @@ $string['showcourseherosummary_desc'] = 'Muestra un resumen abreviado del curso 
 $string['showdashboardhero_desc'] = 'Muestra la bienvenida LearnLingo en el Área personal si está habilitada, sin cambiar Inicio ni Mis cursos.';
 $string['showpersonalxp_desc'] = 'Muestra XP personal cuando local_personalxp está activo. Ocultarlo no desinstala el complemento.';
 $string['showwelcome_desc'] = 'Muestra el saludo en Inicio y en Área personal y Mis cursos cuando están activos. No activa dichas páginas.';
+
+$string['darkmodeintro'] = '
+<p>LearnLingo admite el complemento opcional local_boost_dark, que permite a estudiantes y docentes elegir una interfaz clara u oscura sin perder la identidad visual de la institución.</p>
+<p>Lectura más cómoda con poca luz, con fondos oscuros y textos legibles.</p>
+<p>Cada usuario puede elegir de forma independiente la apariencia clara u oscura.</p>
+<p>Las tarjetas de LearnLingo, las páginas de cursos, el Área personal y el asistente de configuración se adaptan automáticamente al modo oscuro.</p>
+<p><a href="{$a}" class="btn btn-primary">Instalar modo oscuro</a></p>
+<p class="small">Integración opcional. Puedes completar la configuración sin instalar el complemento; la instalación y activación siguen bajo el control del administrador de Moodle.</p>';
