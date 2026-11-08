@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * LearnLingo language strings (zh_cn).
@@ -467,26 +467,3 @@ $string['setuppalettedescsunset'] = '温暖宜人。';
 $string['setuppalettedescviolet'] = '富有创意且现代。';
 $string['setuppalettepreservedesc'] = '适合已具备自身品牌视觉设计的站点。';
 $string['setuppreservenote'] = '仅更改选中的选项。现有内容、图片、徽标和自定义 CSS 均保留。';
-
-$string['setuppreviewillustration'] = '布局示意图，非真实截图';
-$string['setuppromptintro'] = '提示词包含当前设置，并指导 ChatGPT 与您讨论颜色、布局、文案和品牌。无需 MCP 连接。';
-$string['setuppromptnote'] = '提示词包含站点现有文案、HTML 和设置，共享前请检查。只有导入通过验证的 JSON 才会修改 Moodle，图片须单独上传。';
-$string['setupsettingsdesc'] = '探索配色、首页和页脚布局、视觉选项以及通过 MCP 连接 ChatGPT 或 Claude 的可选功能。';
-$string['setupstudentaidesc'] = '复制设置，让 AI 为仪表板和我的课程设计新的欢迎语和视觉风格，再导入 JSON 应用。';
-$string['setupstudentaiheading'] = '通过 MCP 使用 ChatGPT 或 Claude 自定义欢迎语';
-$string['setupstudentchooseintro'] = '选择其中一个或两个页面。这会更改 Moodle 全局导航，不仅影响 LearnLingo。';
-$string['setupstudentcoreflags'] = '这些选项会更改 Moodle 全局导航设置，位置为';
-$string['setupstudentdashboarddesc'] = '仪表板汇集日历、截止日期、近期活动和可自定义区块，也能显示课程概览区块。';
-$string['setupstudentdashboardherohelp'] = '启用仪表板时显示增强欢迎面板。';
-$string['setupstudentduplicatedesc'] = '仪表板可能通过课程概览区块显示与我的课程相同的课程，同时启用可能重复信息。需要日历和区块请选择仪表板，需要直接访问已选课程请选择我的课程。';
-$string['setupstudentintro'] = '选择学生的个人区域。保留两个页面可能导致重复内容及更复杂的导航。';
-$string['setupstudentmycoursesdesc'] = '我的课程集中显示已选课程，包含搜索、筛选、收藏和进度跟踪。';
-$string['setupstudentwelcomedesc'] = '隐藏欢迎语，不影响原生课程列表、活动或区块。';
-$string['setupwizardfinisheddesc'] = '颜色、品牌、首页和页脚已保存。可返回任一步骤或打开高级设置。';
-$string['setupwizardintro'] = '配置品牌、首页、页脚和登录。启用仪表板和我的课程时会出现附加步骤。';
-$string['showcoursehero_desc'] = '在课程主页显示 LearnLingo 课程标题区域。';
-$string['showcourseheroprogress_desc'] = 'Moodle 完成跟踪可用时显示当前用户的课程完成百分比。';
-$string['showcourseherosummary_desc'] = '在课程标题区域显示原生课程简介的缩略版本。';
-$string['showdashboardhero_desc'] = '启用时在仪表板显示 LearnLingo 增强欢迎面板，不更改首页或我的课程。';
-$string['showpersonalxp_desc'] = '启用 local_personalxp 时显示个人经验值，隐藏不会卸载该插件。';
-$string['showwelcome_desc'] = '在首页及已启用的仪表板和我的课程页面显示欢迎语，但不会启用这些页面。';

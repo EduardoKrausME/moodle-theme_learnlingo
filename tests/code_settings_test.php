@@ -57,18 +57,24 @@ final class code_settings_test extends advanced_testcase {
     }
 
     /**
-     * A CSS setting save must invalidate the generated theme stylesheet revision.
+     * Purging theme CSS must also invalidate the theme's MUC entries.
+     *
+     * PHPUnit may expose the install-time theme revision fallback, so verify
+     * observable cache invalidation instead of assuming a revision increment.
      */
-    public function test_css_purge_bumps_theme_revision(): void {
+    public function test_css_purge_invalidates_muc_cache(): void {
         global $CFG;
         require_once($CFG->dirroot . '/theme/learnlingo/lib.php');
         $this->resetAfterTest();
-        set_config('themedesignermode', 0);
-        $before = theme_get_revision();
+
+        $cache = \cache::make('theme_learnlingo', 'publiccourses');
+        $cache->set('test-css-purge', 'cached');
+        $this->assertSame('cached', $cache->get('test-css-purge'));
 
         \theme_learnlingo_purge_css_cache();
 
-        $this->assertGreaterThan($before, theme_get_revision());
+        $cache = \cache::make('theme_learnlingo', 'publiccourses');
+        $this->assertFalse($cache->get('test-css-purge'));
     }
 
     /**

@@ -84,10 +84,10 @@ final class pages_test extends advanced_testcase {
         $this->assertNull(pages::published('contato'));
         $page->id = $id;
         set_config('homepagemode', 'moodle', 'theme_learnlingo');
-        set_config('pagefriendlyurls', 0, 'theme_learnlingo');
         $this->assertSame('contato', pages::url($page)->get_param('page'));
-        set_config('pagefriendlyurls', 1, 'theme_learnlingo');
-        $this->assertStringContainsString('/index.php/page-contato', pages::url($page)->out(false));
+        set_config('homepagemode', 'html', 'theme_learnlingo');
+        $this->assertSame('contato', pages::url($page)->get_param('page'));
+        $this->assertStringContainsString('?page=contato', pages::url($page)->out(false));
         $page->status = 1;
         $DB->update_record('theme_learnlingo_pages', $page);
         $this->assertNotNull(pages::published('contato'));
