@@ -25,6 +25,7 @@
 use theme_learnlingo\admin_setting_configcode;
 use theme_learnlingo\admin_setting_configcolourmodern;
 use theme_learnlingo\admin_setting_configstoredfilemodern;
+use theme_learnlingo\content_editor_banner;
 use theme_learnlingo\dark_mode;
 use theme_learnlingo\mcp_banner;
 use theme_learnlingo\pages;
@@ -139,6 +140,12 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback("theme_reset_all_caches");
     $page->add($setting);
 
+    $page->add(new admin_setting_heading(
+        'theme_learnlingo/contenteditorbanner_homepage',
+        '',
+        content_editor_banner::render('homepage')
+    ));
+
     $setting = new admin_setting_configcode(
         "theme_learnlingo/homepagehtml",
         get_string("homepagehtml", "theme_learnlingo"),
@@ -240,6 +247,12 @@ if ($ADMIN->fulltree) {
     );
     $setting->set_updatedcallback("theme_reset_all_caches");
     $page->add($setting);
+
+    $page->add(new admin_setting_heading(
+        'theme_learnlingo/contenteditorbanner_footer',
+        '',
+        content_editor_banner::render('footer')
+    ));
 
     $setting = new admin_setting_configcode(
         "theme_learnlingo/footerhtml",

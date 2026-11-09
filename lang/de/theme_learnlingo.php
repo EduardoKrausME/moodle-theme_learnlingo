@@ -66,6 +66,7 @@ $string['courseheroheading'] = 'Kurskopfbereich';
 $string['courseheroheading_desc'] = 'Der Kurskopf nutzt Kursname, Beschreibung und Kursbild von Moodle. Lehrende ändern das Bild unter Kurseinstellungen > Beschreibung > Kursbild.';
 $string['courseheroprogress'] = 'Ihr Fortschritt';
 $string['courseheroprogressvalue'] = '{$a} % abgeschlossen';
+$string['contenteditorbanner'] = '<aside class="alert alert-info mb-3" role="note" style="border-left:4px solid #1671c5;border-radius:8px;padding:14px 18px;"><strong>Dieser Inhalt lässt sich auf zwei Arten bearbeiten:</strong> mit dem <a class="alert-link" href="{$a->editorurl}">HTML-Editor</a> oder mit <a class="alert-link" href="{$a->helpurl}" target="_blank" rel="noopener noreferrer">ChatGPT/Claude (Hilfe ansehen)</a>.</aside>';
 $string['coursesettings'] = 'Kursseiten';
 $string['coursexpincourse'] = 'XP in diesem Kurs';
 $string['coursexplevel'] = 'Aktuelle Stufe';

@@ -66,6 +66,7 @@ $string['courseheroheading'] = 'Заголовок курса';
 $string['courseheroheading_desc'] = 'Заголовок использует название, описание и изображение курса Moodle. Преподаватель меняет изображение в Настройки курса > Описание > Изображение курса.';
 $string['courseheroprogress'] = 'Ваш прогресс';
 $string['courseheroprogressvalue'] = '{$a}% завершено';
+$string['contenteditorbanner'] = '<aside class="alert alert-info mb-3" role="note" style="border-left:4px solid #1671c5;border-radius:8px;padding:14px 18px;"><strong>Этот материал можно редактировать двумя способами:</strong> через <a class="alert-link" href="{$a->editorurl}">HTML-редактор</a> или с помощью <a class="alert-link" href="{$a->helpurl}" target="_blank" rel="noopener noreferrer">ChatGPT/Claude (справка)</a>.</aside>';
 $string['coursesettings'] = 'Страницы курсов';
 $string['coursexpincourse'] = 'Опыт в этом курсе';
 $string['coursexplevel'] = 'Текущий уровень';

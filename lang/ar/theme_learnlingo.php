@@ -66,6 +66,7 @@ $string['courseheroheading'] = 'ترويسة المقرر';
 $string['courseheroheading_desc'] = 'تستخدم الترويسة اسم المقرر وملخصه وصورته في Moodle. يمكن للمدرس تغيير الصورة من إعدادات المقرر > الوصف > صورة المقرر.';
 $string['courseheroprogress'] = 'تقدمك';
 $string['courseheroprogressvalue'] = 'اكتمل {$a}%';
+$string['contenteditorbanner'] = '<aside class="alert alert-info mb-3" role="note" style="border-left:4px solid #1671c5;border-radius:8px;padding:14px 18px;"><strong>يمكنك تعديل هذا المحتوى بطريقتين:</strong> استخدم <a class="alert-link" href="{$a->editorurl}">محرر HTML</a> أو <a class="alert-link" href="{$a->helpurl}" target="_blank" rel="noopener noreferrer">ChatGPT/Claude (دليل المساعدة)</a>.</aside>';
 $string['coursesettings'] = 'صفحات المقررات';
 $string['coursexpincourse'] = 'نقاط الخبرة في هذا المقرر';
 $string['coursexplevel'] = 'المستوى الحالي';

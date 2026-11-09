@@ -66,6 +66,7 @@ $string['courseheroheading'] = 'Intestazione del corso';
 $string['courseheroheading_desc'] = 'L\'intestazione usa nome, riepilogo e immagine nativi del corso Moodle. I docenti cambiano l\'immagine in Impostazioni corso > Descrizione > Immagine del corso.';
 $string['courseheroprogress'] = 'I tuoi progressi';
 $string['courseheroprogressvalue'] = '{$a}% completato';
+$string['contenteditorbanner'] = '<aside class="alert alert-info mb-3" role="note" style="border-left:4px solid #1671c5;border-radius:8px;padding:14px 18px;"><strong>Puoi modificare questo contenuto in due modi:</strong> con l’<a class="alert-link" href="{$a->editorurl}">editor HTML</a> oppure con <a class="alert-link" href="{$a->helpurl}" target="_blank" rel="noopener noreferrer">ChatGPT/Claude (consulta la guida)</a>.</aside>';
 $string['coursesettings'] = 'Pagine dei corsi';
 $string['coursexpincourse'] = 'XP in questo corso';
 $string['coursexplevel'] = 'Livello attuale';

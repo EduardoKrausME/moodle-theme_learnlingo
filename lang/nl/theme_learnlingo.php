@@ -60,3 +60,4 @@ $string['jsonimportbutton'] = 'Instellingen importeren';
 $string['loginforgotpassword'] = 'Wachtwoord vergeten?';
 $string['loginstartsignup'] = 'Nieuw account aanmaken';
 $string['loginwelcomeback'] = 'Welkom terug!';
+$string['contenteditorbanner'] = '<aside class="alert alert-info mb-3" role="note" style="border-left:4px solid #1671c5;border-radius:8px;padding:14px 18px;"><strong>Bewerk deze inhoud op twee manieren:</strong> gebruik de <a class="alert-link" href="{$a->editorurl}">HTML-editor</a> of <a class="alert-link" href="{$a->helpurl}" target="_blank" rel="noopener noreferrer">ChatGPT/Claude (bekijk de hulp)</a>.</aside>';

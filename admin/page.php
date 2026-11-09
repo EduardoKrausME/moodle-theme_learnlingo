@@ -43,7 +43,7 @@ if (!pages::ready()) {
     throw new moodle_exception('custompagesneedupgrade', 'theme_learnlingo');
 }
 $record = $id ? $DB->get_record('theme_learnlingo_pages', ['id' => $id], '*', MUST_EXIST) : null;
-$form = new page_form($url, ['categories' => pages::categories()]);
+$form = new page_form($url, ['categories' => pages::categories(), 'pageid' => $id]);
 if ($record) {
     $form->set_data($record);
 } else {
@@ -67,14 +67,5 @@ $PAGE->requires->js_call_amd('theme_learnlingo/page_editor', 'init', [[
     'collapse' => get_string('codeeditorcollapse', 'theme_learnlingo'),
 ]]);
 echo $OUTPUT->header();
-if ($record) {
-    // The visual editor updates only content/scss, leaving the page metadata
-    // and the existing Moodle form untouched.
-    $editorurl = new moodle_url('/theme/learnlingo/_editor/editor.php',
-        ['target' => 'page', 'id' => $id]);
-    echo html_writer::div(html_writer::link($editorurl,
-        get_string('visualeditoropen', 'theme_learnlingo'),
-        ['class' => 'btn btn-outline-primary']), 'mb-3');
-}
 $form->display();
 echo $OUTPUT->footer();

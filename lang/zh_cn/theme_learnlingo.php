@@ -66,6 +66,7 @@ $string['courseheroheading'] = '课程标题区域';
 $string['courseheroheading_desc'] = '课程标题区域使用 Moodle 原生课程名称、简介和图片。教师可在课程设置 > 描述 > 课程图片中更换图片。';
 $string['courseheroprogress'] = '您的进度';
 $string['courseheroprogressvalue'] = '已完成 {$a}%';
+$string['contenteditorbanner'] = '<aside class="alert alert-info mb-3" role="note" style="border-left:4px solid #1671c5;border-radius:8px;padding:14px 18px;"><strong>您可以通过两种方式编辑此内容：</strong>使用<a class="alert-link" href="{$a->editorurl}">HTML 编辑器</a>，或使用<a class="alert-link" href="{$a->helpurl}" target="_blank" rel="noopener noreferrer">ChatGPT/Claude（查看帮助）</a>。</aside>';
 $string['coursesettings'] = '课程页面';
 $string['coursexpincourse'] = '本课程经验值';
 $string['coursexplevel'] = '当前等级';

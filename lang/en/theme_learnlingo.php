@@ -66,6 +66,7 @@ $string['courseheroheading'] = 'Course header';
 $string['courseheroheading_desc'] = 'The course header uses the native Moodle course name, summary and Course image. Teachers can change the image in Course settings > Description > Course image.';
 $string['courseheroprogress'] = 'Your progress';
 $string['courseheroprogressvalue'] = '{$a}% complete';
+$string['contenteditorbanner'] = '<aside class="alert alert-info mb-3" role="note" style="border-left:4px solid #1671c5;border-radius:8px;padding:14px 18px;"><strong>Edit this content your way:</strong> use the <a class="alert-link" href="{$a->editorurl}">HTML editor</a> or <a class="alert-link" href="{$a->helpurl}" target="_blank" rel="noopener noreferrer">ChatGPT/Claude (view help)</a>.</aside>';
 $string['coursesettings'] = 'Course pages';
 $string['coursexpincourse'] = 'XP in this course';
 $string['coursexplevel'] = 'Current level';

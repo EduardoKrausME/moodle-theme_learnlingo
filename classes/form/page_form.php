@@ -30,6 +30,7 @@ require_once($CFG->libdir . '/formslib.php');
 
 use moodle_exception;
 use moodleform;
+use theme_learnlingo\content_editor_banner;
 use theme_learnlingo\pages;
 
 /**
@@ -68,6 +69,11 @@ class page_form extends moodleform {
 
         $mform->addElement('select', 'categoryid', get_string('custompagescategory', 'theme_learnlingo'), $categories);
         $mform->setType('categoryid', PARAM_INT);
+
+        // Place the editing guidance immediately above the HTML content field.
+        $mform->addElement('html', content_editor_banner::render(
+            'page', (int)($this->_customdata['pageid'] ?? 0)
+        ));
 
         $mform->addElement('textarea', 'content', get_string('custompageshtml', 'theme_learnlingo'),
             ['rows' => 22, 'class' => 'form-control w-100 font-monospace']);

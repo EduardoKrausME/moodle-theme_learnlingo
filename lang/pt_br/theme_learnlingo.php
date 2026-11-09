@@ -66,6 +66,7 @@ $string['courseheroheading'] = 'Topo do curso';
 $string['courseheroheading_desc'] = 'O topo usa o nome, o resumo e a Imagem do curso nativos do Moodle. O professor troca a imagem em Configurações do curso > Descrição > Imagem do curso.';
 $string['courseheroprogress'] = 'Seu progresso';
 $string['courseheroprogressvalue'] = '{$a}% concluído';
+$string['contenteditorbanner'] = '<aside class="alert alert-info mb-3" role="note" style="border-left:4px solid #1671c5;border-radius:8px;padding:14px 18px;"><strong>Você pode editar este conteúdo de duas formas:</strong> usando o <a class="alert-link" href="{$a->editorurl}">Editor de HTML</a> ou o <a class="alert-link" href="{$a->helpurl}" target="_blank" rel="noopener noreferrer">ChatGPT/Claude (veja a ajuda)</a>.</aside>';
 $string['coursesettings'] = 'Páginas dos cursos';
 $string['coursexpincourse'] = 'XP no curso';
 $string['coursexplevel'] = 'Nível atual';
