@@ -1165,14 +1165,28 @@ h6,
     background: $primary;
     border-color: $primary;
 }
-// Drawers.
+// Drawer surfaces follow the active theme, not Boost's blue-gray nav background.
 .drawer {
-    background: #FFF;
+    background: var(--learnlingo-surface);
     border-color: var(--learnlingo-border);
     box-shadow: 8px 0 25px rgba(37, 42, 55, .08);
 }
 .drawer-right {
     box-shadow: -8px 0 25px rgba(37, 42, 55, .08);
+}
+// Specific IDs win over Boost's drawer background-color and keep the
+// desktop course index, block region and mobile navigation consistent.
+#theme_learnlingo-drawers-courseindex,
+#theme_learnlingo-drawers-blocks,
+#theme_learnlingo-drawers-primary {
+    --bs-nav-drawer: var(--learnlingo-surface);
+    background-color: var(--learnlingo-surface);
+    color: var(--learnlingo-ink);
+    border-color: var(--learnlingo-border);
+    .drawerheader,
+    .drawercontent {
+        background-color: transparent;
+    }
 }
 .drawerheader {
     padding: .9rem;

@@ -1,15 +1,159 @@
-.drawerheader {
+// Desktop course-index drawer. Keep the native Moodle tree and drawer controls.
+#theme_learnlingo-drawers-courseindex {
+    .drawerheader {
+        min-height: 74px;
+        padding: 1rem .95rem .85rem;
+        align-items: flex-start;
+        gap: .5rem;
+        border-bottom: 1px solid var(--learnlingo-border);
+    }
     .drawerheading {
         min-width: 0;
         flex: 1 1 auto;
-        #courseindexdrawerheading {
-            min-width: 0;
+    }
+    #courseindexdrawerheading {
+        min-width: 0;
+        .courseindex-link {
+            display: -webkit-box;
+            max-width: 100%;
             overflow: hidden;
-            .courseindex-link {
-                display: block;
-                max-width: 100%;
-                text-overflow: ellipsis;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            white-space: normal;
+            overflow-wrap: anywhere;
+            color: var(--learnlingo-ink);
+            font-size: .95rem;
+            font-weight: 750;
+            line-height: 1.35;
+            text-overflow: ellipsis;
+            text-decoration: none;
+            &:hover {
+                color: $primary;
             }
+            &:focus-visible {
+                outline: 2px solid $primary;
+                outline-offset: 3px;
+            }
+        }
+    }
+    .draweractions {
+        flex: 0 0 auto;
+    }
+    .drawertoggle {
+        margin: -.2rem -.25rem 0 0;
+        border-radius: .625rem;
+        &:hover {
+            background: rgba($primary, .07);
+        }
+    }
+    .drawercontent {
+        padding: .75rem .65rem 1.25rem;
+    }
+    // The native expand/collapse action has its own row.
+    #courseindexdrawercontrols {
+        margin: 0 .25rem .85rem !important;
+        padding: 0 0 .7rem !important;
+        border-bottom: 1px solid var(--learnlingo-border);
+        hr {
+            display: none;
+        }
+        .courseindex-collapsemenu {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 38px;
+            width: 100%;
+            padding: .45rem .65rem;
+            border-radius: .625rem;
+            color: var(--learnlingo-muted);
+            font-size: .81rem;
+            font-weight: 650;
+            text-align: start;
+            &:hover {
+                background: rgba($primary, .07);
+                color: var(--learnlingo-ink);
+            }
+            &:focus-visible {
+                outline: 2px solid $primary;
+                outline-offset: 2px;
+            }
+        }
+    }
+}
+
+// The same Moodle tree is moved into the primary drawer on small screens.
+#courseindex {
+    min-width: 0;
+    .courseindex-section {
+        margin-bottom: .4rem;
+    }
+    .courseindex-item {
+        min-width: 0;
+        border-radius: .7rem;
+        transition: background-color .15s ease;
+    }
+    .courseindex-section-title {
+        min-height: 40px;
+        padding: .4rem .45rem;
+        margin-bottom: .2rem;
+        .courseindex-link {
+            font-weight: 800;
+            color: var(--learnlingo-ink);
+        }
+    }
+    .courseindex-chevron {
+        flex: 0 0 auto;
+        color: var(--learnlingo-muted);
+        &:focus-visible {
+            outline: 2px solid $primary;
+            outline-offset: 2px;
+        }
+    }
+    .courseindex-sectioncontent {
+        padding: 0 0 0 .35rem;
+        margin: 0;
+    }
+    .courseindex-item[data-for="cm"] {
+        min-height: 42px;
+        margin: .17rem 0;
+        padding: 0 .5rem;
+        align-items: center;
+        &:not(.pageitem):hover {
+            background-color: rgba($primary, .055);
+        }
+        .courseindex-link {
+            min-width: 0;
+            padding: .55rem .25rem;
+            color: var(--learnlingo-ink);
+            font-size: .85rem;
+            font-weight: 550;
+            line-height: 1.45;
+            white-space: normal;
+            overflow-wrap: anywhere;
+            text-overflow: clip;
+            &:focus-visible {
+                outline: 2px solid $primary;
+                outline-offset: 2px;
+            }
+        }
+    }
+    .courseindex-item.pageitem {
+        background: rgba($primary, .10);
+        box-shadow: inset 3px 0 0 $primary;
+        &, .courseindex-link {
+            color: $primary;
+            font-weight: 750;
+        }
+    }
+}
+
+// The active state must remain readable if local_boost_dark is enabled.
+[data-bs-theme="dark"] #courseindex {
+    .courseindex-item.pageitem {
+        background: rgba($primary, .2);
+        box-shadow: inset 3px 0 0 #A4E88B;
+        &, .courseindex-link {
+            color: #A4E88B;
         }
     }
 }
