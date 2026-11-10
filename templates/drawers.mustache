@@ -73,8 +73,8 @@
             {{$tooltipplacement}}right{{/tooltipplacement}}
             {{$closebuttontext}}{{#str}}closecourseindex, core{{/str}}{{/closebuttontext}}
             {{$closebuttonicon}}
-                <span class="dir-rtl-hide">{{#pix}} e/sidebar_left, core {{/pix}}</span>
-                <span class="dir-ltr-hide">{{#pix}} e/sidebar_right, core {{/pix}}</span>
+                <span class="dir-rtl-hide">{{> theme_learnlingo/drawer_toggle_icon}}</span>
+                <span class="dir-ltr-hide learnlingo-panel-mirror">{{> theme_learnlingo/drawer_toggle_icon}}</span>
             {{/closebuttonicon}}
         {{/ theme_learnlingo/drawer}}
     {{/courseindex}}
@@ -95,8 +95,8 @@
             {{$drawercloseonresize}}1{{/drawercloseonresize}}
             {{$closebuttontext}}{{#str}}closeblockdrawer, core{{/str}}{{/closebuttontext}}
             {{$closebuttonicon}}
-                <span class="dir-rtl-hide">{{#pix}} e/sidebar_right, core {{/pix}}</span>
-                <span class="dir-ltr-hide">{{#pix}} e/sidebar_left, core {{/pix}}</span>
+                <span class="dir-rtl-hide learnlingo-panel-mirror">{{> theme_learnlingo/drawer_toggle_icon}}</span>
+                <span class="dir-ltr-hide">{{> theme_learnlingo/drawer_toggle_icon}}</span>
             {{/closebuttonicon}}
         {{/ theme_learnlingo/drawer}}
     {{/hasblocks}}
@@ -115,8 +115,8 @@
                                 data-bs-placement="right"
                                 title="{{#str}}opendrawerindex, core{{/str}}">
                             <span class="visually-hidden">{{#str}}opendrawerindex, core{{/str}}</span>
-                            <span class="dir-rtl-hide">{{#pix}} e/sidebar_right, core {{/pix}}</span>
-                            <span class="dir-ltr-hide">{{#pix}} e/sidebar_left, core {{/pix}}</span>
+                            <span class="dir-rtl-hide">{{> theme_learnlingo/drawer_toggle_icon}}</span>
+                            <span class="dir-ltr-hide learnlingo-panel-mirror">{{> theme_learnlingo/drawer_toggle_icon}}</span>
                         </button>
                     </div>
                 {{/courseindex}}
@@ -131,8 +131,8 @@
                                 data-bs-placement="right"
                                 title="{{#str}}opendrawerblocks, core{{/str}}">
                             <span class="visually-hidden">{{#str}}opendrawerblocks, core{{/str}}</span>
-                            <span class="dir-rtl-hide">{{#pix}} e/sidebar_left, core {{/pix}}</span>
-                            <span class="dir-ltr-hide">{{#pix}} e/sidebar_right, core {{/pix}}</span>
+                            <span class="dir-rtl-hide learnlingo-panel-mirror">{{> theme_learnlingo/drawer_toggle_icon}}</span>
+                            <span class="dir-ltr-hide">{{> theme_learnlingo/drawer_toggle_icon}}</span>
                         </button>
                     </div>
                 {{/hasblocks}}

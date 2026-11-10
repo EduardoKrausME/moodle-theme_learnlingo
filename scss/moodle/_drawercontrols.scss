@@ -1,0 +1,91 @@
+// A single, quiet panel control for the course index and block drawer.
+// Native Moodle buttons keep their actions, tooltips, focus and responsive behavior.
+#theme_learnlingo-drawers-courseindex .drawertoggle,
+#theme_learnlingo-drawers-blocks .drawertoggle,
+.drawer-toggles .drawer-left-toggle > .btn,
+.drawer-toggles .drawer-right-toggle > .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    min-height: 38px;
+    padding: 0;
+    border: 1px solid var(--learnlingo-border);
+    border-radius: 11px;
+    background: var(--learnlingo-surface);
+    color: var(--learnlingo-ink);
+    box-shadow: none;
+    transition: background-color .16s ease, border-color .16s ease, color .16s ease;
+
+    &:hover {
+        background: rgba($primary, .08);
+        color: $primary;
+        border-color: rgba($primary, .28);
+        box-shadow: none;
+    }
+
+    &:focus-visible {
+        outline: 2px solid $primary;
+        outline-offset: 3px;
+        box-shadow: none;
+    }
+
+    .learnlingo-panel-icon {
+        display: block;
+        flex: 0 0 auto;
+        width: 20px;
+        height: 20px;
+        stroke: currentColor;
+    }
+
+    // Moodle's RTL-only/LTR-only wrappers must keep the SVG centered.
+    .dir-rtl-hide,
+    .dir-ltr-hide {
+        align-items: center;
+        justify-content: center;
+    }
+    .dir-rtl-hide:not(.d-none),
+    .dir-ltr-hide:not(.d-none) {
+        // The actual visibility is still governed by Moodle's direction helpers.
+        line-height: 0;
+    }
+    .learnlingo-panel-mirror .learnlingo-panel-icon {
+        transform: scaleX(-1);
+    }
+    .learnlingo-panel-icon__chevron {
+        transform-origin: 14.75px 12px;
+        transition: transform .16s ease;
+    }
+    // Opening points towards the hidden panel; closing points outwards.
+    &[data-action="toggle"]:not([aria-expanded="true"]) .learnlingo-panel-icon__chevron {
+        transform: rotate(180deg);
+    }
+}
+
+// Dark surfaces retain the same button language without pale blue corners.
+[data-bs-theme="dark"] {
+    #theme_learnlingo-drawers-courseindex .drawertoggle,
+    #theme_learnlingo-drawers-blocks .drawertoggle,
+    .drawer-toggles .drawer-left-toggle > .btn,
+    .drawer-toggles .drawer-right-toggle > .btn {
+        background: var(--learnlingo-surface);
+        color: var(--learnlingo-ink);
+        &:hover {
+            background: rgba($primary, .22);
+            color: #fff;
+            border-color: rgba($primary, .55);
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .drawer-toggles .drawer-toggler > .btn,
+    #theme_learnlingo-drawers-courseindex .drawertoggle,
+    #theme_learnlingo-drawers-blocks .drawertoggle,
+    .learnlingo-panel-icon__chevron {
+        transition: none;
+    }
+}
