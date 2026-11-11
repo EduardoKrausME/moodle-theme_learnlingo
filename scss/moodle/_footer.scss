@@ -9,18 +9,18 @@
     line-height: 1.55;
     .footer-container {
         display: grid;
-        grid-template-columns: repeat(var(--learnlingo-footer-columns, 1), minmax(0, 1fr));
+        grid-template-columns: repeat(var(--bs-footer-columns, 1), minmax(0, 1fr));
         gap: 2rem;
         padding-top: 2rem;
         padding-bottom: 2rem;
         &.footer-container-2 {
-            --learnlingo-footer-columns: 2;
+            --bs-footer-columns: 2;
         }
         &.footer-container-3 {
-            --learnlingo-footer-columns: 3;
+            --bs-footer-columns: 3;
         }
         &.footer-container-4 {
-            --learnlingo-footer-columns: 4;
+            --bs-footer-columns: 4;
         }
     }
     .footer-section-wrapper {
@@ -67,12 +67,12 @@
     @media (max-width: 991.98px) {
         .footer-container.footer-container-3,
         .footer-container.footer-container-4 {
-            --learnlingo-footer-columns: 2;
+            --bs-footer-columns: 2;
         }
     }
     @media (max-width: 575.98px) {
         .footer-container {
-            --learnlingo-footer-columns: 1 !important;
+            --bs-footer-columns: 1 !important;
             gap: 1.5rem;
         }
     }

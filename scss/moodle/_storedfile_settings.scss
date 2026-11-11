@@ -11,7 +11,7 @@
         padding: 1rem;
         border: 2px dashed #a3b8ac;
         border-radius: 1.15rem;
-        background: var(--learnlingo-surface, #fff);
+        background: var(--bs-surface, #fff);
         box-shadow: 0 5px 20px rgba(31, 45, 51, .045);
         transition: border-color .16s ease, background-color .16s ease;
 
@@ -70,7 +70,7 @@
     }
 
     &__state {
-        color: var(--learnlingo-muted, #64748b);
+        color: var(--bs-muted, #64748b);
         font-size: .7rem;
         font-weight: 800;
         text-transform: uppercase;
@@ -81,13 +81,13 @@
         display: block;
         max-width: 100%;
         overflow-wrap: anywhere;
-        color: var(--learnlingo-ink, #263238);
+        color: var(--bs-ink, #263238);
         font-size: 1rem;
         font-weight: 750;
     }
 
     &__drop-hint {
-        color: var(--learnlingo-muted, #64748b);
+        color: var(--bs-muted, #64748b);
         font-size: .86rem;
     }
 
@@ -113,7 +113,7 @@
     }
 
     &__footnote {
-        color: var(--learnlingo-muted, #64748b);
+        color: var(--bs-muted, #64748b);
         font-size: .76rem;
         line-height: 1.5;
     }
@@ -132,7 +132,7 @@
     &__status {
         min-height: 1.2rem;
         margin-top: .45rem;
-        color: var(--learnlingo-muted, #64748b);
+        color: var(--bs-muted, #64748b);
         font-size: .85rem;
 
         &--error {

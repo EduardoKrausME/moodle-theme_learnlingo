@@ -2,36 +2,16 @@
 // The plugin sets data-bs-theme="dark" on <html> for each user's preference.
 // These styles do not activate without that attribute and never force a mode.
 [data-bs-theme="dark"] {
-    --learnlingo-ink: #E7EDF4;
-    --learnlingo-muted: #B5C3D0;
-    --learnlingo-surface: #222C39;
-    --learnlingo-canvas: #151D27;
-    --learnlingo-border: #405064;
-    --learnlingo-shadow: 0 4px 0 rgba(0, 0, 0, .18);
-    --learnlingo-shadow-hover: 0 12px 26px rgba(0, 0, 0, .3);
-    // Custom HTML home uses the live light/dark CSS variables defined in _poss.scss.
-    .learnlingo-html-home,
-    .learnlingo-home-intro {
-        color-scheme: dark;
-    }
-    body,
-    #page-wrapper,
-    #page,
-    #page.drawers,
-    #page.drawers .main-inner {
-        color: var(--learnlingo-ink);
-        background-color: var(--learnlingo-canvas);
-    }
     .navbar.fixed-top {
-        color: var(--learnlingo-ink);
+        color: var(--bs-ink);
         background: rgba(30, 40, 52, .98) !important;
-        border-bottom-color: var(--learnlingo-border);
+        border-bottom-color: var(--bs-border);
     }
     .learnlingo-wordmark,
     .navbar-brand.learnlingo-navbar-brand,
     .activityname a,
     .instancename {
-        color: var(--learnlingo-ink);
+        color: var(--bs-ink);
     }
     // Dashboard hero retains the institutional brand gradient. Its CTA needs
     // the separate high-contrast light surface rather than inheriting dark ink.
@@ -67,9 +47,9 @@
     .table,
     .dropdown-menu,
     .modal-content {
-        background: var(--learnlingo-surface);
-        color: var(--learnlingo-ink);
-        border-color: var(--learnlingo-border);
+        background: var(--bs-surface);
+        color: var(--bs-ink);
+        border-color: var(--bs-border);
     }
     // Course activities keep their dark surface and a visible hover state.
     body.path-course-view .activity-item {
@@ -91,10 +71,10 @@
     .learnlingo-course-card-progress span,
     .learnlingo-resume-category,
     .learnlingo-goal-copy {
-        color: var(--learnlingo-muted);
+        color: var(--bs-muted);
     }
     .learnlingo-goal-ring {
-        background: conic-gradient(var(--learnlingo-primary) 0 82%, #46556B 82% 100%);
+        background: conic-gradient(var(--bs-primary) 0 82%, #46556B 82% 100%);
     }
     .learnlingo-course-card-media > span {
         color: #192431;
@@ -110,9 +90,9 @@
     }
     .table thead th,
     .table > :not(caption) > * > * {
-        color: var(--learnlingo-ink);
-        background-color: var(--learnlingo-surface);
-        border-color: var(--learnlingo-border);
+        color: var(--bs-ink);
+        background-color: var(--bs-surface);
+        border-color: var(--bs-border);
     }
     .table thead th {
         background: #2A3748;
@@ -123,29 +103,29 @@
     .modal-header,
     .modal-footer,
     .drawerheader {
-        border-color: var(--learnlingo-border);
+        border-color: var(--bs-border);
     }
     .nav-tabs .nav-link.active,
     .dropdown-item:hover,
     .dropdown-item:focus,
     .courseindex .courseindex-item.pageitem {
-        color: #A4E88B;
+        color: var(--bs-accent);
         background: #294437;
     }
     .dropdown-item,
     .nav-tabs .nav-link,
     .page-link,
     .page-item.disabled .page-link {
-        color: var(--learnlingo-ink);
-        background: var(--learnlingo-surface);
-        border-color: var(--learnlingo-border);
+        color: var(--bs-ink);
+        background: var(--bs-surface);
+        border-color: var(--bs-border);
     }
     // Global light button/input defaults must not leak into dark mode.
     .btn-secondary,
     .btn-outline-secondary {
-        color: var(--learnlingo-ink);
-        background: var(--learnlingo-surface);
-        border-color: var(--learnlingo-border);
+        color: var(--bs-ink);
+        background: var(--bs-surface);
+        border-color: var(--bs-border);
         box-shadow: 0 3px 0 rgba(0, 0, 0, .2);
     }
     .btn-secondary:hover,
@@ -161,9 +141,9 @@
     .btn-secondary.disabled,
     .btn-outline-secondary:disabled,
     .btn-outline-secondary.disabled {
-        color: var(--learnlingo-muted);
+        color: var(--bs-muted);
         background: #273240;
-        border-color: var(--learnlingo-border);
+        border-color: var(--bs-border);
         box-shadow: none;
         opacity: .55;
     }
@@ -175,33 +155,35 @@
     input[type="text"],
     input[type="number"],
     input[type="email"] {
-        color: var(--learnlingo-ink);
-        background-color: var(--learnlingo-surface);
-        border-color: var(--learnlingo-border);
+        &:not(.ll-code-editor__input) {
+            color: var(--bs-ink);
+            background-color: var(--bs-surface);
+            border-color: var(--bs-border);
+        }
     }
     .form-control:disabled,
     .custom-select:disabled,
     .form-select:disabled {
-        color: var(--learnlingo-muted);
+        color: var(--bs-muted);
         background-color: #273240;
         opacity: .65;
     }
     .form-control::placeholder,
     textarea::placeholder,
     input[type="text"]::placeholder {
-        color: var(--learnlingo-muted);
+        color: var(--bs-muted);
         opacity: .85;
     }
     .form-label,
     .col-form-label {
-        color: var(--learnlingo-ink);
+        color: var(--bs-ink);
     }
     .text-muted,
     .dimmed,
     .dimmed_text,
     .course-description-item,
     .small-info {
-        color: var(--learnlingo-muted) !important;
+        color: var(--bs-muted) !important;
     }
     // Custom-page management uses the same surfaces and accessible action states.
     .ll-pages-manager {
@@ -209,10 +191,10 @@
         .ll-pages-children,
         .ll-pages-row,
         .ll-pages-category {
-            border-color: var(--learnlingo-border);
+            border-color: var(--bs-border);
         }
         .ll-pages-category-head {
-            color: var(--learnlingo-ink);
+            color: var(--bs-ink);
             background: #263343;
             &:hover {
                 background: #2F4053;
@@ -222,7 +204,7 @@
         .ll-pages-status,
         .ll-pages-empty,
         .ll-pages-category-name small {
-            color: var(--learnlingo-muted) !important;
+            color: var(--bs-muted) !important;
         }
         .ll-pages-actions a:not(.btn) {
             color: #B9DFFF;
@@ -240,7 +222,7 @@
         }
     }
     .learnlingo-course-xp {
-        color: var(--learnlingo-ink);
+        color: var(--bs-ink);
         background: #304838;
     }
     // Setup uses a separately loaded stylesheet; the root-qualified selector
@@ -325,4 +307,9 @@
         outline: 3px solid #9FCEFF;
         outline-offset: 3px;
     }
+}
+
+[data-bs-theme="dark"] {
+    --bs-pulse-base: var(--bs-surface);
+    --bs-pulse-middle: color-mix(in srgb, var(--bs-surface) 90%, white);
 }

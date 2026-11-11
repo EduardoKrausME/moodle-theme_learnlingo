@@ -1,3 +1,44 @@
+#page-wrapper,
+#page.drawers {
+    background: var(--bs-canvas);
+}
+#page.drawers {
+    padding-left: 0;
+    padding-right: 0;
+}
+#page.drawers .main-inner {
+    width: calc(100% - 2rem);
+    max-width: 1460px;
+    margin: 1.7rem auto 0;
+    padding: 0 0 2rem;
+    background: transparent;
+}
+#page.drawers.show-drawer-left .main-inner,
+#page.drawers.show-drawer-right .main-inner {
+    max-width: 1180px;
+}
+#topofscroll > .page-header-headings,
+#page-header {
+    margin-bottom: 1.25rem;
+}
+.page-header-headings h1 {
+    color: var(--bs-ink);
+    font-size: clamp(1.8rem, 3vw, 2.45rem);
+    font-weight: 800;
+}
+.breadcrumb {
+    gap: .15rem;
+    padding: .65rem .85rem;
+    background: #FFF;
+    border: 1px solid var(--bs-border);
+    border-radius: 12px;
+}
+.breadcrumb-item a {
+    color: var(--bs-muted);
+}
+#region-main {
+    background: transparent;
+}
 @media (min-width: 768px) {
     .pagelayout-standard #page.drawers .main-inner,
     body.limitedwidth #page.drawers .main-inner {

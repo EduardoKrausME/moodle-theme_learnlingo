@@ -1,40 +1,542 @@
-.navbar.fixed-top {
+:root {
+    // Navbar - Light mode.
+    --learnlingo-navbar-bg: rgba(255, 255, 255, .97);
+    --learnlingo-navbar-text: var(--bs-ink);
+    --learnlingo-navbar-border: var(--bs-navbar-border);
+    --learnlingo-navbar-divider: var(--bs-gray-300);
+
+    // Navigation links.
+    --learnlingo-navbar-link: #666A74;
+    --learnlingo-navbar-link-hover: var(--bs-primary);
+    --learnlingo-navbar-link-hover-bg: #{rgba($primary, .07)};
+    --learnlingo-navbar-link-active: var(--bs-primary);
+    --learnlingo-navbar-link-active-bg: #{rgba($primary, .09)};
+    --learnlingo-navbar-link-active-ring: #{rgba($primary, .03)};
+
+    // User menu and avatar.
+    --learnlingo-navbar-user-hover-bg: #{rgba($primary, .06)};
+    --learnlingo-navbar-avatar-border: #{rgba($primary, .2)};
+    --learnlingo-navbar-avatar-ring: #{rgba($primary, .05)};
+
+    // Search.
+    --learnlingo-navbar-search-bg: var(--bs-gray-200);
+    --learnlingo-navbar-search-text: var(--bs-gray-700);
+    --learnlingo-navbar-search-placeholder: var(--learnlingo-navbar-search-text);
+
+    // Brand.
+    --learnlingo-navbar-brandmark-text: #FFF;
+    --learnlingo-navbar-brandmark-start: var(--bs-accent);
+    --learnlingo-navbar-brandmark-end: var(--bs-primary);
+    --learnlingo-navbar-brandmark-shadow: #{darken($primary, 10%)};
+    --learnlingo-navbar-wordmark-accent: var(--bs-primary);
+
+    // Moodle navbar height.
+    --navbar-height: #{$navbar-height};
+}
+
+html[data-bs-theme="dark"] {
+    // Navbar - Dark mode.
+    --learnlingo-navbar-bg: rgba(30, 40, 52, .98);
+    --learnlingo-navbar-text: var(--bs-ink);
+    --learnlingo-navbar-border: var(--bs-navbar-border);
+    --learnlingo-navbar-divider: var(--bs-navbar-border);
+
+    // Navigation links.
+    --learnlingo-navbar-link: var(--learnlingo-navbar-text);
+    --learnlingo-navbar-link-hover: #A4E88B;
+    --learnlingo-navbar-link-hover-bg: rgba(164, 232, 139, .11);
+    --learnlingo-navbar-link-active: #A4E88B;
+    --learnlingo-navbar-link-active-bg: rgba(164, 232, 139, .16);
+    --learnlingo-navbar-link-active-ring: rgba(164, 232, 139, .12);
+
+    // User menu and avatar.
+    --learnlingo-navbar-user-hover-bg: rgba(164, 232, 139, .10);
+    --learnlingo-navbar-avatar-border: rgba(164, 232, 139, .45);
+    --learnlingo-navbar-avatar-ring: rgba(164, 232, 139, .12);
+
+    // Search.
+    --learnlingo-navbar-search-bg: #273240;
+    --learnlingo-navbar-search-text: var(--bs-ink);
+    --learnlingo-navbar-search-placeholder: var(--bs-muted);
+
+    // Brand.
+    --learnlingo-navbar-brandmark-text: #FFF;
+    --learnlingo-navbar-brandmark-start: var(--bs-accent);
+    --learnlingo-navbar-brandmark-end: var(--bs-primary);
+    --learnlingo-navbar-brandmark-shadow: rgba(0, 0, 0, .3);
+    --learnlingo-navbar-wordmark-accent: var(--learnlingo-navbar-link-hover);
+}
+
+// Main navbar.
+html .navbar.fixed-top {
+    align-items: stretch;
+    height: $navbar-height + 1px;
+    min-height: 74px;
+    padding: .65rem 1.25rem;
+
+    color: var(--learnlingo-navbar-text);
+    background: var(--learnlingo-navbar-bg) !important;
+    border-bottom: 1px solid var(--learnlingo-navbar-border);
+    box-shadow: none;
+    backdrop-filter: blur(12px);
+
+    .navbar-content {
+        max-width: 1440px;
+        margin-inline: auto;
+        padding-inline: var(--mds-spacing-lg);
+
+        @include media-breakpoint-down(md) {
+            padding-inline: var(--mds-spacing-md);
+        }
+    }
+
+    .container-fluid {
+        max-width: 1500px;
+        margin-inline: auto;
+    }
+
     .editmode-switch-form {
-        .input-group {
-            label {
+        .input-group label {
+            display: none;
+        }
+    }
+
+    // Brand and logo.
+    .navbar-brand {
+        color: var(--learnlingo-navbar-text);
+
+        .logo {
+            max-height: calc(
+                    #{$navbar-height} - (#{$primary-nav-padding-y} * 2)
+            );
+            width: auto;
+            max-width: 190px;
+            height: 44px;
+            object-fit: contain;
+        }
+
+        &.learnlingo-navbar-brand {
+            gap: .7rem;
+            color: var(--learnlingo-navbar-text);
+            text-decoration: none;
+        }
+    }
+
+    // Navigation links.
+    .primary-navigation .moremenu .nav {
+        margin-top: 11px;
+    }
+    .nav-link {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        white-space: nowrap;
+
+        color: var(--learnlingo-navbar-link);
+        text-decoration: none;
+
+        font-family: "DM Sans";
+        min-height:       60px ;
+        padding: 0 1rem;
+        font-weight: 650;
+        border: 0 !important;
+        border-radius: 0;
+
+        &:hover,
+        &:focus-visible {
+            color: var(--learnlingo-navbar-link-hover);
+            background: var(--learnlingo-navbar-link-hover-bg);
+        }
+
+        &.active,
+        &[aria-current="page"],
+        &[aria-selected="true"] {
+            color: var(--learnlingo-navbar-link-active);
+            background: var(--learnlingo-navbar-link-active-bg);
+            box-shadow: var(--learnlingo-navbar-link-active-ring) 0px -3px 0px inset;
+        }
+    }
+
+    // Dividers.
+    .divider {
+        width: 1px;
+        background-color: var(--learnlingo-navbar-divider);
+    }
+
+    // User navigation.
+    #usernavigation {
+        align-items: center;
+        gap: .25rem;
+
+        .nav-link {
+            padding: 0 $primary-nav-padding-x;
+        }
+
+        .nav-link,
+        .btn {
+            border-radius: 12px;
+        }
+
+        .divider {
+            display: none;
+        }
+    }
+
+    .login {
+        display: flex;
+        align-items: center;
+    }
+
+    // User menu.
+    .usermenu {
+        display: flex;
+
+        .action-menu {
+            display: flex;
+            align-items: center;
+        }
+
+        .userfirstname {
+            margin-inline: $spacer * 0.5;
+            max-width: 20ch;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            color: var(--learnlingo-navbar-text);
+        }
+
+        .userbutton {
+            min-height: 48px;
+            padding: .25rem 0 .25rem .5rem;
+            border-radius: 14px;
+
+            &:hover,
+            &:focus-visible {
+                background: var(--learnlingo-navbar-user-hover-bg);
+            }
+        }
+
+        .avatars .avatar.current img,
+        .userpicture {
+            border: 2px solid var(--learnlingo-navbar-avatar-border);
+            box-shadow: 0 0 0 4px
+            var(--learnlingo-navbar-avatar-ring);
+        }
+
+        .dropdown-menu {
+            min-width: 235px;
+            max-width: 20rem;
+
+            @include media-breakpoint-down(sm) {
+                max-width: calc(100vw - 1rem);
+            }
+
+            .carousel-navigation-link {
+                > * {
+                    pointer-events: none;
+                }
+            }
+
+            .dropdown-header,
+            .dropdown-item,
+            .dropdown-item-text {
+                padding: .25rem 1.75rem .25rem .75rem;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+
+                &.carousel-navigation-link::after {
+                    font: var(--fa-font-solid);
+                    content: fa-content($fa-var-caret-right);
+                    font-size: 1rem;
+                    padding-top: .2rem;
+                    right: .75rem;
+                    position: absolute;
+                }
+            }
+
+            .submenu {
+                .header {
+                    padding: .25rem .75rem;
+                    font-size: .975rem;
+
+                    .icon {
+                        font-size: 20px;
+                        height: 20px;
+                        width: 20px;
+                        margin: 0;
+                    }
+                }
+
+                .items {
+                    .dropdown-item {
+                        &[aria-current="true"]::before {
+                            font: var(--fa-font-solid);
+                            content: fa-content($fa-var-check);
+                            font-size: .75rem;
+                            padding-left: .25rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Shared dropdown layout.
+    .usermenu,
+    .langmenu,
+    .colourmodemenu {
+        .dropdown {
+            display: flex;
+            align-items: center;
+            height: 100%;
+
+            .dropdown-toggle {
+                display: flex;
+                align-items: center;
+                height: 100%;
+                padding-top: 0;
+                padding-bottom: 0;
+                border-radius: 0;
+            }
+        }
+    }
+
+    // Language menu.
+    .langmenu {
+        .dropdown-menu {
+            .dropdown-item {
+                &[aria-current="true"]::before {
+                    font: var(--fa-font-solid);
+                    content: "\f00c";
+                    font-size: .75rem;
+                    padding-left: .25rem;
+                }
+            }
+        }
+
+        @include media-breakpoint-down(md) {
+            .langbutton {
                 display: none;
             }
         }
     }
-}
-#usernavigation {
-    align-items: center;
-    gap: .25rem;
-}
-#usernavigation .divider {
-    display: none;
-}
-#usernavigation .nav-link,
-#usernavigation .btn {
-    border-radius: 12px;
-}
-.usermenu .userbutton {
-    min-height: 48px;
-    padding: .25rem 0 .25rem .5rem;
-    border-radius: 14px;
-    &:hover {
-        background: rgba($primary, .06);
+
+    .moodle-actionmenu .menubar,
+    .action-menu-trigger .dropdown {
+        display: flex;
+        height: 100%;
+    }
+
+    // Inline search.
+    #usernavigation .search-input-inline {
+        display: flex;
+        align-items: center;
+        height: 100%;
+
+        .search-toggle {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            color: var(--learnlingo-navbar-text);
+
+            &:hover,
+            &:focus-visible {
+                color: var(--learnlingo-navbar-link-hover);
+                background: var(--learnlingo-navbar-link-hover-bg);
+            }
+        }
+
+        .searchform-navbar {
+            display: none;
+
+            .input-group-text,
+            .form-control {
+                color: var(--learnlingo-navbar-search-text);
+                background-color: var(--learnlingo-navbar-search-bg);
+                border-color: var(--learnlingo-navbar-border);
+            }
+
+            .form-control::placeholder {
+                color: var(--learnlingo-navbar-search-placeholder);
+            }
+
+            .input-group > .form-control {
+                @include border-end-radius($input-border-radius);
+            }
+
+            .search-close {
+                position: absolute;
+                top: 0;
+                right: 0;
+                z-index: 6;
+                height: 100%;
+                padding: 0 .5rem;
+
+                color: var(--learnlingo-navbar-search-text);
+                background: none;
+                border: 0;
+
+                &:hover,
+                &:focus-visible {
+                    color: var(--learnlingo-navbar-link-hover);
+                }
+
+                .icon {
+                    margin: 0;
+                }
+            }
+        }
+
+        @include media-breakpoint-up(md) {
+            padding: 0 $primary-nav-padding-x;
+
+            .search-toggle {
+                display: none;
+            }
+
+            .searchform-navbar {
+                display: block;
+
+                .input-group {
+                    width: 256px;
+                }
+            }
+        }
+
+        @include media-breakpoint-down(md) {
+            &.expanded {
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: $zindex-popover;
+
+                width: 100%;
+                height: 100%;
+                padding: 0 $primary-nav-padding-x;
+
+                background-color: var(--learnlingo-navbar-bg);
+
+                .search-toggle {
+                    display: none;
+                }
+
+                .searchform-navbar {
+                    display: flex;
+                    align-items: center;
+                    width: 100%;
+
+                    .input-group {
+                        width: 100%;
+                        flex-wrap: nowrap;
+                    }
+
+                    .form-control {
+                        padding-right: 2rem;
+                    }
+                }
+            }
+        }
+    }
+
+    // User menu toggle.
+    #user-menu-toggle {
+        padding: 0 6px;
+    }
+
+    // Mobile navbar toggle.
+    .navbar-toggler {
+        color: var(--learnlingo-navbar-text);
+        border-radius: 10px !important;
+
+        &:hover,
+        &:focus-visible {
+            color: var(--learnlingo-navbar-link-hover);
+            background: var(--learnlingo-navbar-link-hover-bg);
+        }
     }
 }
-.usermenu .avatars .avatar.current img,
-.userpicture {
-    border: 2px solid rgba($primary, .2);
-    box-shadow: 0 0 0 4px rgba($primary, .05);
+
+// Dark mode navbar specificity.
+// Prevent hardcoded rules in _dark.scss from overriding tokens.
+html[data-bs-theme="dark"] .navbar.fixed-top {
+    color: var(--learnlingo-navbar-text);
+    background: var(--learnlingo-navbar-bg) !important;
+    border-bottom-color: var(--learnlingo-navbar-border);
 }
-#user-menu-toggle {
-    padding: 0 6px;
+
+// RTL navigation.
+.dir-rtl .navbar.fixed-top {
+    .usermenu {
+        .dropdown-menu {
+            .dropdown-item {
+                &.carousel-navigation-link::after {
+                    font: var(--fa-font-solid);
+                    content: fa-content($fa-var-caret-left);
+                }
+            }
+        }
+    }
 }
-.navbar-toggler {
-    color: var(--learnlingo-ink);
-    border-radius: 10px !important;
+
+// Wordmark.
+html .learnlingo-wordmark {
+    color: var(--learnlingo-navbar-text);
+    font-size: 1.18rem;
+    font-weight: 850;
+    letter-spacing: -.06em;
+    line-height: 1;
+
+    &-accent {
+        color: var(--learnlingo-navbar-wordmark-accent);
+    }
+}
+
+// Brandmark.
+html .learnlingo-brandmark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 42px;
+
+    width: 42px;
+    height: 42px;
+
+    color: var(--learnlingo-navbar-brandmark-text);
+    background: linear-gradient(
+                    145deg,
+                    var(--learnlingo-navbar-brandmark-start),
+                    var(--learnlingo-navbar-brandmark-end) 70%
+    );
+    border-radius: 13px;
+    box-shadow: 0 4px 0
+    var(--learnlingo-navbar-brandmark-shadow);
+
+    .fa {
+        margin: 0;
+        font-size: 1.15rem;
+    }
+}
+
+// Bootswatch navbar.
+.navbar-bootswatch {
+    .navbar-brand {
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        .sitename {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+    }
+}
+
+// Moodle page spacing.
+#page {
+    margin-top: $navbar-height;
+}
+
+.pagelayout-embedded #page {
+    margin-top: 0;
 }

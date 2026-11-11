@@ -21,6 +21,7 @@
     #page-mod-forum-index .subscription .helplink:nth-of-type(1) a,
     #page-mod-forum-view .subscription .helplink a {
         box-shadow: none;
-        background-color: #XXX;
+        background-color: var(--bs-primary);
+        border:none;
     }
 }

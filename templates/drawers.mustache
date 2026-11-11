@@ -61,11 +61,18 @@
     {{#courseindex}}
         {{< theme_learnlingo/drawer }}
             {{$id}}theme_learnlingo-drawers-courseindex{{/id}}
-            {{$drawerheading}}{{> theme_learnlingo/courseindexdrawerheading}}{{/drawerheading}}
+            {{$drawerheading}}
+                <div id="courseindexdrawerheading">
+                    <a class="courseindex-link text-truncate fw-bold"
+                       href="{{{courseurl}}}"
+                       role="button">{{coursefullname}}</a>
+                </div>
+            {{/drawerheading}}
             {{$drawerclasses}}drawer drawer-left {{#courseindexopen}}show{{/courseindexopen}}{{/drawerclasses}}
+            {{$drawercontentcontrols}}
+                {{> theme_learnlingo/courseindexdrawercontrols}}
+            {{/drawercontentcontrols}}
             {{$drawercontent}}
-                {{! Put expand/collapse below the course title, never alongside it. }}
-                {{> theme_boost/courseindexdrawercontrols}}
                 {{{courseindex}}}
             {{/drawercontent}}
             {{$drawerpreferencename}}drawer-open-index{{/drawerpreferencename}}

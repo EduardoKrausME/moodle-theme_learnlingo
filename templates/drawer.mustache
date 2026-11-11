@@ -36,15 +36,15 @@
     }} data-close-on-resize="{{$drawercloseonresize}}0{{/drawercloseonresize}}"{{!
     }}>
     <div class="drawerheader d-flex">
-        <div class="drawerheading">
+        <!--div class="drawerheading">
             {{$drawerheading}}{{/drawerheading}}
-        </div>
+        </div-->
+        {{$drawercontentcontrols}}{{/drawercontentcontrols}}
         <div class="draweractions">
             <div class="drawerheadercontent">
                 {{$drawerheadercontent}}{{/drawerheadercontent}}
             </div>
-            <button
-                    class="btn btn-icon icon-size-3 drawertoggle"
+            <button class="btn btn-icon icon-size-3 drawertoggle"
                     data-toggler="drawers"
                     data-action="closedrawer"
                     data-target="{{$id}}{{/id}}"
