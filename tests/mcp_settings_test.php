@@ -166,7 +166,18 @@ final class mcp_settings_test extends advanced_testcase {
         ] as $selector) {
             $this->assertStringContainsString($selector, $guide['structure']);
         }
-        $this->assertStringContainsString('.navbar.fixed-top', $guide['scss_outline']);
+        $this->assertStringContainsString(':root {', $guide['scss_outline']);
+        $this->assertStringContainsString('html[data-bs-theme="dark"]', $guide['scss_outline']);
+        $this->assertStringNotContainsString('.navbar.fixed-top {', $guide['scss_outline']);
+        $this->assertStringNotContainsString('padding:', $guide['scss_outline']);
+        $this->assertStringNotContainsString('height:', $guide['scss_outline']);
+        $this->assertContains('--navbar-height', $guide['allowed_variables']);
+        $this->assertCount(22, $guide['allowed_variables']);
+        $this->assertSame($guide['allowed_variables'], array_values(array_unique($guide['allowed_variables'])));
+        $scss = file_get_contents(__DIR__ . '/../scss/moodle/_navbar.scss');
+        preg_match_all('/^\\s*(--[a-z0-9-]+)\\s*:/m', $scss, $matches);
+        $this->assertEqualsCanonicalizing(array_unique($matches[1]), $guide['allowed_variables']);
+        $this->assertStringContainsString('explicitly requests', implode(' ', $guide['instructions']));
         $this->assertStringContainsString('global scss', implode(' ', $guide['instructions']));
         $this->assertStringContainsString('homepagescss', implode(' ', $guide['instructions']));
         $this->assertSame($guide, (new get_homepage())->execute([], $identity)['menu_guide']);

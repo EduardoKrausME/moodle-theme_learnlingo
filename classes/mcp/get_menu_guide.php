@@ -57,14 +57,14 @@ final class get_menu_guide implements tool_interface {
      * @return string Tool output.
      */
     public function get_description(): string {
-        return 'MANDATORY reference for creating, editing or explaining the LearnLingo menu, '
-            . 'navbar or its CSS/SCSS. Returns the complete minimal selector hierarchy '
-            . 'for guest and logged-in navigation: navbar toggler, brand/logo, main links, '
-            . 'More dropdown, notification/message popovers and counts, dark-mode switch, '
-            . 'guest login, user avatar/dropdown and edit-mode switch. '
-            . 'Follow the returned instructions and scss_outline; style shared navigation '
-            . 'in global scss, never in homepagescss. Before writing use learnlingo_get_settings '
-            . 'to read current styles, and preview and request approval.';
+        return 'MANDATORY reference for LearnLingo menu/navbar styling. '
+            . 'The returned structure is read-only context, not a CSS selector checklist. '
+            . 'For ordinary navbar changes, override ONLY the names in allowed_variables '
+            . 'using :root and html[data-bs-theme="dark"] in global scss, never homepagescss. '
+            . 'DO NOT add height, min-height, padding or other layout rules unless the user '
+            . 'explicitly requests the exact structural change. --navbar-height may only '
+            . 'change on an explicit height request. Preserve existing controls and styles. '
+            . 'Read learnlingo_get_settings first; preview and request approval before writing.';
     }
 
     /**

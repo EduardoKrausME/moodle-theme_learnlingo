@@ -70,8 +70,10 @@ final class update_settings extends base_tool {
             . 'in global scss, homepage-only styles in scoped homepagescss, and '
             . 'custom footer styles in footerscss. For ANY navbar/menu CSS change, '
             . 'first follow the mandatory menu_guide from learnlingo_get_settings '
-            . '(or learnlingo_get_menu_guide), covering guest login, authenticated '
-            . 'icons, dropdowns and edit mode. Never silently skip an '
+            . '(or learnlingo_get_menu_guide): override ONLY allowed_variables, '
+            . 'without selector or layout changes. Height and padding changes '
+            . 'require an explicit request; --navbar-height is height-only. '
+            . 'Never silently skip an 
             . 'inconsistent footer or default logo/favicon, but preserve existing '
             . 'branding for small isolated edits or until separately approved. '
             . 'Only homepagehtml accepts PHP-rendered Mustache. Read the '
@@ -204,10 +206,11 @@ final class update_settings extends base_tool {
             'scsspre' => 'Global pre-SCSS compiled BEFORE Boost/Bootstrap; use '
                 . 'for Sass variables and compile-time overrides.',
             'scss' => 'Global SCSS compiled AFTER Boost on all pages, regardless '
-                . 'of homepage or footer modes. Put shared navbar, header and '
-                . 'menu styling here; homepagescss is for scoped homepage rules. '
-                . 'MUST consult menu_guide from learnlingo_get_settings or '
-                . 'learnlingo_get_menu_guide before generating navbar/menu CSS.',
+                . 'of homepage or footer modes. Put shared navbar variable overrides '
+                . 'here; homepagescss is for scoped homepage rules. MUST consult '
+                . 'menu_guide from learnlingo_get_settings or learnlingo_get_menu_guide: '
+                . 'override ONLY allowed_variables. Never add height or padding rules '
+                . 'unless expressly requested; --navbar-height is height-only.',
         ];
         $properties = [];
         foreach (branding_exchange::definitions() as $name => [$type, $default]) {
