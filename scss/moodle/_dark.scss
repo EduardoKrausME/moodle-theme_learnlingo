@@ -71,6 +71,18 @@
         color: var(--learnlingo-ink);
         border-color: var(--learnlingo-border);
     }
+    // Course activities keep their dark surface and a visible hover state.
+    body.path-course-view .activity-item {
+        background: var(--learnlingo-surface);
+        border: 2px solid var(--learnlingo-border) !important;
+        box-shadow: 0 3px 0 var(--learnlingo-border);
+
+        &:hover {
+            background: #2F4052;
+            border-color: #60758B !important;
+            box-shadow: 0 5px 0 #4B6277;
+        }
+    }
     .learnlingo-goal-kicker,
     .learnlingo-resume-label,
     .learnlingo-course-card-kicker,
