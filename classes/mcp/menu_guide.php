@@ -39,22 +39,55 @@ final class menu_guide {
     public static function schema(): array {
         return [
             'instructions' => [
-                'MANDATORY: before creating, editing or explaining navbar/menu SCSS, review the entire structure and cover '
-                    . 'its shared selectors, guest-only login and authenticated-only controls. Do not style only the '
-                    . 'primary navigation links or only the anonymous menu.',
-                'Keep a single minimal SCSS hierarchy rooted at .navbar.fixed-top. Reuse Moodle/Bootstrap classes; '
-                    . 'do not rebuild core/moremenu, core/user_menu or popovers and do not use unstable generated IDs.',
-                'Navbar, shared menu and header styling MUST go in the global scss setting, NOT homepagescss. '
-                    . 'Preserve unrelated SCSS, avoid duplicate/conflicting rules and use a preview/confirmation for writes.',
-                'Account for default, hover, focus-visible, active, dropdown-open, unread-count, mobile and '
-                    . 'light/dark states without interfering with notification, message, user-menu or edit-switch behaviour.',
-                'Use theme-aware color variables and verify [data-bs-theme="dark"] contrast. A fixed white navbar '
-                    . 'background can defeat dark mode, especially if an existing !important rule overrides the new CSS.',
-                'Prefer a transparent PNG logo cropped to the artwork bounds, with NO built-in blank, transparent '
-                    . 'or white padding; any desired spacing belongs to CSS, not the image canvas.',
-                'Some nodes are optional: guest login appears only when logged out; notifications, messages, '
-                    . 'profile dropdown and edit switch appear only when available to authenticated users. '
-                    . 'Handle missing nodes without separate copies of the full stylesheet.',
+                'MANDATORY: for ordinary navbar/menu styling, change ONLY the CSS custom properties listed in '
+                    . 'allowed_variables. The structure below describes existing Moodle markup for reference; '
+                    . 'it is NOT permission to create selector-based styles for each component.',
+                'Never generate or change .navbar.fixed-top, .nav-link, logo, toggler, dropdown, notification, '
+                    . 'message, avatar, search or edit-switch CSS rules just to customize navbar appearance. '
+                    . 'Use the existing theme variables instead of overriding its component selectors.',
+                'Do NOT introduce height, min-height, max-height, padding, padding-inline, padding-block, '
+                    . 'margin, width, gap, alignment or other structural/layout declarations for the navbar '
+                    . 'or its descendants unless the user explicitly requests that exact change.',
+                'Although --navbar-height is in allowed_variables, it is reserved exclusively for an explicit '
+                    . 'navbar-height request. Do not emit or modify --navbar-height for colors, logos, '
+                    . 'menu styling or other routine appearance changes.',
+                'If the user explicitly requests a height, padding or other structural change, inspect the '
+                    . 'existing theme rules and make only that requested exception. Never introduce '
+                    . 'additional height/padding changes as a side effect of a visual redesign.',
+                'Place the minimum requested CSS variable overrides in global scss, NOT homepagescss: '
+                    . 'use :root for light mode and html[data-bs-theme="dark"] for dark mode when relevant. '
+                    . 'Do not rewrite the theme SCSS source, duplicate unrelated variables or replace '
+                    . 'the existing global stylesheet; preserve all unrelated rules.',
+                'Check light/dark contrast and existing hover, focus, active and responsive behavior. '
+                    . 'Keep Moodle navigation, notifications, messages, user dropdown, dark-mode control '
+                    . 'and edit switch functional without changing their selectors or layout.',
+                'Read current settings first, prepare a preview and obtain explicit confirmation before '
+                    . 'writing the updated global scss. For an uploaded logo, prefer a transparent PNG '
+                    . 'tightly cropped to the artwork; do not add image-canvas padding.',
+            ],
+            'allowed_variables' => [
+                '--learnlingo-navbar-bg',
+                '--learnlingo-navbar-text',
+                '--learnlingo-navbar-border',
+                '--learnlingo-navbar-divider',
+                '--learnlingo-navbar-link',
+                '--learnlingo-navbar-link-hover',
+                '--learnlingo-navbar-link-hover-bg',
+                '--learnlingo-navbar-link-active',
+                '--learnlingo-navbar-link-active-bg',
+                '--learnlingo-navbar-link-active-ring',
+                '--learnlingo-navbar-user-hover-bg',
+                '--learnlingo-navbar-avatar-border',
+                '--learnlingo-navbar-avatar-ring',
+                '--learnlingo-navbar-search-bg',
+                '--learnlingo-navbar-search-text',
+                '--learnlingo-navbar-search-placeholder',
+                '--learnlingo-navbar-brandmark-text',
+                '--learnlingo-navbar-brandmark-start',
+                '--learnlingo-navbar-brandmark-end',
+                '--learnlingo-navbar-brandmark-shadow',
+                '--learnlingo-navbar-wordmark-accent',
+                '--navbar-height',
             ],
             'structure' => <<<'STRUCTURE'
 .navbar.fixed-top
@@ -97,37 +130,17 @@ final class menu_guide {
         `-- .mds-switch-label / .mds-switch-control
 STRUCTURE,
             'scss_outline' => <<<'SCSS'
-.navbar.fixed-top {
-    .navbar-toggler { /* mobile toggle */ }
-    .navbar-toggler-icon { /* mobile icon */ }
-    .navbar-brand {
-        .logo { /* image dimensions, never image-canvas padding */ }
-        .learnlingo-wordmark { /* text fallback */ }
-    }
-    .primary-navigation .moremenu {
-        .nav-link { /* default, hover and focus-visible */ }
-        .nav-link.active { /* selected page */ }
-        .dropdown-menu { /* More menu */ }
-    }
-    #usernavigation {
-        .popover-region-notifications,
-        .popover-region-messages {
-            .popover-region-toggle { /* notification/message icon */ }
-            .count-container { /* unread badge */ }
-        }
-        .popover-region-container { /* notification panel */ }
-        .kraus-layout-dark {
-            .dark-mode, .light-mode { /* light/dark control */ }
-            svg { /* icon sizing */ }
-        }
-        .divider { /* optional separator */ }
-        .usermenu-container .usermenu {
-            .login a { /* guest sign-in */ }
-            .dropdown-toggle { /* logged-in avatar */ }
-            .dropdown-menu .dropdown-item { /* profile, preferences, logout */ }
-        }
-        .editmode-switch-form { /* editing control; keep Moodle functionality */ }
-    }
+// Example only: include ONLY the variable overrides explicitly requested.
+// No .navbar selectors, height, padding or other structural declarations.
+:root {
+    --learnlingo-navbar-bg: rgba(255, 255, 255, .97);
+    --learnlingo-navbar-link: #666A74;
+    --learnlingo-navbar-link-hover: var(--bs-primary);
+}
+html[data-bs-theme="dark"] {
+    --learnlingo-navbar-bg: rgba(30, 40, 52, .98);
+    --learnlingo-navbar-link: var(--learnlingo-navbar-text);
+    --learnlingo-navbar-link-hover: #A4E88B;
 }
 SCSS,
         ];

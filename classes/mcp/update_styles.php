@@ -69,12 +69,12 @@ final class update_styles extends base_tool {
         'scsspre' => 'Global SCSS inserted before Boost/Bootstrap for Sass variables '
             . 'and compile-time settings.',
         'scss' => 'Global SCSS inserted after Boost/Bootstrap and applied to every page '
-            . 'in all homepage and footer modes. Put navbar, menu and global '
-            . 'header styles here, never in homepagescss. For any navbar/menu change '
-            . 'FIRST read menu_guide from learnlingo_get_settings or call '
-            . 'learnlingo_get_menu_guide; cover every applicable logged-in/guest '
-            . 'navbar group in its selector hierarchy. For local_boost_dark compatibility, '
-            . 'include [data-bs-theme="dark"] overrides and check text contrast.',
+            . 'in all homepage and footer modes. Put navbar variable overrides here, '
+            . 'never in homepagescss. For navbar/menu changes FIRST read menu_guide '
+            . 'from learnlingo_get_settings or call learnlingo_get_menu_guide; '
+            . 'override ONLY allowed_variables, not the selector hierarchy. Never '
+            . 'set height or padding unless explicitly requested; --navbar-height '
+            . 'is reserved for explicit height changes. Preserve dark-mode contrast.',
     ];
 
     /**
@@ -119,13 +119,14 @@ final class update_styles extends base_tool {
             . 'favicon, footermode, footerhtml and footerscss using '
             . 'learnlingo_get_settings, then request separate approvals for '
             . 'branding (learnlingo_update_settings) and footer where needed. '
-            . 'MANDATORY for menu/navbar edits: inspect the complete menu_guide '
-            . 'structure and scss_outline returned by learnlingo_get_settings '
-            . 'or call learnlingo_get_menu_guide. Cover logo, toggle, primary links, '
-            . 'More, notifications, messages, dark mode, login, user menu and edit switch '
-            . 'for guests and logged-in users as applicable. '
-            . 'Move ONLY legacy shared menu/nav rules from homepagescss to '
-            . 'scss, removing the old copies in ONE confirmed write; preserve '
+            . 'MANDATORY for menu/navbar edits: use menu_guide allowed_variables '
+            . 'returned by learnlingo_get_settings or learnlingo_get_menu_guide. '
+            . 'The selector structure is read-only: add ONLY variable overrides '
+            . 'in global scss, never arbitrary .navbar or child selectors. '
+            . 'Do not add heights, padding or layout adjustments unless expressly '
+            . 'requested, and reserve --navbar-height for explicit height requests. '
+            . 'If migrating legacy menu overrides from homepagescss, move only '
+            . 'required variable rules in ONE confirmed write; preserve '
             . 'homepage-specific rules. Other fields remain unchanged. '
             . 'Read learnlingo_get_settings first; expected_hash is REQUIRED to '
             . 'protect against concurrent changes. Always preview and obtain '
