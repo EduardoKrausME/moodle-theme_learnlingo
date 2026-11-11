@@ -74,7 +74,6 @@ final class menu_guide {
                 '--learnlingo-navbar-link-hover',
                 '--learnlingo-navbar-link-hover-bg',
                 '--learnlingo-navbar-link-active',
-                '--learnlingo-navbar-link-active-bg',
                 '--learnlingo-navbar-link-active-ring',
                 '--learnlingo-navbar-user-hover-bg',
                 '--learnlingo-navbar-avatar-border',
