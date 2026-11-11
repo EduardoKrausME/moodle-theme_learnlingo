@@ -17,7 +17,8 @@
 {{!
     @template theme_learnlingo/branding_json
 
-    JSON export and import administration page. Textareas are escaped by Mustache.
+    Two-column branding JSON export/import page. The desktop workspace is
+    hidden on phones to avoid unreliable copy/paste of very long text.
 
     Example context (json):
     {
@@ -30,63 +31,114 @@
         "exportjson": "{}"
     }
 }}
-<h2>{{#str}}jsonpagetitle, theme_learnlingo{{/str}}</h2>
-{{#saved}}
-    <div class="alert alert-success" role="status">{{#str}}jsonimportsuccess, theme_learnlingo{{/str}}</div>
-{{/saved}}
-<p>{{#str}}jsonpageintro, theme_learnlingo{{/str}}</p>
-<p class="text-muted">{{#str}}jsonfilesnote, theme_learnlingo{{/str}}</p>
+<div class="learnlingo-json-page">
+    <div class="learnlingo-json-page__mobile alert alert-warning" role="alert">
+        <h2 class="h5 mb-2">{{#str}}jsonmobiletitle, theme_learnlingo{{/str}}</h2>
+        <p class="mb-0">{{#str}}jsonmobiledesc, theme_learnlingo{{/str}}</p>
+    </div>
 
-<h3>{{#str}}jsonprompttitle, theme_learnlingo{{/str}}</h3>
-<p>{{#str}}jsonpromptdesc, theme_learnlingo{{/str}}</p>
-<label for="learnlingo-brand-prompt" class="form-label">{{#str}}jsonpromptlabel, theme_learnlingo{{/str}}</label>
-<textarea id="learnlingo-brand-prompt" class="form-control mb-2 font-monospace"
-          rows="5" readonly spellcheck="false">{{prompt}}</textarea>
-<button type="button" id="learnlingo-copy-prompt" class="btn btn-secondary mb-4">
-    {{#str}}jsoncopy, theme_learnlingo{{/str}}
-</button>
+    <div class="learnlingo-json-page__desktop">
+        <header class="learnlingo-json-page__intro">
+            <h2 class="h3 mb-2">{{#str}}jsonpagetitle, theme_learnlingo{{/str}}</h2>
+            {{#saved}}
+                <div class="alert alert-success" role="status">
+                    {{#str}}jsonimportsuccess, theme_learnlingo{{/str}}
+                </div>
+            {{/saved}}
+            <p class="mb-2">{{#str}}jsonpageintro, theme_learnlingo{{/str}}</p>
+            <p class="small text-muted mb-0">{{#str}}jsonfilesnote, theme_learnlingo{{/str}}</p>
+        </header>
 
-<h3>{{#str}}jsonimporttitle, theme_learnlingo{{/str}}</h3>
-<p>{{#str}}jsonimportdesc, theme_learnlingo{{/str}}</p>
-{{#error}}
-    <div class="alert alert-danger" role="alert">{{error}}</div>
-{{/error}}
-{{#report}}
-    <div class="alert {{reportclass}}" role="status">{{report}}</div>
-{{/report}}
-{{#hasissues}}
-    <h4>{{#str}}jsonrejectedtitle, theme_learnlingo{{/str}}</h4>
-    <ul class="list-unstyled">
-        {{#issues}}
-            <li class="mb-3 border rounded p-3">
-                <strong><code>{{name}}</code></strong>: {{reason}}
-                <details class="mt-2">
-                    <summary>{{#str}}jsonrejectedvalue, theme_learnlingo{{/str}}</summary>
-                    <pre class="border rounded p-2 mt-2 overflow-auto" style="max-height: 15rem; white-space: pre-wrap;">{{value}}</pre>
-                </details>
-            </li>
-        {{/issues}}
-    </ul>
-{{/hasissues}}
-<form action="{{actionurl}}" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="sesskey" value="{{sesskey}}">
-    <input type="hidden" name="action" value="import">
-    <label for="learnlingo-brand-json-file" class="form-label">
-        {{#str}}jsonuploadlabel, theme_learnlingo{{/str}}
-    </label>
-    <input id="learnlingo-brand-json-file" name="importfile" type="file"
-           accept=".json,application/json" class="form-control mb-2">
-    <p class="text-muted">{{#str}}jsonuploadhint, theme_learnlingo{{/str}}</p>
-    <label for="learnlingo-brand-json" class="form-label">
-        {{#str}}jsonimportlabel, theme_learnlingo{{/str}}
-    </label>
-    <textarea id="learnlingo-brand-json" name="importjson" class="form-control mb-3 font-monospace"
-              rows="20" spellcheck="false">{{importjson}}</textarea>
-    <p class="text-muted">{{#str}}jsonimportwarning, theme_learnlingo{{/str}}</p>
-    <input type="submit" value="{{#str}}jsonimportbutton, theme_learnlingo{{/str}}" class="btn btn-primary">
-</form>
+        <div class="learnlingo-json-page__columns">
+            <section class="card learnlingo-json-page__panel" aria-labelledby="learnlingo-json-prompt-title">
+                <div class="card-body">
+                    <h3 id="learnlingo-json-prompt-title" class="h4 mb-2">
+                        {{#str}}jsonprompttitle, theme_learnlingo{{/str}}
+                    </h3>
+                    <p class="text-muted">{{#str}}jsonpromptdesc, theme_learnlingo{{/str}}</p>
+                    <label for="learnlingo-brand-prompt" class="form-label">
+                        {{#str}}jsonpromptlabel, theme_learnlingo{{/str}}
+                    </label>
+                    <textarea id="learnlingo-brand-prompt"
+                              class="form-control font-monospace learnlingo-json-page__textarea"
+                              rows="18" readonly spellcheck="false">{{prompt}}</textarea>
+                    <div class="mt-3">
+                        <button type="button" id="learnlingo-copy-prompt" class="btn btn-primary">
+                            {{#str}}jsoncopy, theme_learnlingo{{/str}}
+                        </button>
+                    </div>
 
-<h3 class="mt-5">{{#str}}jsonrawtitle, theme_learnlingo{{/str}}</h3>
-<p>{{#str}}jsonrawdesc, theme_learnlingo{{/str}}</p>
-<textarea id="learnlingo-brand-raw" class="form-control font-monospace"
-          rows="10" readonly spellcheck="false">{{exportjson}}</textarea>
+                </div>
+            </section>
+
+            <section class="card learnlingo-json-page__panel" aria-labelledby="learnlingo-json-import-title">
+                <div class="card-body">
+                    <h3 id="learnlingo-json-import-title" class="h4 mb-2">
+                        {{#str}}jsonimporttitle, theme_learnlingo{{/str}}
+                    </h3>
+                    <p class="text-muted">{{#str}}jsonimportdesc, theme_learnlingo{{/str}}</p>
+                    {{#error}}
+                        <div class="alert alert-danger" role="alert">{{error}}</div>
+                    {{/error}}
+                    {{#report}}
+                        <div class="alert {{reportclass}}" role="status">{{report}}</div>
+                    {{/report}}
+                    {{#hasissues}}
+                        <h4 class="h5">{{#str}}jsonrejectedtitle, theme_learnlingo{{/str}}</h4>
+                        <ul class="list-unstyled">
+                            {{#issues}}
+                                <li class="mb-3 border rounded p-3">
+                                    <strong><code>{{name}}</code></strong>: {{reason}}
+                                    <details class="mt-2">
+                                        <summary>{{#str}}jsonrejectedvalue, theme_learnlingo{{/str}}</summary>
+                                        <pre class="border rounded p-2 mt-2 overflow-auto learnlingo-json-page__rejected">{{value}}</pre>
+                                    </details>
+                                </li>
+                            {{/issues}}
+                        </ul>
+                    {{/hasissues}}
+
+                    <form action="{{actionurl}}" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="sesskey" value="{{sesskey}}">
+                        <input type="hidden" name="action" value="import">
+
+                        <label for="learnlingo-brand-json-file" class="form-label">
+                            {{#str}}jsonuploadlabel, theme_learnlingo{{/str}}
+                        </label>
+                        <input id="learnlingo-brand-json-file" name="importfile" type="file"
+                               accept=".json,application/json" class="form-control mb-2">
+                        <p class="small text-muted mb-3">
+                            {{#str}}jsonuploadhint, theme_learnlingo{{/str}}
+                        </p>
+
+                        <label for="learnlingo-brand-json" class="form-label">
+                            {{#str}}jsonimportlabel, theme_learnlingo{{/str}}
+                        </label>
+                        <textarea id="learnlingo-brand-json" name="importjson"
+                                  class="form-control font-monospace learnlingo-json-page__textarea"
+                                  rows="18" spellcheck="false">{{importjson}}</textarea>
+                        <p class="small text-muted mt-3">
+                            {{#str}}jsonimportwarning, theme_learnlingo{{/str}}
+                        </p>
+                        <button type="submit" class="btn btn-primary">
+                            {{#str}}jsonimportbutton, theme_learnlingo{{/str}}
+                        </button>
+                    </form>
+                </div>
+            </section>
+        </div>
+
+        <section class="card learnlingo-json-page__panel learnlingo-json-page__raw-panel"
+                 aria-labelledby="learnlingo-json-raw-title">
+            <div class="card-body">
+                <h3 id="learnlingo-json-raw-title" class="h4 mb-2">
+                    {{#str}}jsonrawtitle, theme_learnlingo{{/str}}
+                </h3>
+                <p class="text-muted">{{#str}}jsonrawdesc, theme_learnlingo{{/str}}</p>
+                <textarea id="learnlingo-brand-raw"
+                          class="form-control font-monospace learnlingo-json-page__raw"
+                          rows="12" readonly spellcheck="false">{{exportjson}}</textarea>
+            </div>
+        </section>
+    </div>
+</div>
