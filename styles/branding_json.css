@@ -40,12 +40,8 @@
     resize: vertical;
 }
 
-.learnlingo-json-page__backup {
-    border-top: 1px solid var(--bs-border-color, #dee2e6);
-}
-
-.learnlingo-json-page__backup summary {
-    cursor: pointer;
+.learnlingo-json-page__raw-panel {
+    margin-top: 1.5rem;
 }
 
 .learnlingo-json-page__rejected {
