@@ -49,8 +49,10 @@ if ($record) {
 } else {
     $form->set_data((object)['categoryid' => $categoryid]);
 }
+// The page tree lives on the dedicated Pages settings tab.
+$pagesurl = new moodle_url('/admin/settings.php', ['section' => 'theme_learnlingo_pages']);
 if ($form->is_cancelled()) {
-    redirect(new moodle_url('/admin/settings.php', ['section' => 'themesettinglearnlingo']));
+    redirect($pagesurl);
 }
 if ($data = $form->get_data()) {
     $data->id = $id;
@@ -67,5 +69,13 @@ $PAGE->requires->js_call_amd('theme_learnlingo/page_editor', 'init', [[
     'collapse' => get_string('codeeditorcollapse', 'theme_learnlingo'),
 ]]);
 echo $OUTPUT->header();
+if ($id > 0) {
+    // Keep a direct route back to the complete page tree while editing.
+    echo html_writer::div(
+        html_writer::link($pagesurl, get_string('custompagesbacktolist', 'theme_learnlingo'),
+            ['class' => 'btn btn-outline-secondary']),
+        'mb-3'
+    );
+}
 $form->display();
 echo $OUTPUT->footer();
