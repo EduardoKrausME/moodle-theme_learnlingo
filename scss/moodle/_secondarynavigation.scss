@@ -6,4 +6,21 @@
     .secondary-navigation {
         box-shadow: 0 4px 0 rgba(225, 225, 225, 0.18);
     }
+    .btn-primary,
+    .addtagcoll a,
+    .path-admin-tag .addstandardtags a,
+    .gradereport_history_usp .usp-finish input,
+    .forum-post-footer a,
+    .mod_quiz-next-nav,
+    .addbloglink a,
+    .last-add-menu .dropdown-btn,
+    #siteconfiglink a,
+    #enterlink p:nth-of-type(1) a,
+    #enterlink p:nth-of-type(2) a,
+    #addcontrols input,
+    #page-mod-forum-index .subscription .helplink:nth-of-type(1) a,
+    #page-mod-forum-view .subscription .helplink a {
+        box-shadow: none;
+        background-color: #XXX;
+    }
 }
