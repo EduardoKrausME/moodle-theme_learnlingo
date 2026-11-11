@@ -1,0 +1,71 @@
+/*
+ * LearnLingo JSON branding administration.
+ * Scope all styles to this page so other theme administration screens remain unchanged.
+ */
+.learnlingo-json-page {
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.learnlingo-json-page__intro {
+  margin-bottom: 1.5rem;
+}
+
+.learnlingo-json-page__columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.learnlingo-json-page__panel {
+  min-width: 0;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.learnlingo-json-page__panel .card-body {
+  padding: 1.5rem;
+}
+
+.learnlingo-json-page__textarea {
+  width: 100%;
+  min-height: 23rem;
+  resize: vertical;
+}
+
+.learnlingo-json-page__raw {
+  width: 100%;
+  min-height: 12rem;
+  resize: vertical;
+}
+
+.learnlingo-json-page__raw-panel {
+  margin-top: 1.5rem;
+}
+
+.learnlingo-json-page__rejected {
+  max-height: 15rem;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.learnlingo-json-page__mobile {
+  display: none;
+}
+
+@media (max-width: 991.98px) {
+  .learnlingo-json-page__columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 767.98px) {
+  .learnlingo-json-page__desktop {
+    display: none;
+  }
+  .learnlingo-json-page__mobile {
+    display: block;
+  }
+}
+
+/*# sourceMappingURL=branding_json.css.map */
