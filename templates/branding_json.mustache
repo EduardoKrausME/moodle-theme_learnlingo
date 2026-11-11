@@ -68,17 +68,6 @@
                         </button>
                     </div>
 
-                    <details class="learnlingo-json-page__backup mt-4 pt-3">
-                        <summary class="font-weight-bold">
-                            {{#str}}jsonrawtitle, theme_learnlingo{{/str}}
-                        </summary>
-                        <p class="small text-muted mt-3">
-                            {{#str}}jsonrawdesc, theme_learnlingo{{/str}}
-                        </p>
-                        <textarea id="learnlingo-brand-raw"
-                                  class="form-control font-monospace learnlingo-json-page__raw"
-                                  rows="10" readonly spellcheck="false">{{exportjson}}</textarea>
-                    </details>
                 </div>
             </section>
 
@@ -138,5 +127,18 @@
                 </div>
             </section>
         </div>
+
+        <section class="card learnlingo-json-page__panel learnlingo-json-page__raw-panel"
+                 aria-labelledby="learnlingo-json-raw-title">
+            <div class="card-body">
+                <h3 id="learnlingo-json-raw-title" class="h4 mb-2">
+                    {{#str}}jsonrawtitle, theme_learnlingo{{/str}}
+                </h3>
+                <p class="text-muted">{{#str}}jsonrawdesc, theme_learnlingo{{/str}}</p>
+                <textarea id="learnlingo-brand-raw"
+                          class="form-control font-monospace learnlingo-json-page__raw"
+                          rows="12" readonly spellcheck="false">{{exportjson}}</textarea>
+            </div>
+        </section>
     </div>
 </div>
