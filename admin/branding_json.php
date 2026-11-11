@@ -115,6 +115,7 @@ $export = branding_exchange::export();
 $prompt = branding_exchange::prompt($export);
 $exportjson = branding_exchange::json($export);
 
+$PAGE->requires->css(new moodle_url('/theme/learnlingo/styles/branding_json.css'));
 $PAGE->requires->js_call_amd('theme_learnlingo/branding_json', 'init');
 
 echo $OUTPUT->header();
