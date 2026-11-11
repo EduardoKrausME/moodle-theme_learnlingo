@@ -73,7 +73,7 @@ final class update_settings extends base_tool {
             . '(or learnlingo_get_menu_guide): override ONLY allowed_variables, '
             . 'without selector or layout changes. Height and padding changes '
             . 'require an explicit request; --navbar-height is height-only. '
-            . 'Never silently skip an 
+            . 'Never silently skip an '
             . 'inconsistent footer or default logo/favicon, but preserve existing '
             . 'branding for small isolated edits or until separately approved. '
             . 'Only homepagehtml accepts PHP-rendered Mustache. Read the '
