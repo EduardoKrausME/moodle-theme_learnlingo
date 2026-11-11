@@ -72,7 +72,7 @@ final class update_styles extends base_tool {
             . 'in all homepage and footer modes. Put navbar variable overrides here, '
             . 'never in homepagescss. For navbar/menu changes FIRST read menu_guide '
             . 'from learnlingo_get_settings or call learnlingo_get_menu_guide; '
-            . 'override ONLY allowed_variables, not the selector hierarchy. Never '
+            . 'override ONLY allowed_variables, not individual component selectors. Never '
             . 'set height or padding unless explicitly requested; --navbar-height '
             . 'is reserved for explicit height changes. Preserve dark-mode contrast.',
     ];
@@ -121,8 +121,8 @@ final class update_styles extends base_tool {
             . 'branding (learnlingo_update_settings) and footer where needed. '
             . 'MANDATORY for menu/navbar edits: use menu_guide allowed_variables '
             . 'returned by learnlingo_get_settings or learnlingo_get_menu_guide. '
-            . 'The selector structure is read-only: add ONLY variable overrides '
-            . 'in global scss, never arbitrary .navbar or child selectors. '
+            . 'Add ONLY variable overrides in global scss, never arbitrary '
+            . '.navbar or child selectors. '
             . 'Do not add heights, padding or layout adjustments unless expressly '
             . 'requested, and reserve --navbar-height for explicit height requests. '
             . 'If migrating legacy menu overrides from homepagescss, move only '

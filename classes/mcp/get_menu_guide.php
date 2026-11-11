@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * MCP READ tool exposing the full LearnLingo navbar structure.
+ * MCP READ tool exposing LearnLingo navbar variable customization rules.
  *
  * @package theme_learnlingo
  * @copyright 2026 Eduardo Kraus
@@ -30,7 +30,7 @@ use local_mcp\read\tool_interface;
 use local_mcp\security\authenticated_identity;
 
 /**
- * Give MCP clients the actual logged-in and guest navbar selector hierarchy.
+ * Give MCP clients navbar variable customization instructions and an allowlist.
  */
 final class get_menu_guide implements tool_interface {
     /**
@@ -48,7 +48,7 @@ final class get_menu_guide implements tool_interface {
      * @return string Tool output.
      */
     public function get_title(): string {
-        return 'LearnLingo menu structure and SCSS guide';
+        return 'LearnLingo navbar CSS variable guide';
     }
 
     /**
@@ -58,7 +58,6 @@ final class get_menu_guide implements tool_interface {
      */
     public function get_description(): string {
         return 'MANDATORY reference for LearnLingo menu/navbar styling. '
-            . 'The returned structure is read-only context, not a CSS selector checklist. '
             . 'For ordinary navbar changes, override ONLY the names in allowed_variables '
             . 'using :root and html[data-bs-theme="dark"] in global scss, never homepagescss. '
             . 'DO NOT add height, min-height, padding or other layout rules unless the user '

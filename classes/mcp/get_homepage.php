@@ -63,7 +63,7 @@ final class get_homepage implements tool_interface {
             . 'in moodle mode. homepagescss is compiled on every page in every homepage '
             . 'mode, so it is NOT automatically homepage-scoped; reserve it for '
             . 'rules scoped to homepage markup. The returned menu_guide contains the '
-            . 'MANDATORY navbar variable allowlist and read-only selector structure; '
+            . 'MANDATORY navbar variable allowlist and customization instructions; '
             . 'also available via learnlingo_get_menu_guide. Only override its allowed '
             . 'CSS variables for navbar styling; do not change height or padding '
             . 'unless expressly requested. Put navbar overrides in global scss. '

@@ -76,7 +76,7 @@ final class get_settings implements tool_interface {
             . 'updating. Prefer a transparent PNG site logo tightly cropped on all '
             . 'four edges: NEVER include empty/transparent/white margins inside the '
             . 'image itself. Do not confuse embedded image padding with CSS spacing. '
-            . 'The response includes menu_guide with read-only navbar structure '
+            . 'The response includes menu_guide with navbar styling instructions '
             . 'and an exhaustive allowed_variables list. For ANY menu/navbar CSS task, '
             . 'follow that variable-only guide (or call learnlingo_get_menu_guide): '
             . 'never add height or padding rules unless explicitly requested. '

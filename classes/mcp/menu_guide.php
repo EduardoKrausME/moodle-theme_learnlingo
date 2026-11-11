@@ -25,14 +25,11 @@
 namespace theme_learnlingo\mcp;
 
 /**
- * Canonical, reusable menu structure for MCP clients.
- *
- * The structure describes existing Moodle markup; it does not replace templates
- * or constrain which menu items are available to a given user.
+ * Canonical menu customization instructions and CSS variable allowlist for MCP clients.
  */
 final class menu_guide {
     /**
-     * Return the complete navbar coverage reference for AI-generated SCSS.
+     * Return the navbar CSS variable customization reference for AI-generated SCSS.
      *
      * @return array
      */
@@ -40,8 +37,7 @@ final class menu_guide {
         return [
             'instructions' => [
                 'MANDATORY: for ordinary navbar/menu styling, change ONLY the CSS custom properties listed in '
-                    . 'allowed_variables. The structure below describes existing Moodle markup for reference; '
-                    . 'it is NOT permission to create selector-based styles for each component.',
+                    . 'allowed_variables. Do not create selector-based styles for navbar components.',
                 'Never generate or change .navbar.fixed-top, .nav-link, logo, toggler, dropdown, notification, '
                     . 'message, avatar, search or edit-switch CSS rules just to customize navbar appearance. '
                     . 'Use the existing theme variables instead of overriding its component selectors.',
@@ -88,46 +84,6 @@ final class menu_guide {
                 '--learnlingo-navbar-wordmark-accent',
                 '--navbar-height',
             ],
-            'structure' => <<<'STRUCTURE'
-.navbar.fixed-top
-|-- .container-fluid
-|-- .navbar-toggler
-|   `-- .navbar-toggler-icon
-|-- .navbar-brand.learnlingo-navbar-brand
-|   |-- .logo
-|   `-- .learnlingo-wordmark (when no logo)
-|-- .primary-navigation
-|   `-- .moremenu
-|       `-- .more-nav.navbar-nav
-|           |-- .nav-item > .nav-link
-|           |-- .nav-link.active
-|           `-- .dropdownmoremenu > .dropdown-menu (More)
-`-- #usernavigation
-    |-- .popover-region-notifications [logged in]
-    |   |-- .popover-region-toggle
-    |   |-- .count-container
-    |   `-- .popover-region-container
-    |       |-- .popover-region-header-container
-    |       |-- .popover-region-content-container
-    |       `-- .popover-region-footer-container
-    |-- .popover-region-messages [logged in]
-    |   |-- .popover-region-toggle
-    |   `-- .count-container
-    |-- .kraus-layout-dark [both]
-    |   |-- .dark-mode
-    |   |-- .light-mode
-    |   `-- svg
-    |-- .divider
-    |-- .usermenu-container [both]
-    |   `-- .usermenu
-    |       |-- .login a [guest]
-    |       `-- .dropdown [logged in]
-    |           |-- .dropdown-toggle / #user-menu-toggle
-    |           `-- .dropdown-menu / #user-action-menu
-    |               `-- .dropdown-item
-    `-- .editmode-switch-form [when permitted]
-        `-- .mds-switch-label / .mds-switch-control
-STRUCTURE,
             'scss_outline' => <<<'SCSS'
 // Example only: include ONLY the variable overrides explicitly requested.
 // No .navbar selectors, height, padding or other structural declarations.

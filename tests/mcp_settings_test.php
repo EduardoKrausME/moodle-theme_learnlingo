@@ -141,8 +141,7 @@ final class mcp_settings_test extends advanced_testcase {
     }
 
     /**
-     * MCP must always expose the complete minimal menu structure when an AI
-     * consults the theme to produce navbar CSS for guests and signed-in users.
+     * MCP must expose a variable allowlist without publishing a selector structure.
      */
     public function test_menu_guide_is_available_in_all_relevant_read_tools(): void {
         $this->require_mcp();
@@ -155,24 +154,14 @@ final class mcp_settings_test extends advanced_testcase {
         $guide = $menu->execute([], $identity);
 
         $this->assertNotEmpty($guide['instructions']);
-        foreach ([
-            '.navbar.fixed-top', '.navbar-toggler', '.navbar-toggler-icon',
-            '.navbar-brand.learnlingo-navbar-brand', '.logo', '.learnlingo-wordmark',
-            '.primary-navigation', '.moremenu', '.nav-link.active', '.dropdownmoremenu',
-            '#usernavigation', '.popover-region-notifications', '.popover-region-messages',
-            '.popover-region-toggle', '.count-container', '.popover-region-container',
-            '.kraus-layout-dark', '.dark-mode', '.light-mode', '.usermenu-container',
-            '.login a', '.dropdown-toggle', '.dropdown-item', '.editmode-switch-form',
-        ] as $selector) {
-            $this->assertStringContainsString($selector, $guide['structure']);
-        }
+        $this->assertArrayNotHasKey('structure', $guide);
         $this->assertStringContainsString(':root {', $guide['scss_outline']);
         $this->assertStringContainsString('html[data-bs-theme="dark"]', $guide['scss_outline']);
         $this->assertStringNotContainsString('.navbar.fixed-top {', $guide['scss_outline']);
         $this->assertStringNotContainsString('padding:', $guide['scss_outline']);
         $this->assertStringNotContainsString('height:', $guide['scss_outline']);
         $this->assertContains('--navbar-height', $guide['allowed_variables']);
-        $this->assertCount(22, $guide['allowed_variables']);
+        $this->assertCount(21, $guide['allowed_variables']);
         $this->assertSame($guide['allowed_variables'], array_values(array_unique($guide['allowed_variables'])));
         $scss = file_get_contents(__DIR__ . '/../scss/moodle/_navbar.scss');
         preg_match_all('/^\\s*(--[a-z0-9-]+)\\s*:/m', $scss, $matches);
