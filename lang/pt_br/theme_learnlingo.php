@@ -72,6 +72,7 @@ $string['coursexpincourse'] = 'XP no curso';
 $string['coursexplevel'] = 'Nível atual';
 $string['coursexpreward'] = '+{$a} XP';
 $string['custompagesaccess'] = 'Acesso';
+$string['custompagesbacktolist'] = 'Voltar a todas as páginas';
 $string['custompagescategory'] = 'Categoria';
 $string['custompagescategoryname'] = 'Nome da categoria';
 $string['custompagescategorynotempty'] = 'Esta categoria contém páginas. Mova-as para a raiz ou para outra categoria antes de excluí-la.';
