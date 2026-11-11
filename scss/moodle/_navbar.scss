@@ -10,8 +10,7 @@
     --learnlingo-navbar-link-hover: var(--bs-primary);
     --learnlingo-navbar-link-hover-bg: #{rgba($primary, .07)};
     --learnlingo-navbar-link-active: var(--bs-primary);
-    --learnlingo-navbar-link-active-bg: #{rgba($primary, .09)};
-    --learnlingo-navbar-link-active-ring: #{rgba($primary, .03)};
+    --learnlingo-navbar-link-active-ring: #{rgba($primary, .6)};
 
     // User menu and avatar.
     --learnlingo-navbar-user-hover-bg: #{rgba($primary, .06)};
@@ -46,8 +45,7 @@ html[data-bs-theme="dark"] {
     --learnlingo-navbar-link-hover: #A4E88B;
     --learnlingo-navbar-link-hover-bg: rgba(164, 232, 139, .11);
     --learnlingo-navbar-link-active: #A4E88B;
-    --learnlingo-navbar-link-active-bg: rgba(164, 232, 139, .16);
-    --learnlingo-navbar-link-active-ring: rgba(164, 232, 139, .12);
+    --learnlingo-navbar-link-active-ring: rgba(164, 232, 139, .6);
 
     // User menu and avatar.
     --learnlingo-navbar-user-hover-bg: rgba(164, 232, 139, .10);
@@ -124,7 +122,7 @@ html .navbar.fixed-top {
 
     // Navigation links.
     .primary-navigation .moremenu .nav {
-        margin-top: 11px;
+        margin-top: 12px;
     }
     .nav-link {
         display: flex;
@@ -145,14 +143,12 @@ html .navbar.fixed-top {
         &:hover,
         &:focus-visible {
             color: var(--learnlingo-navbar-link-hover);
-            background: var(--learnlingo-navbar-link-hover-bg);
         }
 
         &.active,
         &[aria-current="page"],
         &[aria-selected="true"] {
             color: var(--learnlingo-navbar-link-active);
-            background: var(--learnlingo-navbar-link-active-bg);
             box-shadow: var(--learnlingo-navbar-link-active-ring) 0px -3px 0px inset;
         }
     }
