@@ -227,6 +227,8 @@ if ($ADMIN->fulltree) {
         $OUTPUT->render_from_template('theme_learnlingo/page_tree',
             pages::tree_data())
     ));
+    // Style the pages administration regardless of the currently active Moodle theme.
+    $PAGE->requires->css(new moodle_url('/theme/learnlingo/styles/page_tree.css'));
     $settings->add($page);
 
     $page = new admin_settingpage(
