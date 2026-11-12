@@ -1,20 +1,26 @@
-@mixin register-font($family, $file, $weights, $style: normal) {
-    @each $weight in $weights {
-        @font-face {
-            font-family: $family;
-            src: unquote("url([[font:theme|#{$file}-#{$style}-#{$weight}.woff]]) format('woff')");
-            font-weight: $weight;
-            font-style: $style;
-            font-display: swap;
-        }
+@mixin register-font($family, $file, $style: normal) {
+    @font-face {
+        font-family: $family;
+        src: unquote("url([[font:theme|#{$file}-#{$style}.ttf]]) format('truetype')");
+        font-style: $style;
+        font-display: swap;
     }
 }
 
+// Inter.
+@include register-font("Inter", "Inter");
+@include register-font("Inter", "Inter", italic);
+
+// DM Sans.
+@include register-font("DM Sans", "DMSans");
+@include register-font("DM Sans", "DMSans", italic);
+
 // Montserrat.
-@include register-font("Montserrat", "Montserrat", (400, 500, 700));
+@include register-font("Montserrat", "Montserrat");
+@include register-font("Montserrat", "Montserrat", italic);
 h1, h2, h3, h4, h5, h6 {
     font-family: "Montserrat", sans-serif;
-    font-weight: 750;
+    font-weight: 700;
 }
 
 // Material Icons.

@@ -30,6 +30,7 @@ body {
     background: var(--bs-canvas);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    font-family: $font-family-sans-serif;
     &.learnlingo-html-home-fullwidth {
         #page.drawers div[role=main] {
             padding-left: 0 !important;
