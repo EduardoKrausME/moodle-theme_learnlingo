@@ -65,21 +65,24 @@ final class dark_mode_test extends advanced_testcase {
 
         $light = file_get_contents($CFG->dirroot . '/theme/learnlingo/scss/_poss.scss');
         $dark = file_get_contents($CFG->dirroot . '/theme/learnlingo/scss/moodle/_dark.scss');
+        // Homepage tokens are aliases of the shared theme palette in both modes.
         foreach ([
-            '--learnlingo-home-canvas',
-            '--learnlingo-home-surface',
-            '--learnlingo-home-ink',
-            '--learnlingo-home-muted',
-            '--learnlingo-home-border',
-        ] as $token) {
-            $this->assertStringContainsString($token, $light);
+            '--bs-home-canvas: var(--bs-canvas);',
+            '--bs-home-surface: var(--bs-surface);',
+            '--bs-home-ink: var(--bs-ink);',
+            '--bs-home-muted: var(--bs-muted);',
+            '--bs-home-border: var(--bs-border);',
+        ] as $declaration) {
+            $this->assertStringContainsString($declaration, $light);
         }
         $this->assertStringContainsString('.learnlingo-html-home,', $light);
         $this->assertStringContainsString('.learnlingo-home-intro {', $light);
         $this->assertStringContainsString('color-scheme: light;', $light);
+        $this->assertStringContainsString('[data-bs-theme="dark"]:root {', $light);
+        $this->assertStringContainsString('color-scheme: dark;', $light);
         $this->assertStringContainsString('[data-bs-theme="dark"]', $dark);
-        $this->assertStringContainsString('.learnlingo-html-home,', $dark);
-        $this->assertStringContainsString('color-scheme: dark;', $dark);
+        $this->assertStringContainsString('.learnlingo-home-course-card,', $dark);
+        $this->assertStringContainsString('background: var(--bs-surface);', $dark);
 
         $schema = homepage_context::schema();
         $instructions = implode(' ', $schema['instructions']);
