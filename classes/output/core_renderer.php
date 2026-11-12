@@ -89,10 +89,11 @@ class core_renderer extends \theme_boost\output\core_renderer {
             ));
         }
 
+        $contextheader = $this->context_header();
         $header = [
             "settingsmenu" => $this->context_header_settings_menu(),
-            "contextheader" => $this->context_header(),
-            "hasnavbar" => empty($this->page->layout_options['nonavbar']),
+            "contextheader" => $contextheader,
+            "hasnavbar" => empty($this->page->layout_options['nonavbar']) && isset($contextheader[3]),
             "navbar" => $this->navbar(),
             "pageheadingbutton" => $this->page_heading_button(),
             "courseheader" => $this->course_header(),
@@ -102,7 +103,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $header["welcomemessage"] = core_user::welcome_message();
         }
 
-        if (!empty(array_filter($header))) {
+        if (empty(array_filter($header))) {
             return "";
         }
         return $this->render_from_template("theme_learnlingo/core/full_header", $header);
