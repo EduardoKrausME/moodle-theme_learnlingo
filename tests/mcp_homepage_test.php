@@ -90,7 +90,12 @@ final class mcp_homepage_test extends advanced_testcase {
         $before = $reader->execute([], $identity);
         $this->assertArrayHasKey('mustache', $before);
         $this->assertArrayHasKey('menu_guide', $before);
-        $this->assertStringContainsString('#usernavigation', $before['menu_guide']['structure']);
+        $this->assertArrayHasKey('instructions', $before['menu_guide']);
+        $this->assertArrayHasKey('allowed_variables', $before['menu_guide']);
+        $this->assertArrayHasKey('scss_outline', $before['menu_guide']);
+        $this->assertNotEmpty($before['menu_guide']['instructions']);
+        $this->assertContains('--learnlingo-navbar-bg', $before['menu_guide']['allowed_variables']);
+        $this->assertStringContainsString(':root {', $before['menu_guide']['scss_outline']);
         $this->assertSame('homepagehtml', $before['mustache']['field']);
         $this->assertArrayHasKey('mycourses', $before['mustache']['fields']);
         $this->assertArrayHasKey('coursepagination', $before['mustache']['fields']);
