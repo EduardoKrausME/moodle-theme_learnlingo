@@ -1,11 +1,8 @@
-
 @mixin register-font($family, $file, $weights, $style: normal) {
     @each $weight in $weights {
         @font-face {
             font-family: $family;
-            src: unquote(
-                            "url([[font:theme|#{$file}-#{$style}-#{$weight}.woff]]) format('woff')"
-            );
+            src: unquote("url([[font:theme|#{$file}-#{$style}-#{$weight}.woff]]) format('woff')");
             font-weight: $weight;
             font-style: $style;
             font-display: swap;
@@ -13,42 +10,12 @@
     }
 }
 
-// Inter.
-@include register-font("Inter", "Inter", (100, 200, 300, 400, 500, 600, 700, 800, 900));
-@include register-font("Inter", "Inter", (100, 200, 300, 400, 500, 600, 700, 800, 900), italic);
-
-// Noto Sans.
-@include register-font("Noto Sans", "NotoSans", (100, 200, 300, 400, 500, 600, 700, 800, 900));
-@include register-font("Noto Sans", "NotoSans", (100, 200, 300, 400, 500, 600, 700, 800, 900), italic);
-
-// Open Sans.
-@include register-font("Open Sans", "OpenSans", (300, 400, 500, 600, 700, 800));
-@include register-font("Open Sans", "OpenSans", (300, 400, 500, 600, 700, 800), italic);
-
-// Lato.
-@include register-font("Lato", "Lato", (300, 400, 700));
-
 // Montserrat.
 @include register-font("Montserrat", "Montserrat", (400, 500, 700));
-
-// Merriweather.
-@include register-font("Merriweather", "Merriweather", (400, 700));
-
-// Oswald.
-@include register-font("Oswald", "Oswald", (400, 700));
-
-// Playfair Display.
-@include register-font("Playfair Display", "PlayfairDisplay", (400, 700));
-@include register-font("Playfair Display", "PlayfairDisplay", (400), italic);
-
-// Poppins.
-@include register-font("Poppins", "Poppins", (400, 500, 700));
-
-// Raleway.
-@include register-font("Raleway", "Raleway", (400, 700));
-
-// Roboto.
-@include register-font("Roboto", "Roboto", (400, 700));
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 750;
+}
 
 // Material Icons.
 @font-face {
