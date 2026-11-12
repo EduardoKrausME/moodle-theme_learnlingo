@@ -37,7 +37,7 @@
 <div class="card course-card" role="listitem"
      data-region="course-content"
      data-course-id="{{{id}}}">
-    <a href="{{viewurl}}" tabindex="-1">
+    <a href="{{{viewurl}}}" tabindex="-1">
         <div class="card-img-top" style='background-image: url("{{{courseimage}}}");'>
             <span class="visually-hidden">{{fullname}}</span>
         </div>
@@ -57,7 +57,7 @@
                         </div>
                     </div>
                 {{/showshortname}}
-                <a href="{{viewurl}}" class="aalink coursename me-2 mb-1">
+                <a href="{{{viewurl}}}" class="aalink coursename me-2 mb-1">
                     {{> core_course/favouriteicon }}
                     <span class="visually-hidden">
                         {{#str}}aria:coursename, core_course{{/str}}
