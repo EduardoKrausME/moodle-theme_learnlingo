@@ -41,9 +41,7 @@ $initial = json_encode([
     'scss' => $data['scss'],
     'title' => $data['title'],
     'urls' => [
-        'list' => theme_learnlingo_editor_action_url('file-list', $target, $id)->out(false),
         'upload' => theme_learnlingo_editor_action_url('file-upload', $target, $id)->out(false),
-        'delete' => theme_learnlingo_editor_action_url('file-delete', $target, $id)->out(false),
     ],
 ], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT |
     JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
@@ -54,6 +52,9 @@ $esc = static function(string $value): string {
 
 $replacements = [
     '%%LL_LANG%%' => $esc(current_language()),
+    '%%LL_MOODLE_HEAD%%' => $PAGE->requires->get_head_code($PAGE, $OUTPUT),
+    '%%LL_MOODLE_BODY%%' => $PAGE->requires->get_top_of_body_code($OUTPUT),
+    '%%LL_MOODLE_FOOT%%' => $PAGE->requires->get_end_code(),
     '%%LL_TITLE%%' => $esc($data['title']),
     '%%LL_VISUAL_LABEL%%' => $esc(get_string('visualeditormode', 'theme_learnlingo')),
     '%%LL_SOURCE_LABEL%%' => $esc(get_string('visualeditorsource', 'theme_learnlingo')),
