@@ -36,9 +36,9 @@ final class mds_overrides_test extends advanced_testcase {
     public function test_semantic_tokens_and_dark_mode_are_present(): void {
         global $CFG;
 
-        $scss = file_get_contents($CFG->dirroot . '/theme/learnlingo/scss/_mds_overrides.scss');
+        $scss = file_get_contents($CFG->dirroot . '/theme/learnlingo/scss/_poss.scss');
         preg_match_all('/--mds-[a-z0-9-]+\\s*:/', $scss, $matches);
-        $this->assertGreaterThanOrEqual(285, count($matches[0]));
+        $this->assertGreaterThanOrEqual(354, count($matches[0]));
 
         foreach ([
             '--mds-typography-line-height-paragraph-lg:',
@@ -57,19 +57,23 @@ final class mds_overrides_test extends advanced_testcase {
     }
 
     /**
-     * The override must load after Boost but before the site-wide custom SCSS.
+     * Both light and dark token layers stay in the post-Boot stylesheet.
      */
-    public function test_overrides_are_loaded_by_the_extra_scss_callback(): void {
+    public function test_overrides_are_in_poss_scss_after_component_imports(): void {
         global $CFG;
 
+        $scss = file_get_contents($CFG->dirroot . '/theme/learnlingo/scss/_poss.scss');
         $lib = file_get_contents($CFG->dirroot . '/theme/learnlingo/lib.php');
-        $posbase = strpos($lib, 'scss/_poss.scss');
-        $posmds = strpos($lib, 'scss/_mds_overrides.scss');
-        $poscustom = strpos($lib, '$theme->settings->scss');
-        $this->assertNotFalse($posbase);
+
+        $posimport = strpos($scss, '@import "moodle/dark";');
+        $posmds = strpos($scss, '// Moodle Design System tokens for LearnLingo.');
+        $posdark = strpos($scss, ':root[data-bs-theme="dark"],');
+        $this->assertNotFalse($posimport);
         $this->assertNotFalse($posmds);
-        $this->assertNotFalse($poscustom);
-        $this->assertGreaterThan($posbase, $posmds);
-        $this->assertGreaterThan($posmds, $poscustom);
+        $this->assertNotFalse($posdark);
+        $this->assertGreaterThan($posimport, $posmds);
+        $this->assertGreaterThan($posmds, $posdark);
+        $this->assertStringContainsString('scss/_poss.scss', $lib);
+        $this->assertStringNotContainsString('scss/_mds_overrides.scss', $lib);
     }
 }
