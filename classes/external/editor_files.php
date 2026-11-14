@@ -119,3 +119,4 @@ final class editor_files extends external_api {
             'success' => new external_value(PARAM_BOOL, 'Deletion succeeded'),
         ]);
     }
+}
