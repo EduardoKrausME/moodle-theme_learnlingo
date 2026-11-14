@@ -1,5 +1,6 @@
 // learnlingo visual identity.
 :root {
+    color-scheme: light;
     --bs-primary: #{$primary};
     --bs-accent: #{$learnlingo-accent};
     --bs-ink: #{$body-color};
@@ -794,7 +795,7 @@ h6,
     --bs-home-border: var(--bs-border);
     color: var(--bs-home-ink);
     background-color: var(--bs-home-canvas);
-    color-scheme: light;
+    color-scheme: inherit;
 }
 // Course renderer front page.
 .learnlingo-home {
