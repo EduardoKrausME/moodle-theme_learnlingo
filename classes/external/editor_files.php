@@ -56,23 +56,7 @@ final class editor_files extends external_api {
         self::validate_context($context);
         require_capability('moodle/site:config', $context);
 
-        $fs = get_file_storage();
-        $files = $fs->get_area_files($context->id, 'theme_learnlingo', 'editor_assets',
-            false, 'timecreated DESC', false);
-        $items = [];
-        foreach ($files as $file) {
-            $items[] = [
-                'id' => $file->get_id(),
-                'name' => $file->get_filename(),
-                'type' => 'image',
-                'src' => \moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(),
-                    $file->get_filearea(), $file->get_itemid(), $file->get_filepath(), $file->get_filename())
-                        ->out(false),
-                'size' => $file->get_filesize(),
-                'delete' => true,
-            ];
-        }
-        return $items;
+        return \theme_learnlingo\editor_assets::list_files();
     }
 
     /**

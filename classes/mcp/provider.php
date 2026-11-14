@@ -47,6 +47,7 @@ final class provider implements read_provider_interface, write_provider_interfac
             'learnlingo_get_settings' => get_settings::class,
             'learnlingo_get_menu_guide' => get_menu_guide::class,
             'learnlingo_get_pages' => get_pages::class,
+            'learnlingo_get_editor_images' => get_editor_images::class,
         ]);
     }
 
@@ -64,6 +65,7 @@ final class provider implements read_provider_interface, write_provider_interfac
             'learnlingo_update_page' => update_page::class,
             'learnlingo_update_page_category' => update_page_category::class,
             'learnlingo_delete_page' => delete_page::class,
+            'learnlingo_upload_editor_image' => upload_editor_image::class,
         ]);
     }
 

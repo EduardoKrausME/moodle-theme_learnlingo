@@ -27,6 +27,7 @@ require_once(__DIR__ . '/editor-lib.php');
 require_once($CFG->dirroot . '/theme/learnlingo/lib.php');
 
 use theme_learnlingo\pages;
+use theme_learnlingo\editor_assets;
 
 require_login();
 $context = context_system::instance();
@@ -87,41 +88,17 @@ if ($action === 'file-upload') {
         throw new invalid_parameter_exception('No uploaded image');
     }
     $upload = $_FILES['files'];
-    if ($upload['error'] !== UPLOAD_ERR_OK || $upload['size'] > 10 * 1024 * 1024) {
+    if ($upload['error'] !== UPLOAD_ERR_OK || $upload['size'] > editor_assets::MAX_BYTES) {
         throw new invalid_parameter_exception('Image upload failed or exceeded 10 MiB');
     }
-    $extension = strtolower(pathinfo($upload['name'], PATHINFO_EXTENSION));
-    $types = [
-        'png' => 'image/png',
-        'jpg' => 'image/jpeg',
-        'jpeg' => 'image/jpeg',
-        'gif' => 'image/gif',
-        'webp' => 'image/webp',
-    ];
-    $imageinfo = @getimagesize($upload['tmp_name']);
-    if (!isset($types[$extension]) || !$imageinfo || $imageinfo['mime'] !== $types[$extension]) {
-        throw new invalid_parameter_exception('Only PNG, JPEG, GIF and WebP images are accepted');
+    $bytes = file_get_contents($upload['tmp_name']);
+    if ($bytes === false) {
+        throw new invalid_parameter_exception('Unable to read uploaded image');
     }
-    $fs = get_file_storage();
-    // Store each upload under its own item id so equal filenames never collide.
-    $file = $fs->create_file_from_pathname([
-        'contextid' => $context->id,
-        'component' => $component,
-        'filearea' => $filearea,
-        'itemid' => random_int(1, 2147483647),
-        'filepath' => '/',
-        'filename' => clean_filename($upload['name']),
-        'userid' => $USER->id,
-    ], $upload['tmp_name']);
+    // HTTP and MCP share the same validation, storage area and response shape.
+    $file = editor_assets::save((string)$upload['name'], $bytes, (int)$USER->id);
     header('Content-Type: application/json; charset=utf-8');
-    echo json_encode([[
-        'id' => $file->get_id(),
-        'name' => $file->get_filename(),
-        'type' => 'image',
-        'src' => theme_learnlingo_editor_file_url($file),
-        'size' => $file->get_filesize(),
-        'delete' => true,
-    ]]);
+    echo json_encode([$file]);
     exit;
 }
 
