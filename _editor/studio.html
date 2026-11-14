@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>%%LL_TITLE%% - LearnLingo</title>
+    %%LL_MOODLE_HEAD%%
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/grapes.css">
     <script src="js/build/index.min.js"></script>
@@ -50,6 +51,7 @@
     </style>
 </head>
 <body>
+    %%LL_MOODLE_BODY%%
     <header class="ll-visual-bar">
         <strong>%%LL_TITLE%%</strong>
         <button type="button" id="ll-visual" aria-pressed="false">
@@ -81,6 +83,7 @@
             <textarea id="ll-scss" spellcheck="false" dir="ltr"></textarea>
         </div>
     </section>
+    %%LL_MOODLE_FOOT%%
     <script>
     (function() {
         'use strict';
@@ -114,6 +117,12 @@
             }
             return response.json();
         };
+        // Call Moodle External Services instead of the editor's legacy JSON handlers.
+        const requestEditorAsset = (methodname, args = {}) => new Promise((resolve, reject) => {
+            require(['core/ajax'], (Ajax) => {
+                Promise.resolve(Ajax.call([{methodname, args}])[0]).then(resolve, reject);
+            }, reject);
+        });
         const tags = (text) => text.match(/\{\{\{[\s\S]*?\}\}\}|\{\{[\s\S]*?\}\}/g) || [];
         const managedCss = (source) => {
             const start = source.indexOf(startMarker);
@@ -144,7 +153,7 @@
                 },
                 assets: {
                     storageType: 'self',
-                    onLoad: () => requestJson(initial.urls.list),
+                    onLoad: () => requestEditorAsset('theme_learnlingo_list_editor_files'),
                     onUpload: async ({files}) => {
                         const result = [];
                         for (const file of files) {
@@ -161,10 +170,8 @@
                             if (!asset.attributes.delete) {
                                 throw new Error(%%LL_EDITOR_ASSET_NOT_DELETABLE%%);
                             }
-                            await requestJson(initial.urls.delete, {
-                                method: 'POST',
-                                headers: {'Content-Type': 'application/json'},
-                                body: JSON.stringify({id: asset.attributes.id})
+                            await requestEditorAsset('theme_learnlingo_delete_editor_file', {
+                                id: Number(asset.attributes.id)
                             });
                         }
                     }

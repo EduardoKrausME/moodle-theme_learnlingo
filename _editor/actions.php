@@ -78,25 +78,6 @@ if ($action === 'page-save') {
     redirect($data['returnurl'], get_string('changessaved'), null, \core\output\notification::NOTIFY_SUCCESS);
 }
 
-if ($action === 'file-list') {
-    $fs = get_file_storage();
-    $files = $fs->get_area_files($context->id, $component, $filearea, false, 'timecreated DESC', false);
-    $items = [];
-    foreach ($files as $file) {
-        $items[] = [
-            'id' => $file->get_id(),
-            'name' => $file->get_filename(),
-            'type' => 'image',
-            'src' => theme_learnlingo_editor_file_url($file),
-            'size' => $file->get_filesize(),
-            'delete' => true,
-        ];
-    }
-    header('Content-Type: application/json; charset=utf-8');
-    echo json_encode($items);
-    exit;
-}
-
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     throw new invalid_parameter_exception('Editor file changes require POST');
 }
@@ -141,20 +122,6 @@ if ($action === 'file-upload') {
         'size' => $file->get_filesize(),
         'delete' => true,
     ]]);
-    exit;
-}
-
-if ($action === 'file-delete') {
-    $data = json_decode(file_get_contents('php://input'), true);
-    $fileid = (int)($data['id'] ?? 0);
-    $file = $fileid ? get_file_storage()->get_file_by_id($fileid) : false;
-    if (!$file || $file->get_contextid() !== $context->id ||
-            $file->get_component() !== $component || $file->get_filearea() !== $filearea) {
-        throw new invalid_parameter_exception('Image does not belong to the LearnLingo editor');
-    }
-    $file->delete();
-    header('Content-Type: application/json; charset=utf-8');
-    echo json_encode(['success' => true]);
     exit;
 }
 
