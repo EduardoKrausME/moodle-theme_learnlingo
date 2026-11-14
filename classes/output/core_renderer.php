@@ -106,7 +106,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         if (empty(array_filter($header))) {
             return "";
         }
-        return $this->render_from_template("theme_learnlingo/core/full_header", $header);
+        return $this->render_from_template("core/full_header", $header);
     }
 
     /**
