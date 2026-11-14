@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<libraries>
+    <library>
+        <location>_editor</location>
+        <name>GrapsJS</name>
+        <version>0.9.44</version>
+        <license>BSD 3-Clause</license>
+    </library>
+    <library>
+        <location>scss/bootstrap</location>
+        <name>Twitter Bootstrap</name>
+        <description>HTML, CSS, and JavaScript framework for developing responsive, mobile-first projects on the web.
+        </description>
+        <version>5.3.3</version>
+        <license>MIT</license>
+        <repository>https://github.com/twbs/bootstrap</repository>
+        <copyrights>
+            <copyright>2011-2021 Twitter, Inc</copyright>
+            <copyright>2011-2021 The Bootstrap Authors</copyright>
+        </copyrights>
+        <customised/>
+    </library>
+</libraries>
