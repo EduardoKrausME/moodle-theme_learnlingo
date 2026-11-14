@@ -119,6 +119,8 @@ function theme_learnlingo_get_extra_scss(theme_config $theme): string {
     global $CFG;
 
     $scss = file_get_contents("{$CFG->dirroot}/theme/learnlingo/scss/_poss.scss");
+    // Override Boost/Moodle Design System CSS custom properties without editing the parent theme.
+    $scss .= "\n" . file_get_contents("{$CFG->dirroot}/theme/learnlingo/scss/_mds_overrides.scss");
 
     // Admin page-tree styling belongs to the theme stylesheet, not to settings.php.
     // Moodle also reads theme settings after the page head has already been output.
