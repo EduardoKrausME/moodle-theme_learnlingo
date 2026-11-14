@@ -7,6 +7,7 @@
     %%LL_MOODLE_HEAD%%
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/grapes.css">
+    <link rel="stylesheet" href="css/code-editor.css">
     <script src="js/build/grapes.min.js"></script>
     <script src="js/build/index.min.js"></script>
     <script src="js/build/tableComponent.min.js"></script>
@@ -38,16 +39,11 @@
         #ll-code[hidden], #ll-studio[hidden] { display: none; }
         .ll-code-column { display: flex; flex-direction: column; min-height: 0; gap: 8px; }
         .ll-code-column label { font: 600 14px system-ui, sans-serif; }
-        .ll-code-column textarea { box-sizing: border-box; flex: 1; width: 100%; min-height: 0;
-            resize: none; background: #11151b; color: #e9ecf1; border: 1px solid #64748b;
-            padding: 15px; font: 13px/1.55 ui-monospace, SFMono-Regular, Consolas, monospace;
-            tab-size: 4; white-space: pre; }
         .ll-code-note { margin: 0; color: #cbd5e1; font: 12px/1.5 system-ui, sans-serif; }
         @media (max-width: 760px) {
             .ll-visual-bar { flex-wrap: wrap; }
             .ll-visual-bar strong { max-width: none; flex-basis: 100%; }
             #ll-code { grid-template-columns: 1fr; height: auto; min-height: calc(100dvh - 58px); }
-            .ll-code-column textarea { min-height: 40vh; }
         }
     </style>
 </head>
@@ -76,12 +72,66 @@
     <section id="ll-code" hidden>
         <div class="ll-code-column">
             <label for="ll-html">HTML / Mustache</label>
-            <textarea id="ll-html" spellcheck="false" dir="ltr"></textarea>
+            <div class="ll-code-editor" data-ll-code-editor data-language="html"
+                    data-preserve-source="1"
+                    data-one-line="%%LL_CODE_LINE%%" data-many-lines="%%LL_CODE_LINES%%">
+                <div class="ll-code-editor__toolbar">
+                    <span class="ll-code-editor__language">HTML / Mustache</span>
+                    <span class="ll-code-editor__lines" data-code-lines aria-live="off"></span>
+                    <button class="ll-code-editor__expand" type="button" data-code-expand
+                            data-expand-label="%%LL_CODE_FULLSCREEN%%"
+                            data-collapse-label="%%LL_CODE_COLLAPSE%%"
+                            aria-label="%%LL_CODE_FULLSCREEN%%" aria-pressed="false">
+                        <span data-code-expand-label>%%LL_CODE_FULLSCREEN%%</span>
+                    </button>
+                </div>
+                <div class="ll-code-editor__workspace">
+                    <div class="ll-code-editor__gutter" data-code-gutter aria-hidden="true"></div>
+                    <div class="ll-code-editor__area">
+                        <pre class="ll-code-editor__highlight" data-code-highlight
+                                aria-hidden="true"><code></code></pre>
+                        <textarea id="ll-html" class="ll-code-editor__input" spellcheck="false"
+                                autocomplete="off" autocapitalize="off" dir="ltr"
+                                aria-label="HTML / Mustache"></textarea>
+                    </div>
+                </div>
+                <div class="ll-code-editor__footer">
+                    <span>%%LL_CODE_HINT%%</span>
+                    <span data-code-position></span>
+                </div>
+            </div>
             <p class="ll-code-note">%%LL_MUSTACHE_NOTE%%</p>
         </div>
         <div class="ll-code-column">
             <label for="ll-scss">SCSS / CSS</label>
-            <textarea id="ll-scss" spellcheck="false" dir="ltr"></textarea>
+            <div class="ll-code-editor" data-ll-code-editor data-language="scss"
+                    data-preserve-source="1"
+                    data-one-line="%%LL_CODE_LINE%%" data-many-lines="%%LL_CODE_LINES%%">
+                <div class="ll-code-editor__toolbar">
+                    <span class="ll-code-editor__language">SCSS / CSS</span>
+                    <span class="ll-code-editor__lines" data-code-lines aria-live="off"></span>
+                    <button class="ll-code-editor__expand" type="button" data-code-expand
+                            data-expand-label="%%LL_CODE_FULLSCREEN%%"
+                            data-collapse-label="%%LL_CODE_COLLAPSE%%"
+                            aria-label="%%LL_CODE_FULLSCREEN%%" aria-pressed="false">
+                        <span data-code-expand-label>%%LL_CODE_FULLSCREEN%%</span>
+                    </button>
+                </div>
+                <div class="ll-code-editor__workspace">
+                    <div class="ll-code-editor__gutter" data-code-gutter aria-hidden="true"></div>
+                    <div class="ll-code-editor__area">
+                        <pre class="ll-code-editor__highlight" data-code-highlight
+                                aria-hidden="true"><code></code></pre>
+                        <textarea id="ll-scss" class="ll-code-editor__input" spellcheck="false"
+                                autocomplete="off" autocapitalize="off" dir="ltr"
+                                aria-label="SCSS / CSS"></textarea>
+                    </div>
+                </div>
+                <div class="ll-code-editor__footer">
+                    <span>%%LL_CODE_HINT%%</span>
+                    <span data-code-position></span>
+                </div>
+            </div>
         </div>
     </section>
     %%LL_MOODLE_FOOT%%
@@ -106,6 +156,17 @@
 
         htmlInput.value = initial.html;
         scssInput.value = initial.scss;
+
+        // Reuse the settings syntax highlighter; the native textareas remain
+        // the sole editing source and no automatic formatting is performed.
+        require(['theme_learnlingo/code_settings'], (codeSettings) => {
+            codeSettings.init();
+        });
+
+        const refreshSourceHighlight = () => {
+            htmlInput.dispatchEvent(new Event('input', {bubbles: true}));
+            scssInput.dispatchEvent(new Event('input', {bubbles: true}));
+        };
 
         const showError = (error) => {
             message.textContent = error instanceof Error ? error.message : String(error);
@@ -272,6 +333,7 @@
             scssInput.value = generated
                 ? original + '\n\n' + startMarker + '\n' + generated + '\n' + endMarker
                 : scssInput.value;
+            refreshSourceHighlight();
         };
 
         const submit = () => {
