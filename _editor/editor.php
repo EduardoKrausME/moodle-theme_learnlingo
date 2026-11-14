@@ -50,10 +50,14 @@ $esc = static function(string $value): string {
     return s($value);
 };
 
+// Resolve the core renderer before building the standalone editor page. At this point,
+// $OUTPUT may still be the bootstrap renderer, which get_head_code() does not accept.
+$renderer = $PAGE->get_renderer('core');
+
 $replacements = [
     '%%LL_LANG%%' => $esc(current_language()),
-    '%%LL_MOODLE_HEAD%%' => $PAGE->requires->get_head_code($PAGE, $OUTPUT),
-    '%%LL_MOODLE_BODY%%' => $PAGE->requires->get_top_of_body_code($OUTPUT),
+    '%%LL_MOODLE_HEAD%%' => $PAGE->requires->get_head_code($PAGE, $renderer),
+    '%%LL_MOODLE_BODY%%' => $PAGE->requires->get_top_of_body_code($renderer),
     '%%LL_MOODLE_FOOT%%' => $PAGE->requires->get_end_code(),
     '%%LL_TITLE%%' => $esc($data['title']),
     '%%LL_VISUAL_LABEL%%' => $esc(get_string('visualeditormode', 'theme_learnlingo')),
