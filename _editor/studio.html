@@ -247,10 +247,6 @@
                     showError(%%LL_RELOAD_WARNING%%);
                     return;
                 }
-                if (!editor && tags(htmlInput.value).length &&
-                        !window.confirm(%%LL_VISUAL_WARNING%%)) {
-                    return;
-                }
                 // Studio needs a visible root to measure the canvas on its
                 // first render; initialising into a hidden node yields zero size.
                 visual.hidden = false;
