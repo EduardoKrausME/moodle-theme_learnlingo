@@ -72,7 +72,7 @@ class page_form extends moodleform {
         $mform->addElement('html', \html_writer::link(
             'https://eduardokrausme.github.io/moodle-local_mcp/',
             get_string('setupmcpconnectionlink', 'theme_learnlingo'),
-            ['target' => '_blank', 'rel' => 'noopener noreferrer']
+            ['target' => '_blank']
         ));
 
         $mform->addElement('textarea', 'content', get_string('custompageshtml', 'theme_learnlingo'),
