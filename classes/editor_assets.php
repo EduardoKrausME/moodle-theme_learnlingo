@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Shared image storage for the visual editor and the MCP integration.
+ * Image storage used by the LearnLingo MCP integration.
  *
  * @package    theme_learnlingo
  * @copyright  2026 Eduardo Kraus
@@ -33,7 +33,7 @@ use stored_file;
  * Keep image validation, storage and metadata identical across transports.
  */
 final class editor_assets {
-    /** The same maximum size used by _editor/actions.php. */
+    /** Maximum image upload size accepted by the MCP tools. */
     public const MAX_BYTES = 10 * 1024 * 1024;
 
     /** Image file extensions must match the MIME determined from the image bytes. */
@@ -78,12 +78,12 @@ final class editor_assets {
     }
 
     /**
-     * Store the image in the exact public file area used by GrapesJS.
+     * Store the image in the existing public LearnLingo file area.
      *
      * @param string $filename Original filename.
      * @param string $bytes Binary image.
      * @param int $userid Authenticated Moodle user id.
-     * @return array File metadata in the visual-editor format.
+     * @return array File metadata.
      */
     public static function save(string $filename, string $bytes, int $userid): array {
         $validated = self::validate($filename, $bytes);
@@ -132,7 +132,7 @@ final class editor_assets {
     }
 
     /**
-     * Return the shape expected by GrapesJS and existing AJAX services.
+     * Return the image metadata consumed by the MCP tools.
      *
      * @param stored_file $file Stored image.
      * @return array Image metadata.

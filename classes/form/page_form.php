@@ -30,7 +30,6 @@ require_once($CFG->libdir . '/formslib.php');
 
 use moodle_exception;
 use moodleform;
-use theme_learnlingo\content_editor_banner;
 use theme_learnlingo\pages;
 
 /**
@@ -70,9 +69,10 @@ class page_form extends moodleform {
         $mform->addElement('select', 'categoryid', get_string('custompagescategory', 'theme_learnlingo'), $categories);
         $mform->setType('categoryid', PARAM_INT);
 
-        // Place the editing guidance immediately above the HTML content field.
-        $mform->addElement('html', content_editor_banner::render(
-            'page', (int)($this->_customdata['pageid'] ?? 0)
+        $mform->addElement('html', \html_writer::link(
+            'https://eduardokrausme.github.io/moodle-local_mcp/',
+            get_string('setupmcpconnectionlink', 'theme_learnlingo'),
+            ['target' => '_blank', 'rel' => 'noopener noreferrer']
         ));
 
         $mform->addElement('textarea', 'content', get_string('custompageshtml', 'theme_learnlingo'),

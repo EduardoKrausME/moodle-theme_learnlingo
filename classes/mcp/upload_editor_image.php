@@ -47,15 +47,15 @@ final class upload_editor_image extends base_tool {
      * @return string Human-readable title.
      */
     public function get_title(): string {
-        return 'Upload an image to the LearnLingo visual editor';
+        return 'Upload an image for LearnLingo pages';
     }
 
     /**
      * @return string Tool instructions.
      */
     public function get_description(): string {
-        return 'Upload an image to the same theme_learnlingo/editor_assets area used by '
-            . 'the visual editor file-upload action. The image becomes publicly accessible '
+        return 'Upload an image to the theme_learnlingo/editor_assets area. '
+            . 'The image becomes publicly accessible '
             . 'through pluginfile.php for reuse in homepagehtml, footerhtml and custom pages. '
             . 'Supply a filename whose extension matches the real image bytes, plus exactly '
             . 'one source: image_base64 (PNG/JPEG/GIF/WebP up to 10 MiB, optionally a data URI) '

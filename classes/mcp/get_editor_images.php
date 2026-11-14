@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * MCP read tool for assets uploaded through the LearnLingo visual editor.
+ * MCP read tool for images stored by LearnLingo.
  *
  * @package    theme_learnlingo
  * @copyright  2026 Eduardo Kraus
@@ -45,14 +45,14 @@ final class get_editor_images implements tool_interface {
      * @return string Title.
      */
     public function get_title(): string {
-        return 'List LearnLingo visual editor images';
+        return 'List LearnLingo images';
     }
 
     /**
      * @return string Description.
      */
     public function get_description(): string {
-        return 'List images from the LearnLingo visual editor and MCP upload tool '
+        return 'List images stored by the LearnLingo MCP upload tool '
             . 'with the file id, original filename, size and public pluginfile URL. '
             . 'Use a file.src URL in homepage, footer or custom-page HTML.';
     }

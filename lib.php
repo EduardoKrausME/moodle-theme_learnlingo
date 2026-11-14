@@ -208,8 +208,8 @@ function theme_learnlingo_pluginfile($course, $cm, $context, $filearea, $args, $
     if ($context->contextlevel !== CONTEXT_SYSTEM) {
         send_file_not_found();
     }
-    // Images uploaded through the visual editor are public assets used by
-    // the homepage, footer and published custom pages.
+    // Images uploaded through MCP are public assets used by the homepage,
+    // footer and published custom pages.
     if ($filearea === 'editor_assets') {
         $itemid = (int)array_shift($args);
         $filename = array_shift($args);

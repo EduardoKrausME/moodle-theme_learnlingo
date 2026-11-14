@@ -25,7 +25,6 @@
 use theme_learnlingo\admin_setting_configcode;
 use theme_learnlingo\admin_setting_configcolourmodern;
 use theme_learnlingo\admin_setting_configstoredfilemodern;
-use theme_learnlingo\content_editor_banner;
 use theme_learnlingo\dark_mode;
 use theme_learnlingo\mcp_banner;
 use theme_learnlingo\pages;
@@ -141,9 +140,13 @@ if ($ADMIN->fulltree) {
     $page->add($setting);
 
     $page->add(new admin_setting_heading(
-        'theme_learnlingo/contenteditorbanner_homepage',
+        'theme_learnlingo/mcplink_homepage',
         '',
-        content_editor_banner::render('homepage')
+        html_writer::link(
+            'https://eduardokrausme.github.io/moodle-local_mcp/',
+            get_string('setupmcpconnectionlink', 'theme_learnlingo'),
+            ['target' => '_blank', 'rel' => 'noopener noreferrer']
+        )
     ));
 
     $setting = new admin_setting_configcode(
@@ -249,9 +252,13 @@ if ($ADMIN->fulltree) {
     $page->add($setting);
 
     $page->add(new admin_setting_heading(
-        'theme_learnlingo/contenteditorbanner_footer',
+        'theme_learnlingo/mcplink_footer',
         '',
-        content_editor_banner::render('footer')
+        html_writer::link(
+            'https://eduardokrausme.github.io/moodle-local_mcp/',
+            get_string('setupmcpconnectionlink', 'theme_learnlingo'),
+            ['target' => '_blank', 'rel' => 'noopener noreferrer']
+        )
     ));
 
     $setting = new admin_setting_configcode(

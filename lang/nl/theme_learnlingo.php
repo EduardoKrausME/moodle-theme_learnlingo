@@ -30,7 +30,6 @@ $string['brandcolor'] = 'Primaire kleur';
 $string['brandcolor_desc'] = 'Hoofdkleur voor knoppen, links en accenten.';
 $string['brandingsettings'] = 'Huisstijl en kleuren';
 $string['canvascolor'] = 'Achtergrondkleur van de pagina';
-$string['contenteditorbanner'] = '<aside class="alert alert-info mb-3" role="note" style="border-left:4px solid #1671c5;border-radius:8px;padding:14px 18px;"><strong>Bewerk deze inhoud op twee manieren:</strong> gebruik de <a class="btn btn-outline-primary" href="{$a->editorurl}">HTML-editor</a> of <a class="btn btn-outline-primary" href="{$a->helpurl}" target="_blank" rel="noopener noreferrer">ChatGPT/Claude (bekijk de hulp)</a>.</aside>';
 $string['courseheroprogress'] = 'Je voortgang';
 $string['coursexplevel'] = 'Huidig niveau';
 $string['custompagesdraft'] = 'Concept';
