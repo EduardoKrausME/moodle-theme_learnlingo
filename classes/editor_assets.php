@@ -143,11 +143,11 @@ final class editor_assets {
             $file->get_itemid(), $file->get_filepath(), $file->get_filename()
         );
         return [
-            'id' => $file->get_id(),
+            'id' => (int)$file->get_id(),
             'name' => $file->get_filename(),
             'type' => 'image',
             'src' => $url->out(false),
-            'size' => $file->get_filesize(),
+            'size' => (int)$file->get_filesize(),
             'delete' => true,
         ];
     }

@@ -100,7 +100,7 @@ final class mcp_editor_images_test extends advanced_testcase {
         $this->assertSame(context_system::instance()->id, $file->get_contextid());
         $this->assertSame('theme_learnlingo', $file->get_component());
         $this->assertSame('editor_assets', $file->get_filearea());
-        $this->assertSame((int)get_admin()->id, $file->get_userid());
+        $this->assertSame((int)get_admin()->id, (int)$file->get_userid());
         $this->assertSame(base64_decode(self::PNG), $file->get_content());
 
         $second = $tool->execute($arguments, $identity);

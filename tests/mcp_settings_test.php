@@ -75,14 +75,16 @@ final class mcp_settings_test extends advanced_testcase {
         $this->assertContains('learnlingo_get_settings', $readnames);
         $this->assertContains('learnlingo_get_menu_guide', $readnames);
         $this->assertContains('learnlingo_get_pages', $readnames);
+        $this->assertContains('learnlingo_get_editor_images', $readnames);
         $this->assertContains('learnlingo_update_settings', $writenames);
         $this->assertContains('learnlingo_update_styles', $writenames);
         $this->assertContains('learnlingo_update_footer', $writenames);
         $this->assertContains('learnlingo_update_page', $writenames);
         $this->assertContains('learnlingo_update_page_category', $writenames);
         $this->assertContains('learnlingo_delete_page', $writenames);
-        $this->assertCount(4, $readnames);
-        $this->assertCount(7, $writenames);
+        $this->assertContains('learnlingo_upload_editor_image', $writenames);
+        $this->assertCount(5, $readnames);
+        $this->assertCount(8, $writenames);
         // Tool schemas may contain nested stdClass objects from the MCP schema builder.
         $schema = json_decode(json_encode((new update_settings())->get_input_schema()), true);
         $this->assertArrayHasKey('scsspre', (array)$schema['properties']['settings']['properties']);
