@@ -427,9 +427,13 @@ define([], function() {
         root.dataset.codeInitialised = '1';
 
         // Format the editor's local value; Moodle config changes only on Save.
-        if (!input.disabled && root.dataset.language === 'html') {
+        // The standalone visual editor must preserve the exact source, including
+        // whitespace, Mustache expressions and SCSS formatting.
+        if (root.dataset.preserveSource !== '1' && !input.disabled &&
+                root.dataset.language === 'html') {
             input.value = formatHtmlOnOpen(input.value);
-        } else if (!input.disabled && root.dataset.language === 'scss') {
+        } else if (root.dataset.preserveSource !== '1' && !input.disabled &&
+                root.dataset.language === 'scss') {
             input.value = formatScssOnOpen(input.value);
         }
 
