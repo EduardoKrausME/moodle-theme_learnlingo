@@ -67,6 +67,9 @@ html[data-bs-theme="dark"] {
 
 // Main navbar.
 html .navbar.fixed-top {
+    // MDS tokens used by this navbar belong to the navbar component.
+    --mds-spacing-lg: 1.25rem;
+    --mds-spacing-md: 1rem;
     align-items: stretch;
     height: $navbar-height + 1px;
     min-height: 74px;
