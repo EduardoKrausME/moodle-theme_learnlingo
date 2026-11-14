@@ -37,6 +37,8 @@ use theme_learnlingo\editor_assets;
  */
 final class upload_editor_image extends base_tool {
     /**
+     * Return the name of the MCP image-upload tool.
+     *
      * @return string MCP tool name.
      */
     public function get_name(): string {
@@ -44,6 +46,8 @@ final class upload_editor_image extends base_tool {
     }
 
     /**
+     * Return the title displayed for this MCP tool.
+     *
      * @return string Human-readable title.
      */
     public function get_title(): string {
@@ -51,6 +55,8 @@ final class upload_editor_image extends base_tool {
     }
 
     /**
+     * Describe the image upload procedure and its limits.
+     *
      * @return string Tool instructions.
      */
     public function get_description(): string {
@@ -67,6 +73,8 @@ final class upload_editor_image extends base_tool {
     }
 
     /**
+     * Define the accepted MCP upload arguments.
+     *
      * @return array Strict MCP argument schema.
      */
     public function get_input_schema(): array {
@@ -83,6 +91,8 @@ final class upload_editor_image extends base_tool {
     }
 
     /**
+     * Identify the capability required to upload an image.
+     *
      * @return string Moodle capability required for a public asset write.
      */
     public function get_required_capability(): string {
@@ -90,6 +100,8 @@ final class upload_editor_image extends base_tool {
     }
 
     /**
+     * Resolve the context used for upload authorization.
+     *
      * @param array $arguments Tool inputs.
      * @return context System context.
      */
@@ -98,6 +110,8 @@ final class upload_editor_image extends base_tool {
     }
 
     /**
+     * Indicate that the upload supports non-writing previews.
+     *
      * @return bool A preview must never create files.
      */
     public function supports_dry_run(): bool {
@@ -163,6 +177,8 @@ final class upload_editor_image extends base_tool {
     }
 
     /**
+     * Validate an upload and return its metadata without storing it.
+     *
      * @param array $arguments Image upload fields.
      * @param authenticated_identity $identity Connected administrator.
      * @return array Non-writing preview.
@@ -183,6 +199,8 @@ final class upload_editor_image extends base_tool {
     }
 
     /**
+     * Store the approved image and return its public URL.
+     *
      * @param array $arguments Approved image upload.
      * @param authenticated_identity $identity Connected administrator.
      * @return array Newly stored editor asset and ready-to-use URL.

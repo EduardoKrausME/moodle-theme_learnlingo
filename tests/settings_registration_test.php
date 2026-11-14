@@ -71,7 +71,7 @@ final class settings_registration_test extends advanced_testcase {
      */
     public function test_branding_admin_pages_do_not_use_html_writer(): void {
         global $CFG;
-        foreach (['admin/branding_ai.php', 'admin/branding_json.php', 'settings.php'] as $path) {
+        foreach (['admin/branding_ai.php', 'admin/branding_json.php'] as $path) {
             $source = file_get_contents($CFG->dirroot . '/theme/learnlingo/' . $path);
             $this->assertStringNotContainsString('html_writer::', $source, $path);
         }

@@ -35,6 +35,8 @@ use theme_learnlingo\editor_assets;
  */
 final class get_editor_images implements tool_interface {
     /**
+     * Return the name of the MCP image-listing tool.
+     *
      * @return string Tool name.
      */
     public function get_name(): string {
@@ -42,6 +44,8 @@ final class get_editor_images implements tool_interface {
     }
 
     /**
+     * Return the title displayed for this MCP tool.
+     *
      * @return string Title.
      */
     public function get_title(): string {
@@ -49,6 +53,8 @@ final class get_editor_images implements tool_interface {
     }
 
     /**
+     * Describe the MCP image-listing operation.
+     *
      * @return string Description.
      */
     public function get_description(): string {
@@ -58,6 +64,8 @@ final class get_editor_images implements tool_interface {
     }
 
     /**
+     * Declare that this MCP tool accepts no arguments.
+     *
      * @return array No inputs.
      */
     public function get_input_schema(): array {
@@ -69,6 +77,8 @@ final class get_editor_images implements tool_interface {
     }
 
     /**
+     * Identify the capability required to list stored images.
+     *
      * @return string Required site capability.
      */
     public function get_required_capability(): string {
@@ -76,6 +86,8 @@ final class get_editor_images implements tool_interface {
     }
 
     /**
+     * Resolve the system context used to validate permissions.
+     *
      * @param array $arguments Tool inputs.
      * @return context Context.
      */
@@ -84,6 +96,8 @@ final class get_editor_images implements tool_interface {
     }
 
     /**
+     * List accessible LearnLingo image metadata.
+     *
      * @param array $arguments No parameters expected.
      * @param authenticated_identity $identity Connected administrator.
      * @return array Asset inventory.

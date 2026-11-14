@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * MCP image integration tests for the LearnLingo visual editor.
+ * MCP image integration tests for LearnLingo.
  *
  * @package    theme_learnlingo
  * @copyright  2026 Eduardo Kraus
@@ -36,7 +36,7 @@ use theme_learnlingo\mcp\provider;
 use theme_learnlingo\mcp\upload_editor_image;
 
 /**
- * Verify preview, validation and storage in the same file area as HTTP uploads.
+ * Verify preview, validation and storage through the MCP tools.
  *
  * @covers \theme_learnlingo\editor_assets
  * @covers \theme_learnlingo\mcp\upload_editor_image
@@ -47,6 +47,8 @@ final class mcp_editor_images_test extends advanced_testcase {
     private const PNG = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/y9sAAAAASUVORK5CYII=';
 
     /**
+     * Create an authenticated administrator identity for MCP integration tests.
+     *
      * @return authenticated_identity Admin identity.
      */
     private function identity(): authenticated_identity {
@@ -97,7 +99,7 @@ final class mcp_editor_images_test extends advanced_testcase {
 
         $file = get_file_storage()->get_file_by_id($created['file']['id']);
         $this->assertNotFalse($file);
-        $this->assertSame(context_system::instance()->id, $file->get_contextid());
+        $this->assertSame((int)context_system::instance()->id, (int)$file->get_contextid());
         $this->assertSame('theme_learnlingo', $file->get_component());
         $this->assertSame('editor_assets', $file->get_filearea());
         $this->assertSame((int)get_admin()->id, (int)$file->get_userid());
