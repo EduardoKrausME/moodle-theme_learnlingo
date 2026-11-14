@@ -57,6 +57,25 @@ final class mds_overrides_test extends advanced_testcase {
     }
 
     /**
+     * Navbar-only MDS tokens must be defined by the navbar SCSS, not globally.
+     */
+    public function test_navbar_mds_tokens_are_scoped_to_navbar(): void {
+        global $CFG;
+
+        $global = file_get_contents($CFG->dirroot . '/theme/learnlingo/scss/_poss.scss');
+        $navbar = file_get_contents($CFG->dirroot . '/theme/learnlingo/scss/moodle/_navbar.scss');
+
+        foreach (['--mds-spacing-lg', '--mds-spacing-md'] as $token) {
+            $this->assertStringNotContainsString($token . ':', $global);
+            $this->assertStringContainsString($token . ':', $navbar);
+            $this->assertStringContainsString('var(' . $token . ')', $navbar);
+        }
+
+        $this->assertStringContainsString('html .navbar.fixed-top {', $navbar);
+        $this->assertStringContainsString('@import "moodle/navbar";', $global);
+    }
+
+    /**
      * Both light and dark token layers stay in the post-Boot stylesheet.
      */
     public function test_overrides_are_in_poss_scss_after_component_imports(): void {
