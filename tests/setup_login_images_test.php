@@ -148,7 +148,7 @@ final class setup_login_images_test extends advanced_testcase {
         try {
             $method = new \ReflectionMethod(setup_login_images::class, 'normalize');
             $result = $method->invoke(null, 'loginlogo', $source);
-            $this->assertStringStartsWith(make_request_directory() . '/', $result['path']);
+            $this->assertSame(get_request_storage_directory(), dirname(dirname($result['path'])));
             $this->assertFileExists($result['path']);
         } finally {
             if ($result !== null) {

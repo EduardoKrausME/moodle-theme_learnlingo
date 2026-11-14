@@ -248,7 +248,7 @@ final class setup_images_test extends advanced_testcase {
         try {
             $method = new \ReflectionMethod(setup_images::class, 'normalize');
             $result = $method->invoke(null, 'logo', ['tmp_name' => $source]);
-            $this->assertStringStartsWith(make_request_directory() . '/', $result['tmp_name']);
+            $this->assertSame(get_request_storage_directory(), dirname(dirname($result['tmp_name'])));
             $this->assertFileExists($result['tmp_name']);
         } finally {
             if ($result !== null && !empty($result['generated'])) {
