@@ -17,13 +17,13 @@
 /**
  * Editor.
  *
- * @package   theme_eadtraining
+ * @package   theme_learnlingo
  * @copyright 2025 Eduardo Kraus {@link https://eduardokraus.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-use theme_eadtraining\form\form_save_validator;
-use theme_eadtraining\page_editor_manager;
+use theme_learnlingo\form\form_save_validator;
+use theme_learnlingo\page_editor_manager;
 
 require_once('../../../config.php');
 require_once('../lib.php');
@@ -41,23 +41,23 @@ require_sesskey();
 $local = required_param('local', PARAM_TEXT);
 $action = required_param('action', PARAM_TEXT);
 
-$component = 'theme_eadtraining';
+$component = 'theme_learnlingo';
 $filearea = "editor_{$local}";
 
 if ($action == "langedit") {
     $dataid = required_param("dataid", PARAM_INT);
 
-    $page = $DB->get_record("theme_eadtraining_pages", ["id" => $dataid], "*", MUST_EXIST);
+    $page = $DB->get_record("theme_learnlingo_pages", ["id" => $dataid], "*", MUST_EXIST);
     $page->lang = required_param("lang", PARAM_TEXT);
 
-    $DB->update_record("theme_eadtraining_pages", $page);
+    $DB->update_record("theme_learnlingo_pages", $page);
 
     header("Content-Type: application/json");
     echo json_encode(["status" => "ok"]);
     die;
 } else if ($action == "homemode") {
     $homemode = optional_param("homemode", 0, PARAM_INT);
-    set_config("homemode", $homemode, "theme_eadtraining");
+    set_config("homemode", $homemode, "theme_learnlingo");
 
     redirect(new moodle_url("/", ["redirect" => 0]));
 } else if ($action == "loaddata") {
@@ -78,7 +78,7 @@ if ($action == "langedit") {
 } else {
     if ($action == "page-save") {
         $dataid = required_param("dataid", PARAM_INT);
-        $page = $DB->get_record("theme_eadtraining_pages", ["id" => $dataid], "*", MUST_EXIST);
+        $page = $DB->get_record("theme_learnlingo_pages", ["id" => $dataid], "*", MUST_EXIST);
 
         switch ($page->type) {
             case "html":
@@ -109,7 +109,7 @@ if ($action == "langedit") {
         }
         $page->info = json_encode($info, JSON_PRETTY_PRINT);
 
-        $DB->update_record("theme_eadtraining_pages", $page);
+        $DB->update_record("theme_learnlingo_pages", $page);
 
         if (page_editor_manager::is_mod_page_editor_record($page)) {
             page_editor_manager::sync_editor_record_to_mod_page($page);
@@ -124,13 +124,13 @@ if ($action == "langedit") {
             }
         }
 
-        cache::make("theme_eadtraining", "frontpage_cache")->purge();
+        cache::make("theme_learnlingo", "frontpage_cache")->purge();
         if ($page->local == "home") {
             redirect(new moodle_url("/", ["redirect" => 0]));
         }
         die;
     } else if ($action == "page-order") {
-        $orders = theme_eadtraining_clear_params_array($_POST["order"], PARAM_INT);
+        $orders = theme_learnlingo_clear_params_array($_POST["order"], PARAM_INT);
 
         $pageorder = 0;
         foreach ($orders as $pageid) {
@@ -140,14 +140,14 @@ if ($action == "langedit") {
                     "sort" => $pageorder++,
                 ];
                 try {
-                    $DB->update_record("theme_eadtraining_pages", $page);
+                    $DB->update_record("theme_learnlingo_pages", $page);
                 } catch (dml_exception $e) {
                     error_log($e->getMessage());
                 }
             }
         }
 
-        cache::make("theme_eadtraining", "frontpage_cache")->purge();
+        cache::make("theme_learnlingo", "frontpage_cache")->purge();
 
         $syncpage = (object) ["local" => $local, "info" => ""];
         if (page_editor_manager::is_mod_page_editor_record($syncpage)) {
@@ -178,7 +178,7 @@ if ($action == "langedit") {
 
                 $url = moodle_url::make_pluginfile_url(
                     $context->id,
-                    "theme_eadtraining",
+                    "theme_learnlingo",
                     $filerecord->filearea,
                     $filerecord->itemid,
                     $filerecord->filepath,
@@ -220,7 +220,7 @@ if ($action == "langedit") {
         /** @var stored_file $file */
         foreach ($files as $file) {
             $url = moodle_url::make_pluginfile_url(
-                $context->id, "theme_eadtraining",
+                $context->id, "theme_learnlingo",
                 $file->get_filearea(),
                 $file->get_itemid(),
                 $file->get_filepath(),

@@ -17,7 +17,7 @@
 /**
  * Functions.
  *
- * @package   theme_eadtraining
+ * @package   theme_learnlingo
  * @copyright 2025 Eduardo Kraus {@link https://eduardokraus.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -28,7 +28,7 @@
  * @param $action
  * @return string
  */
-function theme_eadtraining_actionurl($action) {
+function theme_learnlingo_actionurl($action) {
     global $local, $lang;
 
     $params = [
@@ -55,18 +55,18 @@ function theme_eadtraining_actionurl($action) {
  * @return object
  * @throws Exception
  */
-function theme_eadtraining_editor_create_page($template, $lang, $local) {
+function theme_learnlingo_editor_create_page($template, $lang, $local) {
     global $CFG, $DB;
 
     $infofile = __DIR__ . "/model/{$template}/info.json";
     if (file_exists($infofile)) {
-        $info = json_decode(theme_eadtraining_load_info_json($infofile));
+        $info = json_decode(theme_learnlingo_load_info_json($infofile));
         $htmlfile = __DIR__ . "/model/{$template}/editor.html";
         $html = file_get_contents($htmlfile);
-        $html = theme_eadtraining_replace_lang_by_string($html);
+        $html = theme_learnlingo_replace_lang_by_string($html);
 
-        $html = str_replace("src=\"../", "src=\"{$CFG->wwwroot}/theme/eadtraining/_editor/model/{$template}/../", $html);
-        $html = str_replace("url(\"../", "url(\"{$CFG->wwwroot}/theme/eadtraining/_editor/model/{$template}/../", $html);
+        $html = str_replace("src=\"../", "src=\"{$CFG->wwwroot}/theme/learnlingo/_editor/model/{$template}/../", $html);
+        $html = str_replace("url(\"../", "url(\"{$CFG->wwwroot}/theme/learnlingo/_editor/model/{$template}/../", $html);
     } else {
         throw new Exception("File template not found");
     }
@@ -81,7 +81,7 @@ function theme_eadtraining_editor_create_page($template, $lang, $local) {
         "lang" => $lang,
         "sort" => time(),
     ];
-    $page->id = $DB->insert_record("theme_eadtraining_pages", $page);
+    $page->id = $DB->insert_record("theme_learnlingo_pages", $page);
 
     return $page;
 }
@@ -95,11 +95,11 @@ function theme_eadtraining_editor_create_page($template, $lang, $local) {
  * @return object
  * @throws Exception
  */
-function theme_eadtraining_compile_pages($pages, $lang, $editing) {
+function theme_learnlingo_compile_pages($pages, $lang, $editing) {
     global $USER;
 
     $return = (object) ["pages" => [], "css" => [], "js" => []];
-    $return->css["_assets/style.css"] = "/theme/eadtraining/_editor/model/_assets/style.css";
+    $return->css["_assets/style.css"] = "/theme/learnlingo/_editor/model/_assets/style.css";
     $previewdataid = optional_param("dataid", false, PARAM_INT);
 
     foreach ($pages as $page) {
@@ -113,14 +113,14 @@ function theme_eadtraining_compile_pages($pages, $lang, $editing) {
         }
         $cachekey = "{$cachekey}_{$page->id}_{$lang}_v2";
 
-        $cache = cache::make("theme_eadtraining", "frontpage_cache");
+        $cache = cache::make("theme_learnlingo", "frontpage_cache");
 
         if (!$editing && $cache->has($cachekey) && !$previewdataid) {
             $localreturn = $cache->get($cachekey);
         } else {
             $localreturn = (object) ["pages" => [], "css" => [], "js" => []];
 
-            $file = "/theme/eadtraining/_editor/model/{$page->template}/style.css";
+            $file = "/theme/learnlingo/_editor/model/{$page->template}/style.css";
             $localreturn->css["{$page->template}/style.css"] = $file;
 
             if ($page->id == $previewdataid && isset($_POST["save"])) {
@@ -131,7 +131,7 @@ function theme_eadtraining_compile_pages($pages, $lang, $editing) {
                     $page->html = "<div class='alert alert-warning page-editor-preview'>{$html}<style>{$css}</style></div>";
                 }
 
-                $savedata = theme_eadtraining_clear_params_array($_POST["save"], PARAM_RAW);
+                $savedata = theme_learnlingo_clear_params_array($_POST["save"], PARAM_RAW);
                 $info = json_decode($page->info);
                 $info->savedata = array_values($savedata);
                 $page->info = json_encode($info, JSON_PRETTY_PRINT);
@@ -170,7 +170,7 @@ function theme_eadtraining_compile_pages($pages, $lang, $editing) {
                             $localreturn->js[$script] = $js;
                         } else {
                             if (file_exists(__DIR__ . "/model/{$page->template}/{$script}")) {
-                                $file = "/theme/eadtraining/_editor/model/{$page->template}/{$script}";
+                                $file = "/theme/learnlingo/_editor/model/{$page->template}/{$script}";
                                 $localreturn->js["{$page->template}/{$script}"] = $file;
                             }
                         }
@@ -180,7 +180,7 @@ function theme_eadtraining_compile_pages($pages, $lang, $editing) {
                     foreach ($info->form->styles as $style) {
                         if ($style != "bootstrap") {
                             if (file_exists(__DIR__ . "/model/{$page->template}/{$style}")) {
-                                $file = "/theme/eadtraining/_editor/model/{$page->template}/{$style}";
+                                $file = "/theme/learnlingo/_editor/model/{$page->template}/{$style}";
                                 $localreturn->css["{$page->template}/{$style}"] = $file;
                             };
                         }
@@ -210,11 +210,11 @@ function theme_eadtraining_compile_pages($pages, $lang, $editing) {
  * @param $type
  * @return array|mixed
  */
-function theme_eadtraining_clear_params_array($in, $type) {
+function theme_learnlingo_clear_params_array($in, $type) {
     $out = [];
     if (is_array($in)) {
         foreach ($in as $key => $value) {
-            $out[$key] = theme_eadtraining_clear_params_array($value, $type);
+            $out[$key] = theme_learnlingo_clear_params_array($value, $type);
         }
     } else if (is_string($in)) {
         try {
@@ -236,10 +236,10 @@ function theme_eadtraining_clear_params_array($in, $type) {
  * @return string
  * @throws Exception
  */
-function theme_eadtraining_load_info_json($filepath) {
+function theme_learnlingo_load_info_json($filepath) {
     $info = file_get_contents($filepath);
     $data = json_decode($info, true);
-    theme_eadtraining_replace_lang_by_array($data);
+    theme_learnlingo_replace_lang_by_array($data);
 
     return json_encode($data, JSON_PRETTY_PRINT);
 }
@@ -251,12 +251,12 @@ function theme_eadtraining_load_info_json($filepath) {
  * @return void
  * @throws Exception
  */
-function theme_eadtraining_replace_lang_by_array(&$data) {
-    $stringlang = theme_eadtraining_get_strings_langs();
+function theme_learnlingo_replace_lang_by_array(&$data) {
+    $stringlang = theme_learnlingo_get_strings_langs();
 
     foreach ($data as &$value) {
         if (is_array($value)) {
-            theme_eadtraining_replace_lang_by_array($value); // Recursive call.
+            theme_learnlingo_replace_lang_by_array($value); // Recursive call.
         } else if (is_string($value) && strpos($value, 'lang::') === 0) {
             $langkey = substr($value, 6); // Remove 'lang::'.
             if (isset($stringlang[$langkey])) {
@@ -274,8 +274,8 @@ function theme_eadtraining_replace_lang_by_array(&$data) {
  * @param string $data
  * @throws Exception
  */
-function theme_eadtraining_replace_lang_by_string($data) {
-    $stringlang = theme_eadtraining_get_strings_langs();
+function theme_learnlingo_replace_lang_by_string($data) {
+    $stringlang = theme_learnlingo_get_strings_langs();
 
     preg_match_all('/lang::(\w+)/', $data, $output_data);
     foreach ($output_data[1] as $langkey) {
@@ -295,7 +295,7 @@ function theme_eadtraining_replace_lang_by_string($data) {
  *
  * @return array
  */
-function theme_eadtraining_get_strings_langs() {
+function theme_learnlingo_get_strings_langs() {
     static $stringlang = [];
     if (!$stringlang) {
         if (isset($_GET["current_language"])) {
@@ -317,19 +317,19 @@ function theme_eadtraining_get_strings_langs() {
  * @return object
  * @throws Exception
  */
-function theme_eadtraining_get_editor_course_link($course) {
+function theme_learnlingo_get_editor_course_link($course) {
     global $CFG, $USER;
 
     $title = $course->fullname;
     $link = "{$CFG->wwwroot}/course/view.php?id={$course->id}";
-    $access = get_string("access_course", "theme_eadtraining");
+    $access = get_string("access_course", "theme_learnlingo");
 
     if (file_exists("{$CFG->dirroot}/local/kopere_pay/lib.php")) {
         $coursecontext = context_course::instance($course->id);
         if (!has_capability("moodle/course:view", $coursecontext, $USER)) {
             $enable = get_config("local_kopere_dashboard", "builder_enable_{$course->id}");
 
-            $access = get_string("access_course_buy", "theme_eadtraining");
+            $access = get_string("access_course_buy", "theme_learnlingo");
             if ($enable) {
                 $link = "{$CFG->wwwroot}/local/kopere_pay/view.php?id={$course->id}";
                 $title = get_config("local_kopere_dashboard", "builder_titulo_{$course->id}");
@@ -350,7 +350,7 @@ function theme_eadtraining_get_editor_course_link($course) {
  * @return array
  * @throws Exception
  */
-function theme_eadtraining_list_templates() {
+function theme_learnlingo_list_templates() {
     global $CFG;
 
     $lang = current_language();
@@ -359,7 +359,7 @@ function theme_eadtraining_list_templates() {
     $items = [];
     foreach ($files as $file) {
         $dir = pathinfo(pathinfo($file, PATHINFO_DIRNAME), PATHINFO_BASENAME);
-        $data = json_decode(theme_eadtraining_load_info_json($file));
+        $data = json_decode(theme_learnlingo_load_info_json($file));
         if (isset($data->disable) && $data->disable) {
             continue;
         }
@@ -367,8 +367,8 @@ function theme_eadtraining_list_templates() {
         if ($data) {
             $items[] = [
                 "id" => $dir, "title" => $data->title, "category" => $data->category,
-                "image" => "{$CFG->wwwroot}/theme/eadtraining/_editor/model/{$dir}/print.png",
-                "preview" => "{$CFG->wwwroot}/theme/eadtraining/_editor/model/preview.php?path={$dir}&current_language={$lang}",
+                "image" => "{$CFG->wwwroot}/theme/learnlingo/_editor/model/{$dir}/print.png",
+                "preview" => "{$CFG->wwwroot}/theme/learnlingo/_editor/model/preview.php?path={$dir}&current_language={$lang}",
             ];
         }
     }
@@ -382,9 +382,9 @@ function theme_eadtraining_list_templates() {
  * @return array
  * @throws Exception
  */
-function theme_eadtraining_list_templates_category() {
+function theme_learnlingo_list_templates_category() {
     $categorys = [];
-    foreach (theme_eadtraining_list_templates() as $item) {
+    foreach (theme_learnlingo_list_templates() as $item) {
         $categorys[$item["category"]]["category"] = $item["category"];
         $categorys[$item["category"]]["itens"][] = $item;
     }

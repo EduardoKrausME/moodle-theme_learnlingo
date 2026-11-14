@@ -17,12 +17,12 @@
 /**
  * Editor.
  *
- * @package   theme_eadtraining
+ * @package   theme_learnlingo
  * @copyright 2025 Eduardo Kraus {@link https://eduardokraus.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-use theme_eadtraining\page_editor_manager;
+use theme_learnlingo\page_editor_manager;
 
 require_once("../../../config.php");
 require_once("editor-lib.php");
@@ -32,20 +32,20 @@ global $CFG, $DB, $PAGE, $OUTPUT;
 require_admin();
 
 $PAGE->set_context(\context_system::instance());
-$PAGE->set_url(new moodle_url("/theme/eadtraining/_editor/editor.php", $_GET));
+$PAGE->set_url(new moodle_url("/theme/learnlingo/_editor/editor.php", $_GET));
 
 if (optional_param("delete", false, PARAM_INT)) {
     $dataid = required_param("dataid", PARAM_INT);
 
     $PAGE->set_pagelayout("standard");
-    $PAGE->set_title(get_string("delete_block_title", "theme_eadtraining"));
-    $PAGE->set_heading(get_string("delete_block_title", "theme_eadtraining"));
+    $PAGE->set_title(get_string("delete_block_title", "theme_learnlingo"));
+    $PAGE->set_heading(get_string("delete_block_title", "theme_learnlingo"));
 
     echo $OUTPUT->header();
     $confirm = md5($dataid . $CFG->wwwroot);
     if (optional_param("confirm", false, PARAM_TEXT) == $confirm) {
-        $deletedpage = $DB->get_record("theme_eadtraining_pages", ["id" => $dataid], "*", MUST_EXIST);
-        $DB->delete_records("theme_eadtraining_pages", ["id" => $dataid]);
+        $deletedpage = $DB->get_record("theme_learnlingo_pages", ["id" => $dataid], "*", MUST_EXIST);
+        $DB->delete_records("theme_learnlingo_pages", ["id" => $dataid]);
 
         if (page_editor_manager::is_mod_page_editor_record($deletedpage)) {
             $cmid = page_editor_manager::get_cmid_from_editor_record($deletedpage);
@@ -54,15 +54,15 @@ if (optional_param("delete", false, PARAM_INT)) {
             }
         }
 
-        \cache::make("theme_eadtraining", "frontpage_cache")->purge();
+        \cache::make("theme_learnlingo", "frontpage_cache")->purge();
         $returnurl = optional_param("returnurl", "", PARAM_LOCALURL);
         if ($returnurl) {
-            redirect(new moodle_url($returnurl), get_string("delete_block_success", "theme_eadtraining"));
+            redirect(new moodle_url($returnurl), get_string("delete_block_success", "theme_learnlingo"));
         }
-        redirect($CFG->wwwroot, get_string("delete_block_success", "theme_eadtraining"));
+        redirect($CFG->wwwroot, get_string("delete_block_success", "theme_learnlingo"));
     } else {
         $returnurl = optional_param("returnurl", "", PARAM_LOCALURL);
-        $deleteurl = new moodle_url("/theme/eadtraining/_editor/editor.php", [
+        $deleteurl = new moodle_url("/theme/learnlingo/_editor/editor.php", [
             "dataid" => $dataid,
             "delete" => 1,
             "confirm" => $confirm,
@@ -74,7 +74,7 @@ if (optional_param("delete", false, PARAM_INT)) {
         }
 
         echo "
-            <p>" . get_string("delete_block_confirm", "theme_eadtraining") . "</p>
+            <p>" . get_string("delete_block_confirm", "theme_learnlingo") . "</p>
             <div class=\"d-flex\">
                 <a class=\"btn btn-danger me-3\"
                    href=\"" . $deleteurl->out(false) . "\">
@@ -92,18 +92,18 @@ if (required_param("dataid", PARAM_TEXT) == "create") {
     $template = required_param("template", PARAM_TEXT);
     $lang = required_param("lang", PARAM_TEXT);
     $local = required_param("local", PARAM_TEXT);
-    $page = theme_eadtraining_editor_create_page($template, $lang, $local);
+    $page = theme_learnlingo_editor_create_page($template, $lang, $local);
     $params = ["dataid" => $page->id];
     $returnurl = optional_param("returnurl", "", PARAM_LOCALURL);
     if ($returnurl) {
         $params["returnurl"] = $returnurl;
     }
-    redirect(new moodle_url("/theme/eadtraining/_editor/editor.php", $params));
+    redirect(new moodle_url("/theme/learnlingo/_editor/editor.php", $params));
     die;
 }
 
 $dataid = required_param("dataid", PARAM_INT);
-$page = $DB->get_record("theme_eadtraining_pages", ["id" => $dataid], "*", MUST_EXIST);
+$page = $DB->get_record("theme_learnlingo_pages", ["id" => $dataid], "*", MUST_EXIST);
 
 $formitens = false;
 switch ($page->type) {
@@ -127,7 +127,7 @@ $cssfiles = "@import url('model/{$page->template}/style.css');\n";
 $cssfiles .= "@import url('css/bootstrap.css');\n";
 if (file_exists(__DIR__ . "/model/{$page->template}/editor-plugin.js")) {
     $csscontent = file_get_contents(__DIR__ . "/model/_assets/editor.css");
-    $cssfiles .= theme_eadtraining_replace_lang_by_string($csscontent);
+    $cssfiles .= theme_learnlingo_replace_lang_by_string($csscontent);
 }
 if(isset($pageinfo->form->styles)) {
     foreach ($pageinfo->form->styles as $styles) {
@@ -162,7 +162,7 @@ $languages = get_string_manager()->get_list_of_translations();
     <title>GrapesJs</title>
 </head>
 <body style="margin: 0;">
-<form method="post" action="<?php echo theme_eadtraining_actionurl("page-save") ?>" id="form-save-editor">
+<form method="post" action="<?php echo theme_learnlingo_actionurl("page-save") ?>" id="form-save-editor">
     <input type="hidden" name="html" id="html-body" value="<?php echo htmlentities($page->html) ?>">
     <input type="hidden" name="css" id="css-body">
     <input type="hidden" id="editor-sesskey" value="<?php echo sesskey() ?>">
@@ -184,7 +184,7 @@ $languages = get_string_manager()->get_list_of_translations();
                 <label for="change-lang"><?php echo get_string("language") ?>:</label>
                 <select class="form-control" id="change-lang" style="width: auto;">
                     <?php
-                    echo "<option value=\"all\">" . get_string("language_all", "theme_eadtraining") . "</option>\n";
+                    echo "<option value=\"all\">" . get_string("language_all", "theme_learnlingo") . "</option>\n";
                     foreach ($languages as $langcode => $label) {
                         $selected = $page->lang == $langcode ? "selected" : "";
                         echo "<option {$selected} value=\"{$langcode}\">{$label}</option>\n";
@@ -199,7 +199,7 @@ $languages = get_string_manager()->get_list_of_translations();
                        id="btn-editor-preview"
                        value="<?php echo get_string("preview") ?>">
                 <button id="btn-add-block" type="button" class="btn btn-secondary me-3" style="display:none">
-                    <?php echo get_string("add_block", "theme_eadtraining") ?></button>
+                    <?php echo get_string("add_block", "theme_learnlingo") ?></button>
             </div>
         </div>
         <link rel="stylesheet" href="css/bootstrap.css"/>
@@ -243,90 +243,90 @@ if ($page->type == "form") { // Only form.
                             Roboto: {
                                 variants: {
                                     regular: {
-                                         source: '<?php echo $CFG->wwwroot ?>/theme/font.php/eadtraining/theme/<?php echo theme_get_revision() ?>/Roboto/Roboto-normal-400.woff'
+                                         source: '<?php echo $CFG->wwwroot ?>/theme/font.php/learnlingo/theme/<?php echo theme_get_revision() ?>/Roboto/Roboto-normal-400.woff'
                                     },
                                     bold: {
-                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/eadtraining/theme/<?php echo theme_get_revision() ?>/Roboto/Roboto-normal-700.woff'
+                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/learnlingo/theme/<?php echo theme_get_revision() ?>/Roboto/Roboto-normal-700.woff'
                                     }
                                 }
                             },
                             'Open Sans': {
                                 variants: {
                                     regular: {
-                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/eadtraining/theme/<?php echo theme_get_revision() ?>/Open-Sans/Open-Sans-italic-400.woff'
+                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/learnlingo/theme/<?php echo theme_get_revision() ?>/Open-Sans/Open-Sans-italic-400.woff'
                                     },
                                     bold: {
-                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/eadtraining/theme/<?php echo theme_get_revision() ?>/Open-Sans/Open-Sans-italic-700.woff'
+                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/learnlingo/theme/<?php echo theme_get_revision() ?>/Open-Sans/Open-Sans-italic-700.woff'
                                     }
                                 }
                             },
                             Montserrat: {
                                 variants: {
                                     regular: {
-                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/eadtraining/theme/<?php echo theme_get_revision() ?>/Montserrat/Montserrat-normal-400.woff'
+                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/learnlingo/theme/<?php echo theme_get_revision() ?>/Montserrat/Montserrat-normal-400.woff'
                                     },
                                     bold: {
-                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/eadtraining/theme/<?php echo theme_get_revision() ?>/Montserrat/Montserrat-normal-700.woff'
+                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/learnlingo/theme/<?php echo theme_get_revision() ?>/Montserrat/Montserrat-normal-700.woff'
                                     }
                                 }
                             },
                             Poppins: {
                                 variants: {
                                     regular: {
-                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/eadtraining/theme/<?php echo theme_get_revision() ?>/Poppins/Poppins-normal-400.woff'
+                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/learnlingo/theme/<?php echo theme_get_revision() ?>/Poppins/Poppins-normal-400.woff'
                                     },
                                     bold: {
-                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/eadtraining/theme/<?php echo theme_get_revision() ?>/Poppins/Poppins-normal-700.woff'
+                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/learnlingo/theme/<?php echo theme_get_revision() ?>/Poppins/Poppins-normal-700.woff'
                                     }
                                 }
                             },
                             Lato: {
                                 variants: {
                                     regular: {
-                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/eadtraining/theme/<?php echo theme_get_revision() ?>/Lato/Lato-normal-400.woff'
+                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/learnlingo/theme/<?php echo theme_get_revision() ?>/Lato/Lato-normal-400.woff'
                                     },
                                     bold: {
-                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/eadtraining/theme/<?php echo theme_get_revision() ?>/Lato/Lato-normal-700.woff'
+                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/learnlingo/theme/<?php echo theme_get_revision() ?>/Lato/Lato-normal-700.woff'
                                     }
                                 }
                             },
                             'Playfair Display': {
                                 variants: {
                                     regular: {
-                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/eadtraining/theme/<?php echo theme_get_revision() ?>/Playfair-Display/Playfair-Display-italic-400.woff'
+                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/learnlingo/theme/<?php echo theme_get_revision() ?>/Playfair-Display/Playfair-Display-italic-400.woff'
                                     },
                                     bold: {
-                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/eadtraining/theme/<?php echo theme_get_revision() ?>/Playfair-Display/Playfair-Display-italic-700.woff'
+                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/learnlingo/theme/<?php echo theme_get_revision() ?>/Playfair-Display/Playfair-Display-italic-700.woff'
                                     }
                                 }
                             },
                             Merriweather: {
                                 variants: {
                                     regular: {
-                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/eadtraining/theme/<?php echo theme_get_revision() ?>/Merriweather/Merriweather-normal-400.woff'
+                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/learnlingo/theme/<?php echo theme_get_revision() ?>/Merriweather/Merriweather-normal-400.woff'
                                     },
                                     bold: {
-                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/eadtraining/theme/<?php echo theme_get_revision() ?>/Merriweather/Merriweather-normal-700.woff'
+                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/learnlingo/theme/<?php echo theme_get_revision() ?>/Merriweather/Merriweather-normal-700.woff'
                                     }
                                 }
                             },
                             Raleway: {
                                 variants: {
                                     regular: {
-                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/eadtraining/theme/<?php echo theme_get_revision() ?>/Raleway/Raleway-normal-400.woff'
+                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/learnlingo/theme/<?php echo theme_get_revision() ?>/Raleway/Raleway-normal-400.woff'
                                     },
                                     bold: {
-                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/eadtraining/theme/<?php echo theme_get_revision() ?>/Raleway/Raleway-normal-700.woff'
+                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/learnlingo/theme/<?php echo theme_get_revision() ?>/Raleway/Raleway-normal-700.woff'
                                     }
                                 }
                             },
                             Oswald: {
                                 variants: {
                                     regular: {
-                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/eadtraining/theme/<?php echo theme_get_revision() ?>/Oswald/Oswald-normal-400.woff'
+                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/learnlingo/theme/<?php echo theme_get_revision() ?>/Oswald/Oswald-normal-400.woff'
                                     },
                                     bold: {
-                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/eadtraining/theme/<?php echo theme_get_revision() ?>/Oswald/Oswald-normal-700.woff'
+                                        source: '<?php echo $CFG->wwwroot ?>/theme/font.php/learnlingo/theme/<?php echo theme_get_revision() ?>/Oswald/Oswald-normal-700.woff'
                                     }
                                 }
                             }
@@ -338,7 +338,7 @@ if ($page->type == "form") { // Only form.
         assets: {
             storageType: "self",
             onLoad: async function () {
-                const response = await fetch("<?php echo theme_eadtraining_actionurl("file-list") ?>", {method: "GET"});
+                const response = await fetch("<?php echo theme_learnlingo_actionurl("file-list") ?>", {method: "GET"});
 
                 if (!response.ok) {
                     throw new Error(`Erro na requisição: ${response.status}`);
@@ -351,7 +351,7 @@ if ($page->type == "form") { // Only form.
                 for (const file of files) {
                     body.append("files", file);
                 }
-                const response = await fetch("<?php echo theme_eadtraining_actionurl("file-upload") ?>", {
+                const response = await fetch("<?php echo theme_learnlingo_actionurl("file-upload") ?>", {
                     method: "POST",
                     body
                 });
@@ -364,7 +364,7 @@ if ($page->type == "form") { // Only form.
                 }
 
                 const body = JSON.stringify(assets[0].attributes);
-                await fetch("<?php echo theme_eadtraining_actionurl("file-delete") ?>", {
+                await fetch("<?php echo theme_learnlingo_actionurl("file-delete") ?>", {
                     method: "POST",
                     body
                 });
@@ -401,7 +401,7 @@ if ($page->type == "form") { // Only form.
             <?php
             if (file_exists(__DIR__ . "/model/{$page->template}/editor-plugin.js")) {
                 $pluginjs = file_get_contents(__DIR__ . "/model/{$page->template}/editor-plugin.js");
-                echo theme_eadtraining_replace_lang_by_string($pluginjs);
+                echo theme_learnlingo_replace_lang_by_string($pluginjs);
             }
             ?>
         ],

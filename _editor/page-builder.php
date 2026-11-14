@@ -17,12 +17,12 @@
 /**
  * Visual page builder for Moodle page activities.
  *
- * @package   theme_eadtraining
+ * @package   theme_learnlingo
  * @copyright 2026 Eduardo Kraus {@link https://eduardokraus.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-use theme_eadtraining\page_editor_manager;
+use theme_learnlingo\page_editor_manager;
 
 require_once('../../../config.php');
 require_once('editor-lib.php');
@@ -38,7 +38,7 @@ $modulepage = $DB->get_record('page', ['id' => $cm->instance], '*', MUST_EXIST);
 require_login($course, false, $cm);
 require_capability('moodle/course:manageactivities', $context);
 
-$builderurl = new moodle_url('/theme/eadtraining/_editor/page-builder.php', ['cmid' => $cmid]);
+$builderurl = new moodle_url('/theme/learnlingo/_editor/page-builder.php', ['cmid' => $cmid]);
 $returnurl = $builderurl->out_as_local_url(false);
 $viewurl = new moodle_url('/mod/page/view.php', ['id' => $cmid]);
 $editurl = new moodle_url('/course/modedit.php', ['update' => $cmid, 'return' => 1]);
@@ -55,8 +55,8 @@ $PAGE->set_heading(format_string($course->fullname, true, ['context' => context_
 
 $lang = $USER->lang ?? $CFG->lang;
 $local = page_editor_manager::local_from_cmid($cmid);
-$records = $DB->get_records('theme_eadtraining_pages', ['local' => $local], 'sort ASC, id ASC');
-$compiledpages = theme_eadtraining_compile_pages($records, $lang, true);
+$records = $DB->get_records('theme_learnlingo_pages', ['local' => $local], 'sort ASC, id ASC');
+$compiledpages = theme_learnlingo_compile_pages($records, $lang, true);
 
 $csslink = '';
 foreach ($compiledpages->css as $cssfile) {
@@ -74,7 +74,7 @@ foreach ($compiledpages->js as $jsfile) {
 
 foreach ($compiledpages->pages as $blockpage) {
     $blockpage->editorurl = page_editor_manager::get_editor_url($blockpage)->out(false);
-    $blockpage->deleteurl = (new moodle_url('/theme/eadtraining/_editor/editor.php', [
+    $blockpage->deleteurl = (new moodle_url('/theme/learnlingo/_editor/editor.php', [
         'dataid' => $blockpage->id,
         'delete' => 1,
         'returnurl' => $returnurl,
@@ -88,22 +88,22 @@ $editorcontext = [
 ];
 
 $templatecontext = [
-    'title' => get_string('pageeditor_builder_title', 'theme_eadtraining'),
-    'description' => get_string('pageeditor_builder_description', 'theme_eadtraining'),
+    'title' => get_string('pageeditor_builder_title', 'theme_learnlingo'),
+    'description' => get_string('pageeditor_builder_description', 'theme_learnlingo'),
     'viewurl' => $viewurl->out(false),
     'editurl' => $editurl->out(false),
     'csslink' => $csslink,
     'editorcontext' => $editorcontext,
 ];
 
-$PAGE->requires->strings_for_js(['preview', 'add_block_edit'], 'theme_eadtraining');
-$PAGE->requires->js_call_amd('theme_eadtraining/frontpage', 'add_block', [[
+$PAGE->requires->strings_for_js(['preview', 'add_block_edit'], 'theme_learnlingo');
+$PAGE->requires->js_call_amd('theme_learnlingo/frontpage', 'add_block', [[
     'lang' => $lang,
     'local' => $local,
     'returnurl' => $returnurl,
 ]]);
-$PAGE->requires->js_call_amd('theme_eadtraining/frontpage', 'block_order', [$local]);
+$PAGE->requires->js_call_amd('theme_learnlingo/frontpage', 'block_order', [$local]);
 
 echo $OUTPUT->header();
-echo $OUTPUT->render_from_template('theme_eadtraining/page_builder', $templatecontext);
+echo $OUTPUT->render_from_template('theme_learnlingo/page_builder', $templatecontext);
 echo $OUTPUT->footer();
