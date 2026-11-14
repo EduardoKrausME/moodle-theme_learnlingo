@@ -161,7 +161,7 @@ final class mcp_settings_test extends advanced_testcase {
         $this->assertStringNotContainsString('padding:', $guide['scss_outline']);
         $this->assertStringNotContainsString('height:', $guide['scss_outline']);
         $this->assertContains('--navbar-height', $guide['allowed_variables']);
-        $this->assertCount(21, $guide['allowed_variables']);
+        $this->assertCount(22, $guide['allowed_variables']);
         $this->assertSame($guide['allowed_variables'], array_values(array_unique($guide['allowed_variables'])));
         $scss = file_get_contents(__DIR__ . '/../scss/moodle/_navbar.scss');
         preg_match_all('/^\\s*(--[a-z0-9-]+)\\s*:/m', $scss, $matches);

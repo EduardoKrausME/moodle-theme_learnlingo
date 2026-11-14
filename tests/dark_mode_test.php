@@ -78,7 +78,8 @@ final class dark_mode_test extends advanced_testcase {
         $this->assertStringContainsString('.learnlingo-html-home,', $light);
         $this->assertStringContainsString('.learnlingo-home-intro {', $light);
         $this->assertStringContainsString('color-scheme: light;', $light);
-        $this->assertStringContainsString('[data-bs-theme="dark"]:root {', $light);
+        $this->assertStringContainsString('color-scheme: inherit;', $light);
+        $this->assertStringContainsString('[data-bs-theme="dark"] {', $light);
         $this->assertStringContainsString('color-scheme: dark;', $light);
         $this->assertStringContainsString('[data-bs-theme="dark"]', $dark);
         $this->assertStringContainsString('.learnlingo-home-course-card,', $dark);
