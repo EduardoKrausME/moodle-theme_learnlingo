@@ -7,6 +7,7 @@
     %%LL_MOODLE_HEAD%%
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/grapes.css">
+    <script src="js/build/grapes.min.js"></script>
     <script src="js/build/index.min.js"></script>
     <script src="js/build/tableComponent.min.js"></script>
     <script src="js/build/iconifyComponent.min.js"></script>
@@ -99,6 +100,7 @@
         const startMarker = '/* LearnLingo visual CSS: begin */';
         const endMarker = '/* LearnLingo visual CSS: end */';
         let editor = null;
+        let editorPromise = null;
         let mode = 'source';
         let studioSource = '';
 
@@ -135,15 +137,42 @@
             if (editor) {
                 return editor;
             }
-            if (!window.GrapesJs || !window.GrapesJsPlugins_prosemirror) {
+            if (editorPromise) {
+                return editorPromise;
+            }
+            const plugins = [
+                window.GrapesJsPlugins_prosemirror,
+                window.GrapesJsPlugins_layoutSidebarButtons,
+                window.GrapesJsPlugins_tableComponent,
+                window.GrapesJsPlugins_iconifyComponent,
+                window.GrapesJsPlugins_flexComponent,
+                window.GrapesJsPlugins_canvasEmptyState
+            ];
+            if (typeof window.GrapesJs?.createEditor !== 'function' ||
+                    typeof window.grapesjs?.init !== 'function' ||
+                    plugins.some(plugin => typeof plugin?.init !== 'function')) {
                 throw new Error(%%LL_EDITOR_ASSETS_MISSING%%);
             }
             studioSource = htmlInput.value;
             // SCSS is never parsed into GrapesJS rules, which would destroy
             // Sass nesting, variables and Moodle's Mustache expressions.
             window.GrapesJsCSS = "@import url('css/bootstrap.css');\n" + scssInput.value;
-            const instance = GrapesJs.createEditor({
+            // Studio SDK's createEditor resolves before the embedded editor is ready.
+            // Resolve only from onReady, which provides the real GrapesJS instance.
+            editorPromise = new Promise((resolve, reject) => {
+                const timeout = window.setTimeout(() => {
+                    reject(new Error(%%LL_EDITOR_NOT_READY%%));
+                }, 30000);
+                const onReady = (instance) => {
+                    window.clearTimeout(timeout);
+                    editor = instance;
+                    resolve(instance);
+                };
+                try {
+                    Promise.resolve(GrapesJs.createEditor({
                 root: '#ll-studio',
+                gjsScript: window.grapesjs,
+                onReady,
                 theme: 'dark',
                 project: {
                     type: 'web',
@@ -194,9 +223,20 @@
                     GrapesJsPlugins_flexComponent.init({}),
                     GrapesJsPlugins_canvasEmptyState.init({})
                 ]
+                    })).catch(error => {
+                        window.clearTimeout(timeout);
+                        reject(error);
+                    });
+                } catch (error) {
+                    window.clearTimeout(timeout);
+                    reject(error);
+                }
             });
-            editor = await Promise.resolve(instance);
-            return editor;
+            try {
+                return await editorPromise;
+            } finally {
+                editorPromise = null;
+            }
         };
 
         const applyVisual = async (activeEditor) => {
