@@ -67,6 +67,7 @@ final class menu_guide {
                 '--learnlingo-navbar-border',
                 '--learnlingo-navbar-divider',
                 '--learnlingo-navbar-link',
+                '--learnlingo-navbar-link-font',
                 '--learnlingo-navbar-link-hover',
                 '--learnlingo-navbar-link-hover-bg',
                 '--learnlingo-navbar-link-active',
@@ -90,6 +91,7 @@ final class menu_guide {
 :root {
     --learnlingo-navbar-bg: rgba(255, 255, 255, .97);
     --learnlingo-navbar-link: #666A74;
+    --learnlingo-navbar-link-font: "DM Sans";
     --learnlingo-navbar-link-hover: var(--bs-primary);
 }
 html[data-bs-theme="dark"] {

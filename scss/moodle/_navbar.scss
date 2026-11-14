@@ -7,6 +7,7 @@
 
     // Navigation links.
     --learnlingo-navbar-link: #666A74;
+    --learnlingo-navbar-link-font: "DM Sans";
     --learnlingo-navbar-link-hover: var(--bs-primary);
     --learnlingo-navbar-link-hover-bg: #{rgba($primary, .07)};
     --learnlingo-navbar-link-active: var(--bs-primary);
@@ -133,7 +134,7 @@ html .navbar.fixed-top {
         color: var(--learnlingo-navbar-link);
         text-decoration: none;
 
-        font-family: "DM Sans", serif;
+        font-family: var(--learnlingo-navbar-link-font) serif;
         min-height: 60px;
         padding: 0 1rem;
         font-weight: 650;
@@ -547,4 +548,7 @@ html .learnlingo-brandmark {
 
 .pagelayout-embedded #page {
     margin-top: 0;
+}
+.mds-switch-label{
+    font-family: var(--learnlingo-navbar-link-font), serif;
 }
