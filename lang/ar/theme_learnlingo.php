@@ -59,7 +59,7 @@ $string['colourpreset'] = 'استخدام اللون';
 $string['colourpreview'] = 'معاينة اللون';
 $string['colourreset'] = 'استعادة الافتراضي';
 $string['configtitle'] = 'LearnLingo';
-$string['contenteditorbanner'] = '<aside class="alert alert-info mb-3" role="note" style="border-left:4px solid #1671c5;border-radius:8px;padding:14px 18px;"><strong>يمكنك تعديل هذا المحتوى بطريقتين:</strong> استخدم <a class="alert-link" href="{$a->editorurl}">محرر HTML</a> أو <a class="alert-link" href="{$a->helpurl}" target="_blank" rel="noopener noreferrer">ChatGPT/Claude (دليل المساعدة)</a>.</aside>';
+$string['contenteditorbanner'] = '<aside class="alert alert-info mb-3" role="note" style="border-left:4px solid #1671c5;border-radius:8px;padding:14px 18px;"><strong>يمكنك تعديل هذا المحتوى بطريقتين:</strong> استخدم <a class="btn btn-outline-primary" href="{$a->editorurl}">محرر HTML</a> أو <a class="btn btn-outline-primary" href="{$a->helpurl}" target="_blank" rel="noopener noreferrer">ChatGPT/Claude (دليل المساعدة)</a>.</aside>';
 $string['courseheroeyebrow'] = 'تسمية ترويسة المقرر';
 $string['courseheroeyebrow_desc'] = 'تسمية قصيرة أعلى اسم المقرر في الترويسة.';
 $string['courseheroeyebrowdefault'] = 'واصل التقدم';

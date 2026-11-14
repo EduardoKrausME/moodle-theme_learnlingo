@@ -59,7 +59,7 @@ $string['colourpreset'] = 'Farbe verwenden';
 $string['colourpreview'] = 'Farbvorschau';
 $string['colourreset'] = 'Standard wiederherstellen';
 $string['configtitle'] = 'LearnLingo';
-$string['contenteditorbanner'] = '<aside class="alert alert-info mb-3" role="note" style="border-left:4px solid #1671c5;border-radius:8px;padding:14px 18px;"><strong>Dieser Inhalt lässt sich auf zwei Arten bearbeiten:</strong> mit dem <a class="alert-link" href="{$a->editorurl}">HTML-Editor</a> oder mit <a class="alert-link" href="{$a->helpurl}" target="_blank" rel="noopener noreferrer">ChatGPT/Claude (Hilfe ansehen)</a>.</aside>';
+$string['contenteditorbanner'] = '<aside class="alert alert-info mb-3" role="note" style="border-left:4px solid #1671c5;border-radius:8px;padding:14px 18px;"><strong>Dieser Inhalt lässt sich auf zwei Arten bearbeiten:</strong> mit dem <a class="btn btn-outline-primary" href="{$a->editorurl}">HTML-Editor</a> oder mit <a class="btn btn-outline-primary" href="{$a->helpurl}" target="_blank" rel="noopener noreferrer">ChatGPT/Claude (Hilfe ansehen)</a>.</aside>';
 $string['courseheroeyebrow'] = 'Kurskopf-Beschriftung';
 $string['courseheroeyebrow_desc'] = 'Kurze Beschriftung über dem Kursnamen im Kurskopf.';
 $string['courseheroeyebrowdefault'] = 'Weiter so';

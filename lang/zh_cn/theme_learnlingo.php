@@ -59,7 +59,7 @@ $string['colourpreset'] = '使用颜色';
 $string['colourpreview'] = '颜色预览';
 $string['colourreset'] = '恢复默认值';
 $string['configtitle'] = 'LearnLingo';
-$string['contenteditorbanner'] = '<aside class="alert alert-info mb-3" role="note" style="border-left:4px solid #1671c5;border-radius:8px;padding:14px 18px;"><strong>您可以通过两种方式编辑此内容：</strong>使用<a class="alert-link" href="{$a->editorurl}">HTML 编辑器</a>，或使用<a class="alert-link" href="{$a->helpurl}" target="_blank" rel="noopener noreferrer">ChatGPT/Claude（查看帮助）</a>。</aside>';
+$string['contenteditorbanner'] = '<aside class="alert alert-info mb-3" role="note" style="border-left:4px solid #1671c5;border-radius:8px;padding:14px 18px;"><strong>您可以通过两种方式编辑此内容：</strong>使用<a class="btn btn-outline-primary" href="{$a->editorurl}">HTML 编辑器</a>，或使用<a class="btn btn-outline-primary" href="{$a->helpurl}" target="_blank" rel="noopener noreferrer">ChatGPT/Claude（查看帮助）</a>。</aside>';
 $string['courseheroeyebrow'] = '课程标题标签';
 $string['courseheroeyebrow_desc'] = '显示在课程标题区域中课程名称上方的简短标签。';
 $string['courseheroeyebrowdefault'] = '继续前进';

@@ -59,7 +59,7 @@ $string['colourpreset'] = 'Применить цвет';
 $string['colourpreview'] = 'Предпросмотр цвета';
 $string['colourreset'] = 'Восстановить по умолчанию';
 $string['configtitle'] = 'LearnLingo';
-$string['contenteditorbanner'] = '<aside class="alert alert-info mb-3" role="note" style="border-left:4px solid #1671c5;border-radius:8px;padding:14px 18px;"><strong>Этот материал можно редактировать двумя способами:</strong> через <a class="alert-link" href="{$a->editorurl}">HTML-редактор</a> или с помощью <a class="alert-link" href="{$a->helpurl}" target="_blank" rel="noopener noreferrer">ChatGPT/Claude (справка)</a>.</aside>';
+$string['contenteditorbanner'] = '<aside class="alert alert-info mb-3" role="note" style="border-left:4px solid #1671c5;border-radius:8px;padding:14px 18px;"><strong>Этот материал можно редактировать двумя способами:</strong> через <a class="btn btn-outline-primary" href="{$a->editorurl}">HTML-редактор</a> или с помощью <a class="btn btn-outline-primary" href="{$a->helpurl}" target="_blank" rel="noopener noreferrer">ChatGPT/Claude (справка)</a>.</aside>';
 $string['courseheroeyebrow'] = 'Метка заголовка курса';
 $string['courseheroeyebrow_desc'] = 'Короткая метка над названием курса в заголовке.';
 $string['courseheroeyebrowdefault'] = 'Продолжайте двигаться вперёд';
