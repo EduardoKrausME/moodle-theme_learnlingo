@@ -34,6 +34,42 @@ use invalid_parameter_exception;
  */
 final class editor_integration_test extends advanced_testcase {
     /**
+     * Bundles loaded as ordinary scripts must not register anonymous RequireJS modules.
+     *
+     * The Moodle page has RequireJS available, but GrapesJS Studio dynamically injects
+     * its assets as script tags. An AMD branch in a UMD wrapper makes the editor fail
+     * with "Mismatched anonymous define() module".
+     */
+    public function test_standalone_grapesjs_assets_use_global_exports(): void {
+        global $CFG;
+
+        $assets = [
+            'grapes.min.js',
+            'index.min.js',
+            'grapesjs-blocks-basic.min.js',
+            'grapesjs-parser-postcss.min.js',
+            'grapesjs-plugin-forms.min.js',
+            'tableComponent.min.js',
+            'iconifyComponent.min.js',
+            'flexComponent.min.js',
+            'canvasEmptyState.min.js',
+            'layoutSidebarButtons.min.js',
+            'prosemirror.min.js',
+        ];
+
+        foreach ($assets as $asset) {
+            $path = $CFG->dirroot . '/theme/learnlingo/_editor/js/build/' . $asset;
+            $handle = fopen($path, 'rb');
+            $this->assertNotFalse($handle, $asset);
+            $header = fread($handle, 320);
+            fclose($handle);
+
+            $this->assertStringNotContainsString('define.amd', $header, $asset);
+            $this->assertStringContainsString('&&false?', $header, $asset);
+        }
+    }
+
+    /**
      * Home/footer target aliases are never arbitrary configuration keys.
      */
     public function test_editor_only_accepts_known_targets(): void {
