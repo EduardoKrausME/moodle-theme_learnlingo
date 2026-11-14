@@ -127,7 +127,7 @@
                 return editor;
             }
             if (!window.GrapesJs || !window.GrapesJsPlugins_prosemirror) {
-                throw new Error('GrapesJS Studio assets could not be loaded');
+                throw new Error(%%LL_EDITOR_ASSETS_MISSING%%);
             }
             studioSource = htmlInput.value;
             // SCSS is never parsed into GrapesJS rules, which would destroy
@@ -159,7 +159,7 @@
                     onDelete: async ({assets}) => {
                         for (const asset of assets) {
                             if (!asset.attributes.delete) {
-                                throw new Error('This image cannot be deleted');
+                                throw new Error(%%LL_EDITOR_ASSET_NOT_DELETABLE%%);
                             }
                             await requestJson(initial.urls.delete, {
                                 method: 'POST',
@@ -194,15 +194,15 @@
 
         const applyVisual = async (activeEditor) => {
             if (!activeEditor || typeof activeEditor.runCommand !== 'function') {
-                throw new Error('The visual editor has not finished loading');
+                throw new Error(%%LL_EDITOR_NOT_READY%%);
             }
             const files = await activeEditor.runCommand('studio:projectFiles');
             if (!Array.isArray(files)) {
-                throw new Error('The visual editor did not return project files');
+                throw new Error(%%LL_EDITOR_FILES_MISSING%%);
             }
             const htmlFile = files.find((file) => file.mimeType === 'text/html');
             if (!htmlFile || typeof htmlFile.content !== 'string') {
-                throw new Error('The visual editor did not return HTML');
+                throw new Error(%%LL_EDITOR_HTML_MISSING%%);
             }
             let html = htmlFile.content;
             const body = /<body\b[^>]*>([\s\S]*?)<\/body>/i.exec(html);

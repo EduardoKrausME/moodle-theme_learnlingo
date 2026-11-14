@@ -74,4 +74,30 @@ final class footer_renderer_test extends advanced_testcase {
         $this->assertStringContainsString('Custom footer', $data['footer_custom_html']);
         $this->assertSame('<p>Original column</p>', get_config('theme_learnlingo', 'footer_html_1'));
     }
+
+    /**
+     * Footer and editor messages are translated rather than hard-coded.
+     */
+    public function test_footer_attribution_is_localised(): void {
+        global $CFG;
+
+        $template = file_get_contents($CFG->dirroot . '/theme/learnlingo/templates/footer.mustache');
+        $this->assertStringContainsString('{{#str}}poweredby, theme_learnlingo{{/str}}', $template);
+        $this->assertStringNotContainsString(' - Powered by <a', $template);
+        $studio = file_get_contents($CFG->dirroot . '/theme/learnlingo/_editor/studio.html');
+        $editor = file_get_contents($CFG->dirroot . '/theme/learnlingo/_editor/editor.php');
+        $keys = ['poweredby', 'visualeditorassetsmissing', 'visualeditorassetnotdeletable',
+            'visualeditornotready', 'visualeditorfilesmissing', 'visualeditorhtmlmissing'];
+        foreach (['en', 'pt_br'] as $lang) {
+            $string = [];
+            require($CFG->dirroot . '/theme/learnlingo/lang/' . $lang . '/theme_learnlingo.php');
+            foreach ($keys as $key) {
+                $this->assertArrayHasKey($key, $string);
+                $this->assertNotSame('', trim($string[$key]));
+            }
+        }
+        $this->assertStringContainsString('%%LL_EDITOR_ASSETS_MISSING%%', $studio);
+        $this->assertStringContainsString("'visualeditorassetsmissing', 'theme_learnlingo'", $editor);
+    }
+
 }

@@ -233,4 +233,29 @@ final class setup_images_test extends advanced_testcase {
         $this->assertSame('/existing-logo.png', get_config('core_admin', 'logo'));
         $this->assertSame('/existing-favicon.ico', get_config('core_admin', 'favicon'));
     }
+
+    /**
+     * Image normalization uses Moodle's request-scoped temporary directory.
+     */
+    public function test_normalised_image_uses_moodle_request_directory(): void {
+        $this->require_gd();
+
+        $source = make_request_directory() . '/ll-test-source-' . bin2hex(random_bytes(8)) . '.png';
+        $image = imagecreatetruecolor(8, 8);
+        imagepng($image, $source);
+        imagedestroy($image);
+        $result = null;
+        try {
+            $method = new \ReflectionMethod(setup_images::class, 'normalize');
+            $result = $method->invoke(null, 'logo', ['tmp_name' => $source]);
+            $this->assertStringStartsWith(make_request_directory() . '/', $result['tmp_name']);
+            $this->assertFileExists($result['tmp_name']);
+        } finally {
+            if ($result !== null && !empty($result['generated'])) {
+                @unlink($result['tmp_name']);
+            }
+            @unlink($source);
+        }
+    }
+
 }

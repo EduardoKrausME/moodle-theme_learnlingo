@@ -128,8 +128,6 @@ final class setup_login_images {
      * @return array Temporary file record.
      */
     private static function normalize(string $field, string $source): array {
-        global $CFG;
-
         $metadata = @getimagesize($source);
         if (!$metadata || !self::fits_memory((int)$metadata[0], (int)$metadata[1])) {
             throw new invalid_parameter_exception(get_string('setupimagememoryerror', 'theme_learnlingo'));
@@ -174,10 +172,9 @@ final class setup_login_images {
                 $newwidth, $newheight, $width, $height)) {
                 throw new invalid_parameter_exception(get_string('setupimageformaterror', 'theme_learnlingo'));
             }
-            $path = @tempnam($CFG->tempdir, 'll-login-');
-            if ($path === false) {
-                throw new invalid_parameter_exception(get_string('setupimageuploaderror', 'theme_learnlingo'));
-            }
+            // Moodle removes the request directory after this execution.
+            $path = make_request_directory() . '/ll-login-' . bin2hex(random_bytes(12)) .
+                ($savepng ? '.png' : '.jpg');
             $saved = $savepng ? imagepng($output, $path, 6) : imagejpeg($output, $path, 86);
             if (!$saved) {
                 throw new invalid_parameter_exception(get_string('setupimageuploaderror', 'theme_learnlingo'));

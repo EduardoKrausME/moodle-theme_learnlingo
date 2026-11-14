@@ -132,4 +132,30 @@ final class setup_login_images_test extends advanced_testcase {
         $this->assertSame('/existing-login.png', get_config('theme_learnlingo', 'loginlogo'));
         $this->assertSame('/existing-bg.jpg', get_config('theme_boost', 'loginbackgroundimage'));
     }
+
+    /**
+     * Login image normalization uses Moodle's request-scoped temporary directory.
+     */
+    public function test_normalised_login_image_uses_moodle_request_directory(): void {
+        if (!extension_loaded('gd')) {
+            $this->markTestSkipped('PHP GD is required.');
+        }
+        $source = make_request_directory() . '/ll-login-source-' . bin2hex(random_bytes(8)) . '.png';
+        $image = imagecreatetruecolor(8, 8);
+        imagepng($image, $source);
+        imagedestroy($image);
+        $result = null;
+        try {
+            $method = new \ReflectionMethod(setup_login_images::class, 'normalize');
+            $result = $method->invoke(null, 'loginlogo', $source);
+            $this->assertStringStartsWith(make_request_directory() . '/', $result['path']);
+            $this->assertFileExists($result['path']);
+        } finally {
+            if ($result !== null) {
+                @unlink($result['path']);
+            }
+            @unlink($source);
+        }
+    }
+
 }

@@ -206,8 +206,6 @@ final class setup_images {
      * @return array Normalized temporary file record.
      */
     private static function normalize(string $field, array $upload): array {
-        global $CFG;
-
         if (($upload['extension'] ?? '') === 'ico') {
             return $upload;
         }
@@ -275,10 +273,9 @@ final class setup_images {
                 throw new invalid_parameter_exception(get_string('setupimageformaterror', 'theme_learnlingo'));
             }
 
-            $path = @tempnam($CFG->tempdir, 'learnlingo-img-');
-            if ($path === false) {
-                throw new invalid_parameter_exception(get_string('setupimageuploaderror', 'theme_learnlingo'));
-            }
+            // Moodle removes the request directory after this execution.
+            $path = make_request_directory() . '/learnlingo-img-' . bin2hex(random_bytes(12)) .
+                ($png ? '.png' : '.jpg');
             $ok = $png ? imagepng($output, $path, 6) : imagejpeg($output, $path, 86);
             if (!$ok) {
                 throw new invalid_parameter_exception(get_string('setupimageuploaderror', 'theme_learnlingo'));

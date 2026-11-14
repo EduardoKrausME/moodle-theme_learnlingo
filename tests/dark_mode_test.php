@@ -123,4 +123,29 @@ final class dark_mode_test extends advanced_testcase {
 
         $this->assertStringContainsString('@import "moodle/dark";', $scss);
     }
+
+    /**
+     * Keep the separate wizard labels complete without losing settings links.
+     */
+    public function test_dark_mode_setup_language_strings_are_complete(): void {
+        global $CFG;
+
+        $setup = file_get_contents($CFG->dirroot . '/theme/learnlingo/templates/setup.mustache');
+        $this->assertStringContainsString('{{#str}}darkmodesetupintro, theme_learnlingo{{/str}}', $setup);
+        $this->assertStringNotContainsString('{{#str}}darkmodeintro, theme_learnlingo{{/str}}', $setup);
+        $keys = ['darkmodesetupintro', 'darkmodebenefitcomfort', 'darkmodebenefitchoice',
+            'darkmodebenefitcompat', 'darkmodeoptional', 'darkmodeinstall'];
+        foreach (['en', 'pt_br'] as $lang) {
+            $string = [];
+            require($CFG->dirroot . '/theme/learnlingo/lang/' . $lang . '/theme_learnlingo.php');
+            foreach ($keys as $key) {
+                $this->assertArrayHasKey($key, $string);
+                $this->assertNotSame('', trim($string[$key]));
+                $this->assertStringContainsString('{{#str}}' . $key . ', theme_learnlingo{{/str}}', $setup);
+            }
+            $this->assertStringNotContainsString('<p>', $string['darkmodesetupintro']);
+            $this->assertStringNotContainsString('{$a}', $string['darkmodesetupintro']);
+        }
+    }
+
 }
