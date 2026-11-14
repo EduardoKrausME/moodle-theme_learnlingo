@@ -12,94 +12,261 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Save visual-editor content and manage its image assets.
+ * Editor.
  *
- * @package    theme_learnlingo
- * @copyright  2026 Eduardo Kraus
- * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   theme_eadtraining
+ * @copyright 2025 Eduardo Kraus {@link https://eduardokraus.com}
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once(__DIR__ . '/../../../config.php');
-require_once(__DIR__ . '/editor-lib.php');
-require_once($CFG->dirroot . '/theme/learnlingo/lib.php');
+use theme_eadtraining\form\form_save_validator;
+use theme_eadtraining\page_editor_manager;
 
-use theme_learnlingo\pages;
-use theme_learnlingo\editor_assets;
+require_once('../../../config.php');
+require_once('../lib.php');
+require_once('editor-lib.php');
 
-require_login();
+global $CFG, $DB, $USER;
+
+if (!has_capability('moodle/site:config', context_system::instance())) {
+    echo json_encode(["error" => "You don't have permission to access this page.",]);
+    die;
+}
 $context = context_system::instance();
-require_capability('moodle/site:config', $context);
 require_sesskey();
 
-$action = required_param('action', PARAM_RAW_TRIMMED);
-$target = theme_learnlingo_editor_target(required_param('target', PARAM_ALPHA));
-$id = optional_param('id', 0, PARAM_INT);
-$component = 'theme_learnlingo';
-$filearea = 'editor_assets';
+$local = required_param('local', PARAM_TEXT);
+$action = required_param('action', PARAM_TEXT);
 
-if ($action === 'page-save') {
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        throw new invalid_parameter_exception('Editor saving requires POST');
+$component = 'theme_eadtraining';
+$filearea = "editor_{$local}";
+
+if ($action == "langedit") {
+    $dataid = required_param("dataid", PARAM_INT);
+
+    $page = $DB->get_record("theme_eadtraining_pages", ["id" => $dataid], "*", MUST_EXIST);
+    $page->lang = required_param("lang", PARAM_TEXT);
+
+    $DB->update_record("theme_eadtraining_pages", $page);
+
+    header("Content-Type: application/json");
+    echo json_encode(["status" => "ok"]);
+    die;
+} else if ($action == "homemode") {
+    $homemode = optional_param("homemode", 0, PARAM_INT);
+    set_config("homemode", $homemode, "theme_eadtraining");
+
+    redirect(new moodle_url("/", ["redirect" => 0]));
+} else if ($action == "loaddata") {
+    $datakey = required_param("datakey", PARAM_TEXT);
+    switch ($datakey) {
+        case "courses":
+            $courses = $DB->get_records_select(
+                "course",
+                "id>1 AND visible=1",
+                null,
+                "fullname ASC",
+                "id,fullname AS name"
+            );
+
+            header("Content-Type: application/json");
+            echo json_encode(array_values($courses));
     }
-    // Both inputs are source code. Do not pass HTML or SCSS through PARAM_TEXT.
-    $html = required_param('html', PARAM_RAW);
-    $scss = required_param('scss', PARAM_RAW);
-    if ($target === 'page') {
-        if (trim($html) === '') {
-            throw new invalid_parameter_exception('Custom page HTML cannot be empty');
+} else {
+    if ($action == "page-save") {
+        $dataid = required_param("dataid", PARAM_INT);
+        $page = $DB->get_record("theme_eadtraining_pages", ["id" => $dataid], "*", MUST_EXIST);
+
+        switch ($page->type) {
+            case "html":
+            case "html-form":
+                $html = required_param("html", PARAM_RAW);
+                $css = required_param("css", PARAM_RAW);
+                if (isset($html[3])) {
+                    if (preg_match('/<body[^>]*>(.*?)<\/body>/is', $html, $matches)) {
+                        $html = trim($matches[1]);
+                    }
+                    $html = preg_replace('/<style data-project-fonts.*?<\/style>/s', '', $html);
+
+                    $css = preg_replace('/\*.*?body\{.*?\}/s', '', $css);
+
+                    $page->html = "<style>{$css}</style>\n\n{$html}";
+                }
+            case "form":
+                break;
+            default:
+                throw new Exception("Type not found");
         }
-        $page = $DB->get_record('theme_learnlingo_pages', ['id' => $id], '*', MUST_EXIST);
-        $page->content = $html;
-        $page->scss = $scss;
-        // The current schema uses content/scss, and save_page validates and
-        // preserves all menu, access, publication and categorisation metadata.
-        pages::save_page($page);
-    } else {
-        // Match the constraints used by admin_setting_configcode for these fields.
-        if (preg_match('~@(at-root|import|use|forward|extend|keyframes|font-face|charset|namespace|property)\b~i',
-                $scss)) {
-            throw new invalid_parameter_exception(get_string('jsonvalidatescssdirective', 'theme_learnlingo'));
+
+        $info = json_decode($page->info);
+        if (isset($_POST["save"])) {
+            $info->savedata = form_save_validator::validate($info);
+        } else {
+            $info->savedata = [];
         }
-        $scssfield = $target === 'homepage' ? 'homepagescss' : 'footerscss';
-        $htmlfield = $target . 'html';
-        $scsschanged = (string)get_config($component, $scssfield) !== $scss;
-        $htmlchanged = (string)get_config($component, $htmlfield) !== $html;
-        set_config($htmlfield, $html, $component);
-        set_config($scssfield, $scss, $component);
-        if ($scsschanged) {
-            theme_learnlingo_purge_css_cache();
-        } else if ($htmlchanged) {
-            theme_reset_all_caches();
+        $page->info = json_encode($info, JSON_PRETTY_PRINT);
+
+        $DB->update_record("theme_eadtraining_pages", $page);
+
+        if (page_editor_manager::is_mod_page_editor_record($page)) {
+            page_editor_manager::sync_editor_record_to_mod_page($page);
+            $returnurl = optional_param("returnurl", "", PARAM_LOCALURL);
+            if ($returnurl) {
+                redirect(new moodle_url($returnurl));
+            }
+
+            $viewurl = page_editor_manager::get_view_url_from_editor_record($page);
+            if ($viewurl) {
+                redirect($viewurl);
+            }
         }
-    }
-    $data = theme_learnlingo_editor_data($target, $id);
-    redirect($data['returnurl'], get_string('changessaved'), null, \core\output\notification::NOTIFY_SUCCESS);
-}
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    throw new invalid_parameter_exception('Editor file changes require POST');
-}
+        cache::make("theme_eadtraining", "frontpage_cache")->purge();
+        if ($page->local == "home") {
+            redirect(new moodle_url("/", ["redirect" => 0]));
+        }
+        die;
+    } else if ($action == "page-order") {
+        $orders = theme_eadtraining_clear_params_array($_POST["order"], PARAM_INT);
 
-if ($action === 'file-upload') {
-    if (empty($_FILES['files']) || !is_uploaded_file($_FILES['files']['tmp_name'])) {
-        throw new invalid_parameter_exception('No uploaded image');
-    }
-    $upload = $_FILES['files'];
-    if ($upload['error'] !== UPLOAD_ERR_OK || $upload['size'] > editor_assets::MAX_BYTES) {
-        throw new invalid_parameter_exception('Image upload failed or exceeded 10 MiB');
-    }
-    $bytes = file_get_contents($upload['tmp_name']);
-    if ($bytes === false) {
-        throw new invalid_parameter_exception('Unable to read uploaded image');
-    }
-    // HTTP and MCP share the same validation, storage area and response shape.
-    $file = editor_assets::save((string)$upload['name'], $bytes, (int)$USER->id);
-    header('Content-Type: application/json; charset=utf-8');
-    echo json_encode([$file]);
-    exit;
-}
+        $pageorder = 0;
+        foreach ($orders as $pageid) {
+            if ($pageid) {
+                $page = (object) [
+                    "id" => $pageid,
+                    "sort" => $pageorder++,
+                ];
+                try {
+                    $DB->update_record("theme_eadtraining_pages", $page);
+                } catch (dml_exception $e) {
+                    error_log($e->getMessage());
+                }
+            }
+        }
 
-throw new invalid_parameter_exception('Invalid LearnLingo editor action');
+        cache::make("theme_eadtraining", "frontpage_cache")->purge();
+
+        $syncpage = (object) ["local" => $local, "info" => ""];
+        if (page_editor_manager::is_mod_page_editor_record($syncpage)) {
+            $cmid = page_editor_manager::get_cmid_from_editor_record($syncpage);
+            if ($cmid) {
+                page_editor_manager::sync_cmid_to_mod_page($cmid);
+            }
+        }
+
+        die("OK");
+    } else if ($action == "file-upload") {
+        if (isset($_FILES['files']['name'])) {
+            $aloweb = ['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp', 'webm', 'mp4', 'mp3', 'pdf', 'doc', 'docx'];
+
+            $extension = pathinfo($_FILES['files']['name'], PATHINFO_EXTENSION);
+            if (in_array($extension, $aloweb)) {
+                $fs = get_file_storage();
+                $filerecord = (object) [
+                    "component" => $component,
+                    "contextid" => $context->id,
+                    "userid" => $USER->id,
+                    "filearea" => $filearea,
+                    "filepath" => '/',
+                    "itemid" => time() - 1714787612,
+                    "filename" => $_FILES['files']['name'],
+                ];
+                $fs->create_file_from_pathname($filerecord, $_FILES['files']['tmp_name']);
+
+                $url = moodle_url::make_pluginfile_url(
+                    $context->id,
+                    "theme_eadtraining",
+                    $filerecord->filearea,
+                    $filerecord->itemid,
+                    $filerecord->filepath,
+                    $filerecord->filename
+                );
+
+                echo json_encode(
+                    [
+                        (object) [
+                            "name" => $_FILES['files']['name'],
+                            "type" => "image",
+                            "src" => $url->out(false),
+                            "size" => filesize($_FILES['files']['tmp_name']),
+                        ],
+                    ]
+                );
+
+                die();
+            }
+        }
+    } else if ($action == "file-delete") {
+        $fs = get_file_storage();
+        $files = $fs->get_area_files($context->id, $component, $filearea, false, $sort = "filename", false);
+
+        $rawData = file_get_contents("php://input");
+        $data = json_decode($rawData);
+
+        /** @var stored_file $file */
+        foreach ($files as $file) {
+            if ($file->get_id() == $data->id) {
+                $file->delete();
+            }
+        }
+    } else if ($action == "file-list") {
+        $fs = get_file_storage();
+        $files = $fs->get_area_files($context->id, $component, $filearea, false, $sort = "filename", false);
+
+        $items = [];
+        /** @var stored_file $file */
+        foreach ($files as $file) {
+            $url = moodle_url::make_pluginfile_url(
+                $context->id, "theme_eadtraining",
+                $file->get_filearea(),
+                $file->get_itemid(),
+                $file->get_filepath(),
+                $file->get_filename()
+            );
+            $items[] = [
+                "id" => $file->get_id(),
+                "name" => $file->get_filename(),
+                "type" => "image",
+                "src" => $url->out(false),
+                "size" => $file->get_filesize(),
+                "info" => "Upload file",
+                "delete" => true,
+            ];
+        }
+
+        $sql = "SELECT * FROM {course}";
+        $courses = $DB->get_records_sql($sql);
+
+        foreach ($courses as $course) {
+            $courseobj = new core_course_list_element($course);
+            foreach ($courseobj->get_course_overviewfiles() as $file) {
+                $isimage = $file->is_valid_image();
+                if ($isimage) {
+                    $courseimage = file_encode_url(
+                        "{$CFG->wwwroot}/pluginfile.php",
+                        "/{$file->get_contextid()}/{$file->get_component()}/" .
+                        "{$file->get_filearea()}{$file->get_filepath()}{$file->get_filename()}",
+                        !$isimage
+                    );
+
+                    $items[] = [
+                        "id" => 2,
+                        "name" => $file->get_filename(),
+                        "type" => "image",
+                        "src" => $courseimage,
+                        "size" => $file->get_filesize(),
+                        "info" => "Course file",
+                        "delete" => false,
+                    ];
+                }
+            }
+        }
+
+        header("Content-Type: application/json");
+        echo json_encode($items);
+    }
+}
+die();
