@@ -99,7 +99,7 @@ final class editor_files extends external_api {
         require_capability('moodle/site:config', $context);
 
         $file = $id > 0 ? get_file_storage()->get_file_by_id($id) : false;
-        if (!$file || $file->get_contextid() !== $context->id ||
+        if (!$file || (int)$file->get_contextid() !== (int)$context->id ||
                 $file->get_component() !== 'theme_learnlingo' || $file->get_filearea() !== 'editor_assets' ||
                 $file->is_directory()) {
             throw new \invalid_parameter_exception('Image does not belong to the LearnLingo editor');
