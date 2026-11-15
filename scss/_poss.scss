@@ -11,6 +11,13 @@
     --bs-shadow: 0 4px 0 rgba(37, 42, 55, .07);
     --bs-shadow-hover: 0 8px 18px rgba(37, 42, 55, .11);
 
+    --bs-green: #58CC02;
+    --bs-green-dark: #46A302;
+    --bs-blue: #1CB0F6;
+    --bs-yellow: #FFC800;
+    --bs-red: #FF5D65;
+    --bs-soft-green: #F0FCEB;
+
     // Moodle Design System tokens for LearnLingo.
     // Declared after the component imports so these values override Boost and LearnLingo defaults.
     // Keep exact --mds-* names: core MDS components consume these custom properties.
