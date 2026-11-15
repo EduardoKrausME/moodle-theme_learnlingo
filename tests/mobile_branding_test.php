@@ -18,7 +18,8 @@
  * Tests for the public app identity.
  *
  * @package theme_learnlingo
- * @covers \theme_learnlingo\mobile_branding
+ * @copyright 2026 Eduardo Kraus
+ * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace theme_learnlingo;
@@ -27,7 +28,7 @@ namespace theme_learnlingo;
 /**
  * Test stable colours and the exported navbar source.
  *
- * @covers \\theme_learnlingo\\mobile_branding
+ * @covers \theme_learnlingo\mobile_branding
  */
 final class mobile_branding_test extends \advanced_testcase {
     public function test_export_reads_configured_colours_and_real_navbar_source(): void {
