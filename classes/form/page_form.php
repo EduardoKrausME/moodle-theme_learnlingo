@@ -46,6 +46,8 @@ class page_form extends moodleform {
      * @return void
      */
     protected function definition(): void {
+        global $OUTPUT;
+
         $mform = $this->_form;
         $categories = [0 => get_string('custompagesroot', 'theme_learnlingo')];
         foreach ($this->_customdata['categories'] as $category) {
@@ -69,11 +71,10 @@ class page_form extends moodleform {
         $mform->addElement('select', 'categoryid', get_string('custompagescategory', 'theme_learnlingo'), $categories);
         $mform->setType('categoryid', PARAM_INT);
 
-        $mform->addElement('html', \html_writer::link(
-            'https://eduardokrausme.github.io/moodle-local_mcp/',
-            get_string('setupmcpconnectionlink', 'theme_learnlingo'),
-            ['target' => '_blank']
-        ));
+        $mform->addElement('html', $OUTPUT->render_from_template('theme_learnlingo/branding_admin_link', [
+            'url' => "https://eduardokrausme.github.io/moodle-local_mcp/",
+            'label' => get_string('setupmcpconnectionlink', 'theme_learnlingo'),
+        ]));
 
         $mform->addElement('textarea', 'content', get_string('custompageshtml', 'theme_learnlingo'),
             ['rows' => 22, 'class' => 'w-100 font-monospace']);

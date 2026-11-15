@@ -53,7 +53,7 @@ if ($ADMIN->fulltree) {
     );
 
     if (mcp_banner::should_show()) {
-        $page->add(new admin_setting_heading(
+        $page->add(new admin_setting_description(
             "theme_learnlingo/mcp_banner",
             "",
             $OUTPUT->render_from_template("theme_learnlingo/mcp_banner", [
@@ -63,7 +63,7 @@ if ($ADMIN->fulltree) {
     }
 
     // Accessible after installation as well as during first-run onboarding.
-    $page->add(new admin_setting_heading(
+    $page->add(new admin_setting_description(
         'theme_learnlingo/visualsetuplink',
         '',
         $OUTPUT->render_from_template('theme_learnlingo/branding_admin_link', [
@@ -139,15 +139,15 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback("theme_reset_all_caches");
     $page->add($setting);
 
-    $page->add(new admin_setting_heading(
+    $setting = new admin_setting_description(
         'theme_learnlingo/mcplink_homepage',
         '',
-        html_writer::link(
-            'https://eduardokrausme.github.io/moodle-local_mcp/',
-            get_string('setupmcpconnectionlink', 'theme_learnlingo'),
-            ['target' => '_blank']
-        )
-    ));
+        $OUTPUT->render_from_template('theme_learnlingo/branding_admin_link', [
+            'url' => "https://eduardokrausme.github.io/moodle-local_mcp/",
+            'label' => get_string('setupmcpconnectionlink', 'theme_learnlingo'),
+        ])
+    );
+    $page->add($setting);
 
     $setting = new admin_setting_configcode(
         "theme_learnlingo/homepagehtml",
@@ -251,15 +251,15 @@ if ($ADMIN->fulltree) {
     $setting->set_updatedcallback("theme_reset_all_caches");
     $page->add($setting);
 
-    $page->add(new admin_setting_heading(
+    $setting = new admin_setting_description(
         'theme_learnlingo/mcplink_footer',
         '',
-        html_writer::link(
-            'https://eduardokrausme.github.io/moodle-local_mcp/',
-            get_string('setupmcpconnectionlink', 'theme_learnlingo'),
-            ['target' => '_blank']
-        )
-    ));
+        $OUTPUT->render_from_template('theme_learnlingo/branding_admin_link', [
+            'url' => "https://eduardokrausme.github.io/moodle-local_mcp/",
+            'label' => get_string('setupmcpconnectionlink', 'theme_learnlingo'),
+        ])
+    );
+    $page->add($setting);
 
     $setting = new admin_setting_configcode(
         "theme_learnlingo/footerhtml",
@@ -474,7 +474,7 @@ if ($ADMIN->fulltree) {
             "theme_learnlingo_darkmode",
             get_string('darkmodetab', 'theme_learnlingo')
         );
-        $page->add(new admin_setting_heading(
+        $page->add(new admin_setting_description(
             'theme_learnlingo/darkmodeintegration',
             '',
             $OUTPUT->render_from_template('theme_learnlingo/darkmode_settings', [
@@ -522,7 +522,7 @@ if ($ADMIN->fulltree) {
 
     if (file_exists("{$CFG->dirroot}/local/ai_bridge/version.php")) {
         // These assistants use their own POST forms; keep them outside settings.php.
-        $page->add(new admin_setting_heading(
+        $page->add(new admin_setting_description(
             "theme_learnlingo/aibrandinglink",
             "",
             $OUTPUT->render_from_template("theme_learnlingo/branding_admin_link", [
@@ -533,7 +533,7 @@ if ($ADMIN->fulltree) {
         ));
     }
 
-    $page->add(new admin_setting_heading(
+    $page->add(new admin_setting_description(
         "theme_learnlingo/jsonbrandinglink",
         "",
         $OUTPUT->render_from_template("theme_learnlingo/branding_admin_link", [

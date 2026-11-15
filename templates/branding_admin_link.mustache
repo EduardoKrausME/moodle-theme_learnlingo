@@ -26,5 +26,9 @@
         "label": "Open brand settings"
     }
 }}
-<p>{{description}}</p>
-<a href="{{{url}}}">{{label}}</a>
+<div class="alert alert-info">
+    {{#description}}
+        <p>{{description}}</p>
+    {{/description}}
+    <a href="{{{url}}}">{{label}}</a>
+</div>
