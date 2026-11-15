@@ -1846,3 +1846,13 @@ h6,
         background-color: var(--bs-canvas);
     }
 }
+
+// Public app identity aliases. Actual navbar definitions are imported from moodle/_navbar.scss.
+:root {
+    --kopere-mobile-primary: var(--bs-primary);
+    --kopere-mobile-accent: var(--bs-accent);
+    --kopere-mobile-canvas: var(--bs-canvas);
+    --kopere-mobile-text: var(--bs-ink);
+    --kopere-mobile-navbar-bg: var(--learnlingo-navbar-bg);
+    --kopere-mobile-navbar-text: var(--learnlingo-navbar-text);
+}
