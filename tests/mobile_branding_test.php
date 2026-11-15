@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Tests for the public app identity.
@@ -23,10 +23,11 @@
 
 namespace theme_learnlingo;
 
-defined('MOODLE_INTERNAL') || die;
 
 /**
  * Test stable colours and the exported navbar source.
+ *
+ * @covers \\theme_learnlingo\\mobile_branding
  */
 final class mobile_branding_test extends \advanced_testcase {
     public function test_export_reads_configured_colours_and_real_navbar_source(): void {
