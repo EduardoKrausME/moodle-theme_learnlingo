@@ -21,7 +21,7 @@
     transition: background-color .16s ease, border-color .16s ease, color .16s ease;
 
     &:hover {
-        background: rgba($primary, .08);
+        background: mix($primary, #fff, 8%);
         color: $primary;
         border-color: rgba($primary, .28);
         box-shadow: none;

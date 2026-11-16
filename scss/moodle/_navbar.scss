@@ -67,10 +67,9 @@ html[data-bs-theme="dark"] {
 }
 
 // Main navbar.
-html .navbar.fixed-top {
+.navbar.fixed-top {
     align-items: stretch;
     height: $navbar-height + 1px;
-    min-height: 74px;
     padding: .65rem 1.25rem;
 
     color: var(--learnlingo-navbar-text);
@@ -158,7 +157,7 @@ html .navbar.fixed-top {
                 content: "";
                 box-shadow: var(--learnlingo-navbar-link-active-ring) 0px -3px 0px inset;
                 position: absolute;
-                bottom: -8px;
+                bottom: 0;
                 left: 0;
                 width: 100%;
                 height: 2px;

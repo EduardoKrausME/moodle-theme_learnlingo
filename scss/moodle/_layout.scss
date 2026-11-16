@@ -45,3 +45,8 @@
         max-width: 100%;
     }
 }
+.drawer-toggles {
+    .drawer-toggler {
+        z-index: 3;
+    }
+}
