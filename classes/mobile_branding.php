@@ -65,15 +65,7 @@ final class mobile_branding {
             }
         }
 
-        $logourl = '';
-        $logo = get_config('core_admin', 'logo');
-        if (is_string($logo) && trim($logo, '/') !== '') {
-            // Stored-file configuration contains a path (e.g. /logo.png), not a filename.
-            $filename = basename($logo);
-            $url = moodle_url::make_pluginfile_url(context_system::instance()->id,
-                'core_admin', 'logo', 0, '/', $filename);
-            $logourl = $url->out(false);
-        }
+        $logourl = self::public_logo_url();
 
         return [
             'schema_version' => 1,
@@ -85,5 +77,26 @@ final class mobile_branding {
             'logo_url' => $logourl,
             'navbar_scss' => $navbarscss,
         ];
+    }
+    /**
+     * Expose only an actual public image stored in the Moodle-wide logo area.
+     * The default core SVG logo is not a suitable raster app icon.
+     *
+     * @return string
+     */
+    private static function public_logo_url(): string {
+        $logo = get_config('core_admin', 'logo');
+        if (!is_string($logo) || trim($logo, '/') === '') {
+            return '';
+        }
+        $filename = basename($logo);
+        $contextid = context_system::instance()->id;
+        $file = get_file_storage()->get_file($contextid, 'core_admin', 'logo', 0, '/', $filename);
+        if (!$file || $file->is_directory() ||
+                !in_array($file->get_mimetype(), ['image/png', 'image/jpeg', 'image/webp'], true)) {
+            return '';
+        }
+        $url = moodle_url::make_pluginfile_url($contextid, 'core_admin', 'logo', 0, '/', $filename);
+        return $url->out(false);
     }
 }

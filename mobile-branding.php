@@ -22,6 +22,8 @@
  * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+// Only publicly visible site branding is returned; login is intentionally not required.
+// @codingStandardsIgnoreLine
 require_once(__DIR__ . '/../../config.php');
 
 header('Content-Type: application/json; charset=utf-8');
