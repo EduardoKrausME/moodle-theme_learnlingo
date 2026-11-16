@@ -43,8 +43,17 @@ final class mobile_branding_test extends \advanced_testcase {
         $this->assertSame('#FEDCBA', $result['accentcolor']);
         $this->assertSame('#F7FAF5', $result['canvascolor']);
         $this->assertSame('theme_learnlingo', $result['source']);
+        $this->assertSame('', $result['logo_url']);
         $this->assertStringContainsString('--learnlingo-navbar-bg', $result['navbar_scss']);
         $this->assertStringContainsString('html[data-bs-theme="dark"]', $result['navbar_scss']);
         $this->assertStringNotContainsString('// Main navbar.', $result['navbar_scss']);
+    }
+
+    public function test_export_builds_a_valid_public_logo_url(): void {
+        $this->resetAfterTest();
+        set_config('logo', '/brand.png', 'core_admin');
+        $result = mobile_branding::export();
+        $this->assertStringContainsString('/core_admin/logo/0/brand.png', $result['logo_url']);
+        $this->assertStringNotContainsString('//brand.png', $result['logo_url']);
     }
 }

@@ -67,9 +67,11 @@ final class mobile_branding {
 
         $logourl = '';
         $logo = get_config('core_admin', 'logo');
-        if (is_string($logo) && $logo !== '') {
+        if (is_string($logo) && trim($logo, '/') !== '') {
+            // Stored-file configuration contains a path (e.g. /logo.png), not a filename.
+            $filename = basename($logo);
             $url = moodle_url::make_pluginfile_url(context_system::instance()->id,
-                'core_admin', 'logo', 0, '/', $logo);
+                'core_admin', 'logo', 0, '/', $filename);
             $logourl = $url->out(false);
         }
 
