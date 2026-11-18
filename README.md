@@ -60,7 +60,7 @@ Review the actual learner experience on desktop and mobile, especially when usin
 For institutions with several course types, verify the dashboard, a representative course page, the login screen and the
 homepage after major branding changes.
 
-**Compatibility:** Moodle 4.5 or newer.
+**Compatibility:** Moodle 4.4 or newer.
 
 **License:** GNU GPL v3 or later.
 
