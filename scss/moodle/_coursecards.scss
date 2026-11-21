@@ -1,0 +1,297 @@
+// Course-section and activity cards. Use Moodle's native section/activity markup,
+// including the accessible module-name text; no alternate renderer or JavaScript.
+body.path-course-view .course-content {
+    .course-section {
+        overflow: visible;
+        background: var(--bs-surface, #FFF);
+        border: 1px solid rgba(31, 58, 84, .13);
+        border-radius: 22px;
+        box-shadow: 0 10px 28px rgba(22, 49, 76, .07);
+
+        > .section-item {
+            border: 0 !important;
+            border-radius: inherit;
+        }
+
+        // The General section can be rendered with or without a visible heading.
+        // Only decorate the heading when Moodle actually supplies a section name.
+        .course-section-header:has(.sectionname) {
+            align-items: center;
+            min-height: 76px;
+            padding: 1rem 1.25rem;
+            background: linear-gradient(100deg, rgba($primary, .11), rgba($primary, .025) 80%);
+            border-bottom: 1px solid rgba(31, 58, 84, .10);
+            border-radius: 21px 21px 0 0;
+        }
+
+        .course-section-header .sectionname {
+            min-width: 0;
+            color: var(--bs-ink);
+            font-size: clamp(1.1rem, 1.4vw, 1.35rem);
+            font-weight: 800;
+            line-height: 1.4;
+
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
+            a:hover {
+                text-decoration: underline;
+            }
+        }
+
+        .course-section-header .icons-collapse-expand {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 40px;
+            width: 40px;
+            height: 40px;
+            margin-inline-end: .8rem !important;
+            color: var(--bs-primary);
+            background: var(--bs-surface, #FFF);
+            border: 1px solid rgba(31, 58, 84, .13);
+            border-radius: 12px;
+
+            &:hover,
+            &:focus-visible {
+                background: rgba($primary, .10);
+            }
+        }
+
+        .section-content-inner {
+            padding: 1.1rem 1.25rem 1.25rem;
+        }
+
+        // Preserve the core grid and all of its action, completion, date and
+        // availability regions. Avoid styling inline/text-only activities as cards.
+        li.activity > .activity-item:not(.activityinline) {
+            --ll-card-accent: var(--bs-primary);
+            --ll-card-soft: rgba(31, 58, 84, .055);
+            position: relative;
+            margin: 0 0 .9rem;
+            padding: 1.1rem 1.2rem !important;
+            background: linear-gradient(105deg, var(--bs-surface, #FFF) 56%, var(--ll-card-soft));
+            border: 1px solid rgba(31, 58, 84, .13) !important;
+            border-inline-start: 4px solid var(--ll-card-accent) !important;
+            border-radius: 18px !important;
+            box-shadow: 0 5px 16px rgba(27, 60, 89, .09);
+            transition: background-color .18s ease, box-shadow .18s ease, transform .18s ease;
+
+            &:hover {
+                background: linear-gradient(105deg, var(--bs-surface, #FFF) 46%, var(--ll-card-soft));
+                border-color: rgba(31, 58, 84, .22) !important;
+                border-inline-start-color: var(--ll-card-accent) !important;
+                box-shadow: 0 10px 23px rgba(27, 60, 89, .13);
+                transform: translateY(-2px);
+            }
+
+            &:focus-within {
+                outline: 2px solid var(--ll-card-accent);
+                outline-offset: 2px;
+            }
+
+            .activity-grid {
+                column-gap: .75rem;
+                min-width: 0;
+            }
+
+            .activity-name-area {
+                min-width: 0;
+                margin-inline-end: 0 !important;
+            }
+
+            .activitytitle {
+                width: 100%;
+                max-width: 100%;
+                align-self: stretch !important;
+            }
+
+            .activityname > a {
+                display: block;
+                width: 100%;
+            }
+
+            .activityname .instancename {
+                color: var(--bs-ink);
+                font-size: 1.12rem;
+                font-weight: 800;
+                line-height: 1.45;
+            }
+
+            .activity-description,
+            .activity-altcontent {
+                color: var(--bs-muted);
+                font-size: .875rem;
+            }
+
+            .activityiconcontainer.courseicon.smaller {
+                flex: 0 0 56px;
+                width: 56px;
+                min-width: 56px;
+                height: 56px;
+                padding: 12px !important;
+                margin-inline-end: .25rem !important;
+                border-radius: 16px !important;
+
+                .activityicon {
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+        }
+
+        li.activity.modtype_forum > .activity-item:not(.activityinline) {
+            --ll-card-accent: #126BC4;
+            --ll-card-soft: rgba(18, 107, 196, .075);
+
+            .activityiconcontainer.courseicon {
+                background: linear-gradient(145deg, #229BEB, #0756AE) !important;
+                box-shadow: 0 7px 16px rgba(18, 107, 196, .23);
+            }
+        }
+
+        li.activity.modtype_mcp > .activity-item:not(.activityinline) {
+            --ll-card-accent: #07899B;
+            --ll-card-soft: rgba(7, 137, 155, .075);
+
+            .activityiconcontainer.courseicon {
+                background: linear-gradient(145deg, #10ADC0, #006F88) !important;
+                box-shadow: 0 7px 16px rgba(7, 137, 155, .22);
+            }
+        }
+
+        // Moodle already provides translated module types inside the accessible
+        // instance name (e.g. Forum / Atividade MCP). Expose just those existing
+        // strings as visual pills, without hardcoding the current site's language.
+        li.activity:is(.modtype_forum, .modtype_mcp) .activityname {
+            .instancename {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: .45rem .9rem;
+            }
+
+            .instancename > .accesshide {
+                position: static !important;
+                display: inline-flex;
+                align-items: center;
+                flex: 0 0 auto;
+                width: auto !important;
+                height: auto !important;
+                margin: 0 0 0 auto !important;
+                padding: .34rem .75rem !important;
+                overflow: visible !important;
+                clip: auto !important;
+                clip-path: none !important;
+                white-space: normal !important;
+                color: var(--ll-card-accent);
+                font-size: .75rem;
+                font-weight: 800;
+                line-height: 1.35;
+                background: var(--ll-card-soft);
+                border: 1px solid currentColor;
+                border-radius: 999px;
+            }
+        }
+    }
+
+    // During editing, retain the native drag, selection and action affordances.
+    .editing & .course-section li.activity > .activity-item:not(.activityinline) {
+        &:hover {
+            transform: none;
+        }
+        &.selected {
+            outline: 2px solid var(--bs-primary);
+            outline-offset: 2px;
+        }
+    }
+}
+
+[data-bs-theme="dark"] body.path-course-view .course-content {
+    .course-section {
+        background: var(--bs-surface);
+        border-color: var(--bs-border);
+        box-shadow: 0 9px 24px rgba(0, 0, 0, .15);
+
+        .course-section-header:has(.sectionname) {
+            background: linear-gradient(100deg, rgba($primary, .2), transparent 85%);
+            border-bottom-color: var(--bs-border);
+        }
+
+        .course-section-header .icons-collapse-expand {
+            background: var(--bs-surface);
+            border-color: var(--bs-border);
+        }
+
+        li.activity > .activity-item:not(.activityinline) {
+            background: linear-gradient(105deg, var(--bs-surface) 52%, var(--ll-card-soft));
+            border-color: var(--bs-border) !important;
+            border-inline-start-color: var(--ll-card-accent) !important;
+            box-shadow: 0 5px 17px rgba(0, 0, 0, .2);
+
+            &:hover {
+                background: linear-gradient(105deg, var(--bs-surface) 35%, var(--ll-card-soft));
+                border-color: #678098 !important;
+                border-inline-start-color: var(--ll-card-accent) !important;
+                box-shadow: 0 8px 20px rgba(0, 0, 0, .28);
+            }
+        }
+
+        li.activity.modtype_forum > .activity-item:not(.activityinline) {
+            --ll-card-accent: #90C8FF;
+            --ll-card-soft: rgba(38, 137, 223, .14);
+        }
+
+        li.activity.modtype_mcp > .activity-item:not(.activityinline) {
+            --ll-card-accent: #76DAE6;
+            --ll-card-soft: rgba(17, 169, 186, .14);
+        }
+    }
+}
+
+@media (max-width: 767.98px) {
+    body.path-course-view .course-content .course-section {
+        .course-section-header:has(.sectionname) {
+            min-height: 64px;
+            padding: .8rem;
+        }
+
+        .section-content-inner {
+            padding: .8rem;
+        }
+
+        li.activity > .activity-item:not(.activityinline) {
+            padding: .85rem !important;
+
+            .activityiconcontainer.courseicon.smaller {
+                flex-basis: 46px;
+                width: 46px;
+                min-width: 46px;
+                height: 46px;
+                padding: 9px !important;
+
+                .activityicon {
+                    width: 26px;
+                    height: 26px;
+                }
+            }
+
+            .activityname .instancename {
+                font-size: 1rem;
+            }
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body.path-course-view .course-content .course-section
+        li.activity > .activity-item:not(.activityinline) {
+        transition: none;
+
+        &:hover {
+            transform: none;
+        }
+    }
+}
