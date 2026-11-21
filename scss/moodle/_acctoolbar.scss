@@ -51,22 +51,23 @@
             justify-content: center;
             gap: 3px;
             padding: 3px 5px !important;
-        }
 
-        > div span {
-            display: block;
-            color: var(--acc-text) !important;
-            font-size: 10px !important;
-            line-height: 1.2 !important;
-            font-weight: 700;
-        }
+            span {
+                display: block;
+                color: var(--acc-text) !important;
+                font-size: 10px !important;
+                line-height: 1.2 !important;
+                font-weight: 700;
+            }
 
-        > div img {
-            display: block;
-            width: 32px;
-            height: 32px;
-            min-width: 32px;
-            min-height: 32px;
+            img {
+                display: block;
+                width: 48px;
+                height: 48px;
+                min-width: 48px;
+                min-height: 48px;
+                margin: 0 !important;
+            }
         }
 
         &:hover {
@@ -453,35 +454,35 @@ body.mic-toolbox-content-images span.mic-toolbox-images-titles {
 
     > div {
         position: relative;
-    }
 
-    > div > span {
-        position: absolute;
-        top: 50%;
-        right: calc(100% + 16px);
-        left: auto;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: auto;
-        min-height: 38px;
-        margin: 0 !important;
-        padding: 9px 13px;
-        border: 1px solid var(--acc-primary);
-        border-radius: 10px;
-        background: var(--acc-primary) !important;
-        color: var(--acc-on-primary) !important;
-        box-shadow: 0 7px 20px color-mix(in srgb, var(--acc-text) 18%, transparent);
-        font-family: inherit;
-        font-size: 12px !important;
-        font-weight: 700;
-        line-height: 1.2 !important;
-        white-space: nowrap;
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-        transform: translateY(-50%) translateX(8px);
-        animation: learnlingo-accessibility-shortcut-hint 5s ease-out both;
+        > span {
+            position: absolute;
+            top: 50%;
+            right: calc(100% + 6px);
+            left: auto;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: auto;
+            min-height: 38px;
+            margin: 0 !important;
+            padding: 9px 13px;
+            border: 1px solid var(--acc-primary);
+            border-radius: 10px 0 0 10px;
+            background: var(--acc-primary) !important;
+            color: var(--acc-on-primary) !important;
+            box-shadow: 0 7px 20px color-mix(in srgb, var(--acc-text) 18%, transparent);
+            font-family: inherit;
+            font-size: 12px !important;
+            font-weight: 700;
+            line-height: 1.2 !important;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translateY(-50%) translateX(8px);
+            animation: learnlingo-accessibility-shortcut-hint 2s ease-out both;
+        }
     }
 
     // The launcher can be configured on either side of the screen.
