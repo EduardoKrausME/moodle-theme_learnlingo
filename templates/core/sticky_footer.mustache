@@ -41,9 +41,8 @@
         ]
     }
 }}
-<div
-        id="sticky-footer"
-        class="stickyfooter bg-white border-top"
+<div id="sticky-footer"
+     class="border-top"
 {{$ disable }}
     {{#disable}} data-disable="true" {{/disable}}
 {{/ disable }}
@@ -52,11 +51,11 @@
         {{attribute}}="{{value}}"
     {{/extras}}
 {{/ extradata }}>
-<div class="sticky-footer-content-wrapper d-flex justify-content-center">
-    <div class="sticky-footer-content w-100 d-flex align-items-center px-3 py-2 {{!
+<div class="sticky-footer-content-wrapper d-flex">
+    <div style="justify-content: flex-start !important;"
+         class="sticky-footer-content w-100 d-flex align-items-center px-3 py-2 {{!
             }} {{$ stickyclasses }}{{!
                 }}{{# stickyclasses }}{{ stickyclasses }}{{/ stickyclasses }}{{!
-                }}{{^ stickyclasses }}justify-content-end{{/ stickyclasses }}{{!
             }}{{/ stickyclasses }}">
         {{$ stickycontent }}
             {{{stickycontent}}}
@@ -65,7 +64,7 @@
 </div>
 </div>
 {{#js}}
-    require(['theme_learnlingo/sticky-footer'], function(footer) {
+require(['theme_learnlingo/sticky-footer'], function(footer) {
     footer.init();
-    });
+});
 {{/js}}
