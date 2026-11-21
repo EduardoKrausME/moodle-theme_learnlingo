@@ -2,6 +2,7 @@
 // including the accessible module-name text; no alternate renderer or JavaScript.
 body.path-course-view .course-content {
     .course-section {
+        padding: 0;
         overflow: visible;
         background: var(--bs-surface, #FFF);
         border: 1px solid rgba(31, 58, 84, .13);
@@ -180,7 +181,8 @@ body.path-course-view .course-content {
                 flex: 0 0 auto;
                 width: auto !important;
                 height: auto !important;
-                margin: 0 0 0 auto !important;
+                margin: 0 !important;
+                margin-inline-start: auto !important;
                 padding: .34rem .75rem !important;
                 overflow: visible !important;
                 clip: auto !important;
@@ -197,15 +199,18 @@ body.path-course-view .course-content {
         }
     }
 
-    // During editing, retain the native drag, selection and action affordances.
-    .editing & .course-section li.activity > .activity-item:not(.activityinline) {
-        &:hover {
-            transform: none;
-        }
-        &.selected {
-            outline: 2px solid var(--bs-primary);
-            outline-offset: 2px;
-        }
+}
+
+// During editing, retain the native drag, selection and action affordances.
+body.path-course-view.editing .course-content .course-section
+    li.activity > .activity-item:not(.activityinline) {
+    &:hover {
+        transform: none;
+    }
+
+    &.selected {
+        outline: 2px solid var(--bs-primary);
+        outline-offset: 2px;
     }
 }
 
