@@ -39,6 +39,10 @@ final class accessibility {
     public static function before_footer_html_generation(before_footer_html_generation $hook): void {
         global $OUTPUT, $PAGE;
 
+        if ($PAGE->theme->name !== "learnlingo") {
+            return;
+        }
+
         if (get_config("theme_learnlingo", "enable_accessibility")) {
             $PAGE->requires->strings_for_js(["acctoolbar_image_without_alt"], "theme_learnlingo");
             $PAGE->requires->js_call_amd("theme_learnlingo/acctoolbar", "init");
