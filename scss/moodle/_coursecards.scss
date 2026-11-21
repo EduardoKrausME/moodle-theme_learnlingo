@@ -274,6 +274,13 @@ body.path-course-view.editing .course-content .course-section
     }
 }
 
+// Override the more specific dark section-content rule from _course.scss.
+[data-bs-theme="dark"] body.path-course-view .course-content .course-section
+    > .section-item .course-content-item-content .section-content-inner {
+    background-color: transparent;
+    border-top: 0;
+}
+
 [data-bs-theme="dark"] body.path-course-view .course-content {
     .course-section {
         background: transparent;

@@ -375,7 +375,9 @@
                     // Moodle adds more grid children for completion and actions.
                     // Never rewrite that grid or show a decorative arrow over controls.
                     if (grid.children.length === 2 &&
-                            grid.querySelector(':scope > .activity-icon')) {
+                            grid.querySelector(':scope > .activity-icon') &&
+                            !item.querySelector('.activity-completion, .activity-actions, ' +
+                                '.activity-information, [data-region="completion-info"]')) {
                         item.classList.add('learnlingo-simple-activity-card');
                     }
                 });
