@@ -46,6 +46,19 @@ function xmldb_theme_learnlingo_install(): void {
         set_config($name, $type === 'bool' ? (int)$default : $default, 'theme_learnlingo');
     }
 
+    // Accessibility defaults are intentionally not included in branding import/export.
+    // Store them now so they do not appear as missing settings after installation.
+    foreach ([
+        "enable_accessibility" => 0,
+        "enable_vlibras" => 0,
+        "vlibras_position" => "R",
+        "vlibras_avatar" => "icaro",
+    ] as $name => $default) {
+        if (get_config("theme_learnlingo", $name) === false) {
+            set_config($name, $default, "theme_learnlingo");
+        }
+    }
+
     // Only a fresh installation should open the onboarding wizard.
     if (get_config('theme_learnlingo', 'setup_pending') === false) {
         set_config('setup_pending', 1, 'theme_learnlingo');

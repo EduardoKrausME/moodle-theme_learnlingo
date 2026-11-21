@@ -105,5 +105,21 @@ function xmldb_theme_learnlingo_upgrade(int $oldversion): bool {
         upgrade_plugin_savepoint(true, 2026112001, "theme", "learnlingo");
     }
 
+    if ($oldversion < 2026112100) {
+        // Seed new accessibility settings without overwriting administrator choices.
+        foreach ([
+            "enable_accessibility" => 0,
+            "enable_vlibras" => 0,
+            "vlibras_position" => "R",
+            "vlibras_avatar" => "icaro",
+        ] as $name => $default) {
+            if (get_config("theme_learnlingo", $name) === false) {
+                set_config($name, $default, "theme_learnlingo");
+            }
+        }
+
+        upgrade_plugin_savepoint(true, 2026112100, "theme", "learnlingo");
+    }
+
     return true;
 }
