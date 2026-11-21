@@ -58,12 +58,29 @@ final class course_cards_styles_test extends advanced_testcase {
         $this->assertStringContainsString('li.activity > .activity-item:not(.activityinline)', $scss);
         $this->assertStringContainsString('li.activity.modtype_forum', $scss);
         $this->assertStringContainsString('li.activity.modtype_mcp', $scss);
-        $this->assertStringContainsString('.instancename > .accesshide', $scss);
+        $this->assertStringNotContainsString('.instancename > .accesshide', $scss);
+        $this->assertStringContainsString('.learnlingo-activity-type', $scss);
+        $this->assertStringContainsString('.learnlingo-simple-activity-card', $scss);
         $this->assertStringContainsString('body.path-course-view.editing', $scss);
         $this->assertStringContainsString('[data-bs-theme="dark"]', $scss);
         $this->assertStringContainsString('@media (max-width: 767.98px)', $scss);
         $this->assertStringContainsString('prefers-reduced-motion', $scss);
         $this->assertStringNotContainsString('grid-template-areas:', $scss);
         $this->assertStringNotContainsString('content: "Fórum"', $scss);
+    }
+
+    /**
+     * Moodle's translated accessibility label remains hidden and is copied
+     * to a visual, screen-reader-ignored badge only in non-editing view.
+     */
+    public function test_visual_type_badge_preserves_accessibility_and_native_controls(): void {
+        global $CFG;
+
+        $template = file_get_contents($CFG->dirroot . '/theme/learnlingo/templates/drawers.mustache');
+        $this->assertStringContainsString("modulelabel.textContent.trim()", $template);
+        $this->assertStringContainsString("badge.setAttribute('aria-hidden', 'true')", $template);
+        $this->assertStringContainsString("classList.contains('editing')", $template);
+        $this->assertStringContainsString("grid.children.length === 2", $template);
+        $this->assertStringContainsString("new MutationObserver(decorateCourseContent)", $template);
     }
 }

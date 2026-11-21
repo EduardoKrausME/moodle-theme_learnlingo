@@ -1,13 +1,15 @@
-// Course-section and activity cards. Use Moodle's native section/activity markup,
-// including the accessible module-name text; no alternate renderer or JavaScript.
+// Native Moodle course sections and activity cards.
+// The small visual module badge is cloned from the Moodle accessible label
+// by the course script, without unhiding or moving the original label.
 body.path-course-view .course-content {
     .course-section {
+        margin-bottom: 1.45rem;
         padding: 0;
         overflow: visible;
-        background: var(--bs-surface, #FFF);
-        border: 1px solid rgba(31, 58, 84, .13);
-        border-radius: 22px;
-        box-shadow: 0 10px 28px rgba(22, 49, 76, .07);
+        background: transparent;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
 
         > .section-item {
             border: 0 !important;
@@ -18,11 +20,12 @@ body.path-course-view .course-content {
         // Only decorate the heading when Moodle actually supplies a section name.
         .course-section-header:has(.sectionname) {
             align-items: center;
-            min-height: 76px;
-            padding: 1rem 1.25rem;
-            background: linear-gradient(100deg, rgba($primary, .11), rgba($primary, .025) 80%);
-            border-bottom: 1px solid rgba(31, 58, 84, .10);
-            border-radius: 21px 21px 0 0;
+            min-height: 68px;
+            margin-bottom: 1rem;
+            padding: .85rem 1.15rem;
+            background: linear-gradient(100deg, rgba($primary, .12), rgba($primary, .025) 80%);
+            border: 1px solid rgba(31, 58, 84, .11);
+            border-radius: 18px;
         }
 
         .course-section-header .sectionname {
@@ -60,8 +63,18 @@ body.path-course-view .course-content {
             }
         }
 
+        // On the General section Moodle may output only an empty header shell.
+        // Do not reserve space for a heading that is not present.
+        .course-section-header:not(:has(.sectionname)) {
+            min-height: 0;
+            margin: 0;
+            padding: 0;
+        }
+
         .section-content-inner {
-            padding: 1.1rem 1.25rem 1.25rem;
+            padding: 0;
+            background: transparent;
+            border: 0;
         }
 
         // Preserve the core grid and all of its action, completion, date and
@@ -70,13 +83,14 @@ body.path-course-view .course-content {
             --ll-card-accent: var(--bs-primary);
             --ll-card-soft: rgba(31, 58, 84, .055);
             position: relative;
-            margin: 0 0 .9rem;
-            padding: 1.1rem 1.2rem !important;
+            min-height: 122px;
+            margin: 0 0 1rem;
+            padding: 1.2rem 1.45rem !important;
             background: linear-gradient(105deg, var(--bs-surface, #FFF) 56%, var(--ll-card-soft));
             border: 1px solid rgba(31, 58, 84, .13) !important;
-            border-inline-start: 4px solid var(--ll-card-accent) !important;
+            border-inline-start: 6px solid var(--ll-card-accent) !important;
             border-radius: 18px !important;
-            box-shadow: 0 5px 16px rgba(27, 60, 89, .09);
+            box-shadow: 0 7px 18px rgba(27, 60, 89, .10);
             transition: background-color .18s ease, box-shadow .18s ease, transform .18s ease;
 
             &:hover {
@@ -115,29 +129,30 @@ body.path-course-view .course-content {
 
             .activityname .instancename {
                 color: var(--bs-ink);
-                font-size: 1.12rem;
+                font-size: clamp(1.15rem, 1.6vw, 1.5rem);
                 font-weight: 800;
-                line-height: 1.45;
+                line-height: 1.35;
             }
 
             .activity-description,
             .activity-altcontent {
                 color: var(--bs-muted);
-                font-size: .875rem;
+                font-size: 1rem;
+                line-height: 1.5;
             }
 
             .activityiconcontainer.courseicon.smaller {
-                flex: 0 0 56px;
-                width: 56px;
-                min-width: 56px;
-                height: 56px;
-                padding: 12px !important;
-                margin-inline-end: .25rem !important;
-                border-radius: 16px !important;
+                flex: 0 0 74px;
+                width: 74px;
+                min-width: 74px;
+                height: 74px;
+                padding: 16px !important;
+                margin-inline-end: .75rem !important;
+                border-radius: 18px !important;
 
                 .activityicon {
-                    width: 30px;
-                    height: 30px;
+                    width: 42px;
+                    height: 42px;
                 }
             }
         }
@@ -162,46 +177,91 @@ body.path-course-view .course-content {
             }
         }
 
-        // Moodle already provides translated module types inside the accessible
-        // instance name (e.g. Forum / Atividade MCP). Expose just those existing
-        // strings as visual pills, without hardcoding the current site's language.
-        li.activity:is(.modtype_forum, .modtype_mcp) .activityname {
-            .instancename {
-                display: flex;
+        // Only the simple two-column Moodle card gets an ornamental chevron.
+        // Cards with completion controls or teacher actions retain Moodle's grid.
+        li.activity > .activity-item.learnlingo-simple-activity-card {
+            padding-inline-end: 5.3rem !important;
+
+            .activity-grid {
                 align-items: center;
-                justify-content: space-between;
-                flex-wrap: wrap;
-                gap: .45rem .9rem;
             }
 
-            .instancename > .accesshide {
-                position: static !important;
-                display: inline-flex;
+            .activity-name-area {
+                flex-direction: row !important;
                 align-items: center;
-                flex: 0 0 auto;
-                width: auto !important;
-                height: auto !important;
-                margin: 0 !important;
-                margin-inline-start: auto !important;
-                padding: .34rem .75rem !important;
-                overflow: visible !important;
-                clip: auto !important;
-                clip-path: none !important;
-                white-space: normal !important;
-                color: var(--ll-card-accent);
-                font-size: .75rem;
-                font-weight: 800;
-                line-height: 1.35;
-                background: var(--ll-card-soft);
-                border: 1px solid currentColor !important;
-                border-radius: 999px;
+                flex-wrap: wrap;
+                gap: .35rem 1rem;
             }
+
+            .activitytitle {
+                flex: 1 1 190px;
+                width: auto;
+                min-width: 0;
+            }
+
+            .activity-description,
+            .activity-altcontent {
+                flex-basis: 100%;
+            }
+
+            &::before {
+                position: absolute;
+                inset: 0 0 0 auto;
+                width: 34%;
+                background: linear-gradient(164deg, transparent 37%, var(--ll-card-soft) 37%);
+                border-radius: inherit;
+                content: "";
+                pointer-events: none;
+            }
+
+            &::after {
+                position: absolute;
+                top: 50%;
+                inset-inline-end: 1.5rem;
+                display: grid;
+                place-items: center;
+                width: 42px;
+                height: 42px;
+                color: var(--ll-card-accent);
+                background: var(--ll-card-soft);
+                border-radius: 50%;
+                content: "›";
+                font-size: 2rem;
+                font-weight: 400;
+                line-height: 1;
+                transform: translateY(-50%);
+                pointer-events: none;
+            }
+        }
+
+        // Visual duplicate of the native translated module type. The original
+        // .accesshide element remains available exclusively to screen readers.
+        .learnlingo-activity-type {
+            position: relative;
+            z-index: 1;
+            display: inline-flex;
+            align-items: center;
+            flex: 0 0 auto;
+            max-width: 100%;
+            margin-inline-start: auto;
+            padding: .4rem .85rem;
+            color: var(--ll-card-accent);
+            background: var(--ll-card-soft);
+            border: 1px solid currentColor;
+            border-radius: 999px;
+            font-size: .875rem;
+            font-weight: 750;
+            line-height: 1.35;
+            white-space: normal;
         }
     }
 
 }
 
 // During editing, retain the native drag, selection and action affordances.
+html[dir="rtl"] body.path-course-view .learnlingo-simple-activity-card::after {
+    content: "‹";
+}
 body.path-course-view.editing .course-content .course-section
     li.activity > .activity-item:not(.activityinline) {
     &:hover {
@@ -216,9 +276,9 @@ body.path-course-view.editing .course-content .course-section
 
 [data-bs-theme="dark"] body.path-course-view .course-content {
     .course-section {
-        background: var(--bs-surface);
-        border-color: var(--bs-border);
-        box-shadow: 0 9px 24px rgba(0, 0, 0, .15);
+        background: transparent;
+        border-color: transparent;
+        box-shadow: none;
 
         .course-section-header:has(.sectionname) {
             background: linear-gradient(100deg, rgba($primary, .2), transparent 85%);
@@ -259,27 +319,53 @@ body.path-course-view.editing .course-content .course-section
 @media (max-width: 767.98px) {
     body.path-course-view .course-content .course-section {
         .course-section-header:has(.sectionname) {
-            min-height: 64px;
-            padding: .8rem;
+            min-height: 60px;
+            padding: .75rem;
         }
 
         .section-content-inner {
-            padding: .8rem;
+            padding: 0;
         }
 
         li.activity > .activity-item:not(.activityinline) {
-            padding: .85rem !important;
+            min-height: 92px;
+            padding: .9rem !important;
+
+            &.learnlingo-simple-activity-card {
+                padding-inline-end: 3.75rem !important;
+
+                &::before {
+                    width: 25%;
+                }
+
+                &::after {
+                    inset-inline-end: .75rem;
+                    width: 30px;
+                    height: 30px;
+                    font-size: 1.6rem;
+                }
+
+                .activity-name-area {
+                    align-items: flex-start;
+                    flex-direction: column !important;
+                }
+
+                .learnlingo-activity-type {
+                    margin-inline-start: 0;
+                    font-size: .72rem;
+                }
+            }
 
             .activityiconcontainer.courseicon.smaller {
-                flex-basis: 46px;
-                width: 46px;
-                min-width: 46px;
-                height: 46px;
-                padding: 9px !important;
+                flex-basis: 48px;
+                width: 48px;
+                min-width: 48px;
+                height: 48px;
+                padding: 10px !important;
 
                 .activityicon {
-                    width: 26px;
-                    height: 26px;
+                    width: 28px;
+                    height: 28px;
                 }
             }
 

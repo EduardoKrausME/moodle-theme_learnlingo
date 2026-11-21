@@ -342,11 +342,55 @@
             });
         };
 
-        decoratePersonalXpRewards();
+        // Moodle already prints the translated activity type in an accesshide
+        // span. Clone its text for the visual badge; never unhide that span.
+        const decorateCourseActivityCards = function () {
+            if (!document.body.classList.contains('path-course-view') ||
+                    document.body.classList.contains('editing')) {
+                return;
+            }
+
+            document.querySelectorAll('.course-content li.activity > .activity-item:not(.activityinline)')
+                .forEach(function (item) {
+                    const grid = item.querySelector(':scope > .activity-grid');
+                    const namearea = grid && grid.querySelector(':scope > .activity-name-area');
+                    if (!grid || !namearea || !namearea.querySelector('.activityname a.aalink')) {
+                        return;
+                    }
+
+                    const modulelabel = namearea.querySelector('.instancename > .accesshide');
+                    const label = modulelabel ? modulelabel.textContent.trim() : '';
+                    if (!label) {
+                        return;
+                    }
+
+                    if (!namearea.querySelector(':scope > .learnlingo-activity-type')) {
+                        const badge = document.createElement('span');
+                        badge.className = 'learnlingo-activity-type';
+                        badge.setAttribute('aria-hidden', 'true');
+                        badge.textContent = label;
+                        namearea.appendChild(badge);
+                    }
+
+                    // Moodle adds more grid children for completion and actions.
+                    // Never rewrite that grid or show a decorative arrow over controls.
+                    if (grid.children.length === 2 &&
+                            grid.querySelector(':scope > .activity-icon')) {
+                        item.classList.add('learnlingo-simple-activity-card');
+                    }
+                });
+        };
+
+        const decorateCourseContent = function () {
+            decoratePersonalXpRewards();
+            decorateCourseActivityCards();
+        };
+
+        decorateCourseContent();
 
         const courseContent = document.querySelector('.course-content');
         if (courseContent && window.MutationObserver) {
-            const observer = new MutationObserver(decoratePersonalXpRewards);
+            const observer = new MutationObserver(decorateCourseContent);
             observer.observe(courseContent, {childList: true, subtree: true});
         }
     })();
