@@ -492,19 +492,21 @@ if ($ADMIN->fulltree) {
         "theme_learnlingo_accessibility",
         get_string("settings_accessibility_heading", "theme_learnlingo")
     );
-    $page->add(new admin_setting_configcheckbox(
+    $setting = new admin_setting_configcheckbox(
         "theme_learnlingo/enable_accessibility",
         get_string("settings_accessibility", "theme_learnlingo"),
         get_string("settings_accessibility_desc", "theme_learnlingo"),
         0
-    ));
-    $page->add(new admin_setting_configcheckbox(
+    );
+    $page->add($setting);
+    $setting = new admin_setting_configcheckbox(
         "theme_learnlingo/enable_vlibras",
         get_string("vlibras_enable", "theme_learnlingo"),
         get_string("vlibras_enable_desc", "theme_learnlingo"),
         0
-    ));
-    $page->add(new admin_setting_configselect(
+    );
+    $page->add($setting);
+    $setting = new admin_setting_configselect(
         "theme_learnlingo/vlibras_position",
         get_string("vlibras_position", "theme_learnlingo"),
         "",
@@ -513,8 +515,9 @@ if ($ADMIN->fulltree) {
             "L" => get_string("vlibras_left", "theme_learnlingo"),
             "R" => get_string("vlibras_right", "theme_learnlingo"),
         ]
-    ));
-    $page->add(new admin_setting_configselect(
+    );
+    $page->add($setting);
+    $setting = new admin_setting_configselect(
         "theme_learnlingo/vlibras_avatar",
         get_string("vlibras_avatar", "theme_learnlingo"),
         "",
@@ -525,7 +528,8 @@ if ($ADMIN->fulltree) {
             "guga" => get_string("vlibras_guga", "theme_learnlingo"),
             "random" => get_string("vlibras_random", "theme_learnlingo"),
         ]
-    ));
+    );
+    $page->add($setting);
     $settings->add($page);
 
     $page = new admin_settingpage(
