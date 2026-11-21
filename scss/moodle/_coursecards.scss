@@ -193,7 +193,7 @@ body.path-course-view .course-content {
                 font-weight: 800;
                 line-height: 1.35;
                 background: var(--ll-card-soft);
-                border: 1px solid currentColor;
+                border: 1px solid currentColor !important;
                 border-radius: 999px;
             }
         }
