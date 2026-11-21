@@ -15,6 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * phpcs:disable moodle.Files.RequireLogin.Missing
  * AJAX controller for accessibility toolbar interaction logging.
  *
  * @package    theme_learnlingo
