@@ -489,6 +489,46 @@ if ($ADMIN->fulltree) {
     }
 
     $page = new admin_settingpage(
+        "theme_learnlingo_accessibility",
+        get_string("settings_accessibility_heading", "theme_learnlingo")
+    );
+    $page->add(new admin_setting_configcheckbox(
+        "theme_learnlingo/enable_accessibility",
+        get_string("settings_accessibility", "theme_learnlingo"),
+        get_string("settings_accessibility_desc", "theme_learnlingo"),
+        0
+    ));
+    $page->add(new admin_setting_configcheckbox(
+        "theme_learnlingo/enable_vlibras",
+        get_string("vlibras_enable", "theme_learnlingo"),
+        get_string("vlibras_enable_desc", "theme_learnlingo"),
+        0
+    ));
+    $page->add(new admin_setting_configselect(
+        "theme_learnlingo/vlibras_position",
+        get_string("vlibras_position", "theme_learnlingo"),
+        "",
+        "R",
+        [
+            "L" => get_string("vlibras_left", "theme_learnlingo"),
+            "R" => get_string("vlibras_right", "theme_learnlingo"),
+        ]
+    ));
+    $page->add(new admin_setting_configselect(
+        "theme_learnlingo/vlibras_avatar",
+        get_string("vlibras_avatar", "theme_learnlingo"),
+        "",
+        "icaro",
+        [
+            "icaro" => get_string("vlibras_icaro", "theme_learnlingo"),
+            "hosana" => get_string("vlibras_hosana", "theme_learnlingo"),
+            "guga" => get_string("vlibras_guga", "theme_learnlingo"),
+            "random" => get_string("vlibras_random", "theme_learnlingo"),
+        ]
+    ));
+    $settings->add($page);
+
+    $page = new admin_settingpage(
         "theme_learnlingo_advanced",
         get_string("scsssettings", "theme_learnlingo")
     );

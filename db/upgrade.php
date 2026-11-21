@@ -81,5 +81,29 @@ function xmldb_theme_learnlingo_upgrade(int $oldversion): bool {
         upgrade_plugin_savepoint(true, 2026110300, 'theme', 'learnlingo');
     }
 
+    if ($oldversion < 2026112001) {
+        $table = new xmldb_table("theme_learnlingo_accesslog");
+        $table->add_field("id", XMLDB_TYPE_INTEGER, "10", null, XMLDB_NOTNULL, XMLDB_SEQUENCE);
+        $table->add_field("userid", XMLDB_TYPE_INTEGER, "10", null, XMLDB_NOTNULL, null, "0");
+        $table->add_field("courseid", XMLDB_TYPE_INTEGER, "10", null, XMLDB_NOTNULL, null, "0");
+        $table->add_field("cmid", XMLDB_TYPE_INTEGER, "10", null, XMLDB_NOTNULL, null, "0");
+        $table->add_field("action", XMLDB_TYPE_CHAR, "40", null, XMLDB_NOTNULL);
+        $table->add_field("item", XMLDB_TYPE_CHAR, "100");
+        $table->add_field("status", XMLDB_TYPE_CHAR, "20");
+        $table->add_field("activeitems", XMLDB_TYPE_TEXT);
+        $table->add_field("statejson", XMLDB_TYPE_TEXT);
+        $table->add_field("pageurl", XMLDB_TYPE_TEXT);
+        $table->add_field("timecreated", XMLDB_TYPE_INTEGER, "20", null, XMLDB_NOTNULL, null, "0");
+        $table->add_key("primary", XMLDB_KEY_PRIMARY, ["id"]);
+        $table->add_index("userid", XMLDB_INDEX_NOTUNIQUE, ["userid"]);
+        $table->add_index("action", XMLDB_INDEX_NOTUNIQUE, ["action"]);
+        $table->add_index("timecreated", XMLDB_INDEX_NOTUNIQUE, ["timecreated"]);
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        upgrade_plugin_savepoint(true, 2026112001, "theme", "learnlingo");
+    }
+
     return true;
 }

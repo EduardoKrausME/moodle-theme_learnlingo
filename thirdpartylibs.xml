@@ -14,4 +14,11 @@
         </copyrights>
         <customised/>
     </library>
+    <library>
+        <location>amd/src/acctoolbar.js</location>
+        <name>acc_toolbar</name>
+        <version>1.0.0</version>
+        <license>MIT</license>
+        <repository>https://github.com/mickidum/acc_toolbar</repository>
+    </library>
 </libraries>

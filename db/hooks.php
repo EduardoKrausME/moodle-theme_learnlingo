@@ -37,4 +37,8 @@ $callbacks = [
         'hook' => \core\hook\navigation\primary_extend::class,
         'callback' => [primary_extend::class, 'callback'],
     ],
+    [
+        "hook" => \core\hook\output\before_footer_html_generation::class,
+        "callback" => [\theme_learnlingo\hooks\accessibility::class, "before_footer_html_generation"],
+    ],
 ];
