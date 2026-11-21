@@ -18,57 +18,62 @@ body.path-course-view .course-content {
 
         // The General section can be rendered with or without a visible heading.
         // Only decorate the heading when Moodle actually supplies a section name.
-        .course-section-header:has(.sectionname) {
-            align-items: center;
-            min-height: 68px;
-            margin-bottom: 1rem;
-            padding: .85rem 1.15rem;
-            background: linear-gradient(100deg, rgba($primary, .12), rgba($primary, .025) 80%);
-            border: 1px solid rgba(31, 58, 84, .11);
-            border-radius: 18px;
+        .course-section-header{
+            &:has(.sectionname) {
+                align-items: center;
+                min-height: 68px;
+                padding: .85rem 1.15rem;
+                background: linear-gradient(100deg, rgba($primary, .12), rgba($primary, .025) 80%);
+                border: 1px solid rgba(31, 58, 84, .11);
+                border-radius: 18px;
+            }
+
+            .sectionname {
+                min-width: 0;
+                color: var(--bs-ink);
+                font-size: clamp(1.1rem, 1.4vw, 1.35rem);
+                font-weight: 800;
+                line-height: 1.4;
+
+                a {
+                    color: inherit;
+                    text-decoration: none;
+                }
+                a:hover {
+                    text-decoration: underline;
+                }
+            }
+
+            .icons-collapse-expand {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                flex: 0 0 40px;
+                width: 40px;
+                height: 40px;
+                margin-inline-end: .8rem !important;
+                color: var(--bs-primary);
+                background: var(--bs-surface, #FFF);
+                border: 1px solid rgba(31, 58, 84, .13);
+                border-radius: 12px;
+
+                &:hover,
+                &:focus-visible {
+                    background: rgba($primary, .10);
+                }
+            }
+
+            // On the General section Moodle may output only an empty header shell.
+            // Do not reserve space for a heading that is not present.
+            &:not(:has(.sectionname)) {
+                min-height: 0;
+                margin: 0;
+                padding: 0;
+            }
         }
 
-        .course-section-header .sectionname {
-            min-width: 0;
-            color: var(--bs-ink);
-            font-size: clamp(1.1rem, 1.4vw, 1.35rem);
-            font-weight: 800;
-            line-height: 1.4;
-
-            a {
-                color: inherit;
-                text-decoration: none;
-            }
-            a:hover {
-                text-decoration: underline;
-            }
-        }
-
-        .course-section-header .icons-collapse-expand {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            flex: 0 0 40px;
-            width: 40px;
-            height: 40px;
-            margin-inline-end: .8rem !important;
-            color: var(--bs-primary);
-            background: var(--bs-surface, #FFF);
-            border: 1px solid rgba(31, 58, 84, .13);
-            border-radius: 12px;
-
-            &:hover,
-            &:focus-visible {
-                background: rgba($primary, .10);
-            }
-        }
-
-        // On the General section Moodle may output only an empty header shell.
-        // Do not reserve space for a heading that is not present.
-        .course-section-header:not(:has(.sectionname)) {
-            min-height: 0;
-            margin: 0;
-            padding: 0;
+        .course-content-item-content {
+            margin: 0 1rem;
         }
 
         .section-content-inner {
@@ -83,7 +88,6 @@ body.path-course-view .course-content {
             --ll-card-accent: var(--bs-primary);
             --ll-card-soft: rgba(31, 58, 84, .055);
             position: relative;
-            min-height: 122px;
             margin: 0 0 1rem;
             padding: 1.2rem 1.45rem !important;
             background: linear-gradient(105deg, var(--bs-surface, #FFF) 56%, var(--ll-card-soft));
@@ -146,6 +150,7 @@ body.path-course-view .course-content {
                 width: 74px;
                 min-width: 74px;
                 height: 74px;
+                min-height: 74px;
                 padding: 16px !important;
                 margin-inline-end: .75rem !important;
                 border-radius: 18px !important;
@@ -153,6 +158,8 @@ body.path-course-view .course-content {
                 .activityicon {
                     width: 42px;
                     height: 42px;
+                    min-width: 42px;
+                    min-height: 42px;
                 }
             }
         }
@@ -202,16 +209,6 @@ body.path-course-view .course-content {
             .activity-description,
             .activity-altcontent {
                 flex-basis: 100%;
-            }
-
-            &::before {
-                position: absolute;
-                inset: 0 0 0 auto;
-                width: 34%;
-                background: linear-gradient(164deg, transparent 37%, var(--ll-card-soft) 37%);
-                border-radius: inherit;
-                content: "";
-                pointer-events: none;
             }
 
             &::after {
