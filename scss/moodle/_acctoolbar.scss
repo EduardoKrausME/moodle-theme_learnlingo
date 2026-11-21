@@ -1,302 +1,326 @@
+// Toolbar colours derive from the institution's LearnLingo theme settings.
+// The same tokens are updated by LearnLingo when data-bs-theme="dark" is active.
 #mic-init-access-tool {
     display: block !important;
+
+    --acc-primary: var(--bs-primary, #{$primary});
+    --acc-accent: var(--bs-accent, #{$learnlingo-accent});
+    --acc-text: var(--bs-ink, #{$body-color});
+    --acc-surface: var(--bs-surface, #fff);
+    --acc-canvas: var(--bs-canvas, #{$body-bg});
+    --acc-border: var(--bs-border, #{$border-color});
+    --acc-on-primary: #{color-contrast($primary)};
+    --acc-soft: color-mix(in srgb, var(--acc-primary) 12%, var(--acc-surface));
+    --acc-hover: color-mix(in srgb, var(--acc-accent) 20%, var(--acc-surface));
+    --acc-muted: color-mix(in srgb, var(--acc-text) 78%, var(--acc-surface));
+    --acc-shadow: 0 18px 48px color-mix(in srgb, var(--acc-text) 16%, transparent);
+
     button {
-        outline: 0;
-        -webkit-box-shadow: none;
-        box-shadow: none;
-        color: #333;
-        background-color: #fff;
-        border: 1px solid #d3d5dc;
-        border-radius: 8px;
-
-        path {
-            fill: $primary;
-        }
-    }
-
-    a {
-        outline: 0;
-        display: inline-block;
-        color: #333;
-        width: 100%;
-        line-height: 1;
-    }
-
-    a:focus,
-    a:hover {
-        background-color: #f2f3f7;
-        border-color: #aaa;
-
-        span {
-            color: #8b0000;
-        }
+        cursor: pointer;
+        font-family: inherit;
     }
 
     span.mic-toolbox-images-titles {
         display: none !important;
     }
 
-    * {
-        font-size: 14px !important;
-        font-family: Arial, Helvetica, sans-serif !important;
-        text-decoration: none !important;
-        -webkit-user-select: none !important;
-        -moz-user-select: none !important;
-        -ms-user-select: none !important;
-        user-select: none !important;
-        line-height: 1 !important;
-    }
-
     .mic-access-tool-general-button {
         position: fixed !important;
         z-index: 99999 !important;
-        display: block !important;
-        bottom: 127px;
-        left: 7px;
-        cursor: pointer;
-        border-radius: 4px 4px 20px 4px;
-        color: #424242;
-        padding: 0;
+        bottom: 24px;
+        left: 18px;
+        min-width: 64px;
+        min-height: 64px;
+        padding: 6px !important;
+        color: var(--acc-text) !important;
+        background: var(--acc-surface) !important;
+        border: 2px solid var(--acc-primary) !important;
+        border-radius: 16px !important;
+        box-shadow: 0 8px 28px color-mix(in srgb, var(--acc-text) 16%, transparent);
+        transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+
+        &.mic-access-tool-general-button-right {
+            left: auto;
+            right: 18px;
+        }
 
         > div {
-            font-size: 0 !important;
-            position: relative;
-            text-align: center;
-            padding: 4px 6px !important;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            padding: 3px 5px !important;
         }
 
         > div span {
             display: block;
-            margin-bottom: 4px;
-            line-height: 1;
+            color: var(--acc-text) !important;
+            font-size: 10px !important;
+            line-height: 1.2 !important;
             font-weight: 700;
-            font-size: 11px !important;
-            font-family: Arial, Helvetica, sans-serif !important;
         }
 
         > div img {
-            display: inline-block;
-            width: 45px;
-            height: 45px;
-            min-width: 45px;
-            min-height: 45px;
+            display: block;
+            width: 32px;
+            height: 32px;
+            min-width: 32px;
+            min-height: 32px;
         }
 
-        &.mic-access-tool-general-button-right {
-            left: auto;
-            right: 7px;
-            border-radius: 4px 4px 4px 20px;
-        }
-
-        &:focus,
         &:hover {
-            color: #8b0000;
-            border-color: #8b0000;
-            background-color: rgba(139, 139, 139, 0.09);
-
-            span {
-                color: #8b0000;
-            }
+            background: var(--acc-hover) !important;
+            box-shadow: 0 10px 32px color-mix(in srgb, var(--acc-text) 20%, transparent);
+            transform: translateY(-3px);
         }
     }
 
     .mic-access-tool-box {
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        color: #2E3B2D;
-        background: #FEFAF8;
-        font-family: "Inter", "Roboto", sans-serif;
-        border-radius: 10px;
-        overflow-y: auto;
-        -webkit-box-shadow: 1px 0 4px 0 #777;
         position: fixed;
-        width: 370px;
-        top: 10px;
-        left: 10px;
         z-index: 9999999999999;
+        top: 12px;
+        left: 12px;
+        width: min(390px, calc(100vw - 24px));
+        max-height: calc(100vh - 24px);
+        max-height: calc(100dvh - 24px);
+        color: var(--acc-text) !important;
+        background: var(--acc-surface) !important;
+        border: 1px solid var(--acc-border);
+        border-radius: 18px;
+        box-shadow: var(--acc-shadow);
+        overflow-x: hidden;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        scrollbar-width: thin;
         visibility: hidden;
         opacity: 0;
-        -webkit-transition: opacity .4s;
-        transition: opacity .4s;
-    }
+        transition: opacity .2s ease;
 
-    .mic-access-tool-box.opened-mic-access-tool {
-        visibility: visible;
-        opacity: 1;
-    }
+        &.opened-mic-access-tool {
+            visibility: visible;
+            opacity: 1;
+        }
 
-    .mic-access-tool-box.mic-access-tool-box-right {
-        left: auto;
-        right: 10px;
+        &.mic-access-tool-box-right {
+            left: auto;
+            right: 12px;
+        }
     }
 
     .mic-access-tool-box .mic-access-tool-box-header {
+        position: sticky;
+        top: 0;
+        z-index: 2;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        position: relative;
-        text-align: left;
-        font-size: 28px !important;
-        line-height: 1 !important;
+        min-height: 66px;
+        padding: 16px 20px !important;
+        background: var(--acc-primary) !important;
+        color: var(--acc-on-primary) !important;
+        font-size: 20px !important;
+        line-height: 1.3 !important;
         font-weight: 700;
-        padding: 10px;
-        color: #2E3B2D;
 
         button {
-            color: #fff;
-            background: #2E3B2D;
-            border: none;
-            font-size: 20px;
-            cursor: pointer;
-            transition: transform 0.2s;
-            border-radius: 53%;
-            min-width: 31px;
-            width: 31px;
-            height: 31px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            min-width: 36px;
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            background: color-mix(in srgb, var(--acc-on-primary) 15%, transparent) !important;
+            border: 1px solid color-mix(in srgb, var(--acc-on-primary) 35%, transparent) !important;
+            border-radius: 10px;
+            color: var(--acc-on-primary) !important;
+            font-size: 20px !important;
+            line-height: 1 !important;
 
             &:hover {
-                transform: scale(1.2);
+                background: color-mix(in srgb, var(--acc-on-primary) 25%, transparent) !important;
             }
         }
     }
 
     .mic-access-tool-box .mic-buttons-block {
-        padding: 8px;
         position: relative;
-        font-size: 12px !important;
-        margin: 4px;
-        border-radius: 4px;
+        margin: 0 16px;
+        padding: 16px 0;
+        border-bottom: 1px solid var(--acc-border);
 
         h3 {
-            font-size: 24px !important;
-            font-weight: bold;
-            color: #374151;
+            margin: 0 0 12px;
+            color: var(--acc-muted) !important;
+            font-size: 15px !important;
+            line-height: 1.4 !important;
+            font-weight: 700;
+        }
+
+        .d-flex,
+        &.mic-buttons-block-horizontal {
+            display: grid !important;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            align-items: stretch;
+            gap: 8px;
         }
 
         button {
-            flex: 1;
-            background: #f9fafb;
-            border: 1px solid #e5e7eb;
-            border-radius: 0.75rem;
-            font-size: 13px;
-            font-weight: 500;
-            color: #374151;
-            display: flex;
+            position: relative;
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            justify-content: space-between;
-            gap: 0.5rem;
-            cursor: pointer;
-            transition: all 0.2s;
+            gap: 8px;
             width: 100%;
-            margin: 5px 3px;
-            padding: 8px 14px;
+            min-width: 0;
+            min-height: 92px;
+            margin: 0 !important;
+            padding: 12px 8px !important;
+            background: var(--acc-canvas) !important;
+            color: var(--acc-text) !important;
+            border: 1px solid var(--acc-border) !important;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 12px !important;
+            line-height: 1.35 !important;
+            transition: background .2s ease, border-color .2s ease, transform .2s ease;
+
+            span {
+                display: block;
+                color: var(--acc-text) !important;
+                font-size: 12px !important;
+                line-height: 1.35 !important;
+                overflow-wrap: anywhere;
+            }
 
             img {
-                width: 20px;
-                height: 20px;
+                display: block;
+                width: 26px;
+                height: 26px;
+                min-width: 26px;
+                min-height: 26px;
+                max-width: 26px;
+                max-height: 26px;
+                object-fit: contain;
             }
 
             &:hover {
-                background: #eef2ff;
-                border-color: #6366f1;
-                color: #111827;
-            }
-
-            &:active {
-                background: #e0e7ff;
-            }
-
-            #mic-toolbox-fonts-up-enabled {
-                position: absolute;
-                right: 2px;
-                top: 8px;
-                color: #e91e63;
+                background: var(--acc-hover) !important;
+                border-color: var(--acc-accent) !important;
+                transform: translateY(-2px);
             }
 
             &.vi-enabled {
-                border: dashed 1px #8b0000;
-                background-color: #fffff3;
+                background: var(--acc-soft) !important;
+                border: 2px solid var(--acc-primary) !important;
 
                 span {
-                    color: #8b0000 !important;
+                    color: var(--acc-text) !important;
                     font-weight: 700;
                 }
 
                 &::before {
-                    content: "\2713";
+                    content: "✓";
                     position: absolute;
-                    top: 2px;
-                    right: 2px;
-                    color: #00e800;
-                    font-weight: 700 !important;
-                    line-height: 1 !important;
+                    top: 4px;
+                    right: 6px;
+                    color: var(--acc-primary);
                     font-size: 14px !important;
+                    font-weight: 700;
+                    line-height: 1 !important;
                 }
             }
-        }
-        &.mic-buttons-block-horizontal {
-            margin-top: 0;
-            margin-bottom: 0;
-        }
 
-        .d-flex {
-            display: flex;
-            justify-content: space-between;
-            align-items: stretch;
-            width: 100%;
-
-            button {
-                width: 32%;
-                padding: 5px 0;
-                display: flex;
-                justify-content: center;
-                flex-direction: column;
-                align-items: center;
-                gap: 6px;
-                margin-bottom: 0;
-            }
-        }
-
-        img,
-        span {
-            display: inline-block;
-            vertical-align: middle;
-            font-size: 15px !important;
-            color: #333;
-        }
-
-        img {
-            width: 22px;
-            height: 22px;
-            min-width: 22px;
-            min-height: 22px;
-            max-width: 22px;
-            max-height: 22px;
-        }
-
-        #mic-toolbox-disable-buttons-reset-all {
-            text-align: center;
-            font-weight: 700;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-evenly;
-            padding: 8px;
-            background: #ef4444 !important;
-
-            span {
-                color: #ffffff;
+            #mic-toolbox-fonts-up-enabled {
+                color: var(--acc-primary);
             }
         }
 
         &:last-child {
-            padding: 0;
+            margin: 0;
+            padding: 16px;
             border-bottom: 0;
-            background: none;
+        }
+
+        #mic-toolbox-disable-buttons-reset-all {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            min-height: 46px;
+            padding: 10px 14px !important;
+            background: var(--acc-primary) !important;
+            border-color: var(--acc-primary) !important;
+            color: var(--acc-on-primary) !important;
+            font-weight: 700;
+
+            span {
+                color: var(--acc-on-primary) !important;
+                font-weight: 700;
+            }
+
+            img {
+                width: 20px;
+                height: 20px;
+                min-width: 20px;
+                min-height: 20px;
+            }
+
+            &:hover {
+                background: color-mix(in srgb, var(--acc-primary) 80%, var(--acc-accent)) !important;
+            }
+        }
+    }
+
+    button:focus-visible {
+        outline: 3px solid var(--acc-primary) !important;
+        outline-offset: 3px !important;
+    }
+}
+
+// The design tokens already change with data-bs-theme="dark".
+// Do not override them with a second, fixed dark palette.
+@media (max-width: 480px) {
+    #mic-init-access-tool .mic-access-tool-box {
+        top: 8px;
+        right: auto;
+        left: 8px;
+        width: calc(100vw - 16px);
+        max-height: calc(100dvh - 16px);
+        border-radius: 14px;
+
+        &.mic-access-tool-box-right {
+            left: auto;
+            right: 8px;
+        }
+
+        .mic-buttons-block {
+            margin: 0 12px;
+
+            .d-flex,
+            &.mic-buttons-block-horizontal {
+                gap: 6px;
+            }
+
+            button {
+                min-height: 86px;
+                padding: 9px 5px !important;
+            }
         }
     }
 }
 
-// Aply Styles.
+@media (prefers-reduced-motion: reduce) {
+    #mic-init-access-tool button,
+    #mic-init-access-tool .mic-access-tool-box {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+// Accessibility effects on the Moodle page (not on the toolbar).
 body.mic-toolbox-zoom-up > :not(#mic-init-access-tool) {
     zoom: 1.4 !important;
     -moz-transform: scale(1.4) !important;
@@ -411,7 +435,7 @@ body.mic-toolbox-content-images span.mic-toolbox-images-titles {
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
     padding: 10px !important;
-    border: solid 1px #8b0000 !important;
+    border: solid 1px var(--bs-primary) !important;
     border-radius: 0 !important;
 }
 
@@ -422,31 +446,3 @@ body.mic-toolbox-content-images span.mic-toolbox-images-titles {
     font-display: swap;
 }
 
-// Dark-mode surface contrast for the independent accessibility controls.
-[data-bs-theme="dark"] #mic-init-access-tool {
-    .mic-access-tool-box {
-        color: #f8fafc;
-        background: #1e293b;
-    }
-    .mic-access-tool-box .mic-access-tool-box-header,
-    .mic-access-tool-box .mic-buttons-block h3 { color: #f8fafc; }
-    .mic-access-tool-box .mic-buttons-block button:not(#mic-toolbox-disable-buttons-reset-all) {
-        background: #334155;
-        border-color: #64748b;
-        color: #f8fafc;
-        span { color: #f8fafc; }
-        &:hover, &:focus-visible {
-            background: #475569;
-            border-color: var(--bs-accent, #8be24a);
-        }
-    }
-}
-@media (max-width: 480px) {
-    #mic-init-access-tool .mic-access-tool-box {
-        width: auto;
-        max-width: calc(100vw - 20px);
-        max-height: calc(100vh - 20px);
-        left: 10px;
-        right: 10px;
-    }
-}
