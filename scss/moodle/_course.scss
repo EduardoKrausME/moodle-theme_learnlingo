@@ -325,9 +325,9 @@ body.path-course-view .course-section:not(#section-0) .section-title::before {
     content: counter(learnlingo-unit);
     font-size: 1.1rem;
     font-weight: 900;
-    background: var(--bs-green);
+    background: var(--bs-primary);
     border-radius: 50%;
-    box-shadow: 0 4px 0 var(--bs-green-dark);
+    box-shadow: 0 4px 0 color-mix(in srgb, var(--bs-primary) 80%, black);
 }
 body.path-course-view .course-section .summary,
 body.path-course-view .course-section .section-summary-activities {
