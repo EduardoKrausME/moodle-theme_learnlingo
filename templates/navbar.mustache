@@ -100,6 +100,7 @@
                 {{> theme_learnlingo/language_menu }}
                 <div class="divider border-start h-75 align-self-center mx-1"></div>
             {{/langmenu}}
+            {{{ output.edit_switch }}}
             {{# output.navbar_plugin_output }}
                 {{{ . }}}
                 <div class="divider border-start h-75 align-self-center mx-1"></div>
@@ -109,7 +110,6 @@
                     {{> core/user_menu }}
                 </div>
             {{/usermenu}}
-            {{{ output.edit_switch }}}
         </div>
     </div>
 </nav>
