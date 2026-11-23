@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.2.4 - 2026-11-23
+
+- Preserved the configured Moodle site logo during LearnLingo installation and added regression coverage for logo preservation.
+- Restored context page headers and the native Moodle editing switch label in the navbar.
+- Added course activity rendering templates and refined course card, section title, activity icon and navbar styles.
+
+**Comparison:** [2.2.3...2.2.4](https://github.com/EduardoKrausME/moodle-theme_learnlingo/compare/2.2.3...2.2.4)
+
 ## 2.2.3 - 2026-11-22
 
 - Added bilingual theme documentation and copy-and-paste setup guides.
