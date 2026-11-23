@@ -93,7 +93,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $header = [
             "settingsmenu" => $this->context_header_settings_menu(),
             "contextheader" => $contextheader,
-            "hasnavbar" => empty($this->page->layout_options['nonavbar']) && isset($contextheader[3]),
+            "hasnavbar" => empty($this->page->layout_options['nonavbar']),
             "navbar" => $this->navbar(),
             "pageheadingbutton" => $this->page_heading_button(),
             "courseheader" => $this->course_header(),
@@ -120,9 +120,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
      */
     protected function render_context_header(context_header $contextheader) {
         $context = $contextheader->export_for_template($this);
-        if (!empty(array_filter($context))) {
-            return "";
-        }
         return $this->render_from_template('core/context_header', $context);
     }
 }
