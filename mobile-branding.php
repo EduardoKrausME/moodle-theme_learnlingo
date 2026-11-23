@@ -23,7 +23,9 @@
  */
 
 // Only publicly visible site branding is returned; login is intentionally not required.
-// @codingStandardsIgnoreLine
+// phpcs:disable moodle.Files.RequireLogin.Missing
+use theme_learnlingo\mobile_branding;
+
 require_once(__DIR__ . '/../../config.php');
 
 header('Content-Type: application/json; charset=utf-8');
@@ -35,4 +37,4 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'GET'
     exit;
 }
 
-echo json_encode(\theme_learnlingo\mobile_branding::export(), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+echo json_encode(mobile_branding::export(), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
