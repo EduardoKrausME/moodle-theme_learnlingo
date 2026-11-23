@@ -93,9 +93,14 @@ html[data-bs-theme="dark"] {
         margin-inline: auto;
     }
 
+    // Keep Moodle's native edit switch visible, including its accessible label.
+    // Moodle 5.1 uses an input-group; newer versions may use design system markup.
     .editmode-switch-form {
-        .input-group label {
-            display: none;
+        flex-shrink: 0;
+
+        .input-group {
+            align-items: center;
+            flex-wrap: nowrap;
         }
     }
 
