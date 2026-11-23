@@ -64,37 +64,32 @@ function xmldb_theme_learnlingo_install(): void {
         set_config('setup_pending', 1, 'theme_learnlingo');
     }
 
+    // A configured site logo always takes precedence, even if Moodle cannot
+    // resolve the referenced stored file during installation.
+    $configured = trim((string)get_config("core_admin", "logo"));
     $source = "{$CFG->dirroot}/theme/learnlingo/pix/default-logo.svg";
-    if (file_exists($source)) {
+    if ($configured === "" && file_exists($source)) {
         $context = context_system::instance();
         $fs = get_file_storage();
 
-        // Preserve a configured logo if its file is still available.
-        $configured = trim((string)get_config("core_admin", "logo"));
-        $relativepath = ltrim($configured, "/");
-        $existing = $configured !== ""
-            ? $fs->get_file_by_hash(sha1("/{$context->id}/core_admin/logo/0/{$relativepath}"))
-            : false;
-        if (!($existing && !$existing->is_directory())) {
-            $files = $fs->get_area_files($context->id, "core_admin", "logo", 0, "id", false);
-            if ($files) {
-                // Recover a pre-existing upload whose configuration value is empty.
-                $file = reset($files);
-            } else {
-                $file = $fs->create_file_from_pathname([
-                    "contextid" => $context->id,
-                    "component" => "core_admin",
-                    "filearea" => "logo",
-                    "itemid" => 0,
-                    "filepath" => "/",
-                    "filename" => "default-logo.svg",
-                    "mimetype" => "image/svg+xml",
-                    "userid" => 0,
-                ], $source);
-            }
-
-            set_config("logo", $file->get_filepath() . $file->get_filename(), "core_admin");
+        // Reuse an existing upload when the configuration is empty.
+        $files = $fs->get_area_files($context->id, "core_admin", "logo", 0, "id", false);
+        if ($files) {
+            $file = reset($files);
+        } else {
+            $file = $fs->create_file_from_pathname([
+                "contextid" => $context->id,
+                "component" => "core_admin",
+                "filearea" => "logo",
+                "itemid" => 0,
+                "filepath" => "/",
+                "filename" => "default-logo.svg",
+                "mimetype" => "image/svg+xml",
+                "userid" => 0,
+            ], $source);
         }
+
+        set_config("logo", $file->get_filepath() . $file->get_filename(), "core_admin");
     }
 
     $source = "{$CFG->dirroot}/theme/learnlingo/pix/login_background.jpg";
