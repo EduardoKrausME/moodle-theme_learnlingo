@@ -3,6 +3,8 @@
     color-scheme: light;
     --bs-primary: #{$primary};
     --bs-accent: #{$learnlingo-accent};
+    --bs-primary-rgb: #{red($primary)}, #{green($primary)}, #{blue($primary)};
+    --bs-accent-rgb: #{red($learnlingo-accent)}, #{green($learnlingo-accent)}, #{blue($learnlingo-accent)};
     --bs-ink: #{$body-color};
     --bs-muted: #68756D;
     --bs-surface: #FFF;
@@ -378,6 +380,8 @@
 [data-bs-theme="dark"] {
     --bs-primary: #{$primary} !important;
     --bs-accent: #{lighten($learnlingo-accent, 10%)};
+    --bs-primary-rgb: #{red($primary)}, #{green($primary)}, #{blue($primary)};
+    --bs-accent-rgb: #{red(lighten($learnlingo-accent, 10%))}, #{green(lighten($learnlingo-accent, 10%))}, #{blue(lighten($learnlingo-accent, 10%))};
     --bs-ink: #E7EDF4;
     --bs-muted: #B5C3D0;
     --bs-surface: #222C39;
