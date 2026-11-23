@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.2.3 - 2026-11-22
+
+- Added bilingual theme documentation and copy-and-paste setup guides.
+- Refined course card styling, drawer templates and accessibility toolbar styles, with course card regression tests.
+
+**Comparison:** [2.2.2...2.2.3](https://github.com/EduardoKrausME/moodle-theme_learnlingo/compare/2.2.2...2.2.3)
+
+## 2.2.2 - 2026-11-21
+
+- Added an accessibility toolbar with display controls, settings, language strings and bundled assets.
+- Added accessibility logging and privacy-provider support, database changes and regression tests.
+
+**Comparison:** [2.2.1...2.2.2](https://github.com/EduardoKrausME/moodle-theme_learnlingo/compare/2.2.1...2.2.2)
+
 This changelog records verified changes in published GitHub releases. Each entry compares the release tag with the immediately preceding published release; changes made after the tag are excluded. Earlier releases are available in GitHub's release history.
 
 ## 2.2.1 - 2026-11-16
