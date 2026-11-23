@@ -24,7 +24,6 @@
 
 namespace theme_learnlingo;
 
-
 use context_system;
 use moodle_url;
 
