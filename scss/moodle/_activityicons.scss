@@ -41,6 +41,11 @@ $learnlingo-activity-colors: (
     box-shadow: 0 3px 0 mix(#000, $color, 18%),
     0 7px 14px rgba($color, .18);
 }
+
+.activityiconcontainer.courseicon {
+    @include learnlingo-activity-icon(#7B8794);
+}
+
 .path-course-view .activityiconcontainer.courseicon,
 .activity-item .activityiconcontainer.courseicon {
     width: 46px;
