@@ -126,16 +126,21 @@ body.path-course-view .course-content {
                 align-self: stretch !important;
             }
 
-            .activityname > a {
-                display: block;
-                width: 100%;
-            }
+            .activityname {
+                display: flex;
+                justify-content: space-between;
 
-            .activityname .instancename {
-                color: var(--bs-ink);
-                font-size: clamp(1.15rem, 1.6vw, 1.5rem);
-                font-weight: 800;
-                line-height: 1.35;
+                > a {
+                    display: block;
+                    width: 100%;
+                }
+
+                .activityname .instancename {
+                    color: var(--bs-ink);
+                    font-size: clamp(1.15rem, 1.6vw, 1.5rem);
+                    font-weight: 800;
+                    line-height: 1.35;
+                }
             }
 
             .activity-description,
