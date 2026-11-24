@@ -64,6 +64,10 @@ final class dark_mode_test extends advanced_testcase {
         global $CFG;
 
         $light = file_get_contents($CFG->dirroot . '/theme/learnlingo/scss/_poss.scss');
+        $frontpage = file_get_contents($CFG->dirroot . '/theme/learnlingo/scss/moodle/_frontpage.scss');
+        $imports = file_get_contents($CFG->dirroot . '/theme/learnlingo/scss/_learnlingo-moodle.scss');
+        $this->assertStringContainsString('@import "learnlingo-moodle";', $light);
+        $this->assertStringContainsString('@import "moodle/frontpage";', $imports);
         $dark = file_get_contents($CFG->dirroot . '/theme/learnlingo/scss/moodle/_dark.scss');
         // Homepage tokens are aliases of the shared theme palette in both modes.
         foreach ([
@@ -73,12 +77,12 @@ final class dark_mode_test extends advanced_testcase {
             '--bs-home-muted: var(--bs-muted);',
             '--bs-home-border: var(--bs-border);',
         ] as $declaration) {
-            $this->assertStringContainsString($declaration, $light);
+            $this->assertStringContainsString($declaration, $frontpage);
         }
-        $this->assertStringContainsString('.learnlingo-html-home,', $light);
-        $this->assertStringContainsString('.learnlingo-home-intro {', $light);
+        $this->assertStringContainsString('.learnlingo-html-home,', $frontpage);
+        $this->assertStringContainsString('.learnlingo-home-intro {', $frontpage);
         $this->assertStringContainsString('color-scheme: light;', $light);
-        $this->assertStringContainsString('color-scheme: inherit;', $light);
+        $this->assertStringContainsString('color-scheme: inherit;', $frontpage);
         $this->assertStringContainsString('[data-bs-theme="dark"] {', $light);
         $this->assertStringContainsString('color-scheme: dark;', $light);
         $this->assertStringContainsString('[data-bs-theme="dark"]', $dark);
@@ -103,7 +107,9 @@ final class dark_mode_test extends advanced_testcase {
         global $CFG;
         $setup = file_get_contents($CFG->dirroot . '/theme/learnlingo/templates/setup.mustache');
         $settings = file_get_contents($CFG->dirroot . '/theme/learnlingo/templates/darkmode_settings.mustache');
-        $scss = file_get_contents($CFG->dirroot . '/theme/learnlingo/scss/_poss.scss');
+        $root = file_get_contents($CFG->dirroot . '/theme/learnlingo/scss/_poss.scss');
+        $scss = file_get_contents($CFG->dirroot . '/theme/learnlingo/scss/_learnlingo-moodle.scss');
+        $this->assertStringContainsString('@import "learnlingo-moodle";', $root);
         $adminsettings = file_get_contents($CFG->dirroot . '/theme/learnlingo/settings.php');
 
         $this->assertStringContainsString('<a href="{{{darkinstallurl}}}" class="btn btn-secondary">', $setup);

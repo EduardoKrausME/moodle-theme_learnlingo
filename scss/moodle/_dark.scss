@@ -313,3 +313,14 @@
     --bs-pulse-base: var(--bs-surface);
     --bs-pulse-middle: color-mix(in srgb, var(--bs-surface) 90%, white);
 }
+
+[data-bs-theme="dark"] {
+    body,
+    #page-wrapper,
+    #page,
+    #page.drawers,
+    #page.drawers .main-inner {
+        color: var(--bs-ink);
+        background-color: var(--bs-canvas);
+    }
+}

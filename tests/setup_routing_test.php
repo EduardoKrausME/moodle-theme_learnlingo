@@ -26,6 +26,7 @@ namespace theme_learnlingo;
 
 use advanced_testcase;
 use theme_config;
+
 use function theme_learnlingo_homepage_html;
 
 /**

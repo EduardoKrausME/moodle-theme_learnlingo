@@ -1,0 +1,41 @@
+// LearnLingo components, loaded after the parent Boost preset.
+// Keep the existing component override order (including the late course cards and drawer controls).
+@import "moodle/dashboard";
+@import "moodle/frontpage";
+@import "moodle/core";
+@import "moodle/forms";
+@import "moodle/courselisting";
+@import "moodle/courseoverview";
+@import "moodle/drawer";
+@import "moodle/dropdown";
+@import "moodle/modal";
+@import "moodle/print";
+
+@import "bootstrap/utilities/stretched-link";
+@import "moodle/blocks";
+@import "moodle/buttons";
+@import "moodle/courseindex";
+@import "moodle/coursemanagement";
+@import "moodle/footer";
+@import "moodle/icon";
+@import "moodle/layout";
+@import "moodle/login";
+@import "moodle/page_tree";
+@import "moodle/primarynavigation";
+@import "moodle/filemanager";
+@import "moodle/navbar";
+@import "moodle/tables";
+@import "moodle/visually-hidden";
+@import "moodle/search";
+@import "moodle/secondarynavigation";
+@import "moodle/activityicons";
+@import "moodle/course";
+@import "moodle/debug";
+@import "moodle/mcp";
+@import "moodle/colour_settings";
+@import "moodle/code_settings";
+@import "moodle/storedfile_settings";
+@import "moodle/dark";
+@import "moodle/coursecards";
+@import "moodle/acctoolbar";
+@import "moodle/drawercontrols";

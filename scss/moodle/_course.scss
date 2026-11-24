@@ -1,3 +1,60 @@
+.course-section {
+    margin-bottom: 1rem;
+    padding: 1.15rem;
+    background: #FFF;
+    border: 1px solid var(--bs-border);
+    border-radius: 20px;
+    box-shadow: var(--bs-shadow);
+}
+.course-section .sectionname,
+.course-section .section-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+}
+.course-section .section-item {
+    border: 0;
+}
+.course-content ul.topics li.section,
+.course-content ul.weeks li.section {
+    border-bottom: 0;
+}
+.activity-item {
+    margin-bottom: .65rem;
+    padding: .85rem !important;
+    background: #FAFAFB;
+    border: 1px solid #ECEEF2 !important;
+    border-radius: 14px !important;
+    transition: background-color .16s ease, border-color .16s ease, transform .16s ease;
+}
+.activity-item:hover {
+    background: rgba($primary, .025);
+    border-color: rgba($primary, .22) !important;
+    transform: translateX(2px);
+}
+.activityname a,
+.instancename {
+    color: var(--bs-ink);
+    font-weight: 750;
+}
+.activity-navigation {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: #FFF;
+    border: 1px solid var(--bs-border);
+    border-radius: 17px;
+    box-shadow: var(--bs-shadow);
+}
+.completion-info,
+.automatic-completion-conditions .badge {
+    border-radius: 999px;
+}
+
+@media (max-width: 767.98px) {
+    .course-section {
+        padding: 1rem;
+    }
+}
+
 // LearnLingo course experience.
 // The markup remains Moodle core; this file only changes presentation.
 .learnlingo-course-hero {
@@ -510,4 +567,26 @@ body.path-course-view .courseindex .courseindex-item.pageitem a {
             box-shadow: 0 5px 0 #4B6277;
         }
     }
+}
+
+// Personal XP lives alongside (not instead of) Moodle course completion.
+.learnlingo-course-xp {
+    display: inline-flex;
+    gap: .35rem;
+    align-items: center;
+    width: fit-content;
+    max-width: 100%;
+    padding: .35rem .65rem;
+    margin: .45rem 0;
+    border-radius: 999px;
+    color: var(--bs-ink, #263238);
+    background: rgba($primary, .08);
+    font-size: .82rem;
+    font-weight: 700;
+    line-height: 1.35;
+}
+.learnlingo-course-xp:hover,
+.learnlingo-course-xp:focus {
+    background: rgba($primary, .14);
+    text-decoration: none;
 }

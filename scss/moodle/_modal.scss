@@ -1,0 +1,14 @@
+.modal-content {
+    overflow: hidden;
+    border: 1px solid var(--bs-border);
+    border-radius: 20px;
+    box-shadow: 0 20px 55px rgba(37, 42, 55, .18);
+}
+.modal-header,
+.modal-footer {
+    border-color: #ECEEF2;
+}
+.modal {
+    overflow-x: initial !important;
+    overflow-y: initial !important;
+}

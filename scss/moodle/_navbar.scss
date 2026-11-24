@@ -1,3 +1,25 @@
+
+@media (max-width: 991.98px) {
+    .navbar.fixed-top {
+        min-height: 64px;
+        padding: .45rem .75rem;
+    }
+    .navbar-brand.learnlingo-navbar-brand {
+        margin-right: .5rem !important;
+    }
+    .learnlingo-brandmark {
+        flex-basis: 38px;
+        width: 38px;
+        height: 38px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .navbar-brand .learnlingo-wordmark {
+        display: none;
+    }
+}
+
 :root {
     // Navbar - Light mode.
     --learnlingo-navbar-bg: rgba(255, 255, 255, .97);

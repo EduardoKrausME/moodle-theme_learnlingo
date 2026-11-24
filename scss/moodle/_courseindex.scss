@@ -1,3 +1,14 @@
+.courseindex .courseindex-item {
+    margin-bottom: .2rem;
+    border-radius: 10px;
+}
+.courseindex .courseindex-item.pageitem {
+    &, a {
+        color: $primary;
+    }
+    background: rgba($primary, .08);
+}
+
 // Desktop course-index drawer. Keep the native Moodle tree and drawer controls.
 #theme_learnlingo-drawers-courseindex {
     .drawerheader {

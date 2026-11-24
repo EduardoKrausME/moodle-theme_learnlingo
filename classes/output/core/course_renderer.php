@@ -35,6 +35,7 @@ use local_personalxp\service\xp_manager;
 use moodle_url;
 use stdClass;
 use theme_learnlingo\homepage_context;
+
 use function format_text;
 
 /**

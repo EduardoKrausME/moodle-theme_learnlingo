@@ -26,6 +26,7 @@ namespace theme_learnlingo;
 
 use advanced_testcase;
 use context_system;
+
 use function xmldb_theme_learnlingo_install;
 
 /**

@@ -1,3 +1,58 @@
+// Buttons, inputs and feedback.
+.btn {
+    //min-height: 42px;
+    padding: .62rem 1rem;
+    font-weight: 750;
+    border-width: 1px;
+    transition: transform .16s ease, box-shadow .16s ease, background-color .16s ease;
+}
+.btn:hover {
+    transform: translateY(-1px);
+}
+.btn-primary {
+    color: #FFF;
+    background-color: $primary;
+    border-color: $primary;
+    box-shadow: 0 4px 0 darken($primary, 11%);
+    &:hover,
+    &:focus,
+    &:active {
+        color: #FFF;
+        background: darken($primary, 5%);
+        border-color: darken($primary, 5%);
+        box-shadow: 0 4px 0 darken($primary, 14%);
+    }
+}
+.btn-group > .btn-primary {
+    box-shadow: none;
+}
+.btn-secondary,
+.btn-outline-secondary {
+    color: var(--bs-ink);
+    background: #FFF;
+    border-color: #D9DCE3;
+    box-shadow: 0 3px 0 rgba(37, 42, 55, .08);
+}
+.btn-secondary:hover,
+.btn-outline-secondary:hover {
+    color: $primary;
+    background: rgba($primary, .04);
+    border-color: rgba($primary, .35);
+}
+.btn-link {
+    color: $primary;
+    box-shadow: none;
+}
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn .icon,
+.btn .fa {
+    margin-right: .35rem;
+}
+
 /* Specific styles for the collapse/expand buttons. */
 .btn-icon.icons-collapse-expand {
     color: var(--bs-gray-800);

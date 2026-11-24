@@ -73,7 +73,7 @@ foreach ($palettes as $key => $colours) {
 $currentmode = (string)(get_config('theme_learnlingo', 'homepagemode') ?: 'learnlingo');
 $currentfooter = (string)(get_config('theme_learnlingo', 'footermode') ?: 'moodle');
 $themeactive = ($CFG->theme ?? '') === 'learnlingo';
-$adminurl = new moodle_url('/' . ($CFG->admin ?? 'admin') . '/index.php');
+$adminurl = new moodle_url('/admin/index.php');
 
 // The site can be configured in several visits. A completed step unlocks the
 // next step; returning to earlier steps does not discard subsequent choices.
@@ -366,7 +366,7 @@ echo $OUTPUT->render_from_template('theme_learnlingo/setup', [
     'dashboarddescriptiontext' => (string)get_config('theme_learnlingo', 'dashboarddescriptiontext'),
     'dashboardurl' => (new moodle_url('/my/'))->out(false),
     'mycoursesurl' => (new moodle_url('/my/courses.php'))->out(false),
-    'moodlenavigationurl' => (new moodle_url('/' . ($CFG->admin ?? 'admin') . '/settings.php',
+    'moodlenavigationurl' => (new moodle_url('/admin/settings.php',
         ['section' => 'navigation']))->out(false),
     'coursehero' => (bool)get_config('theme_learnlingo', 'showcoursehero'),
     'mcpinstalled' => get_config('local_mcp', 'version') !== false,
@@ -386,7 +386,7 @@ echo $OUTPUT->render_from_template('theme_learnlingo/setup', [
     'customhtmlmode' => $currentmode === 'html',
     'existinghomepagehtml' => $currentmode === 'html'
         && !in_array(trim((string)get_config('theme_learnlingo', 'homepagehtml')), ['', 'config'], true),
-    'htmlsettingsurl' => (new moodle_url('/' . ($CFG->admin ?? 'admin') . '/settings.php',
+    'htmlsettingsurl' => (new moodle_url('/admin/settings.php',
         ['section' => 'theme_learnlingo_homepage']))->out(false),
     'advancedurl' => (new moodle_url('/admin/settings.php',
         ['section' => 'theme_learnlingo_branding']))->out(false),

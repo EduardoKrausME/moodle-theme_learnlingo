@@ -1,3 +1,26 @@
+// Tables, tabs, dropdowns and dialogs.
+.table {
+    overflow: hidden;
+    background: #FFF;
+    border-radius: 14px;
+}
+.table thead th {
+    padding-top: .85rem;
+    padding-bottom: .85rem;
+    color: #626672;
+    font-size: .76rem;
+    font-weight: 800;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    background: #F5F6F8;
+    border-bottom-width: 1px;
+}
+.table td,
+.table th {
+    vertical-align: middle;
+    border-color: #ECEEF2;
+}
+
 .generaltable {
     border-top: $table-border-width solid $table-border-color;
     th,

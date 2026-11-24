@@ -24,7 +24,6 @@
 
 namespace theme_learnlingo;
 
-
 /**
  * Test stable colours and the exported navbar source.
  *
