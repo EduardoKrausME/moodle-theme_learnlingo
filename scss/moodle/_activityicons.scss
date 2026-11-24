@@ -46,12 +46,34 @@ $learnlingo-activity-colors: (
     0 7px 14px rgba($color, .18);
 }
 
-.activityiconcontainer.courseicon {
+// Moodle uses courseicon in course listings and modicon_<module> in activity headers.
+// Match the class token at either the start or a space-separated position.
+.activityiconcontainer:is(.courseicon, [class^="modicon_"], [class*=" modicon_"]) {
     @include learnlingo-activity-icon(#7B8794);
+
+    &:not(.isbranded) {
+        .activityicon:not(.nofilter) {
+            filter: brightness(0) invert(1) !important;
+        }
+    }
+
+    // Specific module colours override the shared purpose colour in both contexts.
+    @each $purpose, $color in $learnlingo-purpose-colors {
+        &.#{$purpose} {
+            @include learnlingo-activity-icon($color);
+        }
+    }
+    @each $module, $color in $learnlingo-activity-colors {
+        .modtype_#{$module} &.courseicon,
+        &.modicon_#{$module} {
+            @include learnlingo-activity-icon($color);
+        }
+    }
 }
 
 .path-course-view .activityiconcontainer.courseicon,
-.activity-item .activityiconcontainer.courseicon {
+.activity-item .activityiconcontainer.courseicon,
+.activityiconcontainer:is([class^="modicon_"], [class*=" modicon_"]) {
     width: 46px;
     height: 46px;
     min-width: 46px;
@@ -69,7 +91,6 @@ $learnlingo-activity-colors: (
         margin: 0 !important;
         object-fit: contain;
         opacity: 1;
-        filter: brightness(0) invert(1) !important;
     }
     &.smaller {
         width: 40px;
@@ -81,16 +102,6 @@ $learnlingo-activity-colors: (
             width: 23px;
             height: 23px;
         }
-    }
-}
-@each $purpose, $color in $learnlingo-purpose-colors {
-    .activityiconcontainer.courseicon.#{$purpose} {
-        @include learnlingo-activity-icon($color);
-    }
-}
-@each $module, $color in $learnlingo-activity-colors {
-    .modtype_#{$module} .activityiconcontainer.courseicon {
-        @include learnlingo-activity-icon($color);
     }
 }
 .activity-item:hover .activityiconcontainer.courseicon {
