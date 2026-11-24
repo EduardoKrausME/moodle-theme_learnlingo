@@ -1,3 +1,47 @@
+// Cards, dashboard blocks and course grids.
+.card,
+.block,
+.coursebox,
+.dashboard-card,
+.boxaligncenter {
+    border: 1px solid var(--bs-border);
+    border-radius: 20px;
+    box-shadow: var(--bs-shadow);
+}
+.card,
+.block,
+.coursebox,
+.dashboard-card,
+.course-info-container {
+    background: var(--bs-surface);
+}
+.card-header,
+.block .card-title {
+    background: transparent;
+    border-bottom-color: #ECEEF2;
+}
+.block .card-title {
+    color: var(--bs-ink);
+    font-size: 1.05rem;
+    font-weight: 800;
+}
+.block .card-body {
+    padding: 1.35rem;
+}
+.block_timeline .list-group-item,
+.block_recentlyaccesseditems .list-group-item {
+    margin-bottom: .55rem;
+    background: #FAFAFB;
+    border: 1px solid #ECEEF2 !important;
+    border-radius: 12px !important;
+}
+
+@media (max-width: 767.98px) {
+    .block .card-body {
+        padding: 1rem;
+    }
+}
+
 .block .block-cards .card .coursemenubtn {
     &:hover {
         color: var(--bs-gray-300, #6C757D);

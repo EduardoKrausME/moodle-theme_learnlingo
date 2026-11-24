@@ -1,3 +1,11 @@
+
+@media (max-width: 767.98px) {
+    #page.drawers .main-inner {
+        width: calc(100% - 1rem);
+        margin-top: 1rem;
+    }
+}
+
 html,
 body {
     background: var(--bs-canvas);

@@ -1,0 +1,31 @@
+.dashboard-card,
+.coursebox,
+.course-summaryitem {
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.dashboard-card:hover,
+.coursebox:hover,
+.course-summaryitem:hover {
+    border-color: rgba($primary, .22);
+    box-shadow: var(--bs-shadow-hover);
+    transform: translateY(-3px);
+}
+.dashboard-card .dashboard-card-img,
+.coursebox .courseimage img,
+.course-summaryitem .course-image {
+    border-radius: 18px 18px 0 0;
+}
+.dashboard-card-deck .dashboard-card {
+    overflow: hidden;
+}
+.dashboard-card .course-info-container {
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+.dashboard-card .coursename,
+.coursebox .coursename,
+.course-summaryitem .coursename {
+    color: var(--bs-ink);
+    font-weight: 800;
+}

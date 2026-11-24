@@ -1,0 +1,33 @@
+// Drawer surfaces follow the active theme, not Boost's blue-gray nav background.
+.drawer {
+    background: var(--bs-surface);
+    border-color: var(--bs-border);
+    box-shadow: 8px 0 25px rgba(37, 42, 55, .08);
+}
+[data-region=right-hand-drawer].drawer {
+    top: 82px;
+}
+.drawer-right {
+    box-shadow: -8px 0 25px rgba(37, 42, 55, .08);
+}
+// Specific IDs win over Boost's drawer background-color and keep the
+// desktop course index, block region and mobile navigation consistent.
+#theme_learnlingo-drawers-courseindex,
+#theme_learnlingo-drawers-blocks,
+#theme_learnlingo-drawers-primary {
+    --bs-nav-drawer: var(--bs-surface);
+    background-color: var(--bs-surface);
+    color: var(--bs-ink);
+    border-color: var(--bs-border);
+    .drawerheader,
+    .drawercontent {
+        background-color: transparent;
+    }
+}
+.drawerheader {
+    padding: .9rem;
+    border-bottom: 1px solid #ECEEF2;
+}
+.drawercontent {
+    padding: .75rem;
+}

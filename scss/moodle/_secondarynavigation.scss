@@ -1,3 +1,34 @@
+// Course pages and activities.
+.secondary-navigation {
+    margin-bottom: 1.25rem;
+    padding: 0;
+    background: #FFF;
+    border: 1px solid var(--bs-border);
+    border-radius: 15px;
+    box-shadow: var(--bs-shadow);
+    .navigation {
+        border: 0;
+        background-color: transparent;
+        margin-bottom: -4px;
+        .nav-tabs {
+            background-color: transparent;
+        }
+    }
+    .nav-link {
+        padding: .7rem .95rem;
+        color: var(--bs-muted);
+        border: 0 !important;
+        border-radius: 11px;
+    }
+    .nav-link.active {
+        color: $primary;
+        background: rgba($primary, .08);
+    }
+    .nav-link::before {
+        display: none !important;
+    }
+}
+
 [data-bs-theme=dark] {
     .header-maxwidth .navigation .nav-tabs,
     .secondary-navigation .navigation .nav-tabs {

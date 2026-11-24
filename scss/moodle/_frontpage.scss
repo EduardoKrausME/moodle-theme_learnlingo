@@ -1,0 +1,467 @@
+// Custom Mustache homepage surfaces inherit the current Moodle color scheme.
+// Institutions can use these tokens for their own homepagehtml/homepagescss;
+// they stay compatible with a live light/dark switch without PHP variables.
+.learnlingo-html-home,
+.learnlingo-home-intro {
+    --bs-home-canvas: var(--bs-canvas);
+    --bs-home-surface: var(--bs-surface);
+    --bs-home-ink: var(--bs-ink);
+    --bs-home-muted: var(--bs-muted);
+    --bs-home-border: var(--bs-border);
+    color: var(--bs-home-ink);
+    background-color: var(--bs-home-canvas);
+    color-scheme: inherit;
+}
+// Course renderer front page.
+.learnlingo-home {
+    width: 100%;
+}
+.learnlingo-resume-card {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1.15rem;
+    margin-bottom: 2.25rem;
+    padding: 1.2rem 1.35rem;
+    background: #FFF;
+    border: 1px solid var(--bs-border);
+    border-radius: 20px;
+    box-shadow: var(--bs-shadow);
+}
+.learnlingo-resume-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    color: $primary;
+    background: rgba($primary, .08);
+    border-radius: 16px;
+}
+.learnlingo-resume-icon .fa {
+    margin: 0;
+    font-size: 1.45rem;
+}
+.learnlingo-resume-main {
+    display: grid;
+    min-width: 0;
+}
+.learnlingo-resume-label,
+.learnlingo-course-card-kicker {
+    color: #91959F;
+    font-size: .68rem;
+    font-weight: 850;
+    letter-spacing: .075em;
+    text-transform: uppercase;
+}
+.learnlingo-resume-title {
+    width: fit-content;
+    margin: .12rem 0;
+    overflow: hidden;
+    color: var(--bs-ink);
+    font-size: 1.08rem;
+    font-weight: 820;
+    line-height: 1.35;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.learnlingo-resume-title:hover {
+    color: $primary;
+}
+.learnlingo-resume-category {
+    color: var(--bs-muted);
+    font-size: .78rem;
+}
+.learnlingo-resume-progress {
+    display: grid;
+    grid-template-columns: minmax(120px, 1fr) auto;
+    align-items: center;
+    gap: .85rem;
+    max-width: 720px;
+    margin-top: .7rem;
+}
+.learnlingo-resume-progress strong {
+    color: $primary;
+    font-size: .78rem;
+    white-space: nowrap;
+}
+.learnlingo-resume-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    color: #FFF;
+    background: $primary;
+    border-radius: 14px;
+    box-shadow: 0 4px 0 darken($primary, 11%);
+    text-decoration: none;
+    transition: transform .16s ease, box-shadow .16s ease;
+}
+.learnlingo-resume-action:hover {
+    color: #FFF;
+    box-shadow: 0 6px 0 darken($primary, 11%);
+    transform: translateY(-2px);
+}
+.learnlingo-resume-action .fa {
+    margin: 0 0 0 .15rem;
+}
+.learnlingo-home-courses {
+    margin-bottom: 2.5rem;
+}
+.learnlingo-home-section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.15rem;
+}
+.learnlingo-home-section-heading > div > span {
+    color: $primary;
+    font-size: .72rem;
+    font-weight: 850;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+.learnlingo-home-section-heading h2 {
+    margin: .22rem 0 0;
+    color: var(--bs-ink);
+    font-size: clamp(1.5rem, 3vw, 2.15rem);
+    font-weight: 850;
+}
+.learnlingo-home-section-heading > a {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    padding: .5rem 0;
+    color: $primary;
+    font-size: .86rem;
+    font-weight: 800;
+    text-decoration: none;
+}
+.learnlingo-home-section-heading > a:hover .fa {
+    transform: translateX(3px);
+}
+.learnlingo-home-section-heading .fa {
+    margin: 0;
+    transition: transform .16s ease;
+}
+.learnlingo-home-course-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.2rem;
+}
+.learnlingo-course-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+    background: #FFF;
+    border: 1px solid var(--bs-border);
+    border-radius: 20px;
+    box-shadow: var(--bs-shadow);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.learnlingo-course-card:hover {
+    border-color: rgba($primary, .22);
+    box-shadow: var(--bs-shadow-hover);
+    transform: translateY(-4px);
+}
+.learnlingo-course-card-media {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 155px;
+    overflow: hidden;
+    color: rgba(255, 255, 255, .88);
+    text-decoration: none;
+}
+.learnlingo-course-tone-1 {
+    background: linear-gradient(135deg, $learnlingo-accent, $primary);
+}
+.learnlingo-course-tone-2 {
+    background: linear-gradient(135deg, #F5A23B, #F36A3F);
+}
+.learnlingo-course-tone-3 {
+    background: linear-gradient(135deg, #6D7DE8, #9D65D7);
+}
+.learnlingo-course-card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .3s ease;
+}
+.learnlingo-course-card:hover .learnlingo-course-card-media img {
+    transform: scale(1.04);
+}
+.learnlingo-course-card-media > .fa {
+    margin: 0;
+    font-size: 3.2rem;
+    opacity: .72;
+}
+.learnlingo-course-card-media > span {
+    position: absolute;
+    top: .8rem;
+    left: .8rem;
+    max-width: calc(100% - 1.6rem);
+    padding: .38rem .62rem;
+    overflow: hidden;
+    color: var(--bs-ink);
+    background: rgba(255, 255, 255, .93);
+    border-radius: 999px;
+    box-shadow: 0 2px 0 rgba(37, 42, 55, .08);
+    font-size: .66rem;
+    font-weight: 820;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.learnlingo-course-card-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 1.05rem 1.1rem 1.15rem;
+}
+.learnlingo-course-card-body h3 {
+    margin: .25rem 0 .9rem;
+    font-size: 1.08rem;
+    line-height: 1.35;
+}
+.learnlingo-course-card-body h3 a {
+    color: var(--bs-ink);
+    font-weight: 820;
+    text-decoration: none;
+}
+.learnlingo-course-card-body h3 a:hover {
+    color: $primary;
+}
+.learnlingo-course-card-progress {
+    display: grid;
+    gap: .42rem;
+    margin-top: auto;
+}
+.learnlingo-course-card-progress span {
+    color: var(--bs-muted);
+    font-size: .72rem;
+    font-weight: 700;
+}
+.learnlingo-course-card-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .6rem;
+    margin-top: 1rem;
+    padding-top: .85rem;
+    color: $primary;
+    font-size: .8rem;
+    font-weight: 820;
+    border-top: 1px solid #ECEEF2;
+    text-decoration: none;
+}
+.learnlingo-course-card-action .fa {
+    margin: 0;
+}
+.learnlingo-home-empty {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.4rem;
+    background: #FFF;
+    border: 1px solid var(--bs-border);
+    border-radius: 20px;
+    box-shadow: var(--bs-shadow);
+}
+.learnlingo-home-empty > .fa {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin: 0;
+    color: $primary;
+    background: rgba($primary, .08);
+    border-radius: 14px;
+}
+.learnlingo-home-empty h3,
+.learnlingo-home-empty p {
+    margin: 0;
+}
+.learnlingo-home-empty p {
+    margin-top: .25rem;
+    color: var(--bs-muted);
+}
+// Native Moodle front page transformed into the learnlingo course showcase.
+#page-site-index #site-news-forum,
+#page-site-index #frontpage-available-course-list,
+#page-site-index #frontpage-course-list,
+#page-site-index #frontpage-category-names,
+#page-site-index #frontpage-category-combo {
+    margin-bottom: 2.2rem;
+}
+#page-site-index #site-news-forum {
+    padding: 1.35rem;
+    background: #FFF;
+    border: 1px solid var(--bs-border);
+    border-radius: 20px;
+    box-shadow: var(--bs-shadow);
+}
+#page-site-index #site-news-forum h2,
+#page-site-index #frontpage-available-course-list > h2,
+#page-site-index #frontpage-course-list > h2,
+#page-site-index #frontpage-category-names > h2,
+#page-site-index #frontpage-category-combo > h2 {
+    position: relative;
+    margin-bottom: 1.2rem;
+    color: var(--bs-ink);
+    font-size: clamp(1.45rem, 3vw, 2rem);
+    font-weight: 850;
+}
+#page-site-index .frontpage-course-list-all,
+#page-site-index .frontpage-course-list-enrolled {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.2rem;
+}
+#page-site-index .frontpage-course-list-all .coursebox,
+#page-site-index .frontpage-course-list-enrolled .coursebox {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 275px;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+#page-site-index .frontpage-course-list-all .coursebox > .content,
+#page-site-index .frontpage-course-list-enrolled .coursebox > .content,
+#page-site-index .frontpage-course-list-all .coursebox > .content > .d-flex,
+#page-site-index .frontpage-course-list-enrolled .coursebox > .content > .d-flex {
+    display: contents !important;
+}
+#page-site-index .frontpage-course-list-all .coursebox .courseimage,
+#page-site-index .frontpage-course-list-enrolled .coursebox .courseimage {
+    order: 0;
+    width: 100%;
+    height: 155px;
+    margin: 0;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba($primary, .11), rgba($learnlingo-accent, .2));
+}
+#page-site-index .frontpage-course-list-all .coursebox .courseimage img,
+#page-site-index .frontpage-course-list-enrolled .coursebox .courseimage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+    transition: transform .3s ease;
+}
+#page-site-index .frontpage-course-list-all .coursebox:hover .courseimage img,
+#page-site-index .frontpage-course-list-enrolled .coursebox:hover .courseimage img {
+    transform: scale(1.035);
+}
+#page-site-index .frontpage-course-list-all .coursebox > .info,
+#page-site-index .frontpage-course-list-enrolled .coursebox > .info {
+    order: 1;
+    padding: 1.05rem 1.1rem .45rem;
+}
+#page-site-index .frontpage-course-list-all .coursebox .coursename,
+#page-site-index .frontpage-course-list-enrolled .coursebox .coursename {
+    margin: 0;
+    font-size: 1.06rem;
+    line-height: 1.35;
+}
+#page-site-index .frontpage-course-list-all .coursebox .coursename a,
+#page-site-index .frontpage-course-list-enrolled .coursebox .coursename a {
+    color: var(--bs-ink);
+    font-weight: 820;
+    text-decoration: none;
+}
+#page-site-index .frontpage-course-list-all .coursebox .coursename a:hover,
+#page-site-index .frontpage-course-list-enrolled .coursebox .coursename a:hover {
+    color: $primary;
+}
+#page-site-index .frontpage-course-list-all .coursebox .flex-grow-1,
+#page-site-index .frontpage-course-list-enrolled .coursebox .flex-grow-1 {
+    order: 2;
+    padding: 0 1.1rem 1rem;
+}
+#page-site-index .frontpage-course-list-all .coursebox .teachers,
+#page-site-index .frontpage-course-list-enrolled .coursebox .teachers {
+    margin: 0;
+    padding: 0;
+    color: var(--bs-muted);
+    font-size: .78rem;
+    list-style: none;
+}
+#page-site-index .frontpage-course-list-all .coursebox .teachers .font-weight-bold,
+#page-site-index .frontpage-course-list-enrolled .coursebox .teachers .font-weight-bold {
+    color: #8B8F99;
+    font-size: .68rem;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+#page-site-index .frontpage-course-list-all .coursebox .moreinfo,
+#page-site-index .frontpage-course-list-enrolled .coursebox .moreinfo,
+#page-site-index .frontpage-course-list-all .coursebox .enrolmenticons,
+#page-site-index .frontpage-course-list-enrolled .coursebox .enrolmenticons {
+    color: $primary;
+}
+#page-site-index #frontpage-category-names .course_category_tree,
+#page-site-index #frontpage-category-combo .course_category_tree {
+    padding: 1.25rem;
+    background: #FFF;
+    border: 1px solid var(--bs-border);
+    border-radius: 20px;
+    box-shadow: var(--bs-shadow);
+}
+#page-site-index .course_category_tree .category > .info {
+    margin-bottom: .55rem;
+    padding: .85rem 1rem;
+    background: #FAFAFB;
+    border: 1px solid #ECEEF2;
+    border-radius: 13px;
+}
+#page-site-index .course_category_tree .categoryname {
+    margin: 0;
+}
+#page-site-index .course_category_tree .categoryname a {
+    color: var(--bs-ink);
+    font-weight: 800;
+    text-decoration: none;
+}
+#page-site-index .course_category_tree .categoryname a:hover {
+    color: $primary;
+}
+#page-site-index .paging-morelink {
+    grid-column: 1 / -1;
+    margin-top: .5rem;
+    text-align: right;
+}
+
+@media (max-width: 1199.98px) {
+    .learnlingo-home-course-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 767.98px) {
+    .learnlingo-home-resume-card {
+        grid-template-columns: auto minmax(0, 1fr);
+    }
+    .learnlingo-home-resume-action {
+        grid-column: 1 / -1;
+        width: 100%;
+    }
+    .learnlingo-home-section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+    .learnlingo-home-course-grid {
+        grid-template-columns: 1fr;
+    }
+    .learnlingo-home-empty {
+        padding: 2rem 1.25rem;
+    }
+}

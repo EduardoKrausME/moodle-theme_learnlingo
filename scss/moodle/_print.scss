@@ -1,0 +1,19 @@
+@media print {
+    body,
+    #page-wrapper,
+    #page.drawers {
+        background: #FFF !important;
+    }
+    .learnlingo-dashboard-grid,
+    .drawer-toggles,
+    .navbar.fixed-top,
+    #page-footer {
+        display: none !important;
+    }
+    .card,
+    .block,
+    .course-section,
+    .activity-navigation {
+        box-shadow: none !important;
+    }
+}
