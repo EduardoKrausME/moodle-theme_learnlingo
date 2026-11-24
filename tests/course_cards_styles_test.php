@@ -38,7 +38,10 @@ final class course_cards_styles_test extends advanced_testcase {
     public function test_course_cards_are_compiled_in_theme_scss(): void {
         global $CFG;
 
-        $scss = file_get_contents($CFG->dirroot . '/theme/learnlingo/scss/_poss.scss');
+        $root = file_get_contents($CFG->dirroot . '/theme/learnlingo/scss/_poss.scss');
+        $scss = file_get_contents($CFG->dirroot . '/theme/learnlingo/scss/_learnlingo-moodle.scss');
+        $this->assertStringContainsString('@import "learnlingo-moodle";', $root);
+        $this->assertStringContainsString('@import "moodle/dark";', $scss);
         $this->assertStringContainsString('@import "moodle/coursecards";', $scss);
         $this->assertGreaterThan(
             strpos($scss, '@import "moodle/dark";'),

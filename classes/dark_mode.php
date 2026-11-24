@@ -80,7 +80,6 @@ final class dark_mode {
      * @return moodle_url
      */
     public static function install_url(): moodle_url {
-        global $CFG;
-        return new moodle_url('/' . ($CFG->admin ?? 'admin') . '/index.php');
+        return new moodle_url('/admin/index.php');
     }
 }
