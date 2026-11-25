@@ -15,26 +15,30 @@ body#page-login-index {
     align-items: stretch;
     overflow: hidden;
     color: #FFF;
+    height: 100%;
     background: linear-gradient(145deg, $learnlingo-accent 0%, $primary 58%, darken($primary, 8%) 100%);
+    &::before,
+    &::after {
+        position: absolute;
+        content: "";
+        border: 1px solid rgba(255, 255, 255, .18);
+        border-radius: 50%;
+    }
+    &::before {
+        right: -15vw;
+        bottom: -20vw;
+        width: 48vw;
+        height: 48vw;
+    }
+    &::after {
+        right: -5vw;
+        bottom: -10vw;
+        width: 30vw;
+        height: 30vw;
+    }
 }
-.login-layout-left::before,
-.login-layout-left::after {
-    position: absolute;
-    content: "";
-    border: 1px solid rgba(255, 255, 255, .18);
-    border-radius: 50%;
-}
-.login-layout-left::before {
-    right: -15vw;
-    bottom: -20vw;
-    width: 48vw;
-    height: 48vw;
-}
-.login-layout-left::after {
-    right: -5vw;
-    bottom: -10vw;
-    width: 30vw;
-    height: 30vw;
+body.pagelayout-login #page .login-layout-left::after {
+    display: none !important;
 }
 .login-layout-left-content {
     position: relative;
@@ -46,21 +50,30 @@ body#page-login-index {
     max-width: 650px;
     margin: 0 auto;
     padding: clamp(3rem, 7vw, 7rem);
+    h1 {
+        max-width: 520px;
+        margin-bottom: 1.1rem;
+        color: #FFF;
+        font-size: clamp(2.5rem, 5vw, 4.6rem);
+        font-weight: 850;
+        letter-spacing: -.06em;
+        line-height: .98;
+    }
 }
 .learnlingo-login-brand {
     display: flex;
     align-items: center;
     gap: .75rem;
     margin-bottom: clamp(2.5rem, 7vh, 5rem);
-}
-.learnlingo-login-brand .learnlingo-brandmark {
-    color: $primary;
-    background: #FFF;
-    box-shadow: 0 5px 0 rgba($primary, .22);
-}
-.learnlingo-login-brand .learnlingo-wordmark,
-.learnlingo-login-brand .learnlingo-wordmark-accent {
-    color: #FFF;
+    .learnlingo-brandmark {
+        color: $primary;
+        background: #FFF;
+        box-shadow: 0 5px 0 rgba($primary, .22);
+    }
+    .learnlingo-wordmark,
+    .learnlingo-wordmark-accent {
+        color: #FFF;
+    }
 }
 .learnlingo-login-kicker {
     display: inline-flex;
@@ -72,15 +85,6 @@ body#page-login-index {
     background: rgba(255, 255, 255, .12);
     border: 1px solid rgba(255, 255, 255, .25);
     border-radius: 999px;
-}
-.login-layout-left-content h1 {
-    max-width: 520px;
-    margin-bottom: 1.1rem;
-    color: #FFF;
-    font-size: clamp(2.5rem, 5vw, 4.6rem);
-    font-weight: 850;
-    letter-spacing: -.06em;
-    line-height: .98;
 }
 .learnlingo-login-description {
     max-width: 530px;
@@ -95,23 +99,23 @@ body#page-login-index {
     margin: 0;
     padding: 0;
     list-style: none;
-}
-.learnlingo-login-benefits li {
-    display: flex;
-    align-items: center;
-    gap: .75rem;
-    color: rgba(255, 255, 255, .95);
-    font-weight: 650;
-}
-.learnlingo-login-benefits .fa {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 31px;
-    height: 31px;
-    margin: 0;
-    background: rgba(255, 255, 255, .12);
-    border-radius: 10px;
+    li {
+        display: flex;
+        align-items: center;
+        gap: .75rem;
+        color: rgba(255, 255, 255, .95);
+        font-weight: 650;
+    }
+    .fa {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 31px;
+        height: 31px;
+        margin: 0;
+        background: rgba(255, 255, 255, .12);
+        border-radius: 10px;
+    }
 }
 .learnlingo-login-tagline {
     margin-top: 2rem;
@@ -184,10 +188,6 @@ body#page-login-index {
         }
     }
 }
-body.pagelayout-login #page .login-layout-left::after {
-    display: none !important;
-}
-
 .learnlingo-login-logo {
     display: block;
     max-width: min(100%, 280px);
@@ -195,4 +195,7 @@ body.pagelayout-login #page .login-layout-left::after {
     width: auto;
     height: auto;
     object-fit: contain;
+}
+.pagelayout-login #page-footer {
+    margin-top: 0 !important;
 }
