@@ -255,6 +255,13 @@ body.path-course-view .course-content {
             font-weight: 750;
             line-height: 1.35;
             white-space: normal;
+
+            @media (max-width: 767.98px) {
+                &:is(li.activity > .activity-item:not(.activityinline).learnlingo-simple-activity-card *) {
+                    margin-inline-start: 0;
+                    font-size: .72rem;
+                }
+            }
         }
     }
 
@@ -357,11 +364,6 @@ body.path-course-view.editing .course-content .course-section
                 .activity-name-area {
                     align-items: flex-start;
                     flex-direction: column !important;
-                }
-
-                .learnlingo-activity-type {
-                    margin-inline-start: 0;
-                    font-size: .72rem;
                 }
             }
 
