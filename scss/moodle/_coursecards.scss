@@ -26,6 +26,11 @@ body.path-course-view .course-content {
                 background: linear-gradient(100deg, rgba($primary, .12), rgba($primary, .025) 80%);
                 border: 1px solid rgba(31, 58, 84, .11);
                 border-radius: 18px;
+
+                @media (max-width: 767.98px) {
+                    min-height: 60px;
+                    padding: .75rem;
+                }
             }
 
             .sectionname {
@@ -80,6 +85,10 @@ body.path-course-view .course-content {
             padding: 0;
             background: transparent;
             border: 0;
+
+            @media (max-width: 767.98px) {
+                padding: 0;
+            }
         }
 
         // Preserve the core grid and all of its action, completion, date and
@@ -165,6 +174,56 @@ body.path-course-view .course-content {
                     height: 42px;
                     min-width: 42px;
                     min-height: 42px;
+                }
+            }
+
+            @media (max-width: 767.98px) {
+                min-height: 92px;
+                padding: .9rem !important;
+
+                &.learnlingo-simple-activity-card {
+                    padding-inline-end: 3.75rem !important;
+
+                    &::before {
+                        width: 25%;
+                    }
+
+                    &::after {
+                        inset-inline-end: .75rem;
+                        width: 30px;
+                        height: 30px;
+                        font-size: 1.6rem;
+                    }
+
+                    .activity-name-area {
+                        align-items: flex-start;
+                        flex-direction: column !important;
+                    }
+                }
+
+                .activityiconcontainer.courseicon.smaller {
+                    flex-basis: 48px;
+                    width: 48px;
+                    min-width: 48px;
+                    height: 48px;
+                    padding: 10px !important;
+
+                    .activityicon {
+                        width: 28px;
+                        height: 28px;
+                    }
+                }
+
+                .activityname .instancename {
+                    font-size: 1rem;
+                }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                transition: none;
+
+                &:hover {
+                    transform: none;
                 }
             }
         }
@@ -332,68 +391,3 @@ body.path-course-view.editing .course-content .course-section
     }
 }
 
-@media (max-width: 767.98px) {
-    body.path-course-view .course-content .course-section {
-        .course-section-header:has(.sectionname) {
-            min-height: 60px;
-            padding: .75rem;
-        }
-
-        .section-content-inner {
-            padding: 0;
-        }
-
-        li.activity > .activity-item:not(.activityinline) {
-            min-height: 92px;
-            padding: .9rem !important;
-
-            &.learnlingo-simple-activity-card {
-                padding-inline-end: 3.75rem !important;
-
-                &::before {
-                    width: 25%;
-                }
-
-                &::after {
-                    inset-inline-end: .75rem;
-                    width: 30px;
-                    height: 30px;
-                    font-size: 1.6rem;
-                }
-
-                .activity-name-area {
-                    align-items: flex-start;
-                    flex-direction: column !important;
-                }
-            }
-
-            .activityiconcontainer.courseicon.smaller {
-                flex-basis: 48px;
-                width: 48px;
-                min-width: 48px;
-                height: 48px;
-                padding: 10px !important;
-
-                .activityicon {
-                    width: 28px;
-                    height: 28px;
-                }
-            }
-
-            .activityname .instancename {
-                font-size: 1rem;
-            }
-        }
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    body.path-course-view .course-content .course-section
-        li.activity > .activity-item:not(.activityinline) {
-        transition: none;
-
-        &:hover {
-            transform: none;
-        }
-    }
-}

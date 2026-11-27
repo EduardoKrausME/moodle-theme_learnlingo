@@ -23,12 +23,14 @@
 .ll-pages-category-head {
     cursor: pointer;
     background: var(--bs-secondary-bg, #F3F4F5);
-}
-.ll-pages-category-head:hover {
-    filter: brightness(.98);
-}
-.ll-pages-category-head::marker {
-    color: var(--bs-secondary-color, #666);
+
+    &:hover {
+        filter: brightness(.98);
+    }
+
+    &::marker {
+        color: var(--bs-secondary-color, #666);
+    }
 }
 .ll-pages-name, .ll-pages-category-name {
     flex: 1 1 15rem;
@@ -56,6 +58,10 @@
 }
 .ll-pages-category[open] .ll-pages-children {
     animation: ll-pages-reveal .18s ease-out both;
+
+    @media (prefers-reduced-motion: reduce) {
+        animation: none;
+    }
 }
 .ll-pages-empty {
     color: var(--bs-secondary-color, #666);
@@ -69,11 +75,6 @@
     to {
         opacity: 1;
         transform: translateY(0);
-    }
-}
-@media (prefers-reduced-motion: reduce) {
-    .ll-pages-category[open] .ll-pages-children {
-        animation: none;
     }
 }
 #page-theme-learnlingo-custom-page,

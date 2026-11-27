@@ -19,6 +19,16 @@
             border-color: $primary;
             background: rgba($primary, .085);
         }
+
+        @media (max-width: 575.98px) {
+            grid-template-columns: minmax(0, 1fr);
+            padding: .85rem;
+            gap: .85rem;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+        }
     }
 
     &__visual {
@@ -38,6 +48,10 @@
 
         &[data-background="light"] {
             background: #fff;
+        }
+
+        @media (max-width: 575.98px) {
+            min-height: 140px;
         }
     }
 
@@ -173,22 +187,3 @@
     }
 }
 
-@media (max-width: 575.98px) {
-    .ll-storedfile {
-        &__surface {
-            grid-template-columns: minmax(0, 1fr);
-            padding: .85rem;
-            gap: .85rem;
-        }
-
-        &__visual {
-            min-height: 140px;
-        }
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .ll-storedfile__surface {
-        transition: none;
-    }
-}

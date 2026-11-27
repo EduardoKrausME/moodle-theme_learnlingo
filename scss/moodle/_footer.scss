@@ -22,6 +22,18 @@
         &.footer-container-4 {
             --bs-footer-columns: 4;
         }
+
+        @media (max-width: 991.98px) {
+            &.footer-container-3,
+            &.footer-container-4 {
+                --bs-footer-columns: 2;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            --bs-footer-columns: 1 !important;
+            gap: 1.5rem;
+        }
     }
     .footer-section-wrapper {
         min-width: 0;
@@ -63,18 +75,6 @@
     }
     .footer-foot p {
         margin: 0;
-    }
-    @media (max-width: 991.98px) {
-        .footer-container.footer-container-3,
-        .footer-container.footer-container-4 {
-            --bs-footer-columns: 2;
-        }
-    }
-    @media (max-width: 575.98px) {
-        .footer-container {
-            --bs-footer-columns: 1 !important;
-            gap: 1.5rem;
-        }
     }
 }
 .learnlingo-home-intro {

@@ -27,6 +27,10 @@
 }
 .block .card-body {
     padding: 1.35rem;
+
+    @media (max-width: 767.98px) {
+        padding: 1rem;
+    }
 }
 .block_timeline .list-group-item,
 .block_recentlyaccesseditems .list-group-item {
@@ -34,12 +38,6 @@
     background: #FAFAFB;
     border: 1px solid #ECEEF2 !important;
     border-radius: 12px !important;
-}
-
-@media (max-width: 767.98px) {
-    .block .card-body {
-        padding: 1rem;
-    }
 }
 
 .block .block-cards .card .coursemenubtn {

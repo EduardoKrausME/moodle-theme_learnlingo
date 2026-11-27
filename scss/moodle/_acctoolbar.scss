@@ -18,6 +18,11 @@
     button {
         cursor: pointer;
         font-family: inherit;
+
+        @media (prefers-reduced-motion: reduce) {
+            transition: none !important;
+            animation: none !important;
+        }
     }
 
     span.mic-toolbox-images-titles {
@@ -104,6 +109,25 @@
         &.mic-access-tool-box-right {
             left: auto;
             right: 12px;
+        }
+
+        @media (max-width: 480px) {
+            top: 8px;
+            right: auto;
+            left: 8px;
+            width: calc(100vw - 16px);
+            max-height: calc(100dvh - 16px);
+            border-radius: 14px;
+
+            &.mic-access-tool-box-right {
+                left: auto;
+                right: 8px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            transition: none !important;
+            animation: none !important;
         }
     }
 
@@ -271,31 +295,8 @@
                 background: color-mix(in srgb, var(--acc-primary) 80%, var(--acc-accent)) !important;
             }
         }
-    }
 
-    button:focus-visible {
-        outline: 3px solid var(--acc-primary) !important;
-        outline-offset: 3px !important;
-    }
-}
-
-// The design tokens already change with data-bs-theme="dark".
-// Do not override them with a second, fixed dark palette.
-@media (max-width: 480px) {
-    #mic-init-access-tool .mic-access-tool-box {
-        top: 8px;
-        right: auto;
-        left: 8px;
-        width: calc(100vw - 16px);
-        max-height: calc(100dvh - 16px);
-        border-radius: 14px;
-
-        &.mic-access-tool-box-right {
-            left: auto;
-            right: 8px;
-        }
-
-        .mic-buttons-block {
+        @media (max-width: 480px) {
             margin: 0 12px;
 
             .d-flex,
@@ -309,15 +310,15 @@
             }
         }
     }
-}
 
-@media (prefers-reduced-motion: reduce) {
-    #mic-init-access-tool button,
-    #mic-init-access-tool .mic-access-tool-box {
-        transition: none !important;
-        animation: none !important;
+    button:focus-visible {
+        outline: 3px solid var(--acc-primary) !important;
+        outline-offset: 3px !important;
     }
 }
+
+// The design tokens already change with data-bs-theme="dark".
+// Do not override them with a second, fixed dark palette.
 
 // Accessibility effects on the Moodle page (not on the toolbar).
 body.mic-toolbox-zoom-up > :not(#mic-init-access-tool) {
@@ -480,6 +481,12 @@ body.mic-toolbox-content-images span.mic-toolbox-images-titles {
             pointer-events: none;
             transform: translateY(-50%) translateX(8px);
             animation: learnlingo-accessibility-shortcut-hint 2s ease-out both;
+
+            @media (prefers-reduced-motion: reduce) {
+                animation: none;
+                opacity: 0;
+                visibility: hidden;
+            }
         }
     }
 
@@ -495,6 +502,12 @@ body.mic-toolbox-content-images span.mic-toolbox-images-titles {
         opacity: 1;
         visibility: visible;
         transform: translateY(-50%);
+
+        @media (prefers-reduced-motion: reduce) {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(-50%);
+        }
     }
 }
 
@@ -525,17 +538,3 @@ body.mic-toolbox-content-images span.mic-toolbox-images-titles {
 }
 
 // Do not animate the hint for users who request reduced motion.
-@media (prefers-reduced-motion: reduce) {
-    #mic-init-access-tool .mic-access-tool-general-button > div > span {
-        animation: none;
-        opacity: 0;
-        visibility: hidden;
-    }
-
-    #mic-init-access-tool .mic-access-tool-general-button:hover > div > span,
-    #mic-init-access-tool .mic-access-tool-general-button:focus-visible > div > span {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(-50%);
-    }
-}

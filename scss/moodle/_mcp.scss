@@ -39,6 +39,11 @@
         color: #137651;
         font-weight: bold;
     }
+
+    @media (max-width: 576px) {
+        gap: .75rem;
+        padding: 1rem 2.8rem 1rem 1rem;
+    }
 }
 .mcp-promo__icon {
     display: flex;
@@ -51,6 +56,10 @@
     background: #DCEEFF;
     color: #0A4F8F;
     font-weight: 800;
+
+    @media (max-width: 576px) {
+        display: none;
+    }
 }
 .mcp-promo__content {
     min-width: 0;
@@ -120,14 +129,5 @@
     }
     .mcp-promo p {
         color: #BFCEDB;
-    }
-}
-@media (max-width: 576px) {
-    .mcp-promo {
-        gap: .75rem;
-        padding: 1rem 2.8rem 1rem 1rem;
-    }
-    .mcp-promo__icon {
-        display: none;
     }
 }

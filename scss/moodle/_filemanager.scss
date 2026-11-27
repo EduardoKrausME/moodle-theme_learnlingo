@@ -32,6 +32,11 @@
         justify-content: space-between;
         gap: .6rem 1rem;
         padding: .75rem .9rem;
+
+        @media (max-width: 575.98px) {
+            gap: .6rem;
+            padding: .65rem;
+        }
     }
     .fp-toolbar {
         display: inline-flex;
@@ -48,6 +53,10 @@
         align-items: center;
         gap: .25rem;
         margin-left: auto;
+
+        @media (max-width: 575.98px) {
+            margin-left: 0;
+        }
     }
     .fp-toolbar .btn,
     .fp-viewbar .btn {
@@ -212,6 +221,15 @@
                 background: rgba($primary, .09);
             }
         }
+
+        @media (max-width: 575.98px) {
+            gap: .5rem;
+            padding: .6rem;
+            .fp-file {
+                flex-basis: 136px;
+                width: 136px;
+            }
+        }
     }
     // Do not change display or availability: the core controls drag-and-drop.
     .dndupload-target {
@@ -229,22 +247,5 @@
     .fp-img-downloading,
     .dndupload-uploadinprogress {
         color: $primary;
-    }
-    @media (max-width: 575.98px) {
-        .filemanager-toolbar {
-            gap: .6rem;
-            padding: .65rem;
-        }
-        .fp-viewbar {
-            margin-left: 0;
-        }
-        .fp-iconview {
-            gap: .5rem;
-            padding: .6rem;
-            .fp-file {
-                flex-basis: 136px;
-                width: 136px;
-            }
-        }
     }
 }

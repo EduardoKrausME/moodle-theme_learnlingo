@@ -6,6 +6,10 @@
             grid-template-columns: minmax(0, 2.55fr) minmax(255px, .9fr);
             gap: 1.4rem;
             margin-bottom: 1.7rem;
+
+            @media (max-width: 991.98px) {
+                grid-template-columns: 1fr;
+            }
         }
         &-hero {
             position: relative;
@@ -35,11 +39,25 @@
                 width: 285px;
                 height: 285px;
             }
+
+            @media (max-width: 767.98px) {
+                min-height: 410px;
+                padding: 1.6rem;
+                border-radius: 23px;
+            }
         }
         &-copy {
             position: relative;
             z-index: 2;
             max-width: 60%;
+
+            @media (max-width: 1199.98px) {
+                max-width: 68%;
+            }
+
+            @media (max-width: 767.98px) {
+                max-width: 100%;
+            }
         }
         &-title {
             max-width: 610px;
@@ -49,6 +67,11 @@
             font-weight: 850;
             letter-spacing: -.055em;
             line-height: .98;
+
+            @media (max-width: 767.98px) {
+                max-width: 100%;
+                font-size: 2.15rem;
+            }
         }
         &-description {
             max-width: 590px;
@@ -57,6 +80,11 @@
             font-size: 1.05rem;
             font-weight: 560;
             line-height: 1.65;
+
+            @media (max-width: 767.98px) {
+                max-width: 100%;
+                font-size: .98rem;
+            }
         }
         &-cta {
             display: inline-flex;
@@ -145,6 +173,19 @@
             border: 1px solid var(--bs-border);
             border-radius: 25px;
             box-shadow: var(--bs-shadow);
+
+            @media (max-width: 991.98px) {
+                display: grid;
+                grid-template-columns: auto 1fr auto;
+                gap: 1rem;
+                min-height: 0;
+                align-items: center;
+            }
+
+            @media (max-width: 767.98px) {
+                display: flex;
+                align-items: stretch;
+            }
         }
         &-heading {
             display: flex;
@@ -152,6 +193,14 @@
             align-self: stretch;
             gap: .75rem;
             margin-bottom: 1.25rem;
+
+            @media (max-width: 991.98px) {
+                margin: 0;
+            }
+
+            @media (max-width: 767.98px) {
+                align-self: stretch;
+            }
         }
         &-icon {
             display: inline-flex;
@@ -188,6 +237,16 @@
             margin: .2rem 0 1.1rem;
             background: conic-gradient($primary 0 82%, #ECEEF2 82% 100%);
             border-radius: 50%;
+
+            @media (max-width: 991.98px) {
+                width: 92px;
+                height: 92px;
+                margin: 0;
+            }
+
+            @media (max-width: 767.98px) {
+                align-self: center;
+            }
         }
         &-ring-inner {
             display: flex;
@@ -199,6 +258,11 @@
             color: var(--bs-ink);
             background: #FFF;
             border-radius: 50%;
+
+            @media (max-width: 991.98px) {
+                width: 68px;
+                height: 68px;
+            }
         }
         &-ring-inner strong {
             font-size: 1.45rem;
@@ -213,84 +277,29 @@
             font-size: .86rem;
             line-height: 1.5;
             text-align: center;
+
+            @media (max-width: 991.98px) {
+                margin: 0;
+                text-align: left;
+            }
+
+            @media (max-width: 767.98px) {
+                text-align: center;
+            }
         }
         &-card .btn {
             width: 100%;
             margin-top: auto;
+
+            @media (max-width: 991.98px) {
+                width: auto;
+                margin: 0;
+            }
+
+            @media (max-width: 767.98px) {
+                width: 100%;
+            }
         }
     }
 }
 
-@media (max-width: 1199.98px) {
-    .learnlingo-dashboard-copy {
-        max-width: 68%;
-    }
-}
-
-@media (max-width: 991.98px) {
-    .learnlingo-dashboard-grid {
-        grid-template-columns: 1fr;
-    }
-    .learnlingo-goal-card {
-        display: grid;
-        grid-template-columns: auto 1fr auto;
-        gap: 1rem;
-        min-height: 0;
-        align-items: center;
-    }
-    .learnlingo-goal-heading {
-        margin: 0;
-    }
-    .learnlingo-goal-ring {
-        width: 92px;
-        height: 92px;
-        margin: 0;
-    }
-    .learnlingo-goal-ring-inner {
-        width: 68px;
-        height: 68px;
-    }
-    .learnlingo-goal-copy {
-        margin: 0;
-        text-align: left;
-    }
-    .learnlingo-goal-card .btn {
-        width: auto;
-        margin: 0;
-    }
-}
-
-@media (max-width: 767.98px) {
-    .learnlingo-dashboard-hero {
-        min-height: 410px;
-        padding: 1.6rem;
-        border-radius: 23px;
-    }
-    .learnlingo-dashboard-copy {
-        max-width: 100%;
-    }
-    .learnlingo-dashboard-title {
-        max-width: 100%;
-        font-size: 2.15rem;
-    }
-    .learnlingo-dashboard-description {
-        max-width: 100%;
-        font-size: .98rem;
-    }
-    .learnlingo-goal-card {
-        display: flex;
-        align-items: stretch;
-    }
-    .learnlingo-goal-heading {
-        align-self: stretch;
-    }
-    .learnlingo-goal-ring {
-        align-self: center;
-    }
-    .learnlingo-goal-copy {
-        text-align: center;
-    }
-    .learnlingo-goal-card .btn {
-        width: 100%;
-    }
-}

@@ -92,6 +92,10 @@
         resize: vertical;
         overflow: hidden;
         background: var(--ll-code-bg);
+
+        @media (max-width: 600px) {
+            height: 280px;
+        }
     }
 
     &__gutter {
@@ -110,6 +114,13 @@
         span {
             display: block;
             height: 21px;
+        }
+
+        @media (max-width: 600px) {
+            min-width: 39px;
+            padding-left: 3px;
+            padding-right: 5px;
+            font-size: 12px;
         }
     }
 
@@ -139,6 +150,11 @@
         word-break: normal;
         text-align: left;
         direction: ltr;
+
+        @media (max-width: 600px) {
+            padding: 10px;
+            font-size: 12px;
+        }
     }
 
     &__input {
@@ -228,6 +244,11 @@
             max-height: none;
             resize: none;
         }
+
+        @media (max-width: 600px) {
+            inset: 0;
+            border-radius: 0;
+        }
     }
 }
 
@@ -257,12 +278,3 @@
     --ll-code-interpolation: #ffca85;
 }
 
-@media (max-width: 600px) {
-    .ll-code-editor {
-        &__workspace { height: 280px; }
-        &__input,
-        &__highlight { padding: 10px; font-size: 12px; }
-        &__gutter { min-width: 39px; padding-left: 3px; padding-right: 5px; font-size: 12px; }
-        &--expanded { inset: 0; border-radius: 0; }
-    }
-}

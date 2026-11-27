@@ -350,8 +350,8 @@ html[data-bs-theme="dark"] {
             }
         }
 
-        @include media-breakpoint-down(md) {
-            .langbutton {
+        .langbutton {
+            @include media-breakpoint-down(md) {
                 display: none;
             }
         }

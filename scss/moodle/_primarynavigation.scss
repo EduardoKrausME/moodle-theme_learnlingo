@@ -133,6 +133,10 @@
         border-bottom: 2px solid currentColor;
         transform: rotate(45deg);
         transition: transform .2s ease;
+
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+        }
     }
     &__trigger[aria-expanded="true"] &__chevron {
         transform: rotate(225deg);
@@ -146,11 +150,6 @@
         min-height: 2.75rem;
         padding: .625rem .75rem;
         font-size: .9375rem;
-    }
-}
-@media (prefers-reduced-motion: reduce) {
-    .mobile-primary-navigation__chevron {
-        transition: none;
     }
 }
 // On narrow screens, the single Moodle course index lives inside the primary mobile menu.
